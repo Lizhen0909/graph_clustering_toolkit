@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-#include </usr/include/sys/malloc.h>
+#include <malloc.h>
 #include <iostream>
 #include <iomanip>
 #include <fstream>

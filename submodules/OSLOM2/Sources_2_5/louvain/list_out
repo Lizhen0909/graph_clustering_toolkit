@@ -12,9 +12,9 @@ graph_binary.cpp
 graph_binary.h
 graph_binary.o
 graph_binary_linux.h
-graph_binary_mac.h
 hierarchy
 list_out
+louvain_script
 main_community.cpp
 main_community.o
 main_convert.cpp
