@@ -1,0 +1,15 @@
+[submodule "submodules/LFR-Benchmark_UndirWeightOvp"]
+	path = submodules/LFR-Benchmark_UndirWeightOvp
+	url = https://github.com/eXascaleInfolab/LFR-Benchmark_UndirWeightOvp
+[submodule "submodules/ppSCAN"]
+	path = submodules/ppSCAN
+	url = https://github.com/GraphProcessor/ppSCAN.git
+[submodule "submodules/graph-streaming"]
+	path = submodules/graph-streaming
+	url = https://github.com/ahollocou/graph-streaming
+[submodule "submodules/CGGC"]
+	path = submodules/CGGC
+	url = https://github.com/eXascaleInfolab/CGGC
+[submodule "submodules/distributed_clustering_thrill"]
+	path = submodules/distributed_clustering_thrill
+	url = https://github.com/kit-algo/distributed_clustering_thrill
