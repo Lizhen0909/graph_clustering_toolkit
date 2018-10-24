@@ -57,8 +57,6 @@ infomap_undir_script:
 
 	mv ${Main_folder}/infomap_undir/infomap infomap_undir
 	mv ${Main_folder}/infomap_undir/infomap_scr infomap_undir_script
-	mv infomap_undir .
-	mv infomap_undir_script .
 
 infomap_dir: infomap_dir_script
 infomap_dir_script:
