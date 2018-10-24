@@ -10,7 +10,11 @@ Main_folder=Sources_2_5
 source_folder=$(Main_folder)/OSLOM_files
 visual_folder=$(Main_folder)/visualSources
 
-all:oslom_undir oslom_dir pajek_write_undir pajek_write_dir infomap louvain 
+all: oslom_undir oslom_dir pajek_write_undir pajek_write_dir infomap louvain 
+
+clean:
+	rm oslom_undir oslom_dir pajek_write_undir pajek_write_dir infomap louvain
+	find . -name \*.o -exec rm {] \;
 
 oslom_undir:
 	echo "Compiling OSLOM undirected (oslom_undir) ..."
