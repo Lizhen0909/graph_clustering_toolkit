@@ -1,1 +1,14 @@
 a.out
+*.o
+oslom_undir
+oslom_dir 
+pajek_write_undir 
+pajek_write_dir 
+infomap_dir_script 
+infomap_dir 
+infomap_undir_script 
+infomap_undir 
+louvain_script 	
+community 
+convert 
+hierarchy
