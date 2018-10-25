@@ -2,7 +2,7 @@
 
 
 
-all: OSLOM2 OSLOM  SCAN LFR STREAM cggc
+all: OSLOM2 OSLOM  SCAN LFR STREAM cggc dct mcl
 
 clean: 
 	cd OSLOM2 && make clean
@@ -58,8 +58,16 @@ CGGC/rgmc:
 	make release && cp bin/Release/rgmc .
 
 dct:
-	cd distributed_clustering_thrill && \
-	git submodule update --init --recursive && \
-	mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make 
+	if [ ! -f distributed_clustering_thrill/BUILD_DONE ] ; then \
+		cd distributed_clustering_thrill && \
+		git submodule update --init --recursive && \
+		mkdir -p build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make && touch ../BUILD_DONE; \
+	fi
+
+mcl:	
+	if [ ! -d mcl-14-137 ]; then rm -fr mcl-14-137.tar.gz && wget https://micans.org/mcl/src/mcl-14-137.tar.gz && tar xf mcl-14-137.tar.gz; fi
+	if [ ! -f mcl-14-137/BUILD_DONE ] ; then \
+		cd mcl-14-137 && ./configure --prefix=$(HOME)/local &&  make install && touch BUILD_DONE; \
+	fi
 
 
