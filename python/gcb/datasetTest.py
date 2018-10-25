@@ -13,7 +13,9 @@ class Test(unittest.TestCase):
     def testLoadDataset(self):
         for name in dataset.list_datasets():
             if name in ['com-DBLP']:
-                dataset.load_dataset(name) 
+                ds = dataset.get_dataset(name)
+                print ds  
+                ds.load()
 
 
 if __name__ == "__main__":

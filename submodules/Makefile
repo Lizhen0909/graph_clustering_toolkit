@@ -1,4 +1,4 @@
-
+# sudo apt-get install google-perftools libboost-all-dev libbz2-dev libxml2-dev libjemalloc-dev libcurl-dev openssl libcurl4-openssl-dev libssl-dev libtbb-dev
 
 
 
