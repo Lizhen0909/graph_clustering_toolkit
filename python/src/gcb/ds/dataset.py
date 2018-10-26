@@ -1,4 +1,5 @@
-from gcb import utils, config, edgelist2pajek
+from gcb import utils, config
+import edgelist2pajek
 import dask.dataframe as dd
 import fastparquet
 import json 
@@ -157,7 +158,7 @@ class Dataset(object):
         return filepath 
     
             
-from gcb import snap_dataset
+import snap_dataset
 
 
 def list_datasets():

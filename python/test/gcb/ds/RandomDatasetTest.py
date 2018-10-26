@@ -4,7 +4,8 @@ Created on Oct 23, 2018
 @author: lizhen
 '''
 import unittest
-from gcb import dataset, random_dataset, utils
+from gcb.ds import dataset, random_dataset
+from gcb import utils
 
 
 class Test(unittest.TestCase):
