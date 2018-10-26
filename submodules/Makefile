@@ -2,7 +2,7 @@
 
 
 
-all: OSLOM2 OSLOM  SCAN LFR STREAM cggc dct mcl
+all: OSLOM2 OSLOM  SCAN LFR STREAM cggc dct mcl webgraph
 
 clean: 
 	cd OSLOM2 && make clean
@@ -27,7 +27,8 @@ ppSCAN/pSCANParallel:
 	cd build  && \
 	cmake ..    && \
 	make	 
-	cp ppSCAN/ppSCAN-release/build/pSCANParallel* ppSCAN/ 
+	cp ppSCAN/ppSCAN-release/build/pSCANParallel* ppSCAN/
+	cp ppSCAN/ppSCAN-release/build/converter/converter ppSCAN/  
  
 ppSCAN/scanpp:
 	cp  ppSCAN/SCANVariants/scan_plus2/scanpp ppSCAN/ &&  chmod u+x ppSCAN/scanpp
@@ -69,5 +70,12 @@ mcl:
 	if [ ! -f mcl-14-137/BUILD_DONE ] ; then \
 		cd mcl-14-137 && ./configure --prefix=$(HOME)/local &&  make install && touch BUILD_DONE; \
 	fi
+
+
+webgraph:
+	if [ ! -d webgraph-3.6.1 ]; then rm -fr webgraph-3.6.1.tar.gz && wget http://webgraph.di.unimi.it/webgraph-3.6.1-bin.tar.gz && tar xf webgraph-3.6.1-bin.tar.gz; fi
+
+	if [ ! -f webgraph-3.6.1/sux4j-4.2.0.jar ]; then cd webgraph-3.6.1 &&  wget http://webgraph.di.unimi.it/webgraph-deps.tar.gz && tar xf webgraph-deps.tar.gz; fi
+
 
 

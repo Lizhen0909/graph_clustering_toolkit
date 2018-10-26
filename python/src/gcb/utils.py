@@ -19,7 +19,11 @@ def create_dir_if_not_exists(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
+def remove_if_file_exit(fname):
+    if os.path.exists(fname):
+        os.remove(fname)
         
+            
 def basename(path):        
     return os.path.basename(path)
 
@@ -85,3 +89,8 @@ def shell_run_and_wait(command, working_dir=None):
 def pandas_show_all(df):
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):
         print(df)  
+
+
+
+
+
