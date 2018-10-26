@@ -56,20 +56,20 @@ class RandomDataset(dataset.Dataset):
 
                 print os.listdir(tmpdir)
                 edgefile = "LFR.nsa" if self.is_directed() else "LFR.nse"
-                edgefile=os.path.join(tmpdir,edgefile)
+                edgefile = os.path.join(tmpdir, edgefile)
                 if self.is_weighted():
                     edges = pd.read_csv(edgefile, sep='\t', header=None, skiprows=1, dtype={2:np.float})
                     edges.columns = ['src', 'dest', 'weight']                    
                 else:
                     edges = pd.read_csv(edgefile, sep='\t', header=None, skiprows=1, usecols=[0, 1])
                     edges.columns = ['src', 'dest']
-                self.edges= edges 
+                self.edges = edges 
                 
                 gtfile = "LFR.nmc"
-                gtfile=os.path.join(tmpdir,gtfile)
+                gtfile = os.path.join(tmpdir, gtfile)
                 gt = pd.read_csv(gtfile, sep='\t', header=None)
                 gt.columns = ['node', 'cluster']
-                self.ground_truth= gt                
+                self.ground_truth = gt                
         else :
             raise Exception("unknown " + params['name'])
     
@@ -152,5 +152,5 @@ def generate_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, t1=N
     del params['weighted']
     
     return RandomDataset(name, description="LFR random graph", with_ground_truth=True ,
-                          weighted=weighted, directed=a, params=params)    
+                          weighted=weighted, directed=a > 0, params=params)    
  
