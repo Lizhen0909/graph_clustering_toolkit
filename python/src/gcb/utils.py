@@ -19,9 +19,13 @@ def create_dir_if_not_exists(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-def remove_if_file_exit(fname):
+def remove_if_file_exit(fname, is_dir=False ):
     if os.path.exists(fname):
-        os.remove(fname)
+        if is_dir: 
+            shutil.rmtree(fname) 
+        else:
+            os.remove(fname)
+
         
             
 def basename(path):        

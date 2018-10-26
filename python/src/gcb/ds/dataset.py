@@ -11,6 +11,7 @@ import os
 class Dataset(object):
 
     def __init__(self, name, description=""):
+        assert name 
         self.name = name 
         self.description = description
         self.logger = utils.get_logger("{}:{}".format(type(self).__name__, self.name))
@@ -156,8 +157,56 @@ class Dataset(object):
             for i in grouped.index: 
                 f.write(grouped.loc[i, 0] + "\n")
         return filepath 
+
+
+class DefaultDataset(Dataset):        
+
+    def __init__(self, name, edges, description="", ground_truth=None, directed=False, weighted=False):
+        super(DefaultDataset, self).__init__(name, description=description)
+        self.with_ground_truth = ground_truth is not None 
+        self.directed = directed
+        self.weighted = weighted
+        
+        columns = ['src', 'dest', 'weight'] if weighted else ['src', 'dest']
+        self.edges = self.to_dataframe(edges, columns) 
+        self.ground_truth = None if ground_truth is None else self.to_dataframe(ground_truth, ["node", "cluster"])
+        
+        meta_file = config.get_data_file_path(self.name, 'meta.info')
+        if not utils.file_exists(meta_file):
+            json.dump(self.get_meta(), open(meta_file, 'wt')) 
+
+    def to_dataframe(self, obj, columns):
+        if isinstance(obj, pd.DataFrame):
+            assert obj.shape[1] == len(columns) 
+            obj.columns = columns
+            return obj 
+        elif isinstance(obj, list) or isinstance(obj, np.ndarray):
+            arr = np.array(obj) 
+            assert arr.shape[1] == len(columns)
+            return pd.DataFrame(arr, columns=columns)
+        else:
+            raise Exception("type not supported: " + str(type(obj)))
+        
+    def has_ground_truth(self):
+        return self.with_ground_truth
     
-            
+    def is_directed(self):
+        return self.directed
+    
+    def is_weighted(self):
+        return self.weighted
+    
+    def get_edges(self):
+        return self.edges             
+
+    # return
+    def get_ground_truth(self):
+        if self.has_ground_truth():
+            return self.ground_truth
+        else:
+            raise Exception("graph has no ground truth")
+        
+                    
 import snap_dataset
 
 
