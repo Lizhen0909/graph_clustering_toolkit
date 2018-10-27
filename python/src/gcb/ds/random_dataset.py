@@ -63,16 +63,27 @@ class RandomDataset(dataset.Dataset):
                 else:
                     edges = pd.read_csv(edgefile, sep='\t', header=None, skiprows=1, usecols=[0, 1])
                     edges.columns = ['src', 'dest']
-                self.edges = edges 
                 
                 gtfile = "LFR.nmc"
                 gtfile = os.path.join(tmpdir, gtfile)
                 gt = pd.read_csv(gtfile, sep='\t', header=None)
                 gt.columns = ['node', 'cluster']
-                self.ground_truth = gt                
+                self.edges, self.ground_truth = self.make_offset_0(edges, gt)                
         else :
             raise Exception("unknown " + params['name'])
     
+    def make_offset_0(self, edges, gt):
+        min_node = edges[['src', 'dest']].min().min()
+        if min_node != 0:
+            self.logger.info("min node is {}. will make it 0".format(min_node))
+            edges['src'] = edges['src'] - min_node
+            edges['dest'] = edges['dest'] - min_node
+            if gt is not None:
+                gt['node'] = gt['node'] - min_node 
+            return edges, gt
+        else:
+            return edges, gt
+
     def get_edges(self):
         fname = self.parq_edges
         if utils.file_exists(fname):

@@ -120,7 +120,6 @@ class AnyScan(Clustering):
         self.logger.info("Running " + cmd)
 
         with utils.TempDir() as tmp_dir:
-            tmp_dir = '/tmp/abc'
             timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
             if False and status != 1:  # anyscan always return 1
                 raise Exception("Run command with error status code {}".format(status))

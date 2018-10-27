@@ -37,20 +37,23 @@ class Test(unittest.TestCase):
     def testScanpp(self):
         alg = Scanpp()
         print "testScanpp"
-        print alg.run(self.graph_unweighted_undirect, mu=3,epsilon=0.5).get_result()
+        print alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5).get_result()
         print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
 
     def testPScan(self):
         alg = pScan()
         print "testPScan"
-        print alg.run(self.graph_unweighted_undirect, mu=3,epsilon=0.5).get_result()
+        print alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5).get_result()
         print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
         
     def testAnyScan(self):
         alg = AnyScan()
-        print "testAnyScan"
-        print alg.run(self.graph_unweighted_undirect, algorithm=4,minpts=4, epsilon=0.5).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        for i in range(1, 5):
+            print "testAnyScan", i
+            print alg.run(self.graph_unweighted_undirect, algorithm=i, minpts=3, epsilon=0.5).get_result()
+            print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+
+
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']
     unittest.main()
