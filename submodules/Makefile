@@ -18,6 +18,14 @@ OSLOM:
 LFR:
 	cd LFR-Benchmark_UndirWeightOvp && if [ ! -f lfrbench_udwov ]; then  make; fi
 
+LIGRA:
+	cd ligra && \
+	make -C apps   && \
+	make -C apps/bucketing  && \
+	make -C apps/eccentricity  && \
+	make -C apps/localAlg  && \
+	make -C utils 
+
 
 SCAN: ppSCAN/pSCANParallel ppSCAN/scanpp ppSCAN/pscan ppSCAN/anyscan
 

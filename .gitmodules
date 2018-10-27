@@ -13,3 +13,6 @@
 [submodule "submodules/distributed_clustering_thrill"]
 	path = submodules/distributed_clustering_thrill
 	url = https://github.com/kit-algo/distributed_clustering_thrill
+[submodule "submodules/ligra"]
+	path = submodules/ligra
+	url = https://github.com/jshun/ligra

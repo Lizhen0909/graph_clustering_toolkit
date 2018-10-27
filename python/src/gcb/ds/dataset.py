@@ -21,7 +21,8 @@ class Dataset(object):
         self.file_edges = config.get_data_file_path(self.name, 'edges.txt')
         self.file_pajek = config.get_data_file_path(self.name, 'pajek.txt')
         self.file_scanbin = config.get_data_file_path(self.name, 'scanbin')
-        self.file_anyscan = config.get_data_file_path(self.name, 'adj.anyscan')
+        self.file_anyscan = config.get_data_file_path(self.name, 'anyscan.txt')
+        self.file_snap = config.get_data_file_path(self.name, 'snap.bin')
         
     def __repr__(self, *args, **kwargs):
         return self.__str__()
@@ -103,7 +104,22 @@ class Dataset(object):
                 f.write(row)
         self.logger.info("finish writing " + filepath)                
         return filepath 
-    
+
+    def to_snapformat(self, filepath=None):
+        if (filepath == None):
+            filepath = self.file_snap 
+            if utils.file_exists(filepath):
+                return filepath
+        
+        import snap        
+        from gcb.ds import convert
+        g = convert.to_snap(self)
+        FOut = snap.TFOut(filepath)
+        g.Save(FOut)
+        FOut.Flush()
+        
+        return filepath 
+        
     def to_pajek(self, filepath=None):
         if (filepath == None):
             filepath = self.file_pajek

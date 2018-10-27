@@ -9,6 +9,12 @@ from gcb import utils
 
 
 class Test(unittest.TestCase):
+    def testRandomDataset7(self):
+        ds = random_dataset.generate_LFR("test_LFR_unw_dir", N=128, k=16, maxk=16, muw=0.1, minc=32, beta=1, 
+                                         weighted=False, a=0)
+        utils.remove_if_file_exit(ds.file_snap)
+        print ds.to_snapformat() 
+        
     def testRandomDataset6(self):
         ds = random_dataset.generate_LFR("test_LFR_unw_dir", N=128, k=16, maxk=16, muw=0.1, minc=32, beta=1, 
                                          weighted=False, a=0)
