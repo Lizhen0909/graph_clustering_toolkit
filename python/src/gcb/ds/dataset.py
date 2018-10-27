@@ -87,7 +87,7 @@ class Dataset(object):
         if self.has_ground_truth():
             self.ground_truth = self.ground_from_parq()
  
-    def to_edgelist(self, filepath=None, sep=" "):
+    def to_edgelist(self, filepath=None, sep=" ", sort=False):
         if (filepath == None):
             filepath = self.file_edges
             if utils.file_exists(filepath):
@@ -96,6 +96,8 @@ class Dataset(object):
         with open(filepath, 'wt') as f :
             columns = ['src', 'dest', 'weight'] if self.is_weighted() else ['src', 'dest']
             df = self.get_edges()[columns]
+            if sort:
+                df = df.sort_values(by=['src', 'dest'])
             for i in range(df.shape[0]):
                 r = df.iloc[i]
                 r = ['%g' % (u) for u in r ]
