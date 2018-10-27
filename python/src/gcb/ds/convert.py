@@ -23,7 +23,7 @@ def to_networkx(data):
 
 
 # turn  a networkx graph into a dataset 
-def from_networkx(name, graph, weighted=False, data='weight', default=1):
+def from_networkx(name, graph, weighted=False, data='weight', default=1, description=""):
     directed = graph.is_directed()
     lst = []
     if weighted:
@@ -33,7 +33,7 @@ def from_networkx(name, graph, weighted=False, data='weight', default=1):
         for e in graph.edges():
             lst.append(e)
     
-    return DefaultDataset(name, edges=lst, weighted=weighted, directed=directed)
+    return DefaultDataset(name, edges=lst, weighted=weighted, directed=directed, description=description)
 
 
 # turn a dataset into a igraph graph
@@ -49,7 +49,7 @@ def to_igraph(data):
 
 
 # turn  a networkx graph into a dataset 
-def from_igraph(name, graph, data='weight'):
+def from_igraph(name, graph, data='weight', description=""):
     directed = graph.is_directed()
     weighted = graph.is_weighted()
     
@@ -61,4 +61,39 @@ def from_igraph(name, graph, data='weight'):
         w = graph.es[data]
         df['weight'] = w 
     
-    return DefaultDataset(name, edges=df, weighted=weighted, directed=directed)
+    return DefaultDataset(name, edges=df, weighted=weighted, directed=directed, description=description)
+
+
+# turn a dataset into a snap graph
+def to_snap(data):
+    if data.is_weighted():
+        raise Exception("weighted graph is not supported well on snap")
+    import snap 
+    fname = data.file_edges 
+    if not utils.file_exists(fname):
+        data.to_edgelist()
+
+    if data.is_directed():
+        return snap.LoadEdgeList(snap.PNGraph, fname, 0, 1)
+    else:
+        return snap.LoadEdgeList(snap.PUNGraph, fname, 0, 1)
+
+    
+# turn  a snap graph into a dataset 
+def from_snap(name, graph, description=""):
+    import snap 
+    if isinstance(graph, snap.PUNGraph):
+        directed = False 
+    elif isinstance(graph, snap.PNGraph):
+        directed = True 
+    else:
+        raise Exception("Unkown graph type: " + str(type(graph)))
+    
+    lst = []
+    for EI in graph.Edges():
+        lst.append([EI.GetSrcNId(), EI.GetDstNId()])
+
+    df = pd.DataFrame(lst, columns=['src', 'dest'])
+    
+    return DefaultDataset(name, edges=df, weighted=False, directed=directed, description=description)    
+

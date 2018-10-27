@@ -8,6 +8,7 @@ import networkx as nx
 from gcb.ds import random_dataset, convert
 from gcb import utils, config
 import igraph
+import snap
 
 
 class Test(unittest.TestCase):
@@ -89,8 +90,29 @@ class Test(unittest.TestCase):
         d = convert.from_igraph(name, G)
         d.load()
         print d 
-            
 
+    def testToSnap(self):
+        for data in self.graphs:
+            if not data.is_weighted():
+                g = convert.to_snap(data)
+                print "testToSnap", g, data  
+
+    def testFromSnap(self):
+        name = "testFromSnap"
+
+        utils.remove_if_file_exit(config.get_data_file_path(name), is_dir=True)
+        G = snap.GenRndGnm(snap.PNGraph, 100, 1000) 
+        d = convert.from_snap(name, G)
+        d.load()
+        print "testFromSnap", d
+
+        utils.remove_if_file_exit(config.get_data_file_path(name), is_dir=True)
+        G = snap.GenRndGnm(snap.PUNGraph, 100, 1000) 
+        d = convert.from_snap(name, G)
+        d.load()
+        print "testFromSnap", d 
+
+            
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
