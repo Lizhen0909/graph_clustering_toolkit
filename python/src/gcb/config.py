@@ -35,6 +35,8 @@ PSCAN_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/pscan")
 ANYSCAN_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/anyscan")
 CGGC_PROG  = os.path.join(GCB_HOME, "submodules/CGGC/rgmc")
 STREAMCOM_PROG = os.path.join(GCB_HOME, "submodules/graph-streaming/streamcom")
+MCL_PROG = os.path.join(GCB_HOME, "submodules/local/bin/mcl")
+
 def get_data_file_path(dsname, fname=""):
     dspath = os.path.join(DATA_PATH, dsname)
     utils.create_dir_if_not_exists(dspath)

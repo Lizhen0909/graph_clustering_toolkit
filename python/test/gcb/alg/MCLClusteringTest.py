@@ -8,6 +8,7 @@ from gcb.ds import random_dataset
 from gcb.alg import clustering
 from gcb.alg.cggc_clustering import CGGC
 from gcb.alg.streaming_clustering import streamcom
+from gcb.alg.mcl_clustering import MCL
 
 
 class Test(unittest.TestCase):
@@ -35,10 +36,10 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testSteramcom(self):
-        alg = streamcom()
-        print "testSteramcom"
-        print alg.run(self.graph_unweighted_undirect).get_result()
+    def testMCL(self):
+        alg = MCL()
+        print "testMCL"
+        print alg.run(self.graph_unweighted_undirect, I=2).get_result()
         print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
  
 

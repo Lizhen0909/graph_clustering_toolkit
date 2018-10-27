@@ -35,9 +35,9 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testCGGC_directed(self):
+    def testCGGC(self):
         alg = CGGC()
-        print "testCGGC_directed"
+        print "testCGGC"
         print alg.run(self.graph_unweighted_undirect).get_result()
         print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
  
