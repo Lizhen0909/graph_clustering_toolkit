@@ -30,7 +30,7 @@ assert GCB_HOME
 
 LFR_PROG = os.path.join(GCB_HOME, "submodules/LFR-Benchmark_UndirWeightOvp/lfrbench_udwov")
 SCAN_CONVERT_PROG = os.path.join(GCB_HOME, "submodules/ppSCAN/converter")
-
+SCANPP_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/scanpp")
 
 def get_data_file_path(dsname, fname=""):
     dspath = os.path.join(DATA_PATH, dsname)

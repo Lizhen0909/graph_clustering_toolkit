@@ -9,6 +9,7 @@ import logging
 import pandas as pd 
 import tempfile
 import shutil
+import time
 
 
 def file_exists(file_path):
@@ -19,13 +20,13 @@ def create_dir_if_not_exists(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-def remove_if_file_exit(fname, is_dir=False ):
+
+def remove_if_file_exit(fname, is_dir=False):
     if os.path.exists(fname):
         if is_dir: 
             shutil.rmtree(fname) 
         else:
             os.remove(fname)
-
         
             
 def basename(path):        
@@ -90,11 +91,13 @@ def shell_run_and_wait(command, working_dir=None):
     return process.returncode
 
 
+def timeit(fun):
+    t0 = time.time()
+    ret = fun()
+    t1 = time.time()
+    return t1 - t0, ret
+
 def pandas_show_all(df):
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):
         print(df)  
-
-
-
-
 

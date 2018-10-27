@@ -6,6 +6,7 @@ Created on Oct 27, 2018
 from gcb.ds import convert
 import snap    
 from gcb.alg.clustering import Clustering, save_result
+from gcb import utils
 
 
 class Clauset_Newman_Moore(Clustering):
@@ -22,7 +23,7 @@ class Clauset_Newman_Moore(Clustering):
             raise Exception("only undirected and unweighted graph is supported")
         UGraph = convert.to_snap(data)
         CmtyV = snap.TCnComV()
-        modularity = snap.CommunityCNM(UGraph, CmtyV)
+        timecost, modularity = utils.timeit(lambda: snap.CommunityCNM(UGraph, CmtyV))
         clusters = {}
         i = 0
         for Cmty in CmtyV:
@@ -31,9 +32,10 @@ class Clauset_Newman_Moore(Clustering):
                 clusters[i].append(NI)
             i += 1
                 
-        print "Made %d clusters. modularity of the graph is %f" % (len(clusters), modularity)
+        self.logger.info("Made %d clusters in %f seconds. modularity of the graph is %f" % (len(clusters), timecost, modularity))
         
         result = {}
+        result['timecost'] = timecost
         result['algname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -49,6 +51,7 @@ class Clauset_Newman_Moore(Clustering):
             return self.result
         else:
             raise Exception("No result found. probably no run has been done")
+
     
 class Girvan_Newman(Clustering):
 
@@ -64,7 +67,7 @@ class Girvan_Newman(Clustering):
 #             raise Exception("only undirected and unweighted graph is supported")
         UGraph = convert.to_snap(data)
         CmtyV = snap.TCnComV()
-        modularity = snap.CommunityGirvanNewman(UGraph, CmtyV)
+        timecost, modularity = utils.timeit(lambda: snap.CommunityGirvanNewman(UGraph, CmtyV))
         clusters = {}
         i = 0
         for Cmty in CmtyV:
@@ -72,10 +75,11 @@ class Girvan_Newman(Clustering):
             for NI in Cmty:
                 clusters[i].append(NI)
             i += 1
-                
-        print "Made %d clusters. modularity of the graph is %f" % (len(clusters), modularity)
+
+        self.logger.info("Made %d clusters in %f seconds. modularity of the graph is %f" % (len(clusters), timecost, modularity))
         
         result = {}
+        result['timecost'] = timecost
         result['algname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -91,5 +95,4 @@ class Girvan_Newman(Clustering):
             return self.result
         else:
             raise Exception("No result found. probably no run has been done")
-    
 
