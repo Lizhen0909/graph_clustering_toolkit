@@ -4,19 +4,20 @@ Created on Oct 23, 2018
 @author: lizhen
 '''
 import unittest
-from gcb.ds import dataset, random_dataset
+from gcb.ds import random_dataset
 from gcb import utils
 import snap 
 from wheel.signatures import assertTrue
 
+
 class Test(unittest.TestCase):
     
     def setUp(self):
-        self.graph_unweighted_undirect = random_dataset.generate_LFR("test_LFR_unw_und", N=128, k=16, maxk=16, muw=0.1, minc=32, beta=1,a=0)
+        self.graph_unweighted_undirect = random_dataset.generate_LFR("test_LFR_unw_und", N=128, k=16, maxk=16, muw=0.1, minc=32, beta=1, a=0)
         assert not self.graph_unweighted_undirect.is_directed()
         assert not self.graph_unweighted_undirect.is_weighted()
         
-        self.graph_weighted_undirect = random_dataset.generate_LFR("test_LFR_w_und", N=128, k=16, maxk=16, muw=0.1, minc=32, beta=1, weighted=True,a=0)
+        self.graph_weighted_undirect = random_dataset.generate_LFR("test_LFR_w_und", N=128, k=16, maxk=16, muw=0.1, minc=32, beta=1, weighted=True, a=0)
         assert not self.graph_weighted_undirect.is_directed()
         assert self.graph_weighted_undirect.is_weighted()
         
@@ -44,8 +45,6 @@ class Test(unittest.TestCase):
         print ds.to_snapformat()
         FIn = snap.TFIn(ds.file_snap)
         Graph = snap.TNGraph.Load(FIn)
-
-  
         
     def testRandomDataset6(self):
         ds = self.graph_unweighted_undirect
@@ -53,18 +52,18 @@ class Test(unittest.TestCase):
         print ds.to_anyscan() 
             
     def testRandomDataset5(self):
-        ds=self.graph_unweighted_direct
+        ds = self.graph_unweighted_direct
         print ds.to_scanbin() 
         
     def testRandomDataset4(self):
-        ds=self.graph_weighted_direct
+        ds = self.graph_weighted_direct
         print ds.to_pajek() 
         
     def testRandomDataset3(self):
-        ds=self.graph_weighted_direct
+        ds = self.graph_weighted_direct
         print ds.to_edgelist()
 
-        ds=self.graph_unweighted_undirect        
+        ds = self.graph_unweighted_undirect        
         print ds.to_edgelist()  
         
     def testRandomDataset1(self):

@@ -5,8 +5,6 @@ import pandas as pd
 import json 
 import dataset 
 import shutil
-from codecs import ignore_errors
- 
     
 class LAWDataset(dataset.Dataset):        
 

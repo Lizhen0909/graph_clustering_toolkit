@@ -6,7 +6,6 @@ Created on Oct 27, 2018
 import unittest
 from gcb.ds import random_dataset
 from gcb.alg import clustering
-from gcb.alg.cggc_clustering import CGGC
 from gcb.alg.streaming_clustering import streamcom
 
 
