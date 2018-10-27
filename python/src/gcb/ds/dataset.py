@@ -114,6 +114,7 @@ class Dataset(object):
         import snap        
         from gcb.ds import convert
         g = convert.to_snap(self)
+        self.logger.info("Writing {} to {}".format(type(g), filepath))
         FOut = snap.TFOut(filepath)
         g.Save(FOut)
         FOut.Flush()

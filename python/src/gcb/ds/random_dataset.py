@@ -145,12 +145,12 @@ To set the parameters, type:
 
     
 def generate_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, t1=None, t2=None, minc=None, maxc=None,
-                 on=None, om=None, C=None, a=False, weighted=False):
+                 on=None, om=None, C=None, a=0, weighted=False):
     params = locals()
     params['a'] = int(a)
     params['name'] = 'LFR'
     del params['weighted']
     
     return RandomDataset(name, description="LFR random graph", with_ground_truth=True ,
-                          weighted=weighted, directed=a > 0, params=params)    
+                          weighted=weighted, directed=(a > 0), params=params)    
  

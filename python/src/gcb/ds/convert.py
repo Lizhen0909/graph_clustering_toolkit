@@ -78,9 +78,17 @@ def from_igraph(name, graph, data='weight', description=""):
 
 # turn a dataset into a snap graph
 def to_snap(data):
+    import snap
+    if 1 and utils.file_exists(data.file_snap):
+        FIn = snap.TFIn(data.file_snap)
+        if data.is_directed():
+            graph= snap.TNGraph.Load(FIn)
+        else: 
+            graph = snap.TUNGraph.Load(FIn)
+        return graph 
+
     if data.is_weighted():
         raise Exception("weighted graph is not supported well on snap")
-    import snap 
     fname = data.file_edges 
     if not utils.file_exists(fname):
         data.to_edgelist()
