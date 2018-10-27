@@ -76,7 +76,7 @@ dct:
 mcl:	
 	if [ ! -d mcl-14-137 ]; then rm -fr mcl-14-137.tar.gz && wget https://micans.org/mcl/src/mcl-14-137.tar.gz && tar xf mcl-14-137.tar.gz; fi
 	if [ ! -f mcl-14-137/BUILD_DONE ] ; then \
-		cd mcl-14-137 && ./configure --prefix=$(HOME)/local &&  make install && touch BUILD_DONE; \
+		cd mcl-14-137 && ./configure --prefix=$(shell pwd)/local &&  make install && touch BUILD_DONE; \
 	fi
 
 

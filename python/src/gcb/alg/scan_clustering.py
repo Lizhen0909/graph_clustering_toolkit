@@ -167,7 +167,6 @@ class pScan(Clustering):
         return {'lib':"pScan (has code)", "name": 'pScan' }
     
     def run(self, data, mu=1, epsilon=0):
-        raise Exception("pscan has bug")
         params = {'mu':mu, 'epsilon':epsilon}
         if (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")
@@ -175,17 +174,38 @@ class pScan(Clustering):
             data.to_scanbin()
         
         with utils.TempDir() as tmp_dir:
-            tmp_dir = '/tmp/abc'
             scanbin = data.file_scanbin 
             os.symlink(os.path.join(scanbin, 'b_degree.bin'), os.path.join(tmp_dir, 'b_degree.bin'))
-            os.symlink(os.path.join(scanbin, 'b_degree.bin'), os.path.join(tmp_dir, 'b_adj.bin'))
+            os.symlink(os.path.join(scanbin, 'b_adj.bin'), os.path.join(tmp_dir, 'b_adj.bin'))
             cmd = "{} {} {} {} {}".format(config.PSCAN_PROG, tmp_dir, epsilon, mu, 'output')
             self.logger.info("Running " + cmd)
             timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
-        if status != 0:
-            raise Exception("Run command with error status code {}".format(status))
-        outputfile = glob.glob("output-*-*.txt")[0]
+            if status != 0:
+                raise Exception("Run command with error status code {}".format(status))
+    
+            outputfile = glob.glob(tmp_dir+"/result-*-*.txt")[0]
+            import pandas as pd 
+            output = pd.read_csv(outputfile,sep=" ")
         
+        clusters = output[output['c/n']=='c'][['vertex_id','cluster_id']]
+        others  = output[output['c/n']!='c'][['vertex_id','cluster_id']]
+        clusters= clusters.groupby('cluster_id').apply(lambda u: list(u['vertex_id'])).to_dict()
+        others = others.values.tolist()
+
+        self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['algname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+        result['noise_or_hub']=others 
+        save_result(result)
+        self.result = result 
+        return self 
+            
         return self 
     
     def get_result(self):

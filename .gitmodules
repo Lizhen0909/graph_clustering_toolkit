@@ -3,7 +3,7 @@
 	url = https://github.com/eXascaleInfolab/LFR-Benchmark_UndirWeightOvp
 [submodule "submodules/ppSCAN"]
 	path = submodules/ppSCAN
-	url = https://github.com/GraphProcessor/ppSCAN.git
+	url = https://github.com/lizhen0909/ppSCAN.git
 [submodule "submodules/graph-streaming"]
 	path = submodules/graph-streaming
 	url = https://github.com/ahollocou/graph-streaming
