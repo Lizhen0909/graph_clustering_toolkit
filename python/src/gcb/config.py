@@ -33,6 +33,7 @@ SCAN_CONVERT_PROG = os.path.join(GCB_HOME, "submodules/ppSCAN/converter")
 SCANPP_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/scanpp")
 PSCAN_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/pscan")
 ANYSCAN_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/anyscan")
+CGGC_PROG  = os.path.join(GCB_HOME, "submodules/CGGC/rgmc")
 
 def get_data_file_path(dsname, fname=""):
     dspath = os.path.join(DATA_PATH, dsname)

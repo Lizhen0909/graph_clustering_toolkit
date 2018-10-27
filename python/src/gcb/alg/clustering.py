@@ -32,4 +32,9 @@ class Clustering(object):
     def run(self, data):
         raise Exception("NA")
         
-        
+    def get_result(self):
+        if hasattr(self, 'result'):
+            return self.result
+        else:
+            raise Exception("No result found. probably no run has been done")
+                

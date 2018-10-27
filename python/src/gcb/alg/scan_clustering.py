@@ -13,8 +13,7 @@ import multiprocessing
 
 class Scanpp(Clustering):
 
-    def __init__(self):
-        name = "SCAN++"
+    def __init__(self, name="scanpp"):
         super(Scanpp, self).__init__(name) 
     
     def get_meta(self):
@@ -65,8 +64,7 @@ class Scanpp(Clustering):
 
 class AnyScan(Clustering):
 
-    def __init__(self):
-        name = "anyScan"
+    def __init__(self, name="anyScan"):
         super(AnyScan, self).__init__(name) 
     
     def get_meta(self):
@@ -121,7 +119,7 @@ class AnyScan(Clustering):
 
         with utils.TempDir() as tmp_dir:
             timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
-            if False and status != 1:  # anyscan always return 1
+            if status != 1:  # anyscan always return 1
                 raise Exception("Run command with error status code {}".format(status))
             
             with open (os.path.join(tmp_dir, "output"), "r") as output:
@@ -162,8 +160,7 @@ class AnyScan(Clustering):
 
 class pScan(Clustering):
 
-    def __init__(self):
-        name = "pScan"
+    def __init__(self, name="pScan"):
         super(pScan, self).__init__(name) 
     
     def get_meta(self):
