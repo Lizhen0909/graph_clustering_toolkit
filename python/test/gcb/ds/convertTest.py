@@ -24,6 +24,19 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def testFromEdgelist(self):
+        name = "testFromEdgelist"
+        
+        lst = [[1, 2], [2, 2], [2, 3]]
+        d = convert.from_nodelist(name, lst)
+        d.load() 
+        print name, d 
+
+        lst = [[1, 2, 0.4], [2, 2, 2], [2, 3, 12]]
+        d = convert.from_nodelist(name, lst)
+        d.load() 
+        print name, d 
+                             
     def testToNextworkx(self):
         for data in self.graphs: 
             g = convert.to_networkx(data)

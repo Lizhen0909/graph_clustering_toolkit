@@ -8,6 +8,18 @@ from gcb.ds.dataset import DefaultDataset
 import pandas as pd 
 
 
+def from_nodelist(name, edgelist , directed=False , description=""):
+    assert len(edgelist) > 0, "Error, empty edgelist"
+    if len(edgelist[0]) == 2:
+        weighted = False 
+    elif len(edgelist[0]) == 3:
+        weighted = True 
+    else:
+        raise Exception("Format not right")
+    
+    return DefaultDataset(name=name, edges=edgelist, weighted=weighted, directed=directed, description=description)
+
+    
 # turn a dataset into a networkx graph
 def to_networkx(data):
     import networkx as nx 
