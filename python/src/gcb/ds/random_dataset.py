@@ -68,7 +68,8 @@ class RandomDataset(dataset.Dataset):
                 gtfile = os.path.join(tmpdir, gtfile)
                 gt = pd.read_csv(gtfile, sep='\t', header=None)
                 gt.columns = ['node', 'cluster']
-                self.edges, self.ground_truth = self.make_offset_0(edges, gt)                
+                self.edges, self.ground_truth = self.make_offset_0(edges, gt)   
+                self.load()             
         else :
             raise Exception("unknown " + params['name'])
     
