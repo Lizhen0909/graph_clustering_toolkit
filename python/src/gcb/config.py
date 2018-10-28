@@ -30,14 +30,15 @@ assert GCB_HOME
 
 LFR_PROG = os.path.join(GCB_HOME, "submodules/LFR-Benchmark_UndirWeightOvp/lfrbench_udwov")
 SCAN_CONVERT_PROG = os.path.join(GCB_HOME, "submodules/ppSCAN/converter")
-SCANPP_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/scanpp")
-PSCAN_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/pscan")
-PPSCAN_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/pSCANParallel")
-PPSCANSSE_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/pSCANParallelSSE")
-ANYSCAN_PROG  = os.path.join(GCB_HOME, "submodules/ppSCAN/anyscan")
-CGGC_PROG  = os.path.join(GCB_HOME, "submodules/CGGC/rgmc")
+SCANPP_PROG = os.path.join(GCB_HOME, "submodules/ppSCAN/scanpp")
+PSCAN_PROG = os.path.join(GCB_HOME, "submodules/ppSCAN/pscan")
+PPSCAN_PROG = os.path.join(GCB_HOME, "submodules/ppSCAN/pSCANParallel")
+PPSCANSSE_PROG = os.path.join(GCB_HOME, "submodules/ppSCAN/pSCANParallelSSE")
+ANYSCAN_PROG = os.path.join(GCB_HOME, "submodules/ppSCAN/anyscan")
+CGGC_PROG = os.path.join(GCB_HOME, "submodules/CGGC/rgmc")
 STREAMCOM_PROG = os.path.join(GCB_HOME, "submodules/graph-streaming/streamcom")
 MCL_PROG = os.path.join(GCB_HOME, "submodules/local/bin/mcl")
+
 
 def get_data_file_path(dsname, fname=""):
     dspath = os.path.join(DATA_PATH, dsname)
@@ -54,4 +55,27 @@ def get_result_file_path(dsname, algname):
     algpath = os.path.join(dspath, algname)
     utils.create_dir_if_not_exists(algpath)
     return algpath 
+
+
+def get_OSLOM_prog(name, is_directed):
+    if name == 'infomap':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM2/infomap")
+        #prog += '_dir' if is_directed else "_undir"
+        prog += '_dir' #undir has bug        
+        return prog
+    elif name == 'Infohiermap':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM/infohiermap")
+        prog += '_dir' if is_directed else "_undir"
+        return prog    
+    elif name == 'lpm':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM/lpm")
+        return prog     
+    elif name == 'louvain_method':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM/louvain_method")
+        return prog         
+    elif name == 'modopt':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM/modopt")
+        return prog             
+    else:
+        raise Exception("Unknown " + name)
 

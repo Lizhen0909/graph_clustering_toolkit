@@ -13,7 +13,7 @@ targets=oslom_undir oslom_dir \
 	infohiermap_undir infohiermap_undir_script \
 	infohiermap_dir infohiermap_dir_script \
 	pr_consensus \
-	modopt
+	modopt louvain_method lpm
 
 all: $(targets)
 
