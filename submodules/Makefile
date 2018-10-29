@@ -1,18 +1,21 @@
 # sudo apt-get install google-perftools libboost-all-dev libbz2-dev libxml2-dev libjemalloc-dev libcurl-dev openssl libcurl4-openssl-dev libssl-dev libtbb-dev
+# conda create --name python3 python=3.6 pandas seaborn scikit-learn cython matplotlib networkx python-igraph tabulate fastparquet python-snappy dask
+# python3 -m pip install --user --upgrade pip==9.0.3
+# http://snap.stanford.edu/snappy/release/beta/snap-5.0.9-64-3.0-centos6.5-x64-py3.6.tar.gz
 
 
 
-all: OSLOM2 OSLOM  SCAN LFR STREAM cggc dct mcl relaxmap webgraph
+all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap webgraph
 
 clean: 
 	cd OSLOM2 && make clean
 	cd OSLOM && make clean
 
 
-OSLOM2:
+oslom2:
 	cd OSLOM2 && make
 
-OSLOM:
+oslom:
 	cd OSLOM && make
 
 relaxmap:
