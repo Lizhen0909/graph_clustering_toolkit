@@ -16,3 +16,6 @@
 [submodule "submodules/distributed_clustering_thrill"]
 	path = submodules/distributed_clustering_thrill
 	url = https://github.com/lizhen0909/distributed_clustering_thrill
+[submodule "submodules/RelaxMap"]
+	path = submodules/RelaxMap
+	url = https://github.com/Lizhen0909/RelaxMap
