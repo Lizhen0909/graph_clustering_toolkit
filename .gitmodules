@@ -10,9 +10,9 @@
 [submodule "submodules/CGGC"]
 	path = submodules/CGGC
 	url = https://github.com/eXascaleInfolab/CGGC
+[submodule "submodules/--force"]
+	path = submodules/--force
+	url = https://github.com/lizhen0909/distributed_clustering_thrill
 [submodule "submodules/distributed_clustering_thrill"]
 	path = submodules/distributed_clustering_thrill
-	url = https://github.com/kit-algo/distributed_clustering_thrill
-[submodule "submodules/ligra"]
-	path = submodules/ligra
-	url = https://github.com/jshun/ligra
+	url = https://github.com/lizhen0909/distributed_clustering_thrill
