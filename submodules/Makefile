@@ -2,7 +2,7 @@
 
 
 
-all: OSLOM2 OSLOM  SCAN LFR STREAM cggc dct mcl webgraph
+all: OSLOM2 OSLOM  SCAN LFR STREAM cggc dct mcl relaxmap webgraph
 
 clean: 
 	cd OSLOM2 && make clean
@@ -14,6 +14,9 @@ OSLOM2:
 
 OSLOM:
 	cd OSLOM && make
+
+relaxmap:
+	cd RelaxMap && make
 
 LFR:
 	cd LFR-Benchmark_UndirWeightOvp && if [ ! -f lfrbench_udwov ]; then  make; fi
