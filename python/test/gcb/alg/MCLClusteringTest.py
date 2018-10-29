@@ -36,9 +36,9 @@ class Test(unittest.TestCase):
 
     def testMCL(self):
         alg = MCL()
-        print "testMCL"
-        print alg.run(self.graph_unweighted_undirect, I=2).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print ("testMCL")
+        print (alg.run(self.graph_unweighted_undirect, I=2).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
  
 
 if __name__ == "__main__":

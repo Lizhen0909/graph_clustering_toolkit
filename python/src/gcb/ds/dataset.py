@@ -1,5 +1,5 @@
 from gcb import utils, config
-import edgelist2pajek
+from gcb.ds import edgelist2pajek
 import dask.dataframe as dd
 import fastparquet
 import json 
@@ -161,7 +161,7 @@ class Dataset(object):
         if min_node != 0  :
             self.logger.warn("node id is greater than 0, fake node will be added")
 
-        self_edges = pd.DataFrame([[u, u] for u in xrange(max_node + 1)], columns=['src', 'dest'])
+        self_edges = pd.DataFrame([[u, u] for u in range(max_node + 1)], columns=['src', 'dest'])
         edges2 = edges1[['dest', 'src']].copy();  edges2.columns = ['src', 'dest']
         edges = pd.concat([edges1, edges2, self_edges], axis=0)
         del edges1, edges2, self_edges 
@@ -226,7 +226,7 @@ class DefaultDataset(Dataset):
             raise Exception("graph has no ground truth")
         
                     
-import snap_dataset
+from gcb.ds import snap_dataset
 
 
 def list_datasets():

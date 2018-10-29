@@ -10,6 +10,7 @@ from gcb.alg.igraph_clustering import community_fastgreedy, community_infomap, \
     community_leading_eigenvector, community_label_propagation, \
     community_multilevel, community_optimal_modularity, \
     community_edge_betweenness, community_spinglass, community_walktrap
+import sys
 
 
 class Test(unittest.TestCase):
@@ -39,137 +40,137 @@ class Test(unittest.TestCase):
 
     def testCommunity_fastgreedy(self):
         alg = community_fastgreedy()
-        print "testCommunity_fastgreedy"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_fastgreedy()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
     def testCommunity_infomap(self):
         alg = community_infomap()
-        print "testCommunity_infomap"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_infomap()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_infomap()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
     def test_community_label_propagation(self):
         alg = community_label_propagation()
-        print "test_community_label_propagation"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_label_propagation()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_label_propagation()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = community_label_propagation()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
     def test_community_multilevel(self):
         alg = community_multilevel()
-        print "test_community_multilevel"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_multilevel()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
     def testCommunity_leading_eigenvector(self): 
         alg = community_leading_eigenvector()
-        print "testCommunity_leading_eigenvector"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_leading_eigenvector()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
  
     def test_community_optimal_modularity(self):  
         alg = community_optimal_modularity()
-        print "test_community_optimal_modularity"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_optimal_modularity()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_optimal_modularity()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = community_optimal_modularity()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)        
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))        
 
     def test_community_edge_betweenness(self):  
         alg = community_edge_betweenness()
-        print "test_community_edge_betweenness"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_edge_betweenness()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_edge_betweenness()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = community_edge_betweenness()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)) 
 
     def test_community_spinglass(self):  
         alg = community_spinglass()
-        print "test_community_spinglass"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_spinglass()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_spinglass()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = community_spinglass()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)) 
         
     def test_community_walktrap(self):  
         alg = community_walktrap()
-        print "test_community_walktrap"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_walktrap()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
         alg = community_walktrap()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = community_walktrap()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)) 
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']

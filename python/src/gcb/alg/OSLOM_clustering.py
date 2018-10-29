@@ -37,7 +37,6 @@ class Infomap(Clustering):
                     destname = path.split("/")[-1]
                 destpath = os.path.join(tmp_dir, destname)
                 utils.remove_if_file_exit(destpath)
-                print path, destpath
                 os.symlink(path, destpath)
                 return destpath            
 
@@ -236,7 +235,6 @@ class copra(Clustering):
             data.to_edgelist()
         
         with utils.TempDir() as tmp_dir:
-            tmp_dir = "/tmp/abc"
             pajek = os.path.join(tmp_dir, 'edges.txt')
             utils.remove_if_file_exit(pajek)
             os.symlink(data.file_edges, pajek)
@@ -394,14 +392,12 @@ class OSLOM(Clustering):
             data.to_edgelist()
         
         with utils.TempDir() as tmp_dir:
-
             # tmp_dir = "/tmp/abc"
             def link_file(path, destname=None):
                 if destname is None :
                     destname = path.split("/")[-1]
                 destpath = os.path.join(tmp_dir, destname)
                 utils.remove_if_file_exit(destpath)
-                print path, destpath
                 os.symlink(path, destpath)
                 return destpath
 

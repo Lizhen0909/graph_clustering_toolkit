@@ -7,7 +7,6 @@ import unittest
 from gcb.ds import random_dataset
 from gcb import utils
 import snap 
-from wheel.signatures import assertTrue
 
 
 class Test(unittest.TestCase):
@@ -35,40 +34,40 @@ class Test(unittest.TestCase):
     def testRandomDataset7(self):
         ds = self.graph_unweighted_undirect
         utils.remove_if_file_exit(ds.file_snap)
-        print ds.to_snapformat()
+        print (ds.to_snapformat())
         FIn = snap.TFIn(ds.file_snap)
         Graph = snap.TUNGraph.Load(FIn)
 
         ds = self.graph_unweighted_direct
-        assertTrue(ds.is_directed())
+        self.assertTrue(ds.is_directed())
         utils.remove_if_file_exit(ds.file_snap)
-        print ds.to_snapformat()
+        print (ds.to_snapformat())
         FIn = snap.TFIn(ds.file_snap)
         Graph = snap.TNGraph.Load(FIn)
         
     def testRandomDataset6(self):
         ds = self.graph_unweighted_undirect
         utils.remove_if_file_exit(ds.file_anyscan)
-        print ds.to_anyscan() 
+        print (ds.to_anyscan())
             
     def testRandomDataset5(self):
         ds = self.graph_unweighted_direct
-        print ds.to_scanbin() 
+        print (ds.to_scanbin())
         
     def testRandomDataset4(self):
         ds = self.graph_weighted_direct
-        print ds.to_pajek() 
+        print (ds.to_pajek())
         
     def testRandomDataset3(self):
         ds = self.graph_weighted_direct
-        print ds.to_edgelist()
+        print (ds.to_edgelist())
 
         ds = self.graph_unweighted_undirect        
-        print ds.to_edgelist()  
+        print (ds.to_edgelist())  
         
     def testRandomDataset1(self):
         ds = random_dataset.generate_Erdos_Renyi("test1", 100, 1000, False)
-        print ds 
+        print (ds)
         ds.load()
 
 

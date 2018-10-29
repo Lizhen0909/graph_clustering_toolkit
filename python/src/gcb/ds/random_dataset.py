@@ -2,7 +2,7 @@ from gcb import utils, config
 import pandas as pd
 import numpy as np  
 import json 
-import dataset 
+from . import dataset 
 import snap 
 import os
  
@@ -54,7 +54,6 @@ class RandomDataset(dataset.Dataset):
                 self.logger.info("working dir: " + tmpdir)
                 utils.shell_run_and_wait(cmd, working_dir=tmpdir)
 
-                print os.listdir(tmpdir)
                 edgefile = "LFR.nsa" if self.is_directed() else "LFR.nse"
                 edgefile = os.path.join(tmpdir, edgefile)
                 if self.is_weighted():

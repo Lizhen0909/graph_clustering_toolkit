@@ -10,6 +10,8 @@ import pandas as pd
 import tempfile
 import shutil
 import time
+import sys
+import subprocess
 
 
 def file_exists(file_path):
@@ -100,4 +102,22 @@ def timeit(fun):
 def pandas_show_all(df):
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):
         print(df)  
+
+def urlretrieve(src,dst):
+    if sys.version_info[0] >= 3:
+        from urllib.request import urlretrieve
+    else:
+        # Not Python 3 - today, it is most likely to be Python 2
+        # But note that this might need an update when Python 4
+        # might be around one day
+        from urllib import urlretrieve
+    return urlretrieve(src, dst)
+
+def check_output(lst):
+    if sys.version_info[0] >= 3:
+        return subprocess.getoutput((" ".join (lst)))
+    else:
+        return subprocess.check_output(lst)        
+
+
 

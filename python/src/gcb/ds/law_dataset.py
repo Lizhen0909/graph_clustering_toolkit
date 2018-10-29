@@ -3,7 +3,7 @@ import urllib
 import gzip
 import pandas as pd 
 import json 
-import dataset 
+from . import dataset 
 import shutil
     
 class LAWDataset(dataset.Dataset):        
@@ -42,7 +42,7 @@ class LAWDataset(dataset.Dataset):
             lfile = config.get_data_file_path(self.name, fname)
             if not utils.file_exists(lfile):
                 self.logger.info("Dowloading {} to {} ".format(rfile, lfile))
-                urllib.urlretrieve (rfile, lfile)
+                utils.urlretrieve (rfile, lfile)
         
         assert self.has_downloaded()
         if not self.md5check():

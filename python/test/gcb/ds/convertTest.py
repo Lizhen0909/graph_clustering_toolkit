@@ -42,12 +42,12 @@ class Test(unittest.TestCase):
         lst = [[1, 2], [2, 2], [2, 3]]
         d = convert.from_nodelist(name, lst)
         d.load() 
-        print name, d 
+        print (name, d) 
 
         lst = [[1, 2, 0.4], [2, 2, 2], [2, 3, 12]]
         d = convert.from_nodelist(name, lst)
         d.load() 
-        print name, d 
+        print (name, d) 
                              
     def testToNextworkx(self):
         for data in self.graphs: 
@@ -60,32 +60,32 @@ class Test(unittest.TestCase):
         G = nx.complete_graph(5)
         d = convert.from_networkx(name, G, weighted=False)
         d.load()
-        print d 
+        print (d) 
 
         utils.remove_if_file_exit(config.get_data_file_path(name), is_dir=True)
         G = nx.complete_graph(5).to_directed()
         d = convert.from_networkx(name, G, weighted=False)
         d.load()
-        print d
+        print (d)
        
         utils.remove_if_file_exit(config.get_data_file_path(name), is_dir=True)
         G = nx.complete_graph(5) 
         G.add_weighted_edges_from((u, v, 1) for u, v in nx.complete_graph(5).edges())
         d = convert.from_networkx(name, G, weighted=True)
         d.load()
-        print d 
+        print (d)
                 
         utils.remove_if_file_exit(config.get_data_file_path(name), is_dir=True)
         G = nx.complete_graph(5).to_directed()
         G.add_weighted_edges_from((u, v, 1) for u, v in nx.complete_graph(5).edges())
         d = convert.from_networkx(name, G, weighted=True)
         d.load()
-        print d 
+        print (d)
 
     def testToIGraph(self):
         for data in self.graphs:
             g = convert.to_igraph(data)
-            print data.is_weighted(), g.is_weighted(), data.is_directed(), g.is_directed()
+            print (data.is_weighted(), g.is_weighted(), data.is_directed(), g.is_directed())
             
     def testFromIGraph(self):
         name = "testFromIGraph"
@@ -94,33 +94,33 @@ class Test(unittest.TestCase):
         G = igraph.Graph.Full(5, directed=False)
         d = convert.from_igraph(name, G)
         d.load()
-        print d 
+        print (d)
 
         utils.remove_if_file_exit(config.get_data_file_path(name), is_dir=True)
         G = igraph.Graph.Full(5, directed=True)
         d = convert.from_igraph(name, G)
         d.load()
-        print d
+        print (d)
         
         utils.remove_if_file_exit(config.get_data_file_path(name), is_dir=True)
         G = igraph.Graph.Full(5, directed=False)
         G.es['weight'] = [1] * G.ecount()
         d = convert.from_igraph(name, G)
         d.load()
-        print d 
+        print (d) 
 
         utils.remove_if_file_exit(config.get_data_file_path(name), is_dir=True)
         G = igraph.Graph.Full(5, directed=True)
         G.es['weight'] = [1] * G.ecount()        
         d = convert.from_igraph(name, G)
         d.load()
-        print d 
+        print (d) 
 
     def testToSnap(self):
         for data in self.graphs:
             if not data.is_weighted():
                 g = convert.to_snap(data)
-                print "testToSnap", g, data  
+                print ("testToSnap", g, data)  
 
     def testFromSnap(self):
         name = "testFromSnap"
@@ -129,13 +129,13 @@ class Test(unittest.TestCase):
         G = snap.GenRndGnm(snap.PNGraph, 100, 1000) 
         d = convert.from_snap(name, G)
         d.load()
-        print "testFromSnap", d
+        print ("testFromSnap", d)
 
         utils.remove_if_file_exit(config.get_data_file_path(name), is_dir=True)
         G = snap.GenRndGnm(snap.PUNGraph, 100, 1000) 
         d = convert.from_snap(name, G)
         d.load()
-        print "testFromSnap", d 
+        print ("testFromSnap", d) 
 
             
 if __name__ == "__main__":

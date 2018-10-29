@@ -5,7 +5,7 @@ Created on Oct 23, 2018
 '''
 
 import os
-import utils
+from gcb import utils
 
 if 'GCB_DATA' not in os.environ:
     DATA_HOME = os.path.join(os.environ['HOME'], '.gcb')
@@ -22,7 +22,7 @@ RESULT_PATH = os.path.join(DATA_HOME, "result")
 [utils.create_dir_if_not_exists(directory) for directory in [ DATA_PATH, RESULT_PATH]]
 
 if 'GCB_HOME' not in os.environ:
-    GCB_HOME = os.path.join(os.environ['HOME'], 'graph_clustering_benchmark')
+    GCB_HOME = os.path.join(os.environ['HOME'], 'graph_clustering_toolkit')
 else:
     GCB_HOME = os.environ['GCB_HOME']
 

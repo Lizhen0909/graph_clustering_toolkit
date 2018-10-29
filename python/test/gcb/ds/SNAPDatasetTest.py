@@ -13,7 +13,7 @@ class Test(unittest.TestCase):
         for name in dataset.list_datasets():
             if name in ['com-DBLP']:
                 ds = dataset.get_dataset(name)
-                print ds  
+                print (ds)  
                 ds.load()
 
 

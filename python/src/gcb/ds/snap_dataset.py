@@ -3,7 +3,7 @@ import urllib
 import gzip
 import pandas as pd 
 import json 
-import dataset 
+from . import dataset 
 
 
  
@@ -44,7 +44,7 @@ class SNAPDataset(dataset.Dataset):
     def download(self):
         for rfile, fname in zip(self.files, self.local_files):
             self.logger.info("Dowloading {} to {} ".format(rfile, fname))
-            urllib.urlretrieve (rfile, fname)
+            utils.urlretrieve (rfile, fname)
         assert self.has_downloaded()
 
     def get_edges(self):

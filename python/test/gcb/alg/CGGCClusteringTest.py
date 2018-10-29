@@ -36,9 +36,9 @@ class Test(unittest.TestCase):
 
     def testCGGC(self):
         alg = CGGC()
-        print "testCGGC"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print ("testCGGC")
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
  
 
 if __name__ == "__main__":

@@ -7,6 +7,7 @@ import unittest
 from gcb.ds import random_dataset
 from gcb.alg import clustering
 from gcb.alg.scan_clustering import Scanpp, pScan, AnyScan
+import sys
 
 
 class Test(unittest.TestCase):
@@ -36,34 +37,34 @@ class Test(unittest.TestCase):
 
     def testScanpp(self):
         alg = Scanpp()
-        print "testScanpp"
-        print alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
     def testPScan(self):
         alg = pScan()
-        print "testPScan"
-        print alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5, prog='pScan').get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5, prog='pScan').get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
     def testPPScan(self):
         alg = pScan()
-        print "testPPScan"
-        print alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5, prog='ppScan').get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5, prog='ppScan').get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
     def testPPScanSSE(self):
         alg = pScan()
-        print "testPPScanSSE"
-        print alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5, prog='ppScanSSE').get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print(sys._getframe().f_code.co_name) 
+        print (alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5, prog='ppScanSSE').get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
         
     def testAnyScan(self):
         alg = AnyScan()
         for i in range(1, 5):
-            print "testAnyScan", i
-            print alg.run(self.graph_unweighted_undirect, algorithm=i, minpts=3, epsilon=0.5).get_result()
-            print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+            print(sys._getframe().f_code.co_name,i) 
+            print (alg.run(self.graph_unweighted_undirect, algorithm=i, minpts=3, epsilon=0.5).get_result())
+            print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
 
 if __name__ == "__main__":

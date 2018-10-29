@@ -8,6 +8,7 @@ from gcb.ds import random_dataset
 from gcb.alg import clustering
 from gcb.alg.OSLOM_clustering import Infomap, Infohiermap, lpm, louvain_method, \
     modopt, OSLOM, copra
+import sys
 
 
 class Test(unittest.TestCase):
@@ -36,194 +37,194 @@ class Test(unittest.TestCase):
         pass
     
     def test_infomap(self):  
-        print "test_infomap"
+        print(sys._getframe().f_code.co_name) 
         
         alg = Infomap()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_weighted_direct.name, alg.name))
 
         alg = Infomap()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_direct.name, alg.name)) 
 
         alg = Infomap()
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = Infomap()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_weighted_undirect.name, alg.name))
 
     def test_Infohiermap(self):  
-        print "test_Infohiermap"
+        print(sys._getframe().f_code.co_name) 
         
         alg = Infohiermap()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_weighted_direct.name, alg.name))
 
         alg = Infohiermap()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_direct.name, alg.name)) 
 
         alg = Infohiermap()
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = Infohiermap()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_weighted_undirect.name, alg.name))
 
     def test_lpm(self):  
-        print "test_lpm"
+        print(sys._getframe().f_code.co_name) 
         
         alg = lpm()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_weighted_direct.name, alg.name))
 
         alg = lpm()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_direct.name, alg.name)) 
 
         alg = lpm()
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = lpm()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_weighted_undirect.name, alg.name))
 
     def test_louvain_method(self):  
-        print "test_louvain_method"
+        print(sys._getframe().f_code.co_name) 
         
         alg = louvain_method()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_weighted_direct.name, alg.name))
 
         alg = louvain_method()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_direct.name, alg.name)) 
 
         alg = louvain_method()
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = louvain_method()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_weighted_undirect.name, alg.name))
         
     def test_copra(self):  
-        print "test_copra"
+        print(sys._getframe().f_code.co_name) 
         
         alg = copra()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_weighted_direct.name, alg.name))
 
         alg = copra()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_direct.name, alg.name)) 
 
         alg = copra()
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = copra()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_weighted_undirect.name, alg.name))
         
     def test_modopt(self):  
-        print "test_modopt"
+        print(sys._getframe().f_code.co_name) 
         
         alg = modopt()
-        print alg.run(self.graph_weighted_direct).get_result()
-        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+        print (alg.run(self.graph_weighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_weighted_direct.name, alg.name))
 
         alg = modopt()
-        print alg.run(self.graph_unweighted_direct).get_result()
-        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_direct.name, alg.name)) 
 
         alg = modopt()
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = modopt()
-        print alg.run(self.graph_weighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_weighted_undirect.name, alg.name))
 
     def test_oslom(self):  
-        print "test_oslom"
+        print(sys._getframe().f_code.co_name) 
         
         alg = OSLOM()
-        print alg.run(self.graph_weighted_direct, fast=True).get_result()
-        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+        print (alg.run(self.graph_weighted_direct, fast=True).get_result())
+        print (clustering.load_rusult(self.graph_weighted_direct.name, alg.name))
 
         alg = OSLOM()
-        print alg.run(self.graph_unweighted_direct, fast=True).get_result()
-        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct, fast=True).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_direct.name, alg.name)) 
 
         alg = OSLOM()
-        print alg.run(self.graph_unweighted_undirect, fast=True).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_undirect, fast=True).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = OSLOM()
-        print alg.run(self.graph_weighted_undirect, fast=True).get_result()
-        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect, fast=True).get_result())
+        print (clustering.load_rusult(self.graph_weighted_undirect.name, alg.name))
 
     def test_oslom_with_infomap(self):  
-        print "test_oslom"
+        print(sys._getframe().f_code.co_name) 
         
         alg = OSLOM()
-        print alg.run(self.graph_weighted_direct, fast=True, infomap=True).get_result()
-        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+        print (alg.run(self.graph_weighted_direct, fast=True, infomap=True).get_result())
+        print (clustering.load_rusult(self.graph_weighted_direct.name, alg.name))
 
         alg = OSLOM()
-        print alg.run(self.graph_unweighted_direct, fast=True, infomap=True).get_result()
-        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct, fast=True, infomap=True).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_direct.name, alg.name)) 
 
         alg = OSLOM()
-        print alg.run(self.graph_unweighted_undirect, fast=True, infomap=True).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_undirect, fast=True, infomap=True).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = OSLOM()
-        print alg.run(self.graph_weighted_undirect, fast=True, infomap=True).get_result()
-        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect, fast=True, infomap=True).get_result())
+        print (clustering.load_rusult(self.graph_weighted_undirect.name, alg.name))
                 
     def test_oslom_with_copra(self):  
-        print "test_oslom"
+        print(sys._getframe().f_code.co_name) 
         
         alg = OSLOM()
-        print alg.run(self.graph_weighted_direct, fast=True, copra=True).get_result()
-        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+        print (alg.run(self.graph_weighted_direct, fast=True, copra=True).get_result())
+        print (clustering.load_rusult(self.graph_weighted_direct.name, alg.name))
 
         alg = OSLOM()
-        print alg.run(self.graph_unweighted_direct, fast=True, copra=True).get_result()
-        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct, fast=True, copra=True).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_direct.name, alg.name)) 
 
         alg = OSLOM()
-        print alg.run(self.graph_unweighted_undirect, fast=True, copra=True).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_undirect, fast=True, copra=True).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = OSLOM()
-        print alg.run(self.graph_weighted_undirect, fast=True, copra=True).get_result()
-        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect, fast=True, copra=True).get_result())
+        print (clustering.load_rusult(self.graph_weighted_undirect.name, alg.name))
 
     def test_oslom_with_louvain(self):  
-        print "test_oslom"
+        print(sys._getframe().f_code.co_name) 
         
         alg = OSLOM()
-        print alg.run(self.graph_weighted_direct, fast=True, louvain=True).get_result()
-        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+        print (alg.run(self.graph_weighted_direct, fast=True, louvain=True).get_result())
+        print (clustering.load_rusult(self.graph_weighted_direct.name, alg.name))
 
         alg = OSLOM()
-        print alg.run(self.graph_unweighted_direct, fast=True, louvain=True).get_result()
-        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+        print (alg.run(self.graph_unweighted_direct, fast=True, louvain=True).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_direct.name, alg.name)) 
 
         alg = OSLOM()
-        print alg.run(self.graph_unweighted_undirect, fast=True, louvain=True).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print (alg.run(self.graph_unweighted_undirect, fast=True, louvain=True).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
 
         alg = OSLOM()
-        print alg.run(self.graph_weighted_undirect, fast=True, louvain=True).get_result()
-        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        print (alg.run(self.graph_weighted_undirect, fast=True, louvain=True).get_result())
+        print (clustering.load_rusult(self.graph_weighted_undirect.name, alg.name))
 
                         
 if __name__ == "__main__":

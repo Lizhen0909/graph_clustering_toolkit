@@ -70,8 +70,8 @@ def edgelist_to_pajek(input_filename, output_filename="", directed=False, weight
                 output_file.write("\t%d\t%d\n" % (node_idx_map[n1],
                                                   node_idx_map[n2]))
         except ValueError:
-            raise ValueError, "Problem parsing input file on line %d, which reads: \n\t%s\nIf you selected the -w option for weighted edegs, make sure this line has an edg\
-e weight" % (i + 1, line)
+            raise ValueError( "Problem parsing input file on line %d, which reads: \n\t%s\nIf you selected the -w option for weighted edegs, make sure this line has an edg\
+e weight" % (i + 1, line))
     input_file.close()
     output_file.close()
 
@@ -83,7 +83,7 @@ def run_command(command):
     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     retcode = process.wait()
     if retcode != 0:
-        raise Exception, "Problem running command: " + command
+        raise Exception( "Problem running command: " + command)
     stdout, stderr = process.communicate()
     return stdout
 

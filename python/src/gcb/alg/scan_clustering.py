@@ -28,7 +28,9 @@ class Scanpp(Clustering):
         
         cmd = "{} -e {} -m {} -r {}".format(config.SCANPP_PROG, epsilon, mu, data.file_edges)
         self.logger.info("Running " + cmd)
-        timecost, output = utils.timeit(lambda: subprocess.check_output(cmd.split(" ")))
+        timecost, output = utils.timeit(lambda: utils.check_output(cmd.split(" ")))
+        print (output) 
+        print (type(output))
         if not output.startswith('node'):
             raise Exception("Something wrong with scapp. output:\n" + output)
 
