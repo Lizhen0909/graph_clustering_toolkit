@@ -61,18 +61,42 @@ def get_OSLOM_prog(name, is_directed):
     if name == 'infomap':
         prog = os.path.join(GCB_HOME, "submodules/OSLOM2/infomap")
         #prog += '_dir' if is_directed else "_undir"
-        prog += '_dir' #undir has bug        
+        prog += '_dir'  # undir has bug        
         return prog
     elif name == 'Infohiermap':
         prog = os.path.join(GCB_HOME, "submodules/OSLOM/infohiermap")
         prog += '_dir' if is_directed else "_undir"
+        return prog 
+    elif name == 'oslom':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM2/oslom")
+        prog += '_dir' if is_directed else "_undir"
         return prog    
+    elif name == 'copra':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM2/copra.jar")
+        return prog           
     elif name == 'lpm':
         prog = os.path.join(GCB_HOME, "submodules/OSLOM/lpm")
         return prog     
     elif name == 'louvain_method':
         prog = os.path.join(GCB_HOME, "submodules/OSLOM/louvain_method")
         return prog         
+    elif name == 'louvain_script':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM2/louvain_script")
+        return prog 
+    elif name == 'convert':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM2/convert")
+        return prog   
+    elif name == 'community':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM2/community")
+        return prog   
+    elif name == 'hierarchy':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM2/hierarchy")
+        return prog                  
+    elif name == 'infomap_script':
+        prog = os.path.join(GCB_HOME, "submodules/OSLOM2/infomap")
+        prog += '_dir' if is_directed else "_undir"
+        prog += '_script'
+        return prog              
     elif name == 'modopt':
         prog = os.path.join(GCB_HOME, "submodules/OSLOM/modopt")
         return prog             

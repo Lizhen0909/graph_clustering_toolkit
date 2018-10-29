@@ -6,8 +6,8 @@ Created on Oct 27, 2018
 import unittest
 from gcb.ds import random_dataset
 from gcb.alg import clustering
-from gcb.alg.OSLOM_clustering import Infomap, Infohiermap, lpm, louvain_method,\
-    modopt
+from gcb.alg.OSLOM_clustering import Infomap, Infohiermap, lpm, louvain_method, \
+    modopt, OSLOM, copra
 
 
 class Test(unittest.TestCase):
@@ -110,7 +110,26 @@ class Test(unittest.TestCase):
         alg = louvain_method()
         print alg.run(self.graph_weighted_undirect).get_result()
         print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        
+    def test_copra(self):  
+        print "test_copra"
+        
+        alg = copra()
+        print alg.run(self.graph_weighted_direct).get_result()
+        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
 
+        alg = copra()
+        print alg.run(self.graph_unweighted_direct).get_result()
+        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+
+        alg = copra()
+        print alg.run(self.graph_unweighted_undirect).get_result()
+        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+
+        alg = copra()
+        print alg.run(self.graph_weighted_undirect).get_result()
+        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+        
     def test_modopt(self):  
         print "test_modopt"
         
@@ -130,7 +149,83 @@ class Test(unittest.TestCase):
         print alg.run(self.graph_weighted_undirect).get_result()
         print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
 
+    def test_oslom(self):  
+        print "test_oslom"
+        
+        alg = OSLOM()
+        print alg.run(self.graph_weighted_direct, fast=True).get_result()
+        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+
+        alg = OSLOM()
+        print alg.run(self.graph_unweighted_direct, fast=True).get_result()
+        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+
+        alg = OSLOM()
+        print alg.run(self.graph_unweighted_undirect, fast=True).get_result()
+        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+
+        alg = OSLOM()
+        print alg.run(self.graph_weighted_undirect, fast=True).get_result()
+        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+
+    def test_oslom_with_infomap(self):  
+        print "test_oslom"
+        
+        alg = OSLOM()
+        print alg.run(self.graph_weighted_direct, fast=True, infomap=True).get_result()
+        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+
+        alg = OSLOM()
+        print alg.run(self.graph_unweighted_direct, fast=True, infomap=True).get_result()
+        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+
+        alg = OSLOM()
+        print alg.run(self.graph_unweighted_undirect, fast=True, infomap=True).get_result()
+        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+
+        alg = OSLOM()
+        print alg.run(self.graph_weighted_undirect, fast=True, infomap=True).get_result()
+        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
                 
+    def test_oslom_with_copra(self):  
+        print "test_oslom"
+        
+        alg = OSLOM()
+        print alg.run(self.graph_weighted_direct, fast=True, copra=True).get_result()
+        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+
+        alg = OSLOM()
+        print alg.run(self.graph_unweighted_direct, fast=True, copra=True).get_result()
+        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+
+        alg = OSLOM()
+        print alg.run(self.graph_unweighted_undirect, fast=True, copra=True).get_result()
+        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+
+        alg = OSLOM()
+        print alg.run(self.graph_weighted_undirect, fast=True, copra=True).get_result()
+        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+
+    def test_oslom_with_louvain(self):  
+        print "test_oslom"
+        
+        alg = OSLOM()
+        print alg.run(self.graph_weighted_direct, fast=True, louvain=True).get_result()
+        print clustering.load_rusult(self.graph_weighted_direct.name, alg.name)
+
+        alg = OSLOM()
+        print alg.run(self.graph_unweighted_direct, fast=True, louvain=True).get_result()
+        print clustering.load_rusult(self.graph_unweighted_direct.name, alg.name) 
+
+        alg = OSLOM()
+        print alg.run(self.graph_unweighted_undirect, fast=True, louvain=True).get_result()
+        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+
+        alg = OSLOM()
+        print alg.run(self.graph_weighted_undirect, fast=True, louvain=True).get_result()
+        print clustering.load_rusult(self.graph_weighted_undirect.name, alg.name)
+
+                        
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']
     unittest.main()
