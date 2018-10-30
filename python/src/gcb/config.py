@@ -57,10 +57,25 @@ def get_result_file_path(dsname, algname):
     return algpath 
 
 
+def get_dct_prog(name, directed=False):
+    if name == 'seq_louvain':
+        prog = os.path.join(GCB_HOME, "submodules/distributed_clustering_thrill/build/seq_louvain")
+        return prog
+    elif name == 'infomap':
+        prog = os.path.join(GCB_HOME, "submodules/distributed_clustering_thrill/build/infomap")
+        if directed: prog += '_directed'
+        return prog 
+    elif name.startswith('dlslm') or name in ['dlplm']:
+        prog = os.path.join(GCB_HOME, "submodules/distributed_clustering_thrill/build/" + name)
+        return prog             
+    else:
+        raise Exception("Unknown " + name)
+
+
 def get_OSLOM_prog(name, is_directed):
     if name == 'infomap':
         prog = os.path.join(GCB_HOME, "submodules/OSLOM2/infomap")
-        #prog += '_dir' if is_directed else "_undir"
+        # prog += '_dir' if is_directed else "_undir"
         prog += '_dir'  # undir has bug        
         return prog
     elif name == 'Infohiermap':

@@ -79,14 +79,14 @@ class TempDir():
             shutil.rmtree(self.dirpath)
 
         
-def shell_run_and_wait(command, working_dir=None):
+def shell_run_and_wait(command, working_dir=None, env=None):
     curr_dir = os.getcwd()
     if working_dir is not None:
         os.chdir(working_dir)
     command = command.split(" ")
     import subprocess
     # process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    process = subprocess.Popen(command)
+    process = subprocess.Popen(command,env=env)
     process.wait()
     if working_dir is not None:
         os.chdir(curr_dir)
@@ -99,11 +99,13 @@ def timeit(fun):
     t1 = time.time()
     return t1 - t0, ret
 
+
 def pandas_show_all(df):
     with pd.option_context('display.max_rows', None, 'display.max_columns', None):
         print(df)  
 
-def urlretrieve(src,dst):
+
+def urlretrieve(src, dst):
     if sys.version_info[0] >= 3:
         from urllib.request import urlretrieve
     else:
@@ -113,6 +115,7 @@ def urlretrieve(src,dst):
         from urllib import urlretrieve
     return urlretrieve(src, dst)
 
+
 def check_output(lst):
     if sys.version_info[0] >= 3:
         return subprocess.getoutput((" ".join (lst)))
@@ -120,4 +123,13 @@ def check_output(lst):
         return subprocess.check_output(lst)        
 
 
+def link_file(path, dest_dir, destname=None):
+    if not os.path.exists(path):
+        raise Exception("source path not found: " + path)
+    if destname is None :
+        destname = path.split("/")[-1]
+    destpath = os.path.join(dest_dir, destname)
+    remove_if_file_exit(destpath)
+    os.symlink(path, destpath)
+    return destpath            
 
