@@ -10,12 +10,14 @@ import json
     
 def load_rusult(dataname, algname):
     fpath = os.path.join(config.get_result_file_path(dataname, algname), 'result.txt')
-    return json.load(open(fpath, 'rt'))
+    with open(fpath, 'rt') as f :
+        return json.load(f)
 
 
 def save_result(result):
     fpath = os.path.join(config.get_result_file_path(result['dataname'], result['algname']), 'result.txt')
-    json.dump(result, open(fpath, 'wt'))
+    with open(fpath, 'wt') as f:
+        json.dump(result, f)
 
 
 class Clustering(object):
