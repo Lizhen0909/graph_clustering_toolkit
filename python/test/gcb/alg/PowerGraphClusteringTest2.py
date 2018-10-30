@@ -8,6 +8,7 @@ from gcb.ds import random_dataset
 from gcb.alg import clustering
 import sys
 from gcb.alg.dct_clustering import seq_louvain, infomap, dct
+from gcb.alg.powergraph_clustering import label_propagation, GossipMap
 
 
 class Test(unittest.TestCase):
@@ -35,55 +36,19 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_seq_louvain(self):
+    def test_label_propagation(self):
         for data in  self.graphs: 
-            alg = seq_louvain()
+            alg = label_propagation()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
             print (clustering.load_rusult(data.name, alg.name))
  
-    def test_infomap(self):
+    def test_GossipMap(self):
         for data in  self.graphs: 
-            alg = infomap()
+            alg = GossipMap()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
             print (clustering.load_rusult(data.name, alg.name))
- 
-    def test_dlslm(self):
-        for data in  self.graphs: 
-            alg = dct(progname='dlslm')
-            print(sys._getframe().f_code.co_name) 
-            print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
- 
-    def test_dlslm_with_seq(self):
-        for data in  self.graphs: 
-            alg = dct(progname='dlslm_with_seq')
-            print(sys._getframe().f_code.co_name) 
-            print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))             
-
-    def test_dlslm_map_eq(self):
-        for data in  self.graphs: 
-            alg = dct(progname='dlslm_map_eq')
-            print(sys._getframe().f_code.co_name) 
-            print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))             
-
-    def test_dlslm_no_contraction(self):
-        for data in  self.graphs: 
-            alg = dct(progname='dlslm_no_contraction')
-            print(sys._getframe().f_code.co_name) 
-            print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))             
-
-    def test_dlplm(self):
-        for data in  self.graphs: 
-            alg = dct(progname='dlplm')
-            print(sys._getframe().f_code.co_name) 
-            print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))             
-
 
 
 if __name__ == "__main__":

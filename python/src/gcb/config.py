@@ -71,6 +71,17 @@ def get_dct_prog(name, directed=False):
     else:
         raise Exception("Unknown " + name)
 
+    
+def get_powergraph_prog(name, directed=False):
+    if name in ['label_propagation']:
+        prog = os.path.join(GCB_HOME, "submodules/PowerGraph/release/apps/label_propagation/label_propagation")
+        return prog             
+    elif name in ['GossipMap']:
+        prog = os.path.join(GCB_HOME, "submodules/PowerGraph/release/apps/GossipMap/GossipMap")
+        return prog             
+    else:
+        raise Exception("Unknown " + name)
+
 
 def get_OSLOM_prog(name, is_directed):
     if name == 'infomap':
