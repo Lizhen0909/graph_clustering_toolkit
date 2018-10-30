@@ -16,3 +16,6 @@
 [submodule "submodules/RelaxMap"]
 	path = submodules/RelaxMap
 	url = https://github.com/Lizhen0909/RelaxMap
+[submodule "submodules/PowerGraph"]
+	path = submodules/PowerGraph
+	url = https://github.com/Lizhen0909/PowerGraph
