@@ -37,7 +37,7 @@ class RandomDataset(dataset.Dataset):
     def is_weighted(self):
         return self.weighted
     
-    def generate(self):
+    def generate(self, seed=None):
         params = self.params
         if params['name'] == 'Erdos-Renyi':
             gtype = snap.PNGraph if params['directed'] else snap.PUNGraph
@@ -47,10 +47,14 @@ class RandomDataset(dataset.Dataset):
                 lst.append([EI.GetSrcNId(), EI.GetDstNId()])
             self.edges = pd.DataFrame(lst, columns=['src', 'dest'])
         elif params['name'] == 'LFR':
+            if seed is None:
+                seed = np.random.randint(999999)
             with utils.TempDir() as tmpdir:
+                with open(os.path.join(tmpdir, "seed.txt"), 'wt') as seedf :
+                    seedf.write(str(seed))
                 program = config.LFR_PROG
                 cmd = program + " " + " ".join([ "-" + str(u[0]) + " " + str(u[1]) for u in params.items() if u[1] is not None])
-                self.logger.info("Runing " + cmd)
+                self.logger.info("Runing '{}' with seed {}".format(cmd, seed))
                 self.logger.info("working dir: " + tmpdir)
                 utils.shell_run_and_wait(cmd, working_dir=tmpdir)
 

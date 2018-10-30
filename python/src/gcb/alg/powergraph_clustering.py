@@ -76,7 +76,6 @@ class GossipMap(Clustering):
             data.to_edgelist()
         
         with utils.TempDir() as tmp_dir:
-            tmp_dir = '/tmp/abc'
             pajek = os.path.join(tmp_dir, 'edges.txt')
             utils.remove_if_file_exit(pajek)
             os.symlink(data.file_edges, pajek)

@@ -5,7 +5,7 @@ Created on Oct 23, 2018
 '''
 import unittest
 from gcb.ds import random_dataset
-from gcb import utils
+from gcb import utils, config
 import snap 
 
 
@@ -66,11 +66,18 @@ class Test(unittest.TestCase):
         print (ds.to_edgelist())  
         
     def testRandomDataset1(self):
-        ds = random_dataset.generate_Erdos_Renyi("test1", 100, 1000, False)
+        utils.create_dir_if_not_exists(config.get_data_file_path("testRandomDataset1"))
+        ds = random_dataset.generate_Erdos_Renyi("testRandomDataset1", 100, 1000, False)
         print (ds)
         ds.load()
 
-
+    def testRandomDataset0(self):
+        utils.create_dir_if_not_exists(config.get_data_file_path("testRandomDataset0"))
+        ds = random_dataset.generate_LFR("testRandomDataset0", N=128, k=16, maxk=16, muw=0.1, minc=32, beta=1, a=0)
+        print (ds)
+        ds.load()
+        
+        
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testLoadSNAPDataset']
     unittest.main()
