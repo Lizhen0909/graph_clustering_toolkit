@@ -117,3 +117,12 @@ def from_snap(name, graph, description=""):
     
     return DefaultDataset(name, edges=df, weighted=False, directed=directed, description=description)    
 
+
+# turn a dataset into a networkit graph
+def to_networkit(data):
+    import networkit
+    fname = data.file_edges 
+    if not utils.file_exists(fname):
+        data.to_edgelist()
+    return networkit.readGraph(fname, fileformat=networkit.Format.EdgeListSpaceZero, directed=data.is_directed())
+

@@ -137,7 +137,11 @@ class Test(unittest.TestCase):
         d.load()
         print ("testFromSnap", d) 
 
-            
+    def testToNetworkit(self):
+        for data in self.graphs:
+            g = convert.to_networkit(data)
+            print ("testToNetworkit", g, data)  
+                            
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
