@@ -5,7 +5,7 @@ Created on Oct 26, 2018
 '''
 import unittest
 from gct.dataset import random_dataset
-from gct.dataset.GraphProperty import GraphProperties
+from gct.dataset.properties import GraphProperties, GraphClustersProperties
 
 
 class Test(unittest.TestCase):
@@ -19,13 +19,28 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testProperties(self):
+    def testGraphProperties(self):
         p = GraphProperties(self.graph_unweighted_undirect)
         print (p.num_edges)
         print (p.num_vectices)
         print (p.density)
         print (p.density1)
-                            
+        print (p.degrees)
+
+    def testClustersProperties(self):
+        g=self.graph_unweighted_undirect
+        p = GraphClustersProperties(g,g.get_ground_truth())
+        print (p.num_edges)
+        print (p.num_vectices)
+        print (p.num_clusters)
+        print (p.cluser_sizes)
+        print (p.cluser_indexes)
+        print (p.cluser_edge_sizes)
+        print (p.intra_cluster_densities)
+        print (p.intra_cluster_density)
+        print (p.inter_cluster_density)
+        
+                                    
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
