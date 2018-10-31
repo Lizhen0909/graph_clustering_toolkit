@@ -4,9 +4,9 @@ Created on Oct 27, 2018
 @author: lizhen
 '''
 import unittest
-from gcb.ds import random_dataset
-from gcb.alg import clustering
-from gcb.alg.streaming_clustering import streamcom
+from gct.dataset import random_dataset
+from gct.alg import clustering
+from gct.alg.streaming_clustering import streamcom
 
 
 class Test(unittest.TestCase):
@@ -36,9 +36,9 @@ class Test(unittest.TestCase):
 
     def testSteramcom(self):
         alg = streamcom()
-        print "testSteramcom"
-        print alg.run(self.graph_unweighted_undirect).get_result()
-        print clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name)
+        print ("testSteramcom")
+        print (alg.run(self.graph_unweighted_undirect).get_result())
+        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
  
 
 if __name__ == "__main__":

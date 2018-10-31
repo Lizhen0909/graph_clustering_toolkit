@@ -3,15 +3,11 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gcb.alg.clustering import Clustering, save_result
-from gcb import utils, config
-import subprocess
+from gct.alg.clustering import Clustering, save_result
+from gct import utils, config
 import os
 import glob
-import multiprocessing
 import numpy as np 
-from random import random
-
 
 class Infomap(Clustering):
 

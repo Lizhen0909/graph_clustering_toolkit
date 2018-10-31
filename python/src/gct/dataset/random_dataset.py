@@ -1,4 +1,4 @@
-from gcb import utils, config
+from gct import utils, config
 import pandas as pd
 import numpy as np  
 import json 

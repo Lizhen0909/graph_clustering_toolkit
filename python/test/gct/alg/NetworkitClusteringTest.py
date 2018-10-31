@@ -4,10 +4,10 @@ Created on Oct 27, 2018
 @author: lizhen
 '''
 import unittest
-from gcb.ds import random_dataset
-from gcb.alg import clustering
+from gct.dataset import random_dataset
+from gct.alg import clustering
 import sys
-from gcb.alg.networkit_clustering import LPDegreeOrdered, CutClustering, PLP,\
+from gct.alg.networkit_clustering import LPDegreeOrdered, CutClustering, PLP,\
     PLM
 
 

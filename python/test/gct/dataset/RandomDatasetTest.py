@@ -4,8 +4,8 @@ Created on Oct 23, 2018
 @author: lizhen
 '''
 import unittest
-from gcb.ds import random_dataset
-from gcb import utils, config
+from . import random_dataset
+from gct import utils, config
 import snap 
 
 

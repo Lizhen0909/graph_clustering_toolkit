@@ -1,5 +1,5 @@
-from gcb import utils, config
-from gcb.ds import edgelist2pajek
+from gct import utils, config
+from gct.dataset import edgelist2pajek
 import dask.dataframe as dd
 import fastparquet
 import json 
@@ -114,7 +114,7 @@ class Dataset(object):
                 return filepath
         
         import snap        
-        from gcb.ds import convert
+        from gct.dataset import convert
         g = convert.to_snap(self)
         self.logger.info("Writing {} to {}".format(type(g), filepath))
         FOut = snap.TFOut(filepath)
@@ -226,7 +226,7 @@ class DefaultDataset(Dataset):
             raise Exception("graph has no ground truth")
         
                     
-from gcb.ds import snap_dataset
+from gct.dataset import snap_dataset
 
 
 def list_datasets():

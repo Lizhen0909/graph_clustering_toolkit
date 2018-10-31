@@ -3,8 +3,8 @@ Created on Oct 26, 2018
 
 @author: lizhen
 '''
-from gcb import utils
-from gcb.ds.dataset import DefaultDataset
+from gct import utils
+from gct.dataset.dataset import DefaultDataset
 import pandas as pd 
 
 

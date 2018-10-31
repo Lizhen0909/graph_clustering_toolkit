@@ -3,7 +3,7 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gcb import utils, config
+from gct import utils, config
 import os
 import json
     

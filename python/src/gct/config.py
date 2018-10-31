@@ -5,7 +5,7 @@ Created on Oct 23, 2018
 '''
 
 import os
-from gcb import utils
+from gct import utils
 
 if 'GCB_DATA' not in os.environ:
     DATA_HOME = os.path.join(os.environ['HOME'], '.gcb')

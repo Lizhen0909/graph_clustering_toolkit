@@ -4,9 +4,9 @@ Created on Oct 27, 2018
 @author: lizhen
 '''
 import unittest
-from gcb.ds import random_dataset
-from gcb.alg import clustering
-from gcb.alg.igraph_clustering import community_fastgreedy, community_infomap, \
+from gct.dataset import random_dataset
+from gct.alg import clustering
+from gct.alg.igraph_clustering import community_fastgreedy, community_infomap, \
     community_leading_eigenvector, community_label_propagation, \
     community_multilevel, community_optimal_modularity, \
     community_edge_betweenness, community_spinglass, community_walktrap

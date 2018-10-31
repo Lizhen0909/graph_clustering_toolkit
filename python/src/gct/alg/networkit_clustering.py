@@ -3,10 +3,10 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gcb.ds import convert
+from gct.dataset import convert
 import igraph    
-from gcb.alg.clustering import Clustering, save_result
-from gcb import utils
+from gct.alg.clustering import Clustering, save_result
+from gct import utils
 import networkit
 
 

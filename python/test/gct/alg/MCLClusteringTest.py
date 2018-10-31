@@ -4,9 +4,9 @@ Created on Oct 27, 2018
 @author: lizhen
 '''
 import unittest
-from gcb.ds import random_dataset
-from gcb.alg import clustering
-from gcb.alg.mcl_clustering import MCL
+from gct.dataset import random_dataset
+from gct.alg import clustering
+from gct.alg.mcl_clustering import MCL
 
 
 class Test(unittest.TestCase):

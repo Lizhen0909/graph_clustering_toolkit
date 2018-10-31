@@ -4,11 +4,11 @@ Created on Oct 27, 2018
 @author: lizhen
 '''
 import unittest
-from gcb.ds import random_dataset
-from gcb.alg import clustering
+from gct.dataset import random_dataset
+from gct.alg import clustering
 import sys
-from gcb.alg.dct_clustering import seq_louvain, infomap, dct
-from gcb.alg.powergraph_clustering import label_propagation, GossipMap
+from gct.alg.dct_clustering import seq_louvain, infomap, dct
+from gct.alg.powergraph_clustering import label_propagation, GossipMap
 
 
 class Test(unittest.TestCase):

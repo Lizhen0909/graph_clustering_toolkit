@@ -4,9 +4,9 @@ Created on Oct 27, 2018
 @author: lizhen
 '''
 import unittest
-from gcb.ds import random_dataset
-from gcb.alg import clustering
-from gcb.alg.OSLOM_clustering import Infomap, Infohiermap, lpm, louvain_method, \
+from gct.dataset import random_dataset
+from gct.alg import clustering
+from gct.alg.OSLOM_clustering import Infomap, Infohiermap, lpm, louvain_method, \
     modopt, OSLOM, copra
 import sys
 

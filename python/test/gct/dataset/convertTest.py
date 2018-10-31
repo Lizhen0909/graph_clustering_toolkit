@@ -5,8 +5,8 @@ Created on Oct 26, 2018
 '''
 import unittest
 import networkx as nx 
-from gcb.ds import random_dataset, convert
-from gcb import utils, config
+from . import random_dataset, convert
+from gct import utils, config
 import igraph
 import snap
 

@@ -4,9 +4,9 @@ Created on Oct 27, 2018
 @author: lizhen
 '''
 import unittest
-from gcb.ds import random_dataset
-from gcb.alg import clustering
-from gcb.alg.scan_clustering import Scanpp, pScan, AnyScan
+from gct.dataset import random_dataset
+from gct.alg import clustering
+from gct.alg.scan_clustering import Scanpp, pScan, AnyScan
 import sys
 
 

@@ -4,7 +4,7 @@ Created on Apr 6, 2018
 @author: lizhen
 '''
 import os, time
-import utils
+from . import utils
 
 
 class Task(object):

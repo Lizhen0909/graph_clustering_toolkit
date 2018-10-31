@@ -1,4 +1,4 @@
-from gcb import utils, config
+from gct import utils, config
 import urllib
 import gzip
 import pandas as pd 
