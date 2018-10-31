@@ -4,7 +4,7 @@ Created on Oct 23, 2018
 @author: lizhen
 '''
 import unittest
-from . import dataset
+from gct.dataset import dataset
 
 
 class Test(unittest.TestCase):

@@ -5,7 +5,7 @@ Created on Oct 26, 2018
 '''
 import unittest
 import networkx as nx 
-from . import random_dataset, convert
+from gct.dataset import random_dataset, convert
 from gct import utils, config
 import igraph
 import snap

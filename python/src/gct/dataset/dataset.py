@@ -10,19 +10,20 @@ import os
 
 class Dataset(object):
 
-    def __init__(self, name, description=""):
-        assert name 
+    def __init__(self, name=None, description="", anonymous=False):
         self.name = name 
         self.description = description
         self.logger = utils.get_logger("{}:{}".format(type(self).__name__, self.name))
         
-        self.parq_edges = config.get_data_file_path(self.name, 'edges.parq')
-        self.parq_ground_truth = config.get_data_file_path(self.name, 'ground_truth.parq')
-        self.file_edges = config.get_data_file_path(self.name, 'edges.txt')
-        self.file_pajek = config.get_data_file_path(self.name, 'pajek.txt')
-        self.file_scanbin = config.get_data_file_path(self.name, 'scanbin')
-        self.file_anyscan = config.get_data_file_path(self.name, 'anyscan.txt')
-        self.file_snap = config.get_data_file_path(self.name, 'snap.bin')
+        if not anonymous:
+            assert name 
+            self.parq_edges = config.get_data_file_path(self.name, 'edges.parq')
+            self.parq_ground_truth = config.get_data_file_path(self.name, 'ground_truth.parq')
+            self.file_edges = config.get_data_file_path(self.name, 'edges.txt')
+            self.file_pajek = config.get_data_file_path(self.name, 'pajek.txt')
+            self.file_scanbin = config.get_data_file_path(self.name, 'scanbin')
+            self.file_anyscan = config.get_data_file_path(self.name, 'anyscan.txt')
+            self.file_snap = config.get_data_file_path(self.name, 'snap.bin')
         
     def __repr__(self, *args, **kwargs):
         return self.__str__()
@@ -176,6 +177,50 @@ class Dataset(object):
             for i in grouped.index: 
                 f.write(grouped.loc[i, 0] + "\n")
         return filepath 
+
+
+class AnonymousDataset(Dataset):        
+
+    def __init__(self, edges, description="", ground_truth=None, directed=False, weighted=False):
+        super(AnonymousDataset, self).__init__(name=None , description=description, anonymous=True)
+        self.with_ground_truth = ground_truth is not None 
+        self.directed = directed
+        self.weighted = weighted
+        
+        columns = ['src', 'dest', 'weight'] if weighted else ['src', 'dest']
+        self.edges = self.to_dataframe(edges, columns) 
+        self.ground_truth = None if ground_truth is None else self.to_dataframe(ground_truth, ["node", "cluster"])
+
+    def to_dataframe(self, obj, columns):
+        if isinstance(obj, pd.DataFrame):
+            assert obj.shape[1] == len(columns) 
+            obj.columns = columns
+            return obj 
+        elif isinstance(obj, list) or isinstance(obj, np.ndarray):
+            arr = np.array(obj) 
+            assert arr.shape[1] == len(columns)
+            return pd.DataFrame(arr, columns=columns)
+        else:
+            raise Exception("type not supported: " + str(type(obj)))
+        
+    def has_ground_truth(self):
+        return self.with_ground_truth
+    
+    def is_directed(self):
+        return self.directed
+    
+    def is_weighted(self):
+        return self.weighted
+    
+    def get_edges(self):
+        return self.edges             
+
+    # return
+    def get_ground_truth(self):
+        if self.has_ground_truth():
+            return self.ground_truth
+        else:
+            raise Exception("graph has no ground truth")
 
 
 class DefaultDataset(Dataset):        

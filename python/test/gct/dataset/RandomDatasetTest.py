@@ -4,7 +4,7 @@ Created on Oct 23, 2018
 @author: lizhen
 '''
 import unittest
-from . import random_dataset
+from gct.dataset import random_dataset
 from gct import utils, config
 import snap 
 

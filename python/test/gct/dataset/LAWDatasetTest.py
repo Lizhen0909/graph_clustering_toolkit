@@ -4,7 +4,7 @@ Created on Oct 23, 2018
 @author: lizhen
 '''
 import unittest
-from . import law_dataset as dataset 
+from gct.dataset import law_dataset as dataset 
 
 
 class Test(unittest.TestCase):
