@@ -19,3 +19,12 @@
 [submodule "submodules/PowerGraph"]
 	path = submodules/PowerGraph
 	url = https://github.com/Lizhen0909/PowerGraph
+[submodule "submodules/GenConvNMI"]
+	path = submodules/GenConvNMI
+	url = https://github.com/eXascaleInfolab/GenConvNMI
+[submodule "submodules/OvpNMI"]
+	path = submodules/OvpNMI
+	url = https://github.com/eXascaleInfolab/OvpNMI
+[submodule "submodules/xmeasures"]
+	path = submodules/xmeasures
+	url = https://github.com/eXascaleInfolab/xmeasures
