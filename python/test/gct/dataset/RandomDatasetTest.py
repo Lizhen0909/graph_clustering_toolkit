@@ -30,7 +30,16 @@ class Test(unittest.TestCase):
         
         self.graphs = [self.graph_unweighted_undirect, self.graph_weighted_undirect,
                        self.graph_weighted_direct, self.graph_unweighted_direct]
-
+    
+    def testRandomDataset8(self):
+        ds = self.graph_unweighted_undirect
+        utils.remove_if_file_exit(ds.file_hig)
+        print (ds.to_higformat())
+        
+        ds = self.graph_weighted_undirect
+        utils.remove_if_file_exit(ds.file_hig)
+        print (ds.to_higformat())
+                
     def testRandomDataset7(self):
         ds = self.graph_unweighted_undirect
         utils.remove_if_file_exit(ds.file_snap)

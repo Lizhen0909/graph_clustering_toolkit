@@ -30,6 +30,7 @@ assert GCT_HOME
 
 LFR_PROG = os.path.join(GCT_HOME, "submodules/LFR-Benchmark_UndirWeightOvp/lfrbench_udwov")
 SCAN_CONVERT_PROG = os.path.join(GCT_HOME, "submodules/ppSCAN/converter")
+HIG_CONVERT_PROG = os.path.join(GCT_HOME, "submodules/hirecs/pajek_hig.py")
 SCANPP_PROG = os.path.join(GCT_HOME, "submodules/ppSCAN/scanpp")
 PSCAN_PROG = os.path.join(GCT_HOME, "submodules/ppSCAN/pscan")
 PPSCAN_PROG = os.path.join(GCT_HOME, "submodules/ppSCAN/pSCANParallel")
@@ -38,7 +39,7 @@ ANYSCAN_PROG = os.path.join(GCT_HOME, "submodules/ppSCAN/anyscan")
 CGGC_PROG = os.path.join(GCT_HOME, "submodules/CGGC/rgmc")
 STREAMCOM_PROG = os.path.join(GCT_HOME, "submodules/graph-streaming/streamcom")
 MCL_PROG = os.path.join(GCT_HOME, "submodules/local/bin/mcl")
-
+HIRECS_PATH = os.path.join(GCT_HOME, "submodules/hirecs")
 
 def get_data_file_path(dsname, fname=""):
     dspath = os.path.join(DATA_PATH, dsname)

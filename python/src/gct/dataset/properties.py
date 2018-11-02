@@ -137,14 +137,26 @@ class GraphClustersProperties(object):
     def num_vectices(self):
         prop_name = "_" + sys._getframe().f_code.co_name        
         return self.set_if_not_exists(prop_name, lambda: len(set(np.unique(self.edges[['src', 'dest']].values))))
-    
+
+    '''
+    degree for each node
+    '''    
+
     @property
-    def degrees(self):
+    def node_degrees(self):
+        return self.unweighted_degrees
+
+    '''
+    sum weight for each node
+    '''
+
+    @property
+    def node_weights(self):
         return self.weighted_degrees
 
     @property
-    def sum_degree(self):
-        return np.sum(list(self.degrees.values()))
+    def sum_weight(self):
+        return np.sum(list(self.node_weights.values()))
         
     @property
     def unweighted_degrees(self):
@@ -172,19 +184,19 @@ class GraphClustersProperties(object):
 
     @property 
     def num_clusters(self):
-        return len(self.cluser_indexes)
+        return len(self.cluster_indexes)
     
     @property 
-    def cluser_indexes(self):
-        return self.cluser_sizes.keys()    
+    def cluster_indexes(self):
+        return self.cluster_sizes.keys()    
     
     @property 
-    def cluser_sizes(self):
+    def cluster_sizes(self):
         prop_name = "_" + sys._getframe().f_code.co_name        
         return self.set_if_not_exists(prop_name, lambda: self.clusters[['node', 'cluster']].groupby('cluster')['node'].count().to_dict())
     
     @property 
-    def cluser_sum_intra_weights(self):
+    def cluster_sum_intra_weights(self):
 
         def f():
             df = self.edges[['src', 'dest', 'weight']]
@@ -201,7 +213,7 @@ class GraphClustersProperties(object):
         return self.set_if_not_exists(prop_name, f)        
 
     @property 
-    def cluser_sum_weighted_degrees(self):
+    def cluster_sum_weighted_degrees(self):
 
         def f():
             df = self.clusters[['node', 'cluster']]
@@ -214,7 +226,7 @@ class GraphClustersProperties(object):
         return self.set_if_not_exists(prop_name, f)        
         
     @property
-    def cluser_edge_sizes(self):
+    def cluster_edge_sizes(self):
 
         def f():
             df = self.edges[['src', 'dest']]
@@ -231,6 +243,46 @@ class GraphClustersProperties(object):
         return self.set_if_not_exists(prop_name, f)        
     
     @property
+    def cluster_out_sum_weights(self):
+
+        def f():
+            df = self.edges[['src', 'dest', 'weight']]
+            c_df = self.clusters[['node', 'cluster']].set_index('node')['cluster'].to_dict()
+            df['src_c'] = df['src'].map(c_df) 
+            df['dest_c'] = df['dest'].map(c_df)
+            df = df[(df['src_c'] != df['dest_c'])]
+            
+            a = df.groupby('src_c')[['weight']].sum().reset_index()
+            b = df.groupby('dest_c')[['weight']].sum().reset_index() 
+            b.columns = a.columns
+            a = pd.concat([a, b]).groupby('src_c').sum()
+            return a['weight'].to_dict()
+                
+        prop_name = "_" + sys._getframe().f_code.co_name
+        
+        return self.set_if_not_exists(prop_name, f)
+        
+    @property
+    def cluster_expansions(self):
+        if self.data.is_weighted():
+            raise Exception("only support unweighted graph")
+
+        def f():
+            ow = self.cluster_out_sum_weights
+            cs = self.cluster_sizes
+            return {u:v / cs[u] for u, v in ow.items()}
+                
+        prop_name = "_" + sys._getframe().f_code.co_name
+        
+        return self.set_if_not_exists(prop_name, f)        
+
+    @property
+    def cluster_cut_ratios(self):
+        d = self.cluster_sizes
+        n = self.num_vectices
+        return {u:v / float(n - d[u]) for u, v in self.cluster_expansions.items()}
+    
+    @property
     def intra_cluster_densities(self):
         if self.data.is_weighted():
             raise Exception("only support unweighted graph")
@@ -241,8 +293,8 @@ class GraphClustersProperties(object):
 
         def f():
             r = {}
-            d = self.cluser_edge_sizes
-            for cluster, n_node in self.cluser_sizes.items():
+            d = self.cluster_edge_sizes
+            for cluster, n_node in self.cluster_sizes.items():
                 n_edge = d[cluster]
                 a = float(n_edge) * 2 / n_node / (n_node - 1) if n_node > 1 else 0.0
                 r[cluster] = a
@@ -264,14 +316,14 @@ class GraphClustersProperties(object):
     
     @property
     def inter_unweighted_cluster_density(self):
-        n_intra_edges = np.sum(list(self.cluser_edge_sizes.values()))
+        n_intra_edges = np.sum(list(self.cluster_edge_sizes.values()))
         n_edge = self.num_edges
         n = self.num_vectices
-        d = n * (n - 1) - np.sum([u * (u - 1) for u in self.cluser_sizes.values()])
+        d = n * (n - 1) - np.sum([u * (u - 1) for u in self.cluster_sizes.values()])
         return float(n_edge - n_intra_edges) * 2 / d
 
     @property
-    def relative_cluser_densities(self):
+    def relative_cluster_densities(self):
 
         def f():
             df = self.edges[['src', 'dest', 'weight']]
@@ -324,14 +376,145 @@ class GraphClustersProperties(object):
     def modularity2(self):  # another formula
 
         def f():
-            c = self.sum_degree
+            c = self.sum_weight
             d = 1.0 / (c * c)
-            a = np.sum(list(self.cluser_sum_intra_weights.values())) / c
-            b = np.sum([u * u * d for u in self.cluser_sum_weighted_degrees.values()])
-            print (self.num_edges, a, b, c, d)
+            a = np.sum(list(self.cluster_sum_intra_weights.values())) / c
+            b = np.sum([u * u * d for u in self.cluster_sum_weighted_degrees.values()])
             return a - b
             
         prop_name = "_" + sys._getframe().f_code.co_name
         
+        return self.set_if_not_exists(prop_name, f)
+           
+    @property
+    def conductance(self):  # another formula
+
+        def f():
+            a = self.cluster_out_sum_weights
+            d = self.cluster_sum_intra_weights
+            return {u:v / (v + d[u]) for u, v in a.items() }
+                
+        prop_name = "_" + sys._getframe().f_code.co_name
+        
         return self.set_if_not_exists(prop_name, f)       
+        
+    @property
+    def normalized_cut(self):  # another formula
+
+        def f():
+            m = self.sum_weight
+            a = self.cluster_out_sum_weights
+            d = self.cluster_sum_intra_weights
+            return {u:v / (v + d[u]) + v / (v + m - d[u]) for u, v in a.items() }
+                
+        prop_name = "_" + sys._getframe().f_code.co_name
+        
+        return self.set_if_not_exists(prop_name, f)       
+    
+    @property
+    def cluster_max_out_degree_fraction(self):
+        return self.cluster_out_degree_fraction[0]
+
+    @property
+    def cluster_avg_out_degree_fraction(self):
+        return self.cluster_out_degree_fraction[1]
+
+    @property
+    def cluster_flake_out_degree_fraction(self):
+        return self.cluster_out_degree_fraction[2]    
+        
+    @property
+    def cluster_out_degree_fraction(self):
+
+        def f1():
+            df = self.edges[['src', 'dest', 'weight']]
+            df2 = self.edges[['dest', 'src', 'weight']]
+            df2.columns = df.columns 
+            df = pd.concat([df, df2]);del df2 
+            c_df = self.clusters[['node', 'cluster']].set_index('node')['cluster'].to_dict()
+            df['src_c'] = df['src'].map(c_df) 
+            df['dest_c'] = df['dest'].map(c_df)
+            df1 = df[(df['src_c'] != df['dest_c'])].drop(['dest_c', 'dest'], axis=1)
+            df1 = df1.groupby(['src_c', 'src'])["weight"].sum().reset_index()
+            df1.columns = ['cluster', 'node', 'inter_weight']
+            df2 = df[(df['src_c'] == df['dest_c'])].drop(['dest_c', 'dest'], axis=1)
+            df2 = df.groupby(['src_c', 'src'])["weight"].sum().reset_index()
+            df2.columns = ['cluster', 'node', 'intra_weight']
+            df = pd.merge(df1, df2, on=['cluster', 'node'], how='outer')
+            return df
+
+        def f2():
+            df = f1()
+            df['odf'] = df['inter_weight'] / (df['inter_weight'] + df['intra_weight'])
+            df['flake'] = (df['inter_weight'] > df['intra_weight']).astype(np.float)
+            max_odf = df.groupby('cluster')['odf'].max().to_dict()
+            avg_odf = df.groupby('cluster')['odf'].mean().to_dict()
+            flake_odf = df.groupby('cluster')[['flake']].sum()
+            d = self.cluster_sizes
+            flake_odf['cluster_size'] = flake_odf.index.map(d)
+            flake_odf = (flake_odf['flake'] / flake_odf['cluster_size']).to_dict()
+            return max_odf, avg_odf, flake_odf
+
+        prop_name = "_" + sys._getframe().f_code.co_name
+        
+        return self.set_if_not_exists(prop_name, f2)
+        
+    @property
+    def separability(self):
+        a=self.cluster_out_sum_weights
+        b=self.cluster_sum_intra_weights
+        return {u:b[u]/float(v) for u,v in a.items() }
+    
+    
+        
+    @property
+    def cluster_clustering_coefficient(self):
+
+        def f1(edges):
+            import igraph 
+            g = igraph.Graph(edges=edges[['src', 'dest']].values.tolist(), directed=False) 
+            return g.transitivity_undirected()
+
+        def f2():
+            df = self.edges[['src', 'dest']]
+            c_df = self.clusters[['node', 'cluster']].set_index('node')['cluster'].to_dict()
+            df['src_c'] = df['src'].map(c_df) 
+            df['dest_c'] = df['dest'].map(c_df)
+            df = df[(df['src_c'] == df['dest_c'])]
+            
+            ret={}
+            for i in self.cluster_indexes:
+                edges=df[df['src_c']==i]
+                ret[i]=f1(edges)
+            return ret 
+        
+        prop_name = "_" + sys._getframe().f_code.co_name
+        
+        return self.set_if_not_exists(prop_name, f2)
+
+    @property
+    def cluster_local_clustering_coefficient(self):
+
+        def f1(edges):
+            import igraph 
+            g = igraph.Graph(edges=edges[['src', 'dest']].values.tolist(), directed=False) 
+            return g.transitivity_local_undirected()
+
+        def f2():
+            df = self.edges[['src', 'dest']]
+            c_df = self.clusters[['node', 'cluster']].set_index('node')['cluster'].to_dict()
+            df['src_c'] = df['src'].map(c_df) 
+            df['dest_c'] = df['dest'].map(c_df)
+            df = df[(df['src_c'] == df['dest_c'])]
+            
+            ret={}
+            for i in self.cluster_indexes:
+                edges=df[df['src_c']==i]
+                print (edges.shape) 
+                ret[i]=f1(edges)
+            return ret 
+        
+        prop_name = "_" + sys._getframe().f_code.co_name
+        
+        return self.set_if_not_exists(prop_name, f2)
     

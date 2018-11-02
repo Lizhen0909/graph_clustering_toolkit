@@ -5,7 +5,7 @@
 
 
 
-all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap webgraph
+all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap powergraph webgraph
 
 clean: 
 	cd OSLOM2 && make clean
@@ -23,6 +23,11 @@ relaxmap:
 
 LFR:
 	cd LFR-Benchmark_UndirWeightOvp && if [ ! -f lfrbench_udwov ]; then  make; fi
+
+powergraph:
+	if [ ! -d PowerGraph/release ]; then  cd PowerGraph && ./configure  --no_jvm; fi
+	if [ ! -f PowerGraph/release/apps/label_propagation/label_propagation ]; then  cd PowerGraph/release/apps/label_propagation && make; fi
+	if [ ! -f PowerGraph/release/apps/GossipMap/GossipMap ]; then  cd PowerGraph/release/apps/GossipMap && make; fi
 
 LIGRA:
 	cd ligra && \
@@ -90,6 +95,37 @@ webgraph:
 	if [ ! -d webgraph-3.6.1 ]; then rm -fr webgraph-3.6.1.tar.gz && wget http://webgraph.di.unimi.it/webgraph-3.6.1-bin.tar.gz && tar xf webgraph-3.6.1-bin.tar.gz; fi
 
 	if [ ! -f webgraph-3.6.1/sux4j-4.2.0.jar ]; then cd webgraph-3.6.1 &&  wget http://webgraph.di.unimi.it/webgraph-deps.tar.gz && tar xf webgraph-deps.tar.gz; fi
+
+
+genconvnmi:
+	if [ ! -f GenConvNMI/gecmi ]; then \
+	   cd GenConvNMI && wget https://github.com/eXascaleInfolab/GenConvNMI/releases/download/v2.53-AccuracyConvergence/gecmi && chmod u+x gecmi; \
+	fi
+
+ovpnmi:
+	if [ ! -f OvpNMI/onmi ]; then \
+	   cd OvpNMI && make && cp bin/Release/onmi . ; \
+	fi
+
+xmeasures: xmeasures/xmeasures
+xmeasures/xmeasures:
+	cd xmeasures && make release && cp bin/Release/xmeasures . ; \
+
+hirecs: hirecs/hirecs hirecs/libhirecs.so
+hirecs/hirecs:
+	cd hirecs && cp client/bin/Release/hirecs . && chmod u+x hirecs
+hirecs/libhirecs.so:
+	cd hirecs && cp bin/Release/libhirecs.so .
+
+GANXiS: GANXiS/LabelRank GANXiS/GANXiSw.jar
+GANXiS/LabelRank:
+	cd GANXiS/GANXiS-S_v1.0 && g++ *.cpp -o LabelRank && cp LabelRank ..
+GANXiS/GANXiSw.jar:
+	cd GANXiS/GANXiS_v3.0.2  &&  cp *.jar ..
+
+
+
+
 
 
 

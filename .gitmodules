@@ -28,3 +28,6 @@
 [submodule "submodules/xmeasures"]
 	path = submodules/xmeasures
 	url = https://github.com/eXascaleInfolab/xmeasures
+[submodule "submodules/hirecs"]
+	path = submodules/hirecs
+	url = https://github.com/eXascaleInfolab/hirecs

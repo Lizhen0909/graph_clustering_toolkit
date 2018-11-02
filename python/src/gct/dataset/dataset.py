@@ -21,6 +21,7 @@ class Dataset(object):
             self.parq_ground_truth = config.get_data_file_path(self.name, 'ground_truth.parq')
             self.file_edges = config.get_data_file_path(self.name, 'edges.txt')
             self.file_pajek = config.get_data_file_path(self.name, 'pajek.txt')
+            self.file_hig = config.get_data_file_path(self.name, 'pajek.hig')
             self.file_scanbin = config.get_data_file_path(self.name, 'scanbin')
             self.file_anyscan = config.get_data_file_path(self.name, 'anyscan.txt')
             self.file_snap = config.get_data_file_path(self.name, 'snap.bin')
@@ -178,7 +179,20 @@ class Dataset(object):
                 f.write(grouped.loc[i, 0] + "\n")
         return filepath 
 
-
+    def to_higformat(self, filepath=None):
+        if (filepath == None):
+            filepath = self.file_hig
+            if utils.file_exists(filepath):
+                return filepath         
+        if not utils.file_exists(self.file_pajek): self.to_pajek()
+        
+        cmd = "python {} {}".format(config.HIG_CONVERT_PROG, self.file_pajek)
+        self.logger.info("running " + cmd)
+        status = utils.shell_run_and_wait(cmd)
+        if (status != 0):
+            raise Exception("run command failed: " + str(status))
+        return filepath 
+    
 class AnonymousDataset(Dataset):        
 
     def __init__(self, edges, description="", ground_truth=None, directed=False, weighted=False):

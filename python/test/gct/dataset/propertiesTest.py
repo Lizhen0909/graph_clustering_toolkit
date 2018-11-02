@@ -4,8 +4,9 @@ Created on Oct 26, 2018
 @author: lizhen
 '''
 import unittest
-from gct.dataset import random_dataset
+from gct.dataset import random_dataset, convert
 from gct.dataset.properties import GraphProperties, GraphClustersProperties
+import numpy as np 
 
 
 class Test(unittest.TestCase):
@@ -31,24 +32,41 @@ class Test(unittest.TestCase):
         g = self.graph_unweighted_undirect
         assert not g.is_weighted()
         p = GraphClustersProperties(g, g.get_ground_truth())
+        self.assertEqual(p.num_edges * 2, p.sum_weight)
+        self.assertEqual(np.sum(list(p.cluster_out_sum_weights.values())) + np.sum(list(p.cluster_sum_intra_weights.values())), p.sum_weight)
         print ('num_edges', p.num_edges)
         print ('num_vectices', p.num_vectices)
         print ('num_clusters', p.num_clusters)
-        print ('cluser_sizes', p.cluser_sizes)
-        print ('cluser_indexes', p.cluser_indexes)
-        print ('cluser_edge_sizes', p.cluser_edge_sizes)
-        print ('cluser_sum_intra_weights',p.cluser_sum_intra_weights)
+        print ('cluster_sizes', p.cluster_sizes)
+        print ('cluster_indexes', p.cluster_indexes)
+        print ('cluster_edge_sizes', p.cluster_edge_sizes)
+        print ('cluster_sum_intra_weights', p.cluster_sum_intra_weights)
         print ('unweighted_intra_cluster_densities', p.unweighted_intra_cluster_densities)
-        print ('cluser_sum_weighted_degrees', p.cluser_sum_weighted_degrees)
+        print ('cluster_sum_weighted_degrees', p.cluster_sum_weighted_degrees)
         
         print ('intra_cluster_densities', p.intra_cluster_densities)
         print ('intra_cluster_density', p.intra_cluster_density)
         print ('inter_cluster_density', p.inter_cluster_density)
-        print ('relative_cluser_densities', p.relative_cluser_densities)
-        print ("modularity1", p.modularity1)
+        print ('relative_cluster_densities', p.relative_cluster_densities)
         print ("modularity2", p.modularity2)
-        # print ("snap_modularities", p.snap_modularities)        
-        # print ("snap_modularity", p.snap_modularity)
+        print ("cluster_expansions", p.cluster_expansions)
+        print ("cluster_cut_ratios", p.cluster_cut_ratios)
+        
+        print ("conductance", p.conductance)  
+        print ("normalized_cut", p.normalized_cut)
+              
+        print ("cluster_max_out_degree_fraction", p.cluster_max_out_degree_fraction)
+        print ("cluster_avg_out_degree_fraction", p.cluster_avg_out_degree_fraction)
+        print ("cluster_flake_out_degree_fraction", p.cluster_flake_out_degree_fraction)
+        print ("separability", p.separability)
+        
+        print ("cluster_clustering_coefficient", p.cluster_clustering_coefficient)
+        print ("cluster_local_clustering_coefficient", p.cluster_local_clustering_coefficient) 
+        
+        print ("AAA", convert.to_igraph(self.graph_unweighted_undirect).transitivity_local_undirected())       
+        print ("AAA", convert.to_igraph(self.graph_unweighted_undirect).transitivity_undirected())       
+        
+        
         
                                     
 if __name__ == "__main__":
