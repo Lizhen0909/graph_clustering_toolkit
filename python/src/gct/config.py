@@ -40,6 +40,8 @@ CGGC_PROG = os.path.join(GCT_HOME, "submodules/CGGC/rgmc")
 STREAMCOM_PROG = os.path.join(GCT_HOME, "submodules/graph-streaming/streamcom")
 MCL_PROG = os.path.join(GCT_HOME, "submodules/local/bin/mcl")
 HIRECS_PATH = os.path.join(GCT_HOME, "submodules/hirecs")
+LABLE_RANK_PROG = os.path.join(GCT_HOME, "submodules/GANXiS/LabelRank")
+GANXISW_PROG  = os.path.join(GCT_HOME, "submodules/GANXiS/GANXiSw.jar")
 
 def get_data_file_path(dsname, fname=""):
     dspath = os.path.join(DATA_PATH, dsname)

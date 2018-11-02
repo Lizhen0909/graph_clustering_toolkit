@@ -7,7 +7,7 @@ import unittest
 from gct.dataset import random_dataset
 from gct.alg import clustering
 import sys
-from gct.alg.PyCABeM_clustering import HiReCS
+from gct.alg.PyCABeM_clustering import HiReCS, LabelRank, GANXiSw
 
 
 class Test(unittest.TestCase):
@@ -42,6 +42,21 @@ class Test(unittest.TestCase):
             print (alg.run(data).get_result())
             print (clustering.load_rusult(data.name, alg.name))
  
+
+    def test_LabelRank(self):
+        for data in  self.graphs: 
+            alg = LabelRank()
+            print(sys._getframe().f_code.co_name) 
+            print (alg.run(data).get_result())
+            print (clustering.load_rusult(data.name, alg.name))
+
+    def test_GANXiSw(self):
+        for data in  self.graphs: 
+            alg = GANXiSw()
+            print(sys._getframe().f_code.co_name) 
+            print (alg.run(data).get_result())
+            print (clustering.load_rusult(data.name, alg.name))
+             
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']
