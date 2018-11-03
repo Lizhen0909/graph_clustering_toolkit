@@ -5,8 +5,12 @@ Created on Oct 26, 2018
 '''
 import unittest
 from gct.dataset import random_dataset, convert
-from gct.dataset.properties import GraphProperties, GraphClustersProperties
+from gct.dataset.properties import GraphProperties, GraphClustersProperties, \
+    ClusterComparator
 import numpy as np 
+from gct.alg.OSLOM_clustering import Infomap, OSLOM
+from gct.alg import clustering
+from gct.alg.cggc_clustering import CGGC
 
 
 class Test(unittest.TestCase):
@@ -65,10 +69,46 @@ class Test(unittest.TestCase):
         
         print ("AAA", convert.to_igraph(self.graph_unweighted_undirect).transitivity_local_undirected())       
         print ("AAA", convert.to_igraph(self.graph_unweighted_undirect).transitivity_undirected())       
+
+    def testClusterComparator(self):
+        g = self.graph_unweighted_undirect
+
+        def make_cluter_if_not_exists():
+            alg = CGGC()
+            if not clustering.has_result(g.name, alg.name):
+                alg.run(g).get_result()
+            return clustering.load_result(g.name, alg.name)
+
+        assert not g.is_weighted()
+        gt = list(g.get_ground_truth().values())[0]
+        cluster = make_cluter_if_not_exists()
         
+        p = ClusterComparator(gt, cluster)
+        print ('sklean_nmi', p.sklean_nmi)
+        print ('sklean_ami', p.sklean_ami)
+        print ('sklean_ars', p.sklean_ars)
+        print ('sklean_completeness', p.sklean_completeness)        
         
+    def testClusterComparator2(self):
+        g = self.graph_unweighted_undirect
+
+        def make_cluter_if_not_exists():
+            alg = OSLOM()
+            if not clustering.has_result(g.name, alg.name):
+                alg.run(g).get_result()
+            return clustering.load_result(g.name, alg.name)
+
+        assert not g.is_weighted()
+        gt = list(g.get_ground_truth().values())[0]
+        cluster = make_cluter_if_not_exists()
         
-                                    
+        p = ClusterComparator(gt, cluster)
+        print ('sklean_nmi', p.sklean_nmi)
+        print ('sklean_ami', p.sklean_ami)
+        print ('sklean_ars', p.sklean_ars)
+        print ('sklean_completeness', p.sklean_completeness)        
+
+                                            
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testName']
     unittest.main()

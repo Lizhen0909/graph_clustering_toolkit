@@ -8,7 +8,7 @@ import os
 from gct import utils
 
 if 'GCT_DATA' not in os.environ:
-    DATA_HOME = os.path.join(os.environ['HOME'], '.gcb')
+    DATA_HOME = os.path.join(os.environ['HOME'], '.gct')
     utils.create_dir_if_not_exists(DATA_HOME)
 else:
     DATA_HOME = os.environ['GCT_DATA']
@@ -44,30 +44,34 @@ LABLE_RANK_PROG = os.path.join(GCT_HOME, "submodules/GANXiS/LabelRank")
 GANXISW_PROG = os.path.join(GCT_HOME, "submodules/GANXiS/GANXiSw.jar")
 
 
-def get_data_file_path(dsname, fname=""):
+def get_data_file_path(dsname, fname="", create=False):
     dspath = os.path.join(DATA_PATH, dsname)
-    utils.create_dir_if_not_exists(dspath)
+    if create:
+        utils.create_dir_if_not_exists(dspath)
     if fname:
         return os.path.join(dspath, fname)
     else:
         return dspath 
 
 
-def get_download_file_path(dsname, fname=""):
+def get_download_file_path(dsname, fname="", create=False):
     dspath = os.path.join(DOWNLOAD_PATH, dsname)
-    utils.create_dir_if_not_exists(dspath)
+    if create: utils.create_dir_if_not_exists(dspath)
     if fname:
         return os.path.join(dspath, fname)
     else:
         return dspath 
 
 
-def get_result_file_path(dsname, algname):
+def get_result_file_path(dsname, algname="", create=False):
     dspath = os.path.join(RESULT_PATH, dsname)
-    utils.create_dir_if_not_exists(dspath)
-    algpath = os.path.join(dspath, algname)
-    utils.create_dir_if_not_exists(algpath)
-    return algpath 
+    if create: utils.create_dir_if_not_exists(dspath)
+    if algname:
+        algpath = os.path.join(dspath, algname)
+        utils.create_dir_if_not_exists(algpath)
+        return algpath
+    else:
+        return dspath 
 
 
 def get_dct_prog(name, directed=False):

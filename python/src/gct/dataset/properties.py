@@ -10,6 +10,7 @@ from gct.alg.clustering import Result
 import sys
 from gct.dataset import convert
 from gct.dataset.dataset import Cluster
+from gct import utils
 
 
 class GraphProperties(object):
@@ -520,4 +521,112 @@ class GraphClustersProperties(object):
         prop_name = "_" + sys._getframe().f_code.co_name
         
         return self.set_if_not_exists(prop_name, f2)
+
+
+class ClusterComparator(object):
     
+    def __init__(self, clusterobj1, clusterobj2):
+        self.logger = utils.get_logger("{}".format(type(self).__name__))
+
+        def to_obj(clusterobj):
+            if isinstance(clusterobj, Cluster):
+                return  clusterobj
+            elif isinstance(clusterobj, Result):
+                return  Cluster(clusterobj.clusters(as_dataframe=True))
+            elif isinstance(clusterobj, pd.DataFrame) or isinstance(clusterobj, list) \
+                or isinstance(clusterobj, np.ndarray) or isinstance(clusterobj, str) or isinstance(clusterobj, dict):
+                return Cluster(clusterobj)
+            else:
+                raise Exception("Unsupported " + str(type(clusterobj)))
+        
+        self.clusterobj1 = to_obj(clusterobj1) 
+        self.clusterobj2 = to_obj(clusterobj2)
+        
+        if self.clusterobj1.is_overlap or  self.clusterobj2.is_overlap: 
+            self.overlap = True 
+        else:
+            self.overlap = False  
+        
+        def clean():
+            df1 = self.clusterobj1.value()
+            df2 = self.clusterobj2.value()
+            nodes = set(df1['node']).intersection(set(df2['node']))
+            self.logger.info ("resulting {} nodes out of {},{}".format(len(nodes), len(df1), len(df2)))
+            df1 = df1[df1['node'].isin(nodes)].set_index('node')
+            df2 = df2[df2['node'].isin(nodes)].set_index('node').loc[df2.index]
+            return df1, df2 
+
+        if not self.overlap:
+            self.clean_clusterobj1, self.clean_clusterobj2 = clean()
+
+    
+    @property 
+    def ground_truth(self): #assume the first one is ground truth
+        return self.clusterobj1
+    
+    @property 
+    def clean_ground_truth(self): #assume the first one is ground truth
+        return self.clean_clusterobj1
+
+    @property 
+    def predition(self): 
+        return self.clusterobj2
+
+    @property 
+    def clean_prediction(self): 
+        return self.clean_clusterobj2
+    
+    @property
+    def sklean_nmi(self):
+        if self.overlap:
+            return None 
+        else:
+            prop_name = "_" + sys._getframe().f_code.co_name 
+
+            def f():
+                from sklearn.metrics.cluster import normalized_mutual_info_score            
+                return normalized_mutual_info_score(self.clean_clusterobj1['cluster'].values, self.clean_clusterobj2['cluster'].values)
+
+            return utils.set_if_not_exists(self, prop_name, f)
+    
+    @property
+    def sklean_ami(self):
+        if self.overlap:
+            return None 
+        else:
+            prop_name = "_" + sys._getframe().f_code.co_name 
+
+            def f():
+                from sklearn.metrics.cluster import adjusted_mutual_info_score            
+                return adjusted_mutual_info_score(self.clean_clusterobj1['cluster'].values, self.clean_clusterobj2['cluster'].values)
+
+            return utils.set_if_not_exists(self, prop_name, f)
+
+    @property
+    def sklean_ars(self):
+        if self.overlap:
+            return None 
+        else:
+            prop_name = "_" + sys._getframe().f_code.co_name 
+
+            def f():
+                from sklearn.metrics.cluster import adjusted_rand_score            
+                return adjusted_rand_score(self.clean_clusterobj1['cluster'].values, self.clean_clusterobj2['cluster'].values)
+
+            return utils.set_if_not_exists(self, prop_name, f)
+    @property
+    def sklean_completeness(self):
+        if self.overlap:
+            return None 
+        else:
+            prop_name = "_" + sys._getframe().f_code.co_name 
+
+            def f():
+                from sklearn.metrics.cluster import completeness_score            
+                return completeness_score(self.clean_ground_truth['cluster'].values, self.clean_prediction['cluster'].values)
+
+            return utils.set_if_not_exists(self, prop_name, f)
+        
+                
+        
+        

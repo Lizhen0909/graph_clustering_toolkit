@@ -30,6 +30,14 @@ def remove_if_file_exit(fname, is_dir=False):
         else:
             os.remove(fname)
 
+def set_if_not_exists(self, name, fun):
+    if hasattr(self, name):
+        return getattr(self, name)
+    else:
+        # print ("call fun for " + name)
+        value = fun()
+        setattr(self, name, value)
+        return value 
 
 def abspath(fpath):
     return os.path.abspath(fpath)

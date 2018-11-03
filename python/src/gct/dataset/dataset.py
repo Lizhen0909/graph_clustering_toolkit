@@ -5,6 +5,7 @@ import json
 import numpy as np
 import pandas as pd  
 import os
+import sys
 
 
 class Cluster(object):
@@ -29,10 +30,31 @@ class Cluster(object):
             if len(arr.shape) != 2 or arr.shape[1] != 2:
                 raise ValueError("arg is not right")
             self.cluster = pd.DataFrame(arr, columns=['node', 'cluster'])
-
+        if self.cluster is not None:
+            self.cluster = self.cluster.drop_duplicates()
+        
     def is_persistent(self):
         return self.path is not None  and utils.file_exists(self.path)
     
+    @property 
+    def is_overlap(self):
+        prop_name = "_" + sys._getframe().f_code.co_name 
+
+        def f():
+            (self.node_overlaps > 1).any()
+
+        return utils.set_if_not_exists(self, prop_name, f)
+    
+    @property 
+    def node_overlaps(self):
+        prop_name = "_" + sys._getframe().f_code.co_name 
+
+        def f():
+            df = self.value()
+            return df.groupby('node')['cluster'].count()
+
+        return utils.set_if_not_exists(self, prop_name, f)
+        
     def persistent(self, filepath=None, force=False):
         assert not (self.path is  None  and filepath is None)
         if filepath is None:
@@ -68,6 +90,8 @@ class Cluster(object):
             self.logger.info("reading" + self.path)
             df = fastparquet.ParquetFile(self.path).to_pandas()
             self.cluster = df 
+            if self.cluster is not None:
+                self.cluster = self.cluster.drop_duplicates()            
             return self.cluster
 
         
@@ -97,17 +121,18 @@ class Dataset(object):
         
         if name:
             is_persistent = self.is_edges_persistent() and self.is_ground_truth_persistent()
-            self.home = config.get_data_file_path(name)
+            self.home = config.get_data_file_path(name, create=False)
             if utils.file_exists(self.home):
                 if overide:
                     utils.remove_if_file_exit(self.home, is_dir=True)
-                    utils.create_dir_if_not_exists(self.home)
                 elif is_persistent:
                     pass 
                 else:
                     raise Exception("Dataset {} exists at {}. Use overide=True or use load it locally.".format(name, self.home))
-        
+            
             if not is_persistent:
+                utils.remove_if_file_exit(config.get_result_file_path(self.name), is_dir=True)                               
+                utils.create_dir_if_not_exists(self.home) 
                 self.persistent()
                 self.update_meta()
         
@@ -194,7 +219,7 @@ class Dataset(object):
         if isinstance(obj, dict):
             self.ground_truth = {u:to_cluster(v) for u, v in obj.items()}
         else:
-            self.ground_truth = {"default_ground_truth":to_cluster(obj)}
+            self.ground_truth = {"default":to_cluster(obj)}
 
     def set_edges(self, obj):
         v = obj
@@ -361,7 +386,7 @@ def local_exists(name):
 
 
 def load_local(name):
-    path = config.get_data_file_path(name)
+    path = config.get_data_file_path(name, create=False)
     if not utils.file_exists(path):
         raise Exception("path not exists: " + path)
     with open(os.path.join(path, 'meta.info')) as f:

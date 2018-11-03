@@ -443,13 +443,17 @@ class OSLOM(Clustering):
                 with open(tp) as f:
                     lines = [u.strip() for u in f if not u.startswith('#')]
                     lines = [[int(v) for v in u.split(" ")] for u in lines]
+                    print (dict(enumerate (lines)))
                     clusters[level] = dict(enumerate (lines))
+                    
+            max_level = max(list(clusters.keys()))
                     
         self.logger.info("Made %d levels of clusters with #clusters %s in %f seconds" % (len(clusters), str([len(u) for u in clusters.values()]), timecost))
         
         result = {}
         result['multilevel'] = True
         result['num_level'] = len(clusters)
+        result['max_level'] = max_level
         result['algname'] = self.name
         result['params'] = params
         result['dataname'] = data.name

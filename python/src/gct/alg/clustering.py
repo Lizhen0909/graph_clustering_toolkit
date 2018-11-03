@@ -9,8 +9,13 @@ import json
 import collections
 import pandas as pd     
 
-    
-def load_rusult(dataname, algname):
+
+def has_result(dataname, algname):
+    fpath = os.path.join(config.get_result_file_path(dataname, algname), 'result.txt')
+    return utils.file_exists(fpath)
+
+        
+def load_result(dataname, algname):
     fpath = os.path.join(config.get_result_file_path(dataname, algname), 'result.txt')
     with open(fpath, 'rt') as f :
         return Result(json.load(f))
@@ -68,15 +73,24 @@ class Result(collections.MutableMapping):
         return self.store
 
     def clusters(self, as_dataframe=False):
+        if self.get("multilevel"):
+            max_level = self.get('max_level')
+            if isinstance(list(self.keys())[0], str): 
+                max_level = str(max_level)
+                d = self.get('clusters')[max_level]
+                d={int(u):v for u,v in d.items()}
+            else:
+                d = self.get('clusters')[max_level]
+        else:
+            d = self.get('clusters') 
         if as_dataframe:
-            d = self.get('clusters')
             lst = [] 
             for k, vs in d.items():
                 for v in vs: 
                     lst.append([v, k])
             return pd.DataFrame(lst, columns=['node', 'cluster'])
         else:
-            return self.get('clusters')
+            return d
         
     @property     
     def algname(self):
