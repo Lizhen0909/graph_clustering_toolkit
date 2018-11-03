@@ -29,7 +29,15 @@ def remove_if_file_exit(fname, is_dir=False):
             shutil.rmtree(fname) 
         else:
             os.remove(fname)
-        
+
+
+def abspath(fpath):
+    return os.path.abspath(fpath)
+
+
+def path_equals(path1, path2):    
+    return os.path.abspath(path1) == os.path.abspath(path2)    
+
             
 def basename(path):        
     return os.path.basename(path)
@@ -86,7 +94,7 @@ def shell_run_and_wait(command, working_dir=None, env=None):
     command = command.split(" ")
     import subprocess
     # process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    process = subprocess.Popen(command,env=env)
+    process = subprocess.Popen(command, env=env)
     process.wait()
     if working_dir is not None:
         os.chdir(curr_dir)

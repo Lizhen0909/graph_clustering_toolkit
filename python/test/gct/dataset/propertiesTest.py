@@ -31,7 +31,7 @@ class Test(unittest.TestCase):
     def testClustersProperties(self):
         g = self.graph_unweighted_undirect
         assert not g.is_weighted()
-        p = GraphClustersProperties(g, g.get_ground_truth())
+        p = GraphClustersProperties(g, list(g.get_ground_truth().values())[0])
         self.assertEqual(p.num_edges * 2, p.sum_weight)
         self.assertEqual(np.sum(list(p.cluster_out_sum_weights.values())) + np.sum(list(p.cluster_sum_intra_weights.values())), p.sum_weight)
         print ('num_edges', p.num_edges)

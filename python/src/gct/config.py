@@ -16,10 +16,10 @@ else:
 assert DATA_HOME 
 
 DATA_PATH = os.path.join(DATA_HOME, "data")
-
+DOWNLOAD_PATH = os.path.join(DATA_HOME, "download")
 RESULT_PATH = os.path.join(DATA_HOME, "result")
 
-[utils.create_dir_if_not_exists(directory) for directory in [ DATA_PATH, RESULT_PATH]]
+[utils.create_dir_if_not_exists(directory) for directory in [ DATA_PATH, DOWNLOAD_PATH, RESULT_PATH]]
 
 if 'GCT_HOME' not in os.environ:
     GCT_HOME = os.path.join(os.environ['HOME'], 'graph_clustering_toolkit')
@@ -41,10 +41,20 @@ STREAMCOM_PROG = os.path.join(GCT_HOME, "submodules/graph-streaming/streamcom")
 MCL_PROG = os.path.join(GCT_HOME, "submodules/local/bin/mcl")
 HIRECS_PATH = os.path.join(GCT_HOME, "submodules/hirecs")
 LABLE_RANK_PROG = os.path.join(GCT_HOME, "submodules/GANXiS/LabelRank")
-GANXISW_PROG  = os.path.join(GCT_HOME, "submodules/GANXiS/GANXiSw.jar")
+GANXISW_PROG = os.path.join(GCT_HOME, "submodules/GANXiS/GANXiSw.jar")
+
 
 def get_data_file_path(dsname, fname=""):
     dspath = os.path.join(DATA_PATH, dsname)
+    utils.create_dir_if_not_exists(dspath)
+    if fname:
+        return os.path.join(dspath, fname)
+    else:
+        return dspath 
+
+
+def get_download_file_path(dsname, fname=""):
+    dspath = os.path.join(DOWNLOAD_PATH, dsname)
     utils.create_dir_if_not_exists(dspath)
     if fname:
         return os.path.join(dspath, fname)

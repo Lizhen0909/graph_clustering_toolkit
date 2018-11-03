@@ -78,13 +78,11 @@ class Test(unittest.TestCase):
         utils.create_dir_if_not_exists(config.get_data_file_path("testRandomDataset1"))
         ds = random_dataset.generate_Erdos_Renyi("testRandomDataset1", 100, 1000, False)
         print (ds)
-        ds.load()
 
     def testRandomDataset0(self):
         utils.create_dir_if_not_exists(config.get_data_file_path("testRandomDataset0"))
         ds = random_dataset.generate_LFR("testRandomDataset0", N=128, k=16, maxk=16, muw=0.1, minc=32, beta=1, a=0)
         print (ds)
-        ds.load()
         
         
 if __name__ == "__main__":

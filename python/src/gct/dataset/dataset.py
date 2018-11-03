@@ -1,6 +1,5 @@
 from gct import utils, config
 from gct.dataset import edgelist2pajek
-import dask.dataframe as dd
 import fastparquet
 import json 
 import numpy as np
@@ -8,17 +7,84 @@ import pandas as pd
 import os
 
 
+class Cluster(object):
+
+    def __init__(self, cluster):
+        self.logger = utils.get_logger("{}".format(type(self).__name__))
+        self.cluster = None 
+        self.path = None 
+        if isinstance(cluster, str):
+            self.path = utils.abspath(cluster)
+        elif isinstance(cluster, pd.DataFrame):
+            if not 'cluster' in cluster.columns or not 'node' in cluster.columns:
+                raise ValueError("arg is not right")
+            self.cluster = cluster[['node', 'cluster']]
+        else:  
+            if isinstance(cluster, list):
+                arr = np.array(cluster)
+            elif isinstance(cluster, np.ndarray):
+                arr = cluster  
+            else:
+                raise ValueError("arg is not right")
+            if len(arr.shape) != 2 or arr.shape[1] != 2:
+                raise ValueError("arg is not right")
+            self.cluster = pd.DataFrame(arr, columns=['node', 'cluster'])
+
+    def is_persistent(self):
+        return self.path is not None  and utils.file_exists(self.path)
+    
+    def persistent(self, filepath=None, force=False):
+        assert not (self.path is  None  and filepath is None)
+        if filepath is None:
+            if force: 
+                self.save(self.path)
+            else:
+                raise Exception("already persistent")
+        else:
+            if self.path is None:
+                self.path = utils.abspath(filepath)
+                self.save(self.path)
+            else:
+                if utils.path_equals(self.path, filepath):
+                    if force: 
+                        self.save(self.path)
+                    else:
+                        raise Exception("already persistent")
+             
+    def save(self, filepath, format="parq"):
+        assert filepath 
+        self.logger.info("Writing " + filepath)
+        if format == "parq":
+            fastparquet.writer.write(filepath, self.value(), compression="SNAPPY")
+        elif format == "csv":
+            self.value().to_csv(filepath, index=None)
+        else:
+            raise ValueError("Error: " + format) 
+        
+    def value(self):
+        if self.cluster is not None: 
+            return self.cluster
+        else:
+            self.logger.info("reading" + self.path)
+            df = fastparquet.ParquetFile(self.path).to_pandas()
+            self.cluster = df 
+            return self.cluster
+
+        
 class Dataset(object):
 
-    def __init__(self, name=None, description="", anonymous=False):
+    def __init__(self, name=None, description="", groundtruthObj=None, edgesObj=None, directed=False, weighted=False, overide=False):
+        assert edgesObj is not None 
         self.name = name 
         self.description = description
         self.logger = utils.get_logger("{}:{}".format(type(self).__name__, self.name))
-        
-        if not anonymous:
+        self.directed = directed 
+        self.weighted = weighted
+         
+        self.parq_edges = None
+         
+        if name:
             assert name 
-            self.parq_edges = config.get_data_file_path(self.name, 'edges.parq')
-            self.parq_ground_truth = config.get_data_file_path(self.name, 'ground_truth.parq')
             self.file_edges = config.get_data_file_path(self.name, 'edges.txt')
             self.file_pajek = config.get_data_file_path(self.name, 'pajek.txt')
             self.file_hig = config.get_data_file_path(self.name, 'pajek.hig')
@@ -26,6 +92,66 @@ class Dataset(object):
             self.file_anyscan = config.get_data_file_path(self.name, 'anyscan.txt')
             self.file_snap = config.get_data_file_path(self.name, 'snap.bin')
         
+        self.set_ground_truth(groundtruthObj)
+        self.set_edges(edgesObj)
+        
+        if name:
+            is_persistent = self.is_edges_persistent() and self.is_ground_truth_persistent()
+            self.home = config.get_data_file_path(name)
+            if utils.file_exists(self.home):
+                if overide:
+                    utils.remove_if_file_exit(self.home, is_dir=True)
+                    utils.create_dir_if_not_exists(self.home)
+                elif is_persistent:
+                    pass 
+                else:
+                    raise Exception("Dataset {} exists at {}. Use overide=True or use load it locally.".format(name, self.home))
+        
+            if not is_persistent:
+                self.persistent()
+                self.update_meta()
+        
+    def is_edges_persistent(self):
+        return hasattr(self, "parq_edges") and self.parq_edges is not None and utils.file_exists(self.parq_edges)        
+    
+    def persistent(self):
+        if not self.is_edges_persistent():
+            filepath = config.get_data_file_path(self.name, 'edges.parq')
+            self.persistent_edges(filepath)
+        if self.has_ground_truth():
+            for k, v in self.get_ground_truth().items():
+                if not v.is_persistent():
+                    filepath = config.get_data_file_path(self.name, 'gt_{}.parq'.format(k))                
+                    v.persistent(filepath)
+                
+    def persistent_edges(self, filepath=None, force=False):
+        assert not (self.parq_edges is  None  and filepath is None)
+        if filepath is None:
+            if force: 
+                self.save_edges(self.path)
+            else:
+                raise Exception("already persistent")
+        else:
+            if self.parq_edges is None:
+                self.parq_edges = utils.abspath(filepath)
+                self.save_edges(self.parq_edges)
+            else:
+                if utils.path_equals(self.parq_edges, filepath):
+                    if force: 
+                        self.save_edges(self.parq_edges)
+                    else:
+                        raise Exception("already persistent")
+        
+    def save_edges(self, filepath, format="parq"):
+        assert filepath 
+        self.logger.info("writing" + filepath)
+        if format == "parq":
+            fastparquet.writer.write(filepath, self.get_edges(), compression="SNAPPY")
+        elif format == "csv":
+            self.value().to_csv(filepath, index=None)
+        else:
+            raise ValueError("Error: " + format)
+                
     def __repr__(self, *args, **kwargs):
         return self.__str__()
     
@@ -37,57 +163,92 @@ class Dataset(object):
         d['parq_edges'] = self.parq_edges
         
         if self.has_ground_truth():
-            d['parq_ground_truth'] = self.parq_ground_truth
+            d['parq_ground_truth'] = {u:v.path for u, v in self.get_ground_truth().items()}
         d['description'] = self.description
         return d 
     
+    def is_anonymous(self):
+        return False if self.name else True
+    
+    def update_meta(self):
+        if not self.is_anonymous():
+            meta_file = config.get_data_file_path(self.name, 'meta.info')
+            json.dump(self.get_meta(), open(meta_file, 'wt')) 
+
+    def is_ground_truth_persistent(self):
+        if self.has_ground_truth():
+            for v in self.get_ground_truth().values():
+                if not v.is_persistent():
+                    return False 
+        return True 
+
+    def set_ground_truth(self, obj):
+        if obj is None: return 
+
+        def to_cluster(v):
+            if isinstance(v, Cluster):
+                return v 
+            else:
+                return Cluster(v)
+        
+        if isinstance(obj, dict):
+            self.ground_truth = {u:to_cluster(v) for u, v in obj.items()}
+        else:
+            self.ground_truth = {"default_ground_truth":to_cluster(obj)}
+
+    def set_edges(self, obj):
+        v = obj
+        if isinstance(v, str):
+            self.parq_edges = utils.abspath(v)
+            return self 
+        else:
+            if isinstance(v, pd.DataFrame):
+                if not 'src' in v.columns or not 'dest' in v.columns or (self.is_weighted() and 'weight' not in v.columns):
+                    raise ValueError("arg is not right")
+                if self.is_weighted():
+                    self.edges = v[['src', 'dest', 'weight']]
+                else:
+                    self.edges = v[['src', 'dest']]
+            else:  
+                if isinstance(v, list):
+                    arr = np.array(v)
+                elif isinstance(v, np.ndarray):
+                    arr = v
+                else:
+                    raise ValueError("arg is not right")
+                if len(arr.shape) != 2  or arr.shape[1] != 2 + int(self.is_weighted()):
+                    raise ValueError("arg is not right")
+                if self.is_weighted():
+                    self.edges = pd.DataFrame(arr, columns=['src', 'dest', 'weight'])
+                else:
+                    self.edges = pd.DataFrame(arr, columns=['src', 'dest'])
+            return self 
+                    
     def __str__(self, *args, **kwargs):
         d = self.get_meta()
         return json.dumps(d)
         
     def has_ground_truth(self):
-        raise Exception("NA")
+        return hasattr(self, 'ground_truth') and self.ground_truth is not None 
     
     def is_directed(self):
-        raise Exception("NA")
+        return  self.directed 
     
     def is_weighted(self):
-        raise Exception("NA")
+        return self.weighted
     
     # return edge list
     def get_edges(self):
-        raise Exception("NA")
+        if not hasattr(self, 'edges'):
+            self.logger.info("reading" + self.parq_edges)
+            self.edges = fastparquet.ParquetFile(self.parq_edges).to_pandas() 
+        return self.edges            
     
     # return
     def get_ground_truth(self):
-        raise Exception("NA")
-    
-    # return the edge list parquet file 
-    def edges_from_parq(self):
-        fname = self.parq_edges
-        if not utils.file_exists(fname):
-            df = self.get_edges()
-            fastparquet.writer.write(fname, df, compression="SNAPPY")
-        self.logger.info("reading {}".format(fname))            
-        return dd.read_parquet(fname).compute()            
-
-    # return  ground truth files if possible 
-    def ground_from_parq(self):
         if self.has_ground_truth():
-            fname = self.parq_ground_truth
-            if not utils.file_exists(fname):
-                df = self.get_ground_truth()
-                fastparquet.writer.write(fname, df, compression="SNAPPY")
-            self.logger.info("reading {}".format(fname))            
-            return dd.read_parquet(fname).compute()
-        else:
-            raise Exception("graph has no ground truth")
-
-    # load data into memories
-    def load(self):
-        self.edges = self.edges_from_parq()
-        if self.has_ground_truth():
-            self.ground_truth = self.ground_from_parq()
+            return self.ground_truth
+        return None 
  
     def to_edgelist(self, filepath=None, sep=" ", sort=False):
         if (filepath == None):
@@ -192,105 +353,23 @@ class Dataset(object):
         if (status != 0):
             raise Exception("run command failed: " + str(status))
         return filepath 
+
+
+def local_exists(name):
+    path = config.get_data_file_path(name)
+    return  utils.file_exists(path)
+
+
+def load_local(name):
+    path = config.get_data_file_path(name)
+    if not utils.file_exists(path):
+        raise Exception("path not exists: " + path)
+    with open(os.path.join(path, 'meta.info')) as f:
+        meta = json.load(f)
+    edges = meta['parq_edges']
+    gt = None 
+    if meta["has_ground_truth"]:
+        gt = {k:Cluster(v) for k, v in meta['parq_ground_truth'].items()}
+    return Dataset(name=meta['name'], description=meta['description'], groundtruthObj=gt, edgesObj=edges, directed=meta['directed'],
+                    weighted=meta['weighted'], overide=False)
     
-class AnonymousDataset(Dataset):        
-
-    def __init__(self, edges, description="", ground_truth=None, directed=False, weighted=False):
-        super(AnonymousDataset, self).__init__(name=None , description=description, anonymous=True)
-        self.with_ground_truth = ground_truth is not None 
-        self.directed = directed
-        self.weighted = weighted
-        
-        columns = ['src', 'dest', 'weight'] if weighted else ['src', 'dest']
-        self.edges = self.to_dataframe(edges, columns) 
-        self.ground_truth = None if ground_truth is None else self.to_dataframe(ground_truth, ["node", "cluster"])
-
-    def to_dataframe(self, obj, columns):
-        if isinstance(obj, pd.DataFrame):
-            assert obj.shape[1] == len(columns) 
-            obj.columns = columns
-            return obj 
-        elif isinstance(obj, list) or isinstance(obj, np.ndarray):
-            arr = np.array(obj) 
-            assert arr.shape[1] == len(columns)
-            return pd.DataFrame(arr, columns=columns)
-        else:
-            raise Exception("type not supported: " + str(type(obj)))
-        
-    def has_ground_truth(self):
-        return self.with_ground_truth
-    
-    def is_directed(self):
-        return self.directed
-    
-    def is_weighted(self):
-        return self.weighted
-    
-    def get_edges(self):
-        return self.edges             
-
-    # return
-    def get_ground_truth(self):
-        if self.has_ground_truth():
-            return self.ground_truth
-        else:
-            raise Exception("graph has no ground truth")
-
-
-class DefaultDataset(Dataset):        
-
-    def __init__(self, name, edges, description="", ground_truth=None, directed=False, weighted=False):
-        super(DefaultDataset, self).__init__(name, description=description)
-        self.with_ground_truth = ground_truth is not None 
-        self.directed = directed
-        self.weighted = weighted
-        
-        columns = ['src', 'dest', 'weight'] if weighted else ['src', 'dest']
-        self.edges = self.to_dataframe(edges, columns) 
-        self.ground_truth = None if ground_truth is None else self.to_dataframe(ground_truth, ["node", "cluster"])
-        
-        meta_file = config.get_data_file_path(self.name, 'meta.info')
-        if not utils.file_exists(meta_file):
-            json.dump(self.get_meta(), open(meta_file, 'wt')) 
-
-    def to_dataframe(self, obj, columns):
-        if isinstance(obj, pd.DataFrame):
-            assert obj.shape[1] == len(columns) 
-            obj.columns = columns
-            return obj 
-        elif isinstance(obj, list) or isinstance(obj, np.ndarray):
-            arr = np.array(obj) 
-            assert arr.shape[1] == len(columns)
-            return pd.DataFrame(arr, columns=columns)
-        else:
-            raise Exception("type not supported: " + str(type(obj)))
-        
-    def has_ground_truth(self):
-        return self.with_ground_truth
-    
-    def is_directed(self):
-        return self.directed
-    
-    def is_weighted(self):
-        return self.weighted
-    
-    def get_edges(self):
-        return self.edges             
-
-    # return
-    def get_ground_truth(self):
-        if self.has_ground_truth():
-            return self.ground_truth
-        else:
-            raise Exception("graph has no ground truth")
-        
-                    
-from gct.dataset import snap_dataset
-
-
-def list_datasets():
-    return snap_dataset.list_datasets()
-
-
-def get_dataset(name):
-    return snap_dataset.get_dataset(name)

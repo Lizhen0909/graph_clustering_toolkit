@@ -9,6 +9,7 @@ import pandas as pd
 from gct.alg.clustering import Result
 import sys
 from gct.dataset import convert
+from gct.dataset.dataset import Cluster
 
 
 class GraphProperties(object):
@@ -100,13 +101,17 @@ class GraphClustersProperties(object):
     def __init__(self, data, clusterobj):
         if data.is_directed() or data.is_weighted():
             print ("Warning! Graph will be taken as undirected and unweighted.")
-        if isinstance(clusterobj, Result):
-            self.clusters = clusterobj.clusters(as_dataframe=True)
-        elif isinstance(clusterobj, pd.DataFrame):
-            self.clusters = clusterobj
+        if isinstance(clusterobj, Cluster):
+            self.clusterobj = clusterobj
+        elif isinstance(clusterobj, Result):
+            self.clusterobj = Cluster(clusterobj.clusters(as_dataframe=True))
+        elif isinstance(clusterobj, pd.DataFrame) or isinstance(clusterobj, list) \
+            or isinstance(clusterobj, np.ndarray) or isinstance(clusterobj, str) or isinstance(clusterobj, dict):
+            self.clusterobj = Cluster(clusterobj)
         else:
             raise Exception("Unsupported " + str(type(clusterobj)))
         self.data = data 
+        self.clusters = self.clusterobj.value()
 
     def set_if_not_exists(self, name, fun):
         if hasattr(self, name):
@@ -461,11 +466,9 @@ class GraphClustersProperties(object):
         
     @property
     def separability(self):
-        a=self.cluster_out_sum_weights
-        b=self.cluster_sum_intra_weights
-        return {u:b[u]/float(v) for u,v in a.items() }
-    
-    
+        a = self.cluster_out_sum_weights
+        b = self.cluster_sum_intra_weights
+        return {u:b[u] / float(v) for u, v in a.items() }
         
     @property
     def cluster_clustering_coefficient(self):
@@ -482,10 +485,10 @@ class GraphClustersProperties(object):
             df['dest_c'] = df['dest'].map(c_df)
             df = df[(df['src_c'] == df['dest_c'])]
             
-            ret={}
+            ret = {}
             for i in self.cluster_indexes:
-                edges=df[df['src_c']==i]
-                ret[i]=f1(edges)
+                edges = df[df['src_c'] == i]
+                ret[i] = f1(edges)
             return ret 
         
         prop_name = "_" + sys._getframe().f_code.co_name
@@ -507,11 +510,11 @@ class GraphClustersProperties(object):
             df['dest_c'] = df['dest'].map(c_df)
             df = df[(df['src_c'] == df['dest_c'])]
             
-            ret={}
+            ret = {}
             for i in self.cluster_indexes:
-                edges=df[df['src_c']==i]
+                edges = df[df['src_c'] == i]
                 print (edges.shape) 
-                ret[i]=f1(edges)
+                ret[i] = f1(edges)
             return ret 
         
         prop_name = "_" + sys._getframe().f_code.co_name

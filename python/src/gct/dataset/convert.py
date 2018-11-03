@@ -4,11 +4,11 @@ Created on Oct 26, 2018
 @author: lizhen
 '''
 from gct import utils
-from gct.dataset.dataset import DefaultDataset
+from gct.dataset.dataset import Dataset
 import pandas as pd 
 
 
-def from_nodelist(name, edgelist , directed=False , description=""):
+def from_edgelist(name, edgelist , directed=False , description="", overide=True):
     assert len(edgelist) > 0, "Error, empty edgelist"
     if len(edgelist[0]) == 2:
         weighted = False 
@@ -17,7 +17,7 @@ def from_nodelist(name, edgelist , directed=False , description=""):
     else:
         raise Exception("Format not right")
     
-    return DefaultDataset(name=name, edges=edgelist, weighted=weighted, directed=directed, description=description)
+    return Dataset(name=name, edgesObj=edgelist, weighted=weighted, directed=directed, description=description, overide=overide)
 
     
 # turn a dataset into a networkx graph
@@ -35,7 +35,7 @@ def to_networkx(data):
 
 
 # turn  a networkx graph into a dataset 
-def from_networkx(name, graph, weighted=False, data='weight', default=1, description=""):
+def from_networkx(name, graph, weighted=False, data='weight', default=1, description="", overide=True):
     directed = graph.is_directed()
     lst = []
     if weighted:
@@ -45,7 +45,7 @@ def from_networkx(name, graph, weighted=False, data='weight', default=1, descrip
         for e in graph.edges():
             lst.append(e)
     
-    return DefaultDataset(name, edges=lst, weighted=weighted, directed=directed, description=description)
+    return Dataset(name, edgesObj=lst, weighted=weighted, directed=directed, description=description, overide=overide)
 
 
 # turn a dataset into a igraph graph
@@ -61,7 +61,7 @@ def to_igraph(data):
 
 
 # turn  a networkx graph into a dataset 
-def from_igraph(name, graph, data='weight', description=""):
+def from_igraph(name, graph, data='weight', description="", overide=True):
     directed = graph.is_directed()
     weighted = graph.is_weighted()
     
@@ -73,7 +73,7 @@ def from_igraph(name, graph, data='weight', description=""):
         w = graph.es[data]
         df['weight'] = w 
     
-    return DefaultDataset(name, edges=df, weighted=weighted, directed=directed, description=description)
+    return Dataset(name, edgesObj=df, weighted=weighted, directed=directed, description=description, overide=overide)
 
 
 # turn a dataset into a snap graph
@@ -82,7 +82,7 @@ def to_snap(data):
     if 1 and utils.file_exists(data.file_snap):
         FIn = snap.TFIn(data.file_snap)
         if data.is_directed():
-            graph= snap.TNGraph.Load(FIn)
+            graph = snap.TNGraph.Load(FIn)
         else: 
             graph = snap.TUNGraph.Load(FIn)
         return graph 
@@ -100,7 +100,7 @@ def to_snap(data):
 
     
 # turn  a snap graph into a dataset 
-def from_snap(name, graph, description=""):
+def from_snap(name, graph, description="", overide=False):
     import snap 
     if isinstance(graph, snap.PUNGraph):
         directed = False 
@@ -115,7 +115,7 @@ def from_snap(name, graph, description=""):
 
     df = pd.DataFrame(lst, columns=['src', 'dest'])
     
-    return DefaultDataset(name, edges=df, weighted=False, directed=directed, description=description)    
+    return Dataset(name, edgesObj=df, weighted=False, directed=directed, description=description, overide=overide)    
 
 
 # turn a dataset into a networkit graph
