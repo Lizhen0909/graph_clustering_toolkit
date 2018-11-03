@@ -32,7 +32,34 @@ class Cluster(object):
             self.cluster = pd.DataFrame(arr, columns=['node', 'cluster'])
         if self.cluster is not None:
             self.cluster = self.cluster.drop_duplicates()
-        
+
+    def persistent_cnl(self):
+        if self.path is not None:
+            local_cnl = self.path + ".cnl"
+            if not utils.file_exists(local_cnl):
+                self.logger.info("persistent cluster to cnl file: " + local_cnl)
+                self.save_to_cnl_file(local_cnl)
+            return local_cnl                                         
+        return None 
+    
+    # filepath will be overwritten
+    def save_to_cnl_file(self, filepath):
+        df = self.value()
+        with open(filepath, 'wt') as f :
+            for lst in df.groupby('cluster')['node'].apply(lambda u: list(u)):
+                line = " ".join([str(u) for u in lst]) + "\n"
+                f.write(line)
+        return filepath 
+    
+    # if persistent cnl exists, it will be linked to filepath, otherwise write clsuters to filepath  
+    def make_cnl_file(self, filepath=None):
+        local_cnl = self.persistent_cnl()
+        if local_cnl:
+            return utils.link_file(local_cnl, destname=filepath)
+        else:
+            assert filepath is not None 
+            return self.save_to_cnl_file(filepath)
+                
     def is_persistent(self):
         return self.path is not None  and utils.file_exists(self.path)
     

@@ -139,12 +139,17 @@ def check_output(lst):
         return subprocess.check_output(lst)        
 
 
-def link_file(path, dest_dir, destname=None):
+def link_file(path, dest_dir=None, destname=None):
+    assert not(dest_dir is None and destname is None)
     if not os.path.exists(path):
         raise Exception("source path not found: " + path)
-    if destname is None :
-        destname = path.split("/")[-1]
-    destpath = os.path.join(dest_dir, destname)
+    if dest_dir is None:
+        destpath=destname
+    else: 
+        if destname is None :
+            destname = path.split("/")[-1]
+        destpath = os.path.join(dest_dir, destname)
+        
     remove_if_file_exit(destpath)
     os.symlink(path, destpath)
     return destpath            

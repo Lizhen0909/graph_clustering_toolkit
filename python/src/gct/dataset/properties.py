@@ -10,7 +10,8 @@ from gct.alg.clustering import Result
 import sys
 from gct.dataset import convert
 from gct.dataset.dataset import Cluster
-from gct import utils
+from gct import utils, config
+import os
 
 
 class GraphProperties(object):
@@ -365,7 +366,6 @@ class GraphClustersProperties(object):
                 Nodes = snap.TIntV()
                 for nodeId in v:
                     Nodes.Add(nodeId)
-                    print (nodeId, m)
                 mod = snap.GetModularity(G, Nodes, 1024)
                 ret[k] = mod 
             return ret 
@@ -514,7 +514,6 @@ class GraphClustersProperties(object):
             ret = {}
             for i in self.cluster_indexes:
                 edges = df[df['src_c'] == i]
-                print (edges.shape) 
                 ret[i] = f1(edges)
             return ret 
         
@@ -554,18 +553,18 @@ class ClusterComparator(object):
             self.logger.info ("resulting {} nodes out of {},{}".format(len(nodes), len(df1), len(df2)))
             df1 = df1[df1['node'].isin(nodes)].set_index('node')
             df2 = df2[df2['node'].isin(nodes)].set_index('node').loc[df2.index]
+            df2.index.name = 'node'
             return df1, df2 
 
         if not self.overlap:
             self.clean_clusterobj1, self.clean_clusterobj2 = clean()
-
     
     @property 
-    def ground_truth(self): #assume the first one is ground truth
+    def ground_truth(self):  # assume the first one is ground truth
         return self.clusterobj1
     
     @property 
-    def clean_ground_truth(self): #assume the first one is ground truth
+    def clean_ground_truth(self):  # assume the first one is ground truth
         return self.clean_clusterobj1
 
     @property 
@@ -614,6 +613,7 @@ class ClusterComparator(object):
                 return adjusted_rand_score(self.clean_clusterobj1['cluster'].values, self.clean_clusterobj2['cluster'].values)
 
             return utils.set_if_not_exists(self, prop_name, f)
+
     @property
     def sklean_completeness(self):
         if self.overlap:
@@ -626,7 +626,349 @@ class ClusterComparator(object):
                 return completeness_score(self.clean_ground_truth['cluster'].values, self.clean_prediction['cluster'].values)
 
             return utils.set_if_not_exists(self, prop_name, f)
+    
+    '''
+    wrapper for https://github.com/eXascaleInfolab/GenConvNMI
+    
+    Usage:  ./gecmi [options] <clusters1> <clusters2>
+    clusters  - clusters file in the CNL format (https://github.com/eXascaleInfolab/PyCABeM/blob/master/formats/format.cnl), where each line lists space separated ids of the cluster members
+    
+    Options:
+      -h [ --help ]                produce help message
+      --input arg                  name of the input files
+      -s [ --sync ]                synchronize the node base omitting the 
+                                   non-matching nodes for the fair evaluation. The 
+                                   node base is selected automatically as a 
+                                   clustering having the least number of nodes.
+      -i [ --id-remap ]            remap ids allowing arbitrary input ids 
+                                   (non-contiguous ranges), otherwise ids should 
+                                   form a solid range and start from 0 or 1
+      -n [ --nmis ]                output both NMI [max] and NMI_sqrt
+      -f [ --fnmi ]                evaluate also FNMI, includes '-n'
+      -r [ --risk ] arg (=0.01)    probability of value being outside
+      -e [ --error ] arg (=0.01)   admissible error
+      -a [ --fast ]                apply fast approximate evaluations that are less
+                                   accurate, but much faster on large networks
+      -m [ --membership ] arg (=1) average expected membership of nodes in the 
+                                   clusters, > 0, typically >= 1
+      -d [ --retain-dups ]         retain duplicated clusters if any instead of 
+                                   filtering them out (not recommended)
+    
+    '''
+
+    def GenConvNMI(self, sync=None, id_remap=None, nmis=None, fnmi=True, risk=None, error=None, fast=None, membership=None, retain_dups=None):
+        params = locals(); del params['self'];del params['sync']
+        params = {u.replace('_', '-'):v for u, v in params.items() if v}
+        nonbools = ['risk', 'error', 'membership']
+        cmd = [config.GECMI_PROG]
+        for u, v in params.items():
+            if u in nonbools:
+                cmd.append("--{} {}".format(u, v))
+            else:
+                if v:
+                    cmd.append ("--{}".format(u))
+
+        if sync:
+            cmd.append("--sync -")
+        with utils.TempDir() as tmp_dir:
+            cnl1 = self.clusterobj1.make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster1.cnl'))
+            cnl2 = self.clusterobj2.make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster2.cnl'))
+            cmd.append(cnl1)
+            cmd.append(cnl2)
+            cmd.append("> nmioutput")
+            cmd = " ".join(cmd)            
+            self.logger.info("Running " + cmd)
+            with open(os.path.join(tmp_dir, "tmpcmd"), 'wt') as f: f.write(cmd)            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait("bash tmpcmd", tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            with open (os.path.join(tmp_dir, "nmioutput"), "r") as output:
+                line = [u.strip() for u in output.readlines() if not u.startswith('#')][0]
+                line = line.split(";")[0]
+                if not nmis and not fnmi: 
+                    res = {'NMI_max':float(line)}
+                else:
+                    lst = [u.split(":") for u in line.split(",")]
+                    res = dict([ (k.strip(), float(v.strip())) for k, v in lst])
+            return res 
+
+    '''
+    Compare sets of clusters by their members (nodes) using various measures (NMI,
+    Omega) and considering overlaps
+    
+    Usage: onmi [OPTIONS] clsfile1 clsfile2
+    
+      -h, --help              Print help and exit
+      -V, --version           Print version and exit
+      -s, --sync=filename     synchronize the node base omitting the non-matching
+                                nodes.
+                                NOTE: The node base is either the first input file
+                                or '-' (automatic selection of the input file
+                                having the least number of nodes).
+      -a, --allnmis           output all NMIs (sqrt and sum-denominators, LFK
+                                besides the max-denominator)  (default=off)
+      -m, --membership=FLOAT  average expected membership of nodes in the clusters,
+                                > 0, typically >= 1  (default=`1')
+      -o, --omega             print the Omega measure (can be slow)  (default=off)
+      -t, --textid            use text ids of nodes instead of .cnl format
+                                (default=off)
+      -v, --verbose           detailed debugging  (default=off)
+    
+    '''        
+
+    def OvpNMI(self, sync=None, allnmi=None, omega=None, membership=None, verbose=None):
+        params = locals(); del params['self'];del params['sync']
+        params = {u.replace('_', '-'):v for u, v in params.items() if v}
+        nonbools = [ 'membership']
+        cmd = [config.ONMI_PROG]
+        for u, v in params.items():
+            if u in nonbools:
+                cmd.append("--{} {}".format(u, v))
+            else:
+                if v:
+                    cmd.append ("--{}".format(u))
+
+        if sync:
+            cmd.append("--sync")
+
+        with utils.TempDir() as tmp_dir:
+            cnl1 = self.clusterobj1.make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster1.cnl'))
+            cnl2 = self.clusterobj2.make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster2.cnl'))
+            cmd.append(cnl1)
+            cmd.append(cnl2)
+            cmd.append("> ovpnmioutput")
+            cmd = " ".join(cmd)            
+            self.logger.info("Running " + cmd)
+            with open(os.path.join(tmp_dir, "tmpcmd"), 'wt') as f: f.write(cmd)            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait("bash tmpcmd", tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            with open (os.path.join(tmp_dir, "ovpnmioutput"), "r") as output:
+                line = [u.strip() for u in output.readlines() if not u.startswith('#')][0]
+                line = line.split(";")[0]
+                if not allnmi and not omega: 
+                    res = {'NMImax':float(line)}
+                else:
+                    lst = [u.split(":")[:2] for u in line.split(",")]
+                    lst = [ (k.strip(), v.strip().split(" ")[0]) for k, v in lst]
+                    res = dict([ (k.strip(), float(v.strip())) for k, v in lst])
+            return res 
         
-                
+    '''
+    Evaluating measures are:
+      - OI  - Omega Index (a fuzzy version of the Adjusted Rand Index, identical to
+    the Fuzzy Rand Index), which yields the same value as Adjusted Rand Index when
+    applied to the non-overlapping clusterings.
+      - [M]F1  - various [mean] F1 measures of the Greatest (Max) Match including
+    the Average F1-Score (suggested by J. Leskovec) with optional weighting.
+    NOTE: There are 3 matching policies available for each kind of F1. The most
+    representative evaluation is performed by the F1p with combined matching
+    policy (considers both micro and macro weighting).
+      - NMI  - Normalized Mutual Information, normalized by either max or also
+    sqrt, avg and min information content denominators.
+    ATTENTION: This is a standard NMI, which should be used ONLY for the HARD
+    partitioning evaluation (non-overlapping clustering on a single resolution).
+    It penalizes overlapping and multi-resolution structures.
+    
+    
+      -h, --help                    Print help and exit
+      -V, --version                 Print version and exit
+      -O, --ovp                     evaluate overlapping instead of the
+                                      multi-resolution clusters, where max matching
+                                      for any shared member between R overlapping
+                                      clusters is 1/R (the member is shared)
+                                      instead of 1 (the member fully belongs to
+                                      each [hierarchical  sub]group) for the member
+                                      belonging to R distinct clusters on R
+                                      resolutions.
+                                      NOTE: It has no effect for the Omega Index
+                                      evaluation.  (default=off)
+      -q, --unique                  ensure on loading that all cluster members are
+                                      unique by removing all duplicates.
+                                      (default=off)
+      -s, --sync=filename           synchronize with the specified node base
+                                      omitting the non-matching nodes.
+                                      NOTE: The node base can be either a separate,
+                                      or an evaluating CNL file, in the latter case
+                                      this option should precede the evaluating
+                                      filename not repeating it
+      -m, --membership=FLOAT        average expected membership of the nodes in the
+                                      clusters, > 0, typically >= 1. Used only to
+                                      facilitate estimation of the nodes number on
+                                      the containers preallocation if this number
+                                      is not specified in the file header.
+                                      (default=`1')
+      -d, --detailed                detailed (verbose) results output
+                                      (default=off)
+    
+    Omega Index:
+      -o, --omega                   evaluate Omega Index (a fuzzy version of the
+                                      Adjusted Rand Index, identical to the Fuzzy
+                                      Rand Index and on the non-overlapping
+                                      clusterings equals to ARI).  (default=off)
+      -x, --extended                evaluate extended (Soft) Omega Index, which
+                                      does not excessively penalize distinctly
+                                      shared nodes.  (default=off)
+    
+    Mean F1:
+      -f, --f1[=ENUM]               evaluate mean F1 of the [weighted] average of
+                                      the greatest (maximal) match by F1 or partial
+                                      probability.
+                                      NOTE: F1p <= F1h <= F1a, where:
+                                       - p (F1p or Ph)  - Harmonic mean (F1) of two
+                                      [weighted] averages of the Partial
+                                      Probabilities, the most indicative as
+                                      satisfies the largest number of the Formal
+                                      Constraints (homogeneity, completeness and
+                                      size/quantity except the rag bag in some
+                                      cases);
+                                       - h (F1h)  - Harmonic mean (F1) of two
+                                      [weighted] averages of all local F1 (harmonic
+                                      means of the Precision and Recall of the best
+                                      matches of the clusters);
+                                       - a (F1a)  - Arithmetic mean (average) of
+                                      two [weighted] averages of all local F1, the
+                                      least discriminative and satisfies the lowest
+                                      number of the Formal Constraints.
+                                        (possible values="partprob",
+                                      "harmonic", "average" default=`partprob')
+      -k, --kind[=ENUM]             kind of the matching policy:
+                                       - w  - Weighted by the number of nodes in
+                                      each cluster
+                                       - u  - Unweighed, where each cluster is
+                                      treated equally
+                                       - c  - Combined(w, u) using geometric mean
+                                      (drops the value not so much as harmonic
+                                      mean)
+                                        (possible values="weighted",
+                                      "unweighed", "combined"
+                                      default=`weighted')
+    
+    Clusters Labeling & F1 evaluation with Precision and Recall:
+      -l, --label=gt_filename       label evaluating clusters with the specified
+                                      ground-truth (gt) cluster indices and
+                                      evaluate F1 (including Precision and Recall)
+                                      of the (best) MATCHED labeled clusters only
+                                      (without the probable subclusters).
+                                      NOTE: If 'sync' option is specified then the
+                                      file name  of the clusters labels should be
+                                      the same as the node base (if specified) and
+                                      should be in the .cnl format. The file name
+                                      can be either a separate or an evaluating CNL
+                                      file, in the latter case this option should
+                                      precede the evaluating filename not repeating
+                                      it.
+      -p, --policy[=ENUM]           Labels matching policy:
+                                       - p  - Partial Probabilities (maximizes
+                                      gain)
+                                       - h  - Harmonic Mean (minimizes loss,
+                                      maximizes F1)
+                                        (possible values="partprob", "harmonic"
+                                      default=`harmonic')
+      -u, --unweighted              Labels weighting policy on F1 evaluation:
+                                      weighted by the number of instances in each
+                                      label or unweighed, where each label is
+                                      treated equally  (default=off)
+      -i, --identifiers=labels_filename
+                                    output labels (identifiers) of the evaluating
+                                      clusters as lines of space-separated indices
+                                      of the ground-truth clusters (.cll - clusters
+                                      labels list)
+                                      NOTE: If 'sync' option is specified then the
+                                      reduced collection is outputted to the
+                                      <labels_filename>.cnl besides the
+                                      <labels_filename>
+    
+    
+    NMI:
+      -n, --nmi                     evaluate NMI (Normalized Mutual Information),
+                                      applicable only to the non-overlapping
+                                      clusters  (default=off)
+      -a, --all                     evaluate all NMIs using sqrt, avg and min
+                                      denominators besides the max one
+                                      (default=off)
+      -e, --ln                      use ln (exp base) instead of log2 (Shannon
+                                      entropy, bits) for the information measuring
+                                      (default=off)
+    '''        
+
+    def xmeasure_nmi(self, sync=None, all=False, membership=None, detailed=None):
+        params = locals(); del params['self'];del params['sync']
+        params = {u.replace('_', '-'):v for u, v in params.items() if v}
+        nonbools = [ 'membership']
+        cmd = [config.XMEASURES_PROG]
+        for u, v in params.items():
+            if u in nonbools:
+                cmd.append("--{} {}".format(u, v))
+            else:
+                if v:
+                    cmd.append ("--{}".format(u))
         
+        cmd.append("--nmi") 
+        if sync:
+            cmd.append("--sync")
+
+        with utils.TempDir() as tmp_dir:
+            cnl1 = Cluster(self.clean_ground_truth.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster1.cnl'))
+            cnl2 = Cluster(self.clean_prediction.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster2.cnl'))
+            cmd.append(cnl1)
+            cmd.append(cnl2)
+            cmd.append("> xmeasurenmioutput")
+            cmd = " ".join(cmd)            
+            self.logger.info("Running " + cmd)
+            with open(os.path.join(tmp_dir, "tmpcmd"), 'wt') as f: f.write(cmd)            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait("bash tmpcmd", tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            with open (os.path.join(tmp_dir, "xmeasurenmioutput"), "r") as output:
+                line = [u.strip() for u in output.readlines() if not u.startswith('=')][-1]
+                line = line.split(";")[0]
+                if not all: 
+                    res = {'NMI_max':float(line)}
+                else:
+                    lst = [u.split(":")[:2] for u in line.split(",")]
+                    lst = [ (k.strip(), v.strip().split(" ")[0]) for k, v in lst]
+                    res = dict([ (k.strip(), float(v.strip())) for k, v in lst])
+            return res 
+
+    def xmeasure(self, sync=None, ovp=None, unique=None, omega=None, extended=None, f1=None, kind=False, membership=None, detailed=None):
+        assert not(omega is None and f1 is None)
+        params = locals(); del params['self'];del params['sync']
+        params = {u.replace('_', '-'):v for u, v in params.items() if v}
+        if f1 is not None: assert f1 in ['p', 'h', 'a']
+        nonbools = [ 'membership', 'f1', 'kind']
+        cmd = [config.XMEASURES_PROG]
+        for u, v in params.items():
+            if u in nonbools:
+                cmd.append("--{}={}".format(u, v))
+            else:
+                if v:
+                    cmd.append ("--{}".format(u))
         
+        if sync:
+            cmd.append("--sync")
+
+        with utils.TempDir() as tmp_dir:
+            cnl1 = Cluster(self.clean_ground_truth.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster1.cnl'))
+            cnl2 = Cluster(self.clean_prediction.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster2.cnl'))
+            cmd.append(cnl1)
+            cmd.append(cnl2)
+            cmd.append("> xmeasureoutput")
+            cmd = " ".join(cmd)            
+            self.logger.info("Running " + cmd)
+            with open(os.path.join(tmp_dir, "tmpcmd"), 'wt') as f: f.write(cmd)            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait("bash tmpcmd", tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            with open (os.path.join(tmp_dir, "xmeasureoutput"), "r") as output:
+                lines = [u.strip() for u in output.readlines() if not u.startswith('=') and not ";"  in u]
+                ret = {}
+                assert len(lines) in [2, 4]
+                ret [lines[0].split(" ")[0].strip()] = float(lines[1])
+                if len(lines) == 4:
+                    ret [lines[2].split(" ")[0].strip()] = float(lines[3])
+            return ret,params 

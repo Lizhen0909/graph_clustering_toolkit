@@ -88,6 +88,14 @@ class Test(unittest.TestCase):
         print ('sklean_ami', p.sklean_ami)
         print ('sklean_ars', p.sklean_ars)
         print ('sklean_completeness', p.sklean_completeness)        
+        print ('GenConvNMI', p.GenConvNMI(sync=True, membership=1))
+        print ('OvpNMI', p.OvpNMI(sync=True, allnmi=True, omega=True))
+        print ('xmeasure_nmi', p.xmeasure_nmi(sync=True, all=False))
+        print ('xmeasure_nmi_all', p.xmeasure_nmi(sync=True, all=True))
+        print ('xmeasure_f1_omega', p.xmeasure(sync=True, f1="p", omega=True ))
+        print ('xmeasure_f1', p.xmeasure(sync=True, f1="p"))
+        print ('xmeasure_omega', p.xmeasure(sync=True, omega=True, extended=True))
+        
         
     def testClusterComparator2(self):
         g = self.graph_unweighted_undirect
@@ -107,6 +115,12 @@ class Test(unittest.TestCase):
         print ('sklean_ami', p.sklean_ami)
         print ('sklean_ars', p.sklean_ars)
         print ('sklean_completeness', p.sklean_completeness)        
+        print ('GenConvNMI', p.GenConvNMI(sync=True))
+        print ('xmeasure_nmi', p.xmeasure_nmi(sync=True, all=False))
+        print ('xmeasure_nmi_all', p.xmeasure_nmi(sync=True, all=True))
+        print ('xmeasure_f1_omega', p.xmeasure(sync=True, f1="p", omega=True ))
+        print ('xmeasure_f1', p.xmeasure(sync=True, f1="p"))
+        print ('xmeasure_omega', p.xmeasure(sync=True, omega=True, extended=True))
 
                                             
 if __name__ == "__main__":

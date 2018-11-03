@@ -42,6 +42,9 @@ MCL_PROG = os.path.join(GCT_HOME, "submodules/local/bin/mcl")
 HIRECS_PATH = os.path.join(GCT_HOME, "submodules/hirecs")
 LABLE_RANK_PROG = os.path.join(GCT_HOME, "submodules/GANXiS/LabelRank")
 GANXISW_PROG = os.path.join(GCT_HOME, "submodules/GANXiS/GANXiSw.jar")
+GECMI_PROG = os.path.join(GCT_HOME, "submodules/GenConvNMI/gecmi")
+ONMI_PROG = os.path.join(GCT_HOME, "submodules/OvpNMI/onmi")
+XMEASURES_PROG = os.path.join(GCT_HOME, "submodules/xmeasures/xmeasures")
 
 
 def get_data_file_path(dsname, fname="", create=False):
