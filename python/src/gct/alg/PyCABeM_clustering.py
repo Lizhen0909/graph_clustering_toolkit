@@ -9,17 +9,14 @@ import os
 import json
 import glob
 
+prefix='pycabem'
 
 class HiReCS(Clustering):
-
-    def __init__(self, name="HiReCS"):
-        
-        super(HiReCS, self).__init__(name) 
-    
-    def get_meta(self):
-        return {'lib':"HiReCS", "name": 'HiReCS' }
-
     '''
+    A wrapper of *hirecs* algorithm from http://www.lumais.com/hirecs. 
+
+    Arguments
+    --------------------
     Usage: ./hirecs [-o{t,c,j}] [-f] [-r] [-m<float>] <adjacency_matrix.hig>
       -o  - output data format. Default: t
         t  - text like representation for logs
@@ -32,9 +29,23 @@ class HiReCS(Clustering):
       -r  - rand reorder (shuffle) nodes and links on nodes construction
       -m<float>  - modularity profit margin for early exit, float E [-1, 1]. Default: -0.999, but on practice >~= 0
         -1  - skip stderr tracing after each iteration. Recommended: 1E-6 or 0
+        
+    Reference
+    ------------------------
+    Cannot find any publication. Please refer to http://www.lumais.com/hirecs
+    
     '''
 
+    def __init__(self, name="HiReCS"):
+        
+        super(HiReCS, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"HiReCS", "name": 'HiReCS' }
+
+
     def run(self, data, f=False, m=None):
+        
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
         params = {}
@@ -89,17 +100,24 @@ class HiReCS(Clustering):
 
     
 class LabelRank(Clustering):
+    '''
+    A wrapper of *LabelRank* algorithm from https://sites.google.com/site/communitydetectionslpa/. 
 
+    Arguments
+    --------------------
+    > LabelRank netName cutoff_r inflation_in NBDisimilarity_q
+    
+    Reference
+    ------------------------
+    J. Xie, B. K. Szymanski, "LabelRank: A Stabilized Label Propagation Algorithm for Community Detection in Networks", IEEE NSW, West point, NY, 2013
+    
+    '''
     def __init__(self, name="LabelRank"):
         
         super(LabelRank, self).__init__(name) 
     
     def get_meta(self):
         return {'lib':"GANXiS", "name": 'LabelRank' }
-
-    '''
-       > LabelRank netName cutoff_r inflation_in NBDisimilarity_q
-    '''
 
     def run(self, data, cutoff_r=0.01, inflation_in=2, NBDisimilarity_q=0.3):
         if False and (data.is_directed()):
@@ -174,6 +192,48 @@ NOTE: 1. more parameters refer to Readme.pdf
 
 
 class GANXiSw(Clustering):
+    '''
+    
+    A wrapper of *GANXiSw* algorithm from https://sites.google.com/site/communitydetectionslpa/. 
+
+    Arguments
+    --------------------
+    GANXiSw 3.0.2(used to be SLPAw) is for weighted (directed) networks, version=3.0.2
+    Usage: java -jar GANXiSw.jar -i networkfile
+    Options:
+      -i input network file
+      -d output director (default: output)
+      -L set to 1 to use only the largest connected component
+      -t maximum iteration (default: 100)
+      -run number of repetitions
+      -r a specific threshold in [0,0.5]
+      -ov set to 0 to perform disjoint detection
+      -W treat the input as a weighted network, set 0 to ignore the weights(default 1)
+      -Sym set to 1 to make the edges symmetric/bi-directional (default 0)
+      -seed user specified seed for random generator
+      -help to display usage info
+     -----------------------------Advanced Parameters---------------------------------
+      -v weighted version in {1,2,3}, default=3
+      -Oov set to 1 to output overlapping file, default=0
+      -Onc set to 1 to output <nodeID communityID> format, 2 to output <communityID nodeID> format
+      -minC min community size threshold, default=2
+      -maxC max community size threshold
+      -ev embedded SLPAw's weighted version in {1,2,3}, default=1
+      -loopfactor determine the num of loops for depomposing each large com, default=1.0
+      -Ohis1 set to 1 to output histgram Level1
+      -Ohis2 set to 1 to output histgram Level2
+    
+      -OMem1 set to 1 to output each node's memory content at Level 1
+      -EC evolution cutoff, a real value > 1.0 
+    NOTE: 1. more parameters refer to Readme.pdf
+          2. parameters are *CASE-SENSITIVE*, e.g., -Onc is not -onc
+          
+    
+    Reference
+    ------------------------
+    J. Xie, B. K. Szymanski and X. Liu, "SLPA: Uncovering Overlapping Communities in Social Networks via A Speaker-listener Interaction Dynamic Process"
+    
+    '''
 
     def __init__(self, name="GANXiSw"):
         

@@ -98,7 +98,10 @@ def get_powergraph_prog(name, directed=False):
         return prog             
     elif name in ['GossipMap']:
         prog = os.path.join(GCT_HOME, "submodules/PowerGraph/release/apps/GossipMap/GossipMap")
-        return prog             
+        return prog
+    elif name in ['RelaxMap']:
+        prog = os.path.join(GCT_HOME, "submodules/RelaxMap/ompRelaxmap")
+        return prog                 
     else:
         raise Exception("Unknown " + name)
 

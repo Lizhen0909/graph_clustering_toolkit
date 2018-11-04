@@ -8,21 +8,28 @@ from gct import utils, config
 import os
 import glob
 
-'''
-Usage: streamcom <flags>
-Availaible flags:
-        -f [graph file name] : Specifies the graph file.
-        --skip [number of lines] : Specifies the number of lines to skip in the graph file.
-        -o [output file name] : Specifies the output file for communities.
-        --vmax-start [maximum volume range start] : Specifies the maximum volume for the aggregation phase, beginning of the range.
-        --vmax-end [maximum volume range end] : Specifies the maximum volume for the aggregation phase, end of the range.
-        -c [condition] : Specifies the aggregation condition for the aggregation phase: 0 is AND and 1 is OR.
-        --seed [random seed]: Specifies the random seed if the edges need to be shuffle.
-        --niter [number of iteration]: Specifies the number of iteration of the algorithm.
-'''
-
-
 class streamcom(Clustering):
+    '''
+    A wrapper of *streamcom* algorithm from https://github.com/ahollocou/graph-streaming 
+
+    Arguments
+    --------------------
+    Usage: streamcom <flags>
+    Availaible flags:
+            -f [graph file name] : Specifies the graph file.
+            --skip [number of lines] : Specifies the number of lines to skip in the graph file.
+            -o [output file name] : Specifies the output file for communities.
+            --vmax-start [maximum volume range start] : Specifies the maximum volume for the aggregation phase, beginning of the range.
+            --vmax-end [maximum volume range end] : Specifies the maximum volume for the aggregation phase, end of the range.
+            -c [condition] : Specifies the aggregation condition for the aggregation phase: 0 is AND and 1 is OR.
+            --seed [random seed]: Specifies the random seed if the edges need to be shuffle.
+            --niter [number of iteration]: Specifies the number of iteration of the algorithm.
+            
+    Reference
+    ------------------------
+    Hollocou, Alexandre, et al. "A Streaming Algorithm for Graph Clustering." arXiv preprint arXiv:1712.04337 (2017)
+    '''    
+    
 
     def __init__(self, name="streamcom"):
         

@@ -8,7 +8,7 @@ from gct.dataset import random_dataset
 from gct.alg import clustering
 import sys
 from gct.alg.dct_clustering import seq_louvain, infomap, dct
-from gct.alg.powergraph_clustering import label_propagation, GossipMap
+from gct.alg.powergraph_clustering import label_propagation, GossipMap, RelaxMap
 
 
 class Test(unittest.TestCase):
@@ -41,14 +41,21 @@ class Test(unittest.TestCase):
             alg = label_propagation()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
  
     def test_GossipMap(self):
         for data in  self.graphs: 
             alg = GossipMap()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
+            
+    def test_RelaxMap(self):
+        for data in  self.graphs: 
+            alg = RelaxMap()
+            print(sys._getframe().f_code.co_name) 
+            print (alg.run(data).get_result())
+            print (clustering.load_result(data.name, alg.name))            
 
 
 if __name__ == "__main__":

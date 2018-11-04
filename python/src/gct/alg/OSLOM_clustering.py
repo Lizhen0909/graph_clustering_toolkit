@@ -9,7 +9,24 @@ import os
 import glob
 import numpy as np 
 
+prefix = 'oslom'
+
+
 class Infomap(Clustering):
+    '''
+    A wrapper of *infomap* collected from `OSLOM <http://www.oslom.org/index.html>`
+    
+    Arguments
+    --------------------
+    seed : int
+        random seed
+
+    Reference 
+    ------------------------ 
+    Rosvall, M. and Bergstrom, C. T. Maps of random
+    walks on complex networks reveal community structure. Proc. Natl. Acad. Sci.
+    USA 105, 11181123 (2008).
+    '''        
 
     def __init__(self, name="oslom_infomap"):
         super(Infomap, self).__init__(name) 
@@ -18,6 +35,7 @@ class Infomap(Clustering):
         return {'lib':"OSLOM", "name": 'infomap' }
     
     def run(self, data, seed=None):
+
         if seed is None:
             seed = np.random.randint(999999)
         params = {'seed':seed}
@@ -67,6 +85,20 @@ class Infomap(Clustering):
     
 
 class Infohiermap(Clustering):
+    '''
+    A wrapper of *Hierarchical Infomap* collected from `OSLOM <http://www.oslom.org/index.html>`
+    
+    Arguments
+    --------------------
+    seed : int
+        random seed
+
+    Reference 
+    ------------------------
+    Martin Rosvall and Carl T. Bergstrom Multilevel compression of random walks on
+    networks reveals hierarchical organization in large integrated systems. PLoS ONE 6(4):
+    e18209 (2011).     
+    '''        
 
     def __init__(self, name="oslom_infohiermap"):
         super(Infohiermap, self).__init__(name) 
@@ -117,6 +149,19 @@ class Infohiermap(Clustering):
     
     
 class lpm(Clustering):
+    '''
+    A wrapper of *Label Propagation Method* collected from `OSLOM <http://www.oslom.org/index.html>`
+    
+    Arguments
+    --------------------
+    seed : int
+        random seed
+
+    Reference 
+    ------------------------
+    Raghavan, U. N., Albert, R. and Kumara, S. Near linear time algorithm to detect
+    community structures in large-scale networks. Phys. Rev. E 76, 036106 (2007).    
+    '''            
 
     def __init__(self, name="oslom_lpm"):
         super(lpm, self).__init__(name) 
@@ -166,6 +211,19 @@ class lpm(Clustering):
     
 
 class louvain_method(Clustering):
+    '''
+    A wrapper of *Louvain* algorithm collected from `OSLOM <http://www.oslom.org/index.html>`
+    
+    Arguments
+    --------------------
+    seed : int
+        random seed
+
+    Reference 
+    ------------------------
+    V.D. Blondel, J.-L. Guillaume, R. Lambiotte and E. Lefebvre Fast unfolding of com-
+    munity hierarchies in large networks. J. Stat. Mech. 2008 (10): P10008  
+    '''
 
     def __init__(self, name="oslom_louvain_method"):
         super(louvain_method, self).__init__(name) 
@@ -215,7 +273,32 @@ class louvain_method(Clustering):
 
 
 class copra(Clustering):
+    '''
+    A wrapper of *COPRA (Community Overlap PRopagation Algorithm)* collected from `OSLOM <http://www.oslom.org/index.html>`
+    
+    Arguments
+    --------------------
+    Usage: java COPRA <file> <options>
+    Options:
+      -bi            <file> is a bipartite network. "-w" not allowed.
+      -w             <file> is a weighted unipartite network. "-bi" not allowed.
+      -v <v>         <v> is maximum number of communities/vertex. Default: 1.
+      -vs <v1> <v2>  Repeats for -v <v> for all <v> between <v1>-<v2>.
+      -prop <p>      <p> is maximum number of propagations. Default: no limit.
+      -repeat <r>    Repeats <r> times, for each <v>, and computes average.
+      -mo            Compute the overlap modularity of each solution.
+      -nosplit       Don't split discontiguous communities.
+      -extrasimplify Simplify communities again after splitting.
+      -q             Don't show information when starting program.
 
+
+    Reference 
+    ------------------------
+    Lancichinetti, Andrea, Santo Fortunato, and János Kertész. 
+    "Detecting the overlapping and hierarchical community structure in complex networks." 
+    New Journal of Physics 11.3 (2009): 033015.  
+    '''
+    
     def __init__(self, name="oslom_copra"):
         super(copra, self).__init__(name) 
     
@@ -270,6 +353,24 @@ class copra(Clustering):
 
 
 class modopt(Clustering):
+    '''
+    A wrapper of *Modularity Optimization (Simulated Annealing)* collected from `OSLOM <http://www.oslom.org/index.html>`
+    
+    Arguments
+    --------------------
+    ./modopt [netfile] [random_seed] [lambda] [trials] [temp_step] [initial_temp]
+    default random_seed = 1
+    default lambda= 1
+    default trials= 5
+    default temp_step= 0.999
+    default initial_temp= 1e-6
+
+    Reference 
+    ------------------------
+    Sales-Pardo, M., Guimer, R., Moreira, A. A. and Amaral, L. A. N Extracting the
+    hierarchical organization of complex systems. Proc. Natl. Acad. Sci. USA 104, 1522415229
+    (2007).
+    '''
 
     def __init__(self, name="oslom_modopt"):
         super(modopt, self).__init__(name) 
@@ -326,46 +427,47 @@ class modopt(Clustering):
         self.result = result 
         return self 
 
-'''
-***************************************************************************************************************************************************
-OPTIONS
-
-  [-r R]:                       sets the number of runs for the first hierarchical level, bigger this value, more accurate the output (of course, it takes more). Default value is 10.
-
-  [-hr R]:                      sets the number of runs  for higher hierarchical levels. Default value is 50 (the method should be faster since the aggregated network is usually much smaller).
-
-  [-seed m]:                    sets m equal to the seed for the random number generator. (instead of reading from time_seed.dat)
-
-  [-hint filename]:             takes a partition from filename. The file is expected to have the nodes belonging to the same cluster on the same line.
-
-  [-load filename]:             takes modules from a tp file you already got in a previous run.
-
-  [-t T]:                       sets the threshold equal to T, default value is 0.1
-
-  [-singlet]:                    finds singletons. If you use this flag, the program generally finds a number of nodes which are not assigned to any module.
-                                the program will assign each node with at least one not homeless neighbor. This only applies to the lowest hierarchical level.
-
-  [-cp P]:                      sets a kind of resolution parameter equal to P. This parameter is used to decide if it is better to take some modules or their union.
-                                Default value is 0.5. Bigger value leads to bigger clusters. P must be in the interval (0, 1).
-
-  [-fast]:                      is equivalent to "-r 1 -hr 1" (the fastest possible execution).
-
-  [-infomap runs]:              calls infomap and uses its output as a starting point. runs is the number of times you want to call infomap.
-
-  [-copra runs]:                same as above using copra.
-
-  [-louvain runs]:              same as above using louvain method.
-
-
-Please look at ReadMe.pdf for a more detailed explanation.
-
-
-
-***************************************************************************************************************************************************
-'''
-
 
 class OSLOM(Clustering):
+    '''
+    A wrapper of *OSLOM (Order Statistics Local Optimization Method)* collected from `OSLOM <http://www.oslom.org/index.html>`
+    
+    Arguments
+    --------------------
+    OPTIONS
+    
+      [-r R]:                       sets the number of runs for the first hierarchical level, bigger this value, more accurate the output (of course, it takes more). Default value is 10.
+    
+      [-hr R]:                      sets the number of runs  for higher hierarchical levels. Default value is 50 (the method should be faster since the aggregated network is usually much smaller).
+    
+      [-seed m]:                    sets m equal to the seed for the random number generator. (instead of reading from time_seed.dat)
+    
+      [-hint filename]:             takes a partition from filename. The file is expected to have the nodes belonging to the same cluster on the same line.
+    
+      [-load filename]:             takes modules from a tp file you already got in a previous run.
+    
+      [-t T]:                       sets the threshold equal to T, default value is 0.1
+    
+      [-singlet]:                    finds singletons. If you use this flag, the program generally finds a number of nodes which are not assigned to any module.
+                                    the program will assign each node with at least one not homeless neighbor. This only applies to the lowest hierarchical level.
+    
+      [-cp P]:                      sets a kind of resolution parameter equal to P. This parameter is used to decide if it is better to take some modules or their union.
+                                    Default value is 0.5. Bigger value leads to bigger clusters. P must be in the interval (0, 1).
+    
+      [-fast]:                      is equivalent to "-r 1 -hr 1" (the fastest possible execution).
+    
+      [-infomap runs]:              calls infomap and uses its output as a starting point. runs is the number of times you want to call infomap.
+    
+      [-copra runs]:                same as above using copra.
+    
+      [-louvain runs]:              same as above using louvain method.
+
+
+    Reference 
+    ------------------------
+    A. Lancichinetti, F. Radicchi, J.J. Ramasco and S. Fortunato Finding statistically sig-
+    nificant communities in networks PloS One 6, e18961 (2011)
+    '''
 
     def __init__(self, name="oslom_oslom"):
         super(OSLOM, self).__init__(name) 
@@ -388,6 +490,7 @@ class OSLOM(Clustering):
             data.to_edgelist()
         
         with utils.TempDir() as tmp_dir:
+
             # tmp_dir = "/tmp/abc"
             def link_file(path, destname=None):
                 if destname is None :

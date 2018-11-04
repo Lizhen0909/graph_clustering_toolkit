@@ -6,4 +6,4 @@ def list_datasets():
 
 
 def get_dataset(name):
-    return snap_dataset.get_dataset(name)
+    return snap_dataset.load_snap_dataset(name)

@@ -9,7 +9,22 @@ import glob
 import numpy as np 
 
 
+
 class seq_louvain(Clustering):
+    '''
+    A wrapper of *Louvain* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    seed : int
+        random seed
+
+    Reference 
+    ------------------------
+    Blondel, V., Guillaume, J.L., Lambiotte, R., Lefebvre, E.: Fast unfolding of communities
+    in large networks. Journal of Statistical Mechanics: Theory and Experiment
+    2008(10) (2008)
+    '''
 
     def __init__(self, name="dct-seq_louvain"):
         super(seq_louvain, self).__init__(name) 
@@ -59,6 +74,19 @@ class seq_louvain(Clustering):
 
     
 class infomap(Clustering):
+    '''
+    A wrapper of *infomap* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    seed : int
+        random seed
+
+    Reference 
+    ------------------------
+    Rosvall, M., Axelsson, D., Bergstrom, C.T.: The map equation. The European
+    Physical Journal Special Topics 178(1), 13–23 (2009)
+    '''
 
     def __init__(self, name="dct-infomap"):
         super(infomap, self).__init__(name) 
@@ -108,7 +136,19 @@ class infomap(Clustering):
 
 
 class dct(Clustering):
+    '''
+    A wrapper of *dct (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    progname : str
+        name of dct program. Be one of [dlslm, dlslm_map_eq, dlslm_no_contraction, dlslm_with_seq]
 
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    '''
     def __init__(self, name=None, progname='dlplm'):
         if name is None: name = "dct-" + progname
         super(dct, self).__init__(name) 
