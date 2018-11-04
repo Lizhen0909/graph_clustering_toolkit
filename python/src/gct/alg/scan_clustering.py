@@ -9,6 +9,7 @@ import os
 import glob
 import multiprocessing
 
+prefix='scan'
 
 class Scanpp(Clustering):
     '''

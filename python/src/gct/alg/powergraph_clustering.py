@@ -10,6 +10,7 @@ import glob
 import multiprocessing
 import numpy as np 
 
+prefix='alg'
 
 class label_propagation(Clustering):
     '''

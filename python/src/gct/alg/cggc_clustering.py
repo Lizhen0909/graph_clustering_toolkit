@@ -7,10 +7,8 @@ from gct.alg.clustering import Clustering, save_result
 from gct import utils, config
 import os
 
+prefix = 'cgcc'
 
-'''
-
-'''
 class CGGC(Clustering):
     '''
     A wrapper of *CGGC* (Core Groups Graph ensemble Clustering) method* from `https://github.com/eXascaleInfolab/CGGC`

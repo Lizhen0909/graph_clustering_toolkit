@@ -7,6 +7,7 @@ from gct.alg.clustering import Clustering, save_result
 from gct import utils, config
 import os
 
+prefix='mcl'
 
 class MCL(Clustering):
     '''

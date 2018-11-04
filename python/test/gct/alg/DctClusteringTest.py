@@ -40,49 +40,49 @@ class Test(unittest.TestCase):
             alg = seq_louvain()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
  
     def test_infomap(self):
         for data in  self.graphs: 
             alg = infomap()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
  
     def test_dlslm(self):
         for data in  self.graphs: 
             alg = dct(progname='dlslm')
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
  
     def test_dlslm_with_seq(self):
         for data in  self.graphs: 
             alg = dct(progname='dlslm_with_seq')
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))             
+            print (clustering.load_result(data.name, alg.name))             
 
     def test_dlslm_map_eq(self):
         for data in  self.graphs: 
             alg = dct(progname='dlslm_map_eq')
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))             
+            print (clustering.load_result(data.name, alg.name))             
 
     def test_dlslm_no_contraction(self):
         for data in  self.graphs: 
             alg = dct(progname='dlslm_no_contraction')
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))             
+            print (clustering.load_result(data.name, alg.name))             
 
     def test_dlplm(self):
         for data in  self.graphs: 
             alg = dct(progname='dlplm')
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))             
+            print (clustering.load_result(data.name, alg.name))             
 
 
 

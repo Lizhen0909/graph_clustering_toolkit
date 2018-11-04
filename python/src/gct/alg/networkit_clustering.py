@@ -9,6 +9,7 @@ from gct.alg.clustering import Clustering, save_result
 from gct import utils
 import networkit
 
+prefix='networkit'
 
 class LPDegreeOrdered(Clustering):
     '''

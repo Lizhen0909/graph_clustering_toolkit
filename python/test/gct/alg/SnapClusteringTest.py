@@ -38,13 +38,13 @@ class Test(unittest.TestCase):
         alg = Clauset_Newman_Moore()
         print ("testClauset_Newman_Moore")
         print (alg.run(self.graph_unweighted_undirect).get_result())
-        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
+        print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
 
     def testGirvan_Newman(self):
         alg = Girvan_Newman()
         print ("testGirvan_Newman")
         print (alg.run(self.graph_unweighted_undirect).get_result())
-        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
+        print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']

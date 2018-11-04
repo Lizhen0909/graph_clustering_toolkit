@@ -8,6 +8,7 @@ import igraph
 from gct.alg.clustering import Clustering, save_result
 from gct import utils
 
+prefix='igraph'
 
 class community_fastgreedy(Clustering):
     '''

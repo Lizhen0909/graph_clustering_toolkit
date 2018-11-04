@@ -8,6 +8,7 @@ import snap
 from gct.alg.clustering import Clustering, save_result
 from gct import utils
 
+prefix='snap'
 
 class Clauset_Newman_Moore(Clustering):
     '''

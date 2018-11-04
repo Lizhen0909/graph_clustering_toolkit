@@ -41,21 +41,21 @@ class Test(unittest.TestCase):
             alg = LPDegreeOrdered()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
  
     def testCutClustering(self):
         for data in  self.graphs: 
             alg = CutClustering()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data,alpha=0.15).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
 
     def testPLP(self):
         for data in  self.graphs: 
             alg = PLP()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
 
 
     def testPLM(self):
@@ -63,7 +63,7 @@ class Test(unittest.TestCase):
             alg = PLM()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
 
 
 

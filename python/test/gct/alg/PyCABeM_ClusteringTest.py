@@ -40,7 +40,7 @@ class Test(unittest.TestCase):
             alg = HiReCS()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
  
 
     def test_LabelRank(self):
@@ -48,14 +48,14 @@ class Test(unittest.TestCase):
             alg = LabelRank()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
 
     def test_GANXiSw(self):
         for data in  self.graphs: 
             alg = GANXiSw()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
-            print (clustering.load_rusult(data.name, alg.name))
+            print (clustering.load_result(data.name, alg.name))
              
 
 if __name__ == "__main__":

@@ -38,7 +38,7 @@ class Test(unittest.TestCase):
         alg = streamcom()
         print ("testSteramcom")
         print (alg.run(self.graph_unweighted_undirect).get_result())
-        print (clustering.load_rusult(self.graph_unweighted_undirect.name, alg.name))
+        print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
  
 
 if __name__ == "__main__":

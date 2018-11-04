@@ -8,6 +8,8 @@ from gct import utils, config
 import os
 import glob
 
+prefix='alg'
+
 class streamcom(Clustering):
     '''
     A wrapper of *streamcom* algorithm from https://github.com/ahollocou/graph-streaming 

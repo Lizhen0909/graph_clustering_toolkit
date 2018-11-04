@@ -8,7 +8,7 @@ from gct import utils, config
 import glob
 import numpy as np 
 
-
+prefix='dct'
 
 class seq_louvain(Clustering):
     '''
