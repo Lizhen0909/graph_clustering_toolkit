@@ -167,3 +167,10 @@ def try_import(module_name, module_path):
             sys.path.insert(0,module_path)
             #print(module_name,module_path)
         return importlib.import_module(module_name)
+
+def check_module_available(module_name):
+    try:
+        importlib.import_module(module_name)
+        return True 
+    except ImportError: 
+        return False

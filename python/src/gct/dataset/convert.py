@@ -6,6 +6,8 @@ Created on Oct 26, 2018
 from gct import utils
 from gct.dataset.dataset import Dataset
 import pandas as pd 
+import numpy as np 
+from scipy.sparse.coo import coo_matrix
 
 
 def from_edgelist(name, edgelist , directed=False , description="", overide=True):
@@ -125,4 +127,29 @@ def to_networkit(data):
     if not utils.file_exists(fname):
         data.to_edgelist()
     return networkit.readGraph(fname, fileformat=networkit.Format.EdgeListSpaceZero, directed=data.is_directed())
+
+
+def to_coo_adjacency_matrix(data, simalarity=False,distance_fun=None):
+    edges = data.get_edges()
+    rows = edges['src'].values
+    cols = edges['dest'].values
+    n = int(max(np.max(rows), np.max(cols))) + 1
+    if data.is_weighted():
+        weight = edges['weight'].values
+    else:
+        weight = np.ones_like(rows)
+    if not simalarity:  # distance
+        if distance_fun is None or distance_fun=='minus':
+            weight = -weight
+        elif distance_fun == 'exp_minus':
+            weight=np.exp(-weight)
+        else:
+            raise ValueError("unknown "+distance_fun)
+    if data.is_directed():
+        return coo_matrix((weight, (rows, cols)), shape=[n, n])
+    else:
+        newX = np.concatenate([weight, weight])
+        newrows = np.concatenate([rows, cols])
+        newcols = np.concatenate([cols, rows])
+        return coo_matrix((newX, (newrows, newcols)), shape=[n, n])
 

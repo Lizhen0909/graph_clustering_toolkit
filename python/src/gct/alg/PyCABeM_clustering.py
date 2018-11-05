@@ -157,40 +157,6 @@ class LabelRank(Clustering):
         self.result = result 
         return self 
 
-'''
-GANXiSw 3.0.2(used to be SLPAw) is for weighted (directed) networks, version=3.0.2
-Usage: java -jar GANXiSw.jar -i networkfile
-Options:
-  -i input network file
-  -d output director (default: output)
-  -L set to 1 to use only the largest connected component
-  -t maximum iteration (default: 100)
-  -run number of repetitions
-  -r a specific threshold in [0,0.5]
-  -ov set to 0 to perform disjoint detection
-  -W treat the input as a weighted network, set 0 to ignore the weights(default 1)
-  -Sym set to 1 to make the edges symmetric/bi-directional (default 0)
-  -seed user specified seed for random generator
-  -help to display usage info
- -----------------------------Advanced Parameters---------------------------------
-  -v weighted version in {1,2,3}, default=3
-  -Oov set to 1 to output overlapping file, default=0
-  -Onc set to 1 to output <nodeID communityID> format, 2 to output <communityID nodeID> format
-  -minC min community size threshold, default=2
-  -maxC max community size threshold
-  -ev embedded SLPAw's weighted version in {1,2,3}, default=1
-  -loopfactor determine the num of loops for depomposing each large com, default=1.0
-  -Ohis1 set to 1 to output histgram Level1
-  -Ohis2 set to 1 to output histgram Level2
-
-  -OMem1 set to 1 to output each node's memory content at Level 1
-  -EC evolution cutoff, a real value > 1.0 
-NOTE: 1. more parameters refer to Readme.pdf
-      2. parameters are *CASE-SENSITIVE*, e.g., -Onc is not -onc
-
-'''
-
-
 class GANXiSw(Clustering):
     '''
     

@@ -360,6 +360,101 @@ def dct_dct(name, graph, **kwargs):
     return obj.run(graph, **kwargs)
 
 
+def dct_dlplm(name, graph, **kwargs):
+    '''
+
+    A wrapper of *dlplm (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    None
+
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    
+    '''
+    obj = gct.alg.dct_clustering.dlplm(name)
+    return obj.run(graph, **kwargs)
+
+
+def dct_dlslm(name, graph, **kwargs):
+    '''
+
+    A wrapper of *dlslm (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    None
+
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    
+    '''
+    obj = gct.alg.dct_clustering.dlslm(name)
+    return obj.run(graph, **kwargs)
+
+
+def dct_dlslm_map_eq(name, graph, **kwargs):
+    '''
+
+    A wrapper of *dlslm_map_eq (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    None
+    
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    
+    '''
+    obj = gct.alg.dct_clustering.dlslm_map_eq(name)
+    return obj.run(graph, **kwargs)
+
+
+def dct_dlslm_no_contraction(name, graph, **kwargs):
+    '''
+
+    A wrapper of *dlslm_no_contraction (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    None 
+    
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    
+    '''
+    obj = gct.alg.dct_clustering.dlslm_no_contraction(name)
+    return obj.run(graph, **kwargs)
+
+
+def dct_dlslm_with_seq(name, graph, **kwargs):
+    '''
+
+    A wrapper of *dlslm_with_seq (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    None
+
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    
+    '''
+    obj = gct.alg.dct_clustering.dlslm_with_seq(name)
+    return obj.run(graph, **kwargs)
+
+
 def dct_infomap(name, graph, **kwargs):
     '''
 
@@ -859,6 +954,137 @@ def scan_pScan(name, graph, **kwargs):
     return obj.run(graph, **kwargs)
 
 
+def sklearn_AffinityPropagation(name, graph, **kwargs):
+    '''
+
+    A wrapper of *AffinityPropagation* algorithm from http://scikit-learn.org. 
+
+    Parameters
+    ----------
+    damping : float, optional, default: 0.5
+        Damping factor (between 0.5 and 1) is the extent to
+        which the current value is maintained relative to
+        incoming values (weighted 1 - damping). This in order
+        to avoid numerical oscillations when updating these
+        values (messages).
+    max_iter : int, optional, default: 200
+        Maximum number of iterations.
+    convergence_iter : int, optional, default: 15
+        Number of iterations with no change in the number
+        of estimated clusters that stops the convergence.
+    verbose : boolean, optional, default: False
+        Whether to be verbose.
+        
+    Reference
+    ------------------------
+    Brendan J. Frey and Delbert Dueck, “Clustering by Passing Messages Between Data Points”, Science Feb. 2007
+    
+    
+    '''
+    obj = gct.alg.sklearn_clustering.AffinityPropagation(name)
+    return obj.run(graph, **kwargs)
+
+
+def sklearn_DBSCAN(name, graph, **kwargs):
+    '''
+
+    A wrapper of *DBSCAN* algorithm from http://scikit-learn.org. 
+
+   Parameters
+    ----------
+    eps : float, optional
+        The maximum distance between two samples for them to be considered
+        as in the same neighborhood.
+    min_samples : int, optional
+        The number of samples (or total weight) in a neighborhood for a point
+        to be considered as a core point. This includes the point itself.
+    algorithm : {'auto', 'ball_tree', 'kd_tree', 'brute'}, optional
+        The algorithm to be used by the NearestNeighbors module
+        to compute pointwise distances and find nearest neighbors.
+        See NearestNeighbors module documentation for details.
+    leaf_size : int, optional (default = 30)
+        Leaf size passed to BallTree or cKDTree. This can affect the speed
+        of the construction and query, as well as the memory required
+        to store the tree. The optimal value depends
+        on the nature of the problem.
+    p : float, optional
+        The power of the Minkowski metric to be used to calculate distance
+        between points.
+    n_jobs : int or None, optional (default=None)
+        The number of parallel jobs to run.
+        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
+        ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
+        for more details.
+    Reference
+    ------------------------
+    Ester, M., H. P. Kriegel, J. Sander, and X. Xu, “A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise”. In: Proceedings of the 2nd International Conference on Knowledge Discovery and Data Mining, Portland, OR, AAAI Press, pp. 226-231. 1996    
+    
+    '''
+    obj = gct.alg.sklearn_clustering.DBSCAN(name)
+    return obj.run(graph, **kwargs)
+
+
+def sklearn_SpectralClustering(name, graph, **kwargs):
+    '''
+
+    A wrapper of *SpectralClustering* algorithm from http://scikit-learn.org. 
+
+    Parameters
+    -----------
+    eigen_solver : {None, 'arpack', 'lobpcg', or 'amg'}
+        The eigenvalue decomposition strategy to use. AMG requires pyamg
+        to be installed. It can be faster on very large, sparse problems,
+        but may also lead to instabilities
+    random_state : int, RandomState instance or None (default)
+        A pseudo random number generator used for the initialization of the
+        lobpcg eigen vectors decomposition when eigen_solver == 'amg' and by
+        the K-Means initialization. Use an int to make the randomness
+        deterministic.
+        See :term:`Glossary <random_state>`.
+    n_init : int, optional, default: 10
+        Number of time the k-means algorithm will be run with different
+        centroid seeds. The final results will be the best output of
+        n_init consecutive runs in terms of inertia.
+    gamma : float, default=1.0
+        Kernel coefficient for rbf, poly, sigmoid, laplacian and chi2 kernels.
+        Ignored for ``affinity='nearest_neighbors'``.
+    n_neighbors : integer
+        Number of neighbors to use when constructing the affinity matrix using
+        the nearest neighbors method. Ignored for ``affinity='rbf'``.
+    eigen_tol : float, optional, default: 0.0
+        Stopping criterion for eigendecomposition of the Laplacian matrix
+        when using arpack eigen_solver.
+    assign_labels : {'kmeans', 'discretize'}, default: 'kmeans'
+        The strategy to use to assign labels in the embedding
+        space. There are two ways to assign labels after the laplacian
+        embedding. k-means can be applied and is a popular choice. But it can
+        also be sensitive to initialization. Discretization is another approach
+        which is less sensitive to random initialization.
+    degree : float, default=3
+        Degree of the polynomial kernel. Ignored by other kernels.
+    coef0 : float, default=1
+        Zero coefficient for polynomial and sigmoid kernels.
+        Ignored by other kernels.
+    kernel_params : dictionary of string to any, optional
+        Parameters (keyword arguments) and values for kernel passed as
+        callable object. Ignored by other kernels.
+    n_jobs : int or None, optional (default=None)
+        The number of parallel jobs to run.
+        ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
+        ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
+        for more details.
+        
+    Reference
+    ------------------------
+    Normalized cuts and image segmentation, 2000 Jianbo Shi, Jitendra Malik http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.160.2324
+    A Tutorial on Spectral Clustering, 2007 Ulrike von Luxburg http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.165.9323
+    Multiclass spectral clustering, 2003 Stella X. Yu, Jianbo Shi http://www1.icsi.berkeley.edu/~stellayu/publication/doc/2003kwayICCV.pdf
+    
+    '''
+    obj = gct.alg.sklearn_clustering.SpectralClustering(name)
+    return obj.run(graph, **kwargs)
+
+
 def snap_Clauset_Newman_Moore(name, graph, **kwargs):
     '''
 
@@ -895,6 +1121,104 @@ def snap_Girvan_Newman(name, graph, **kwargs):
     return obj.run(graph, **kwargs)
 
 
+def alg_Paris(name, graph, **kwargs):
+    '''
+
+    A wrapper of *paris* algorithm from https://github.com/tbonald/paris 
+
+    Arguments
+    --------------------
+    None
+            
+    Reference
+    ------------------------
+    Bonald, Thomas, et al. "Hierarchical Graph Clustering using Node Pair Sampling." arXiv preprint arXiv:1806.01664 (2018).
+    
+    '''
+    obj = gct.alg.unsorted_clustering.Paris(name)
+    return obj.run(graph, **kwargs)
+
+
+def alg_lso_cluster(name, graph, **kwargs):
+    '''
+
+    A wrapper of *lso-cluster* algorithm from https://github.com/twanvl/graph-cluster 
+    
+    Please specify long-format options. Don't specify output.
+
+    Arguments
+    --------------------
+    Optional parameters regarding the clustering:
+    
+    'eval', clustering Evaluate the objective function on clustering, do not optimize.
+    
+    'init', clustering Use the given clustering as initial value for the optimization. Default: each node is initially in a separate cluster, i.e. clustering=1:length(A).
+    
+    Optional parameters regarding the objective:
+    
+    'loss', loss Use the given loss/objective function. The loss is given a string name. See below for a list of supported loss functions. Default: loss = 'modularity'
+    
+    'total_volume', m Replace the total volume (sum of edges) by m. Many objectives use the total volume for normalization, and changing it will change the scale at which clusters are found. Usually increasing the total volume will result in larger clusters. Default: m = sum(sum(A))
+    
+    'extra_loss', alpha Add a term to the loss function that penalizes the volume of clusters, with weight alpha.
+    
+    'num_clusters', n Force the solution to have the given number of clusters. The algorithm uses a binary search to alter the objective until it finds a solution with the given number of clusters. The alteration is the same as the one used by extra_loss.
+    
+    'min_num_cluster', n Force the solution to have at least the given number of clusters.
+    
+    'max_num_cluster', n Force the solution to have at most the given number of clusters.
+    
+    'max_cluster_size', n Allow clusters to have at most n nodes.
+    
+    Optional parameters about internal algorithm details, you only need these if you know what you are doing:
+    
+    'seed', random_seed Use a given random seed. By default a fixed seed is used, so repeated runs with the same input give the same output.
+    
+    'num_repeats', n Repeat the search n times from scratch with different random seeds and return the best result. Default: 1
+    
+    'num_partitions', n Number of times to try and break apart the clusters and re-cluster them Default: 0
+    
+    'optimize_exhaustive', bool Use an exhaustive search instead of local search. This is of course very slow. Can be combined with max_num_cluster. Default: false.
+    
+    'optimize_higher_level', bool Use a hierarchical optimizer, where small clusters are considered as nodes of a higher level graph. Default: true.
+    
+    'always_consider_empty', bool Always consider the move of a node into a new singleton cluster. Default: true.
+    
+    'num_loss_tweaks', n Maximum number of iterations in the binary search to force the specified number of clusters. Default: 32
+    
+    'check_invariants', bool Check invariants of the algorithm (for debugging). Default: false.
+    
+    'trace_file', filename Write a trace of the steps performed by the optimization algorithm to a file in JSON format.
+    
+    'verbose', level Level of debug output. Levels go up to 7 and are increasingly chatty. Default: level = 0, i.e. no output.
+
+    Some of the supported loss functions are:
+                
+    'modularity', loss = -sum_c (w_c/m - v_c^2/m^2) This is the negation of the usual definition
+    
+    'infomap': The infomap objective by [3].
+    
+    'ncut': Normalized cut, loss = sum_c (v_c - w_c) / n_c
+    
+    'rcut': Ratio cut, loss = sum_c (v_c - w_c) / v_c
+    
+    {'pmod',p}: Modularity with a different power, loss = -sum_c (w_c/m - (v_c/m)^p / (p-1))
+    
+    {'mom',m}: Monotonic variant of modularity, loss = -sum_c (w_c/(m + 2v_c) - (v_c/(m + 2v_c))^2)
+    
+    'w-log-v', loss = sum_c (w_c/m * log(v_c) )
+
+    num loss = |C|: Minimize the number of clusters, this leads to finding the connected components.
+            
+    Reference
+    ------------------------
+    Graph clustering: does the optimization procedure matter more than the objective function?; Twan van Laarhoven and Elena Marchiori; Physical Review E 87, 012812 (2013)
+    
+    '''
+    obj = gct.alg.unsorted_clustering.lso_cluster(name)
+    return obj.run(graph, **kwargs)
+
+
 def alg_streamcom(name, graph, **kwargs):
     '''
 
@@ -918,12 +1242,11 @@ def alg_streamcom(name, graph, **kwargs):
     Hollocou, Alexandre, et al. "A Streaming Algorithm for Graph Clustering." arXiv preprint arXiv:1712.04337 (2017)
     
     '''
-    obj = gct.alg.streaming_clustering.streamcom(name)
+    obj = gct.alg.unsorted_clustering.streamcom(name)
     return obj.run(graph, **kwargs)
 
 
-__ALG_LIST__ += ['oslom_Infohiermap', 'oslom_Infomap', 'oslom_OSLOM', 'oslom_copra', 'oslom_louvain_method', 'oslom_lpm', 'oslom_modopt', 'pycabem_GANXiSw', 'pycabem_HiReCS', 'pycabem_LabelRank', 'cgcc_CGGC', 'dct_dct', 'dct_infomap', 'dct_seq_louvain', 'igraph_community_edge_betweenness', 'igraph_community_fastgreedy', 'igraph_community_infomap', 'igraph_community_label_propagation', 'igraph_community_leading_eigenvector', 'igraph_community_multilevel', 'igraph_community_optimal_modularity', 'igraph_community_spinglass', 'igraph_community_walktrap', 'mcl_MCL', 'networkit_CutClustering', 'networkit_LPDegreeOrdered', 'networkit_PLM', 'networkit_PLP', 'alg_GossipMap', 'alg_RelaxMap', 'alg_label_propagation', 'scan_AnyScan', 'scan_Scanpp', 'scan_pScan', 'snap_Clauset_Newman_Moore', 'snap_Girvan_Newman', 'alg_streamcom']
-
+__ALG_LIST__ += ['oslom_Infohiermap', 'oslom_Infomap', 'oslom_OSLOM', 'oslom_copra', 'oslom_louvain_method', 'oslom_lpm', 'oslom_modopt', 'pycabem_GANXiSw', 'pycabem_HiReCS', 'pycabem_LabelRank', 'cgcc_CGGC', 'dct_dct', 'dct_dlplm', 'dct_dlslm', 'dct_dlslm_map_eq', 'dct_dlslm_no_contraction', 'dct_dlslm_with_seq', 'dct_infomap', 'dct_seq_louvain', 'igraph_community_edge_betweenness', 'igraph_community_fastgreedy', 'igraph_community_infomap', 'igraph_community_label_propagation', 'igraph_community_leading_eigenvector', 'igraph_community_multilevel', 'igraph_community_optimal_modularity', 'igraph_community_spinglass', 'igraph_community_walktrap', 'mcl_MCL', 'networkit_CutClustering', 'networkit_LPDegreeOrdered', 'networkit_PLM', 'networkit_PLP', 'alg_GossipMap', 'alg_RelaxMap', 'alg_label_propagation', 'scan_AnyScan', 'scan_Scanpp', 'scan_pScan', 'sklearn_AffinityPropagation', 'sklearn_DBSCAN', 'sklearn_SpectralClustering', 'snap_Clauset_Newman_Moore', 'snap_Girvan_Newman', 'alg_Paris', 'alg_lso_cluster', 'alg_streamcom']
 #### end generated algorithm methods
 
 def list_algorithms():
