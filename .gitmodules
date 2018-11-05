@@ -34,3 +34,6 @@
 [submodule "submodules/paris"]
 	path = submodules/paris
 	url = https://github.com/tbonald/paris.git
+[submodule "submodules/graph-cluster"]
+	path = submodules/graph-cluster
+	url = https://github.com/archels/graph-cluster
