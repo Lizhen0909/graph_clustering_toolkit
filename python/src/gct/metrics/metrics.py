@@ -14,8 +14,10 @@ from gct import utils, config
 import os
 
 
-class GraphProperties(object):
-
+class GraphMetrics(object):
+    '''
+    metrics for a graph. e.g. density, diameter etc.
+    '''
     def __init__(self, data):
         if data.is_directed() or data.is_weighted():
             print ("Warning! Graph will be taken as undirected.")
@@ -98,8 +100,10 @@ class GraphProperties(object):
         return self.set_if_not_exists(prop_name, f)
 
 
-class GraphClustersProperties(object):
-
+class GraphClusterMetrics(object):
+    '''
+    metrics for a clustering of a graph. e.g. modularity.
+    '''
     def __init__(self, data, clusterobj):
         if data.is_directed() or data.is_weighted():
             print ("Warning! Graph will be taken as undirected and unweighted.")
@@ -523,7 +527,10 @@ class GraphClustersProperties(object):
 
 
 class ClusterComparator(object):
-    
+    '''
+    metrics for two clustering. e.g. nmi, overlap nmi etc.
+    In case that some metrics requires ground truth, take ground truth as the first parameter.
+    '''
     def __init__(self, clusterobj1, clusterobj2):
         self.logger = utils.get_logger("{}".format(type(self).__name__))
 

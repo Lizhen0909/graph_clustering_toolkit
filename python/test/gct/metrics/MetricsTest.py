@@ -5,7 +5,7 @@ Created on Oct 26, 2018
 '''
 import unittest
 from gct.dataset import random_dataset, convert
-from gct.metrics.metrics import GraphProperties, GraphClustersProperties, \
+from gct.metrics.metrics import GraphMetrics, GraphClusterMetrics, \
     ClusterComparator
 import numpy as np 
 from gct.alg.OSLOM_clustering import Infomap, OSLOM
@@ -23,8 +23,8 @@ class Test(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testGraphProperties(self):
-        p = GraphProperties(self.graph_unweighted_undirect)
+    def testGraphMetrics(self):
+        p = GraphMetrics(self.graph_unweighted_undirect)
         print ('num_edges', p.num_edges)
         print ('num_vectices', p.num_vectices)
         print ('density', p.density)
@@ -35,7 +35,7 @@ class Test(unittest.TestCase):
     def testClustersProperties(self):
         g = self.graph_unweighted_undirect
         assert not g.is_weighted()
-        p = GraphClustersProperties(g, list(g.get_ground_truth().values())[0])
+        p = GraphClusterMetrics(g, list(g.get_ground_truth().values())[0])
         self.assertEqual(p.num_edges * 2, p.sum_weight)
         self.assertEqual(np.sum(list(p.cluster_out_sum_weights.values())) + np.sum(list(p.cluster_sum_intra_weights.values())), p.sum_weight)
         print ('num_edges', p.num_edges)
