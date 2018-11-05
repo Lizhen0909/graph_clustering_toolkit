@@ -5,7 +5,7 @@ Created on Oct 26, 2018
 '''
 import unittest
 from gct.dataset import random_dataset, convert
-from gct.dataset.properties import GraphProperties, GraphClustersProperties, \
+from gct.metrics.metrics import GraphProperties, GraphClustersProperties, \
     ClusterComparator
 import numpy as np 
 from gct.alg.OSLOM_clustering import Infomap, OSLOM
