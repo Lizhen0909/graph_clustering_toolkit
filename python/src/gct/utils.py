@@ -12,6 +12,7 @@ import shutil
 import time
 import sys
 import subprocess
+import importlib
 
 
 def file_exists(file_path):
@@ -154,3 +155,15 @@ def link_file(path, dest_dir=None, destname=None):
     os.symlink(path, destpath)
     return destpath            
 
+
+def try_import(module_name, module_path):
+    '''
+    import module, if failed try import from module_path
+    '''
+    try:
+        return importlib.import_module(module_name)
+    except: 
+        if not module_path in sys.path:
+            sys.path.insert(0,module_path)
+            #print(module_name,module_path)
+        return importlib.import_module(module_name)

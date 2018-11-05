@@ -7,8 +7,10 @@ from gct.alg.clustering import Clustering, save_result
 from gct import utils, config
 import os
 import glob
+from gct.dataset import convert
 
-prefix='alg'
+prefix = 'alg'
+
 
 class streamcom(Clustering):
     '''
@@ -31,7 +33,6 @@ class streamcom(Clustering):
     ------------------------
     Hollocou, Alexandre, et al. "A Streaming Algorithm for Graph Clustering." arXiv preprint arXiv:1712.04337 (2017)
     '''    
-    
 
     def __init__(self, name="streamcom"):
         
@@ -41,7 +42,7 @@ class streamcom(Clustering):
         return {'lib':"streamcom", "name": 'streamcom' }
     
     def run(self, data, vmax_start=None, vmax_end=None, c=None, niter=None, seed=None):
-        if (data.is_directed() or data.is_weighted()):
+        if False and (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")
         params = locals()
         del(params['self']);del(params['data'])
@@ -85,4 +86,56 @@ class streamcom(Clustering):
         save_result(result)
         self.result = result 
         return self 
+
     
+class Paris(Clustering):
+    '''
+    A wrapper of *paris* algorithm from https://github.com/tbonald/paris 
+
+    Arguments
+    --------------------
+    None
+            
+    Reference
+    ------------------------
+    Bonald, Thomas, et al. "Hierarchical Graph Clustering using Node Pair Sampling." arXiv preprint arXiv:1806.01664 (2018).
+    '''    
+
+    def __init__(self, name="pairs"):
+        
+        super(Paris, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"paris", "name": 'paris' }
+    
+    def run(self, data, vmax_start=None, vmax_end=None, c=None, niter=None, seed=None):
+        if False and (data.is_directed() or data.is_weighted()):
+            raise Exception("only undirected and unweighted graph is supported")
+        
+        def fun():        
+            paris = utils.try_import("paris", config.MODULE_PARIS_PATH)
+            G = convert.to_networkx(data)
+            D = paris.paris(G, copy_graph=False)
+            uu = utils.try_import("utils", config.MODULE_PARIS_PATH)
+            best = uu.best_clustering(D)
+            return  best
+
+        timecost, res = utils.timeit(fun)
+        
+        params = {}
+        
+        clusters = dict(enumerate(res))
+        
+        self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['algname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+
+        save_result(result)
+        self.result = result 
+        return self 

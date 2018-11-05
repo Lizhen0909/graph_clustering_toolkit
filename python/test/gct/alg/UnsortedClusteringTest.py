@@ -6,7 +6,8 @@ Created on Oct 27, 2018
 import unittest
 from gct.dataset import random_dataset
 from gct.alg import clustering
-from gct.alg.streaming_clustering import streamcom
+from gct.alg.unsorted_clustering import streamcom, Paris
+import sys
 
 
 class Test(unittest.TestCase):
@@ -35,10 +36,18 @@ class Test(unittest.TestCase):
         pass
 
     def testSteramcom(self):
-        alg = streamcom()
-        print ("testSteramcom")
-        print (alg.run(self.graph_unweighted_undirect).get_result())
-        print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
+        for data in  self.graphs: 
+            alg = streamcom()
+            print(sys._getframe().f_code.co_name) 
+            print (alg.run(data).get_result())
+            print (clustering.load_result(data.name, alg.name))
+
+    def testPairs(self):
+        for data in  self.graphs: 
+            alg = Paris()
+            print(sys._getframe().f_code.co_name) 
+            print (alg.run(data).get_result())
+            print (clustering.load_result(data.name, alg.name))
  
 
 if __name__ == "__main__":

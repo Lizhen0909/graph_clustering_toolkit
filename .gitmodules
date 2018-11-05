@@ -31,3 +31,6 @@
 [submodule "submodules/hirecs"]
 	path = submodules/hirecs
 	url = https://github.com/eXascaleInfolab/hirecs
+[submodule "submodules/paris"]
+	path = submodules/paris
+	url = https://github.com/tbonald/paris.git
