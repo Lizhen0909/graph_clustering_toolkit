@@ -7,7 +7,8 @@ import unittest
 from gct.dataset import random_dataset
 from gct.alg import clustering
 import sys
-from gct.alg.dct_clustering import seq_louvain, infomap, dct
+from gct.alg.dct_clustering import seq_louvain, infomap, dlslm, dlslm_with_seq,\
+    dlslm_map_eq, dlslm_no_contraction, dlplm
 
 
 class Test(unittest.TestCase):
@@ -51,35 +52,36 @@ class Test(unittest.TestCase):
  
     def test_dlslm(self):
         for data in  self.graphs: 
-            alg = dct(progname='dlslm')
+            alg = dlslm()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
             print (clustering.load_result(data.name, alg.name))
  
     def test_dlslm_with_seq(self):
-        for data in  self.graphs: 
-            alg = dct(progname='dlslm_with_seq')
+        for data in  self.graphs:
+            alg = dlslm_with_seq() 
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
             print (clustering.load_result(data.name, alg.name))             
 
     def test_dlslm_map_eq(self):
         for data in  self.graphs: 
-            alg = dct(progname='dlslm_map_eq')
+            alg = dlslm_map_eq()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
             print (clustering.load_result(data.name, alg.name))             
 
     def test_dlslm_no_contraction(self):
         for data in  self.graphs: 
-            alg = dct(progname='dlslm_no_contraction')
+            alg = dlslm_no_contraction()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
             print (clustering.load_result(data.name, alg.name))             
 
     def test_dlplm(self):
-        for data in  self.graphs: 
-            alg = dct(progname='dlplm')
+        alg = dlslm() 
+        for data in  self.graphs:  
+            alg = dlplm()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
             print (clustering.load_result(data.name, alg.name))             

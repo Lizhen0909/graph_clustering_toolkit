@@ -135,7 +135,7 @@ class infomap(Clustering):
         return self 
 
 
-class dct(Clustering):
+class _dct(Clustering):
     '''
     A wrapper of *dct (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
     
@@ -149,9 +149,9 @@ class dct(Clustering):
     Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
     European Conference on Parallel Processing. Springer, Cham, 2018.
     '''
-    def __init__(self, name=None, progname='dlplm'):
+    def __init__(self, name=None, progname='NA'):
         if name is None: name = "dct-" + progname
-        super(dct, self).__init__(name) 
+        super(_dct, self).__init__(name) 
         self.progname = progname
     
     def get_meta(self):
@@ -197,3 +197,85 @@ class dct(Clustering):
         save_result(result)
         self.result = result 
         return self      
+
+
+class dlslm(_dct):
+    '''
+    A wrapper of *dlslm (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    None
+
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    '''
+    def __init__(self, name=None):
+        super(dlslm, self).__init__(name,"dlplm") 
+    
+class dlslm_map_eq(_dct):
+    '''
+    A wrapper of *dlslm_map_eq (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    None
+    
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    '''
+    def __init__(self, name=None):
+        super(dlslm_map_eq, self).__init__(name,"dlslm_map_eq") 
+
+class dlslm_no_contraction(_dct):
+    '''
+    A wrapper of *dlslm_no_contraction (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    None 
+    
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    '''
+    def __init__(self, name=None):
+        super(dlslm_no_contraction, self).__init__(name,"dlslm_no_contraction") 
+
+class dlslm_with_seq(_dct):
+    '''
+    A wrapper of *dlslm_with_seq (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    None
+
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    '''
+    def __init__(self, name=None):
+        super(dlslm_with_seq, self).__init__(name,"dlslm_with_seq") 
+
+
+class dlplm(_dct):
+    '''
+    A wrapper of *dlplm (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+    
+    Arguments
+    --------------------
+    None
+
+    Reference 
+    ------------------------
+    Hamann, Michael, et al. "Distributed Graph Clustering Using Modularity and Map Equation." 
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+    '''
+    def __init__(self, name=None):
+        super(dlplm, self).__init__(name,"dlplm") 
