@@ -22,7 +22,7 @@ class RandomGenerator():
             for EI in g.Edges():
                 lst.append([EI.GetSrcNId(), EI.GetDstNId()])
             return pd.DataFrame(lst, columns=['src', 'dest']), None 
-        elif params['name'] == 'LFR':
+        elif params['name'] == 'ovp_LFR':
             if seed is None:
                 seed = np.random.randint(999999)
             with utils.TempDir() as tmpdir:
@@ -32,6 +32,7 @@ class RandomGenerator():
                 newparams = dict(self.params)
                 if 'directed' in newparams: del newparams['directed']
                 if 'weighted' in newparams: del newparams['weighted']
+                newparams['name']='LFR'
                 cmd = program + " " + " ".join([ "-" + str(u[0]) + " " + str(u[1]) for u in newparams.items() if u[1] is not None])
                 self.logger.info("Runing '{}' with seed {}".format(cmd, seed))
                 self.logger.info("working dir: " + tmpdir)
@@ -84,7 +85,7 @@ def generate_Erdos_Renyi(name, n_node, n_edge, directed=False, seed=None, overid
         return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, weighted=weighted, overide=overide)
 
 
-def generate_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, t1=None, t2=None, minc=None, maxc=None,
+def generate_ovp_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, t1=None, t2=None, minc=None, maxc=None,
                  on=None, om=None, C=None, a=0, weighted=False, seed=None, overide=False):
     '''
     Extended version of the Lancichinetti-Fortunato-Radicchi Benchmark for Undirected Weighted Overlapping networks 
@@ -128,8 +129,8 @@ def generate_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, t1=N
         params = locals()
         del params['overide']
         params['a'] = int(a)
-        params['name'] = 'LFR'
-        description = "LFR random graph"
+        params['name'] = 'ovp_LFR'
+        description = "overlap LFR random graph"
         directed = (a > 0)
         params['directed'] = directed
         gen = RandomGenerator(params=params)
