@@ -46,7 +46,8 @@ GANXISW_PROG = os.path.join(GCT_HOME, "submodules/GANXiS/GANXiSw.jar")
 GECMI_PROG = os.path.join(GCT_HOME, "submodules/GenConvNMI/gecmi")
 ONMI_PROG = os.path.join(GCT_HOME, "submodules/OvpNMI/onmi")
 XMEASURES_PROG = os.path.join(GCT_HOME, "submodules/xmeasures/xmeasures")
-MODULE_PARIS_PATH= os.path.join(GCT_HOME, "submodules/paris")
+MODULE_PARIS_PATH = os.path.join(GCT_HOME, "submodules/paris")
+
 
 def get_data_file_path(dsname, fname="", create=False):
     dspath = os.path.join(DATA_PATH, dsname)
@@ -152,4 +153,22 @@ def get_OSLOM_prog(name, is_directed):
         return prog             
     else:
         raise Exception("Unknown " + name)
+
+
+def get_LFR_prog(weighted, directed, hier=False):
+    if hier:
+        if weighted or directed:
+            raise ValueError("Only undirected and unweighted supported for hierarchical graph")
+        return os.path.join(GCT_HOME, "submodules/CommunityDetectionCodes/lfr_hierarchical_net")
+    
+    if weighted:
+        if directed:
+            return os.path.join(GCT_HOME, "submodules/CommunityDetectionCodes/lfr_weighted_dir_net")
+        else:
+            return os.path.join(GCT_HOME, "submodules/CommunityDetectionCodes/lfr_weighted_net")
+    else:
+        if directed:
+            return os.path.join(GCT_HOME, "submodules/CommunityDetectionCodes/lfr_dir_net")
+        else:
+            return os.path.join(GCT_HOME, "submodules/CommunityDetectionCodes/lfr_undir_net")
 

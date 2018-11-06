@@ -260,6 +260,8 @@ class Dataset(object):
         
         if isinstance(obj, dict):
             self.ground_truth = {u:to_cluster(v) for u, v in obj.items()}
+        elif isinstance(obj, tuple):
+            self.ground_truth = {"cluster" + str(u):to_cluster(v) for u, v in enumerate(obj)}
         else:
             self.ground_truth = {"default":to_cluster(obj)}
 
@@ -422,8 +424,9 @@ class Dataset(object):
         return filepath 
 
     def to_graph_networkx(self):
-        from .. import convert 
+        from gct.dataset import convert 
         return convert.to_networkx(self)
+
 
 def local_exists(name):
     path = config.get_data_file_path(name)
@@ -468,7 +471,7 @@ def list_all_clustering(print_format=False):
     for dsname in list_local():
         ret[dsname] = list_clustering(dsname)
     if print_format:
-        return ["{}/{}".format(u,v) for u,vv in ret.items() for v in vv ]
+        return ["{}/{}".format(u, v) for u, vv in ret.items() for v in vv ]
     else:
         return ret 
 
