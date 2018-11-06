@@ -132,7 +132,8 @@ def generate_Erdos_Renyi(name, n_node, n_edge, directed=False, seed=None, overid
         weighted = False 
         gen = RandomGenerator(params=params)
         edges, gt = gen.generate(seed)    
-        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, weighted=weighted, overide=overide)
+        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, \
+                       directed=directed, weighted=weighted, overide=overide, additional_meta={'genopts': params})
 
 
 def generate_ovp_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, t1=None, t2=None, minc=None, maxc=None,
@@ -185,7 +186,8 @@ def generate_ovp_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, 
         params['directed'] = directed
         gen = RandomGenerator(params=params)
         edges, gt = gen.generate(seed)    
-        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, weighted=weighted, overide=overide)
+        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, \
+                       directed=directed, weighted=weighted, overide=overide, additional_meta={'genopts': params})
 
 
 def generate_undirected_unweighted_random_graph_LFR(name, N, k=None, maxk=None, mu=None, t1=None, t2=None, minc=None, \
@@ -248,7 +250,8 @@ def generate_undirected_unweighted_random_graph_LFR(name, N, k=None, maxk=None, 
         params['name'] = 'LFR'
         gen = RandomGenerator(params=params)
         edges, gt = gen.generate(seed)    
-        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, weighted=weighted, overide=overide)
+        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges,\
+                        directed=directed, weighted=weighted, overide=overide, additional_meta={'genopts': params})
 
 
 def generate_directed_unweighted_random_graph_LFR(name, N, k=None, maxk=None, mu=None, t1=None, t2=None, minc=None, \
@@ -311,7 +314,8 @@ def generate_directed_unweighted_random_graph_LFR(name, N, k=None, maxk=None, mu
         params['name'] = 'LFR'
         gen = RandomGenerator(params=params)
         edges, gt = gen.generate(seed)    
-        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, weighted=weighted, overide=overide)
+        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, \
+                       directed=directed, weighted=weighted, overide=overide, additional_meta={'genopts': params})
 
 
 def generate_undirected_weighted_random_graph_LFR(name, N, k=None, maxk=None, mut=None, muw=None, t1=None, t2=None, \
@@ -386,7 +390,8 @@ def generate_undirected_weighted_random_graph_LFR(name, N, k=None, maxk=None, mu
         params['name'] = 'LFR'
         gen = RandomGenerator(params=params)
         edges, gt = gen.generate(seed)    
-        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, weighted=weighted, overide=overide)
+        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, \
+                       weighted=weighted, overide=overide, additional_meta={'genopts': params})
 
 
 def generate_directed_weighted_random_graph_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, t1=None, t2=None, \
@@ -513,4 +518,5 @@ def generate_undirected_unweighted_hier_random_graph_LFR(name, N, k=None, maxk=N
         params['name'] = 'LFR'
         gen = RandomGenerator(params=params)
         edges, gt = gen.generate(seed)    
-        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, weighted=weighted, overide=overide)
+        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, 
+                       weighted=weighted, overide=overide, additional_meta={'genopts': params})

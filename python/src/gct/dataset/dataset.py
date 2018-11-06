@@ -139,10 +139,12 @@ class Cluster(object):
         
 class Dataset(object):
 
-    def __init__(self, name=None, description="", groundtruthObj=None, edgesObj=None, directed=False, weighted=False, overide=False):
+    def __init__(self, name=None, description="", groundtruthObj=None, edgesObj=None, directed=False,
+                 weighted=False, overide=False, additional_meta=None):
         assert edgesObj is not None 
         self.name = name 
         self.description = description
+        self.additional_meta = additional_meta
         self.logger = utils.get_logger("{}:{}".format(type(self).__name__, self.name))
         self.directed = directed 
         self.weighted = weighted
@@ -231,6 +233,8 @@ class Dataset(object):
         
         if self.has_ground_truth():
             d['parq_ground_truth'] = {u:v.path for u, v in self.get_ground_truth().items()}
+        if self.additional_meta:
+            d.update(self.additional_meta)
         d['description'] = self.description
         return d 
     
