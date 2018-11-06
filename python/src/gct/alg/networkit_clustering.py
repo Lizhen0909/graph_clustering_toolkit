@@ -44,7 +44,7 @@ class LPDegreeOrdered(Clustering):
         
         result = {}
         result['timecost'] = timecost
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -90,7 +90,7 @@ class CutClustering(Clustering):
         result = {}
         result['params'] = params         
         result['timecost'] = timecost
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -144,7 +144,7 @@ class PLP(Clustering):
         result = {}
         result['params'] = params 
         result['timecost'] = timecost
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -197,7 +197,7 @@ class PLM(Clustering):
         result = {}
         result['params'] = params 
         result['timecost'] = timecost
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 

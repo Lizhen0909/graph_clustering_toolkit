@@ -48,7 +48,7 @@ class Clauset_Newman_Moore(Clustering):
         
         result = {}
         result['timecost'] = timecost
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['modularity'] = modularity
@@ -103,7 +103,7 @@ class Girvan_Newman(Clustering):
         
         result = {}
         result['timecost'] = timecost
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['modularity'] = modularity

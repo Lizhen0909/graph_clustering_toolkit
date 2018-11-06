@@ -86,7 +86,7 @@ class HiReCS(Clustering):
         self.logger.info("Made %d clusters in %f seconds with modularity %f" % (len(clusters), timecost, mod))
 
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['overlap'] = True
         result['dataname'] = data.name
@@ -146,7 +146,7 @@ class LabelRank(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
 
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -244,7 +244,7 @@ class GANXiSw(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
 
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()

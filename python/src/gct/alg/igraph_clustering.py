@@ -45,7 +45,7 @@ class community_fastgreedy(Clustering):
         result = {}
         result['timecost'] = timecost
         result['modularity'] = modularity        
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -91,7 +91,7 @@ class community_infomap(Clustering):
         result = {}
         result['timecost'] = timecost
         result['modularity'] = modularity        
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -137,7 +137,7 @@ class community_leading_eigenvector(Clustering):
         result = {}
         result['timecost'] = timecost
         result['modularity'] = modularity        
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -183,7 +183,7 @@ class community_label_propagation(Clustering):
         result = {}
         result['timecost'] = timecost
         result['modularity'] = modularity        
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -228,7 +228,7 @@ class community_multilevel(Clustering):
         result = {}
         result['timecost'] = timecost
         result['modularity'] = modularity        
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -273,7 +273,7 @@ class community_optimal_modularity(Clustering):
         result = {}
         result['timecost'] = timecost
         result['modularity'] = modularity        
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -318,7 +318,7 @@ class community_edge_betweenness(Clustering):
         result = {}
         result['timecost'] = timecost
         result['modularity'] = modularity        
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -363,7 +363,7 @@ class community_spinglass(Clustering):
         result = {}
         result['timecost'] = timecost
         result['modularity'] = modularity        
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 
@@ -408,7 +408,7 @@ class community_walktrap(Clustering):
         result = {}
         result['timecost'] = timecost
         result['modularity'] = modularity        
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
         result['clusters'] = clusters 

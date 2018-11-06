@@ -172,7 +172,7 @@ class Dataset(object):
                 elif is_persistent:
                     pass 
                 else:
-                    raise Exception("Dataset {} exists at {}. Use overide=True or use load it locally.".format(name, self.home))
+                    raise Exception("Dataset {} exists at {}. Use overide=True or load it locally.".format(name, self.home))
             
             if not is_persistent:
                 utils.remove_if_file_exit(config.get_result_file_path(self.name), is_dir=True)                               
@@ -234,7 +234,7 @@ class Dataset(object):
         if self.has_ground_truth():
             d['parq_ground_truth'] = {u:v.path for u, v in self.get_ground_truth().items()}
         if self.additional_meta:
-            d.update(self.additional_meta)
+            d.update({"additional": self.additional_meta})
         d['description'] = self.description
         return d 
     
@@ -427,9 +427,35 @@ class Dataset(object):
             raise Exception("run command failed: " + str(status))
         return filepath 
 
+    def to_graph_igraph(self):
+        from gct.dataset import convert 
+        return convert.to_igraph(self)
+    
     def to_graph_networkx(self):
         from gct.dataset import convert 
         return convert.to_networkx(self)
+    
+    def to_graph_snap(self):
+        from gct.dataset import convert 
+        return convert.to_snap(self)
+    
+    def to_coo_adjacency_matrix(self):
+        from gct.dataset import convert 
+        return convert.to_coo_adjacency_matrix(self)            
+    
+    def as_undirected(self, newname, description="",overide=False):
+        from gct.dataset import convert
+        return convert.as_undirected(self, newname=newname, description=description, overide=overide)
+    
+        
+    def as_unweight(self, newname, description="",overide=False):
+        from gct.dataset import convert
+        return convert.as_unweight(self, newname=newname, description=description, overide=overide)
+    
+    
+    def as_unweight_undirected(self, newname, description="",overide=False):
+        from gct.dataset import convert
+        return convert.as_unweight_undirected(self, newname=newname, description=description, overide=overide)
 
 
 def local_exists(name):
@@ -461,8 +487,9 @@ def load_local(name):
     gt = None 
     if meta["has_ground_truth"]:
         gt = {k:Cluster(v) for k, v in meta['parq_ground_truth'].items()}
+    additional_meta = None if not "additional" in meta else meta['additional'] 
     return Dataset(name=meta['name'], description=meta['description'], groundtruthObj=gt, edgesObj=edges, directed=meta['directed'],
-                    weighted=meta['weighted'], overide=False)
+                    weighted=meta['weighted'], overide=False, additional_meta=additional_meta)
 
     
 def list_clustering(dsname):

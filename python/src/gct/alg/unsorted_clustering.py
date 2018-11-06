@@ -76,7 +76,7 @@ class streamcom(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -129,7 +129,7 @@ class Paris(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -269,7 +269,7 @@ class lso_cluster(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()

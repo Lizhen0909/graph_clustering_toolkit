@@ -73,7 +73,7 @@ class Infomap(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -137,7 +137,7 @@ class Infohiermap(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -199,7 +199,7 @@ class lpm(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -261,7 +261,7 @@ class louvain_method(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -341,7 +341,7 @@ class copra(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -417,7 +417,7 @@ class modopt(Clustering):
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()
@@ -546,7 +546,6 @@ class OSLOM(Clustering):
                 with open(tp) as f:
                     lines = [u.strip() for u in f if not u.startswith('#')]
                     lines = [[int(v) for v in u.split(" ")] for u in lines]
-                    print (dict(enumerate (lines)))
                     clusters[level] = dict(enumerate (lines))
                     
             max_level = max(list(clusters.keys()))
@@ -557,7 +556,7 @@ class OSLOM(Clustering):
         result['multilevel'] = True
         result['num_level'] = len(clusters)
         result['max_level'] = max_level
-        result['algname'] = self.name
+        result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
         result['meta'] = self.get_meta()

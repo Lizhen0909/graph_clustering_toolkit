@@ -68,12 +68,12 @@ def get_download_file_path(dsname, fname="", create=False):
         return dspath 
 
 
-def get_result_file_path(dsname, algname="", create=False):
+def get_result_file_path(dsname, runname="", create=False):
     dspath = os.path.join(RESULT_PATH, dsname)
     if create: utils.create_dir_if_not_exists(dspath)
-    if algname:
-        algpath = os.path.join(dspath, algname)
-        utils.create_dir_if_not_exists(algpath)
+    if runname:
+        algpath = os.path.join(dspath, runname)
+        if create: utils.create_dir_if_not_exists(algpath)
         return algpath
     else:
         return dspath 

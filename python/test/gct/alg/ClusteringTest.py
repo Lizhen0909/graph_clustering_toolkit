@@ -37,7 +37,7 @@ class Test(unittest.TestCase):
     def testResult(self):
         alg = CGGC()
         result = alg.run(self.graph_unweighted_undirect).get_result()
-        print (result.algname)
+        print (result.runname)
         print (result.dataname)
         print (result.meta)
         print (result.params) 

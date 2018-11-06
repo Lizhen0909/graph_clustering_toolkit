@@ -10,13 +10,13 @@ import collections
 import pandas as pd     
 
 
-def has_result(dataname, algname):
-    fpath = os.path.join(config.get_result_file_path(dataname, algname), 'result.txt')
+def has_result(dataname, runname):
+    fpath = os.path.join(config.get_result_file_path(dataname, runname), 'result.txt')
     return utils.file_exists(fpath)
 
         
-def load_result(dataname, algname):
-    fpath = os.path.join(config.get_result_file_path(dataname, algname), 'result.txt')
+def load_result(dataname, runname):
+    fpath = os.path.join(config.get_result_file_path(dataname, runname), 'result.txt')
     with open(fpath, 'rt') as f :
         return Result(json.load(f))
 
@@ -25,9 +25,14 @@ def save_result(result):
     if isinstance(result, Result): 
         result.save()
     else:
-        fpath = os.path.join(config.get_result_file_path(result['dataname'], result['algname']), 'result.txt')
-        with open(fpath, 'wt') as f:
-            json.dump(result, f)
+        filepath = config.get_result_file_path(result['dataname'], result['runname'], create=True)
+        try:
+            fpath = os.path.join(filepath, 'result.txt')
+            with open(fpath, 'wt') as f:
+                json.dump(result, f)
+        except:
+            utils.remove_if_file_exit(fpath, is_dir=True)
+            raise
 
 
 class Result(collections.MutableMapping):
@@ -78,7 +83,7 @@ class Result(collections.MutableMapping):
             if isinstance(list(self.keys())[0], str): 
                 max_level = str(max_level)
                 d = self.get('clusters')[max_level]
-                d={int(u):v for u,v in d.items()}
+                d = {int(u):v for u, v in d.items()}
             else:
                 d = self.get('clusters')[max_level]
         else:
@@ -93,8 +98,8 @@ class Result(collections.MutableMapping):
             return d
         
     @property     
-    def algname(self):
-        return self.get("algname")
+    def runname(self):
+        return self.get("runname")
 
     @property     
     def params(self):

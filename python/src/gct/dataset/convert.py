@@ -154,7 +154,7 @@ def to_coo_adjacency_matrix(data, simalarity=False, distance_fun=None):
         return coo_matrix((newX, (newrows, newcols)), shape=[n, n])
 
 
-def as_undirected(data, newname, description=""):
+def as_undirected(data, newname, description="",overide=False):
     edges = data.get_edges()
     if data.has_ground_truth():
         gt = data.get_ground_truth()
@@ -162,10 +162,10 @@ def as_undirected(data, newname, description=""):
         gt = None 
     
     return Dataset(name=newname, description=description, groundtruthObj=gt, edgesObj=edges, directed=False,
-                    weighted=data.is_weighted(), overide=False)
+                    weighted=data.is_weighted(), overide=overide)
 
     
-def as_unweight(data, newname, description=""):
+def as_unweight(data, newname, description="",overide=False):
     edges = data.get_edges()[['src', 'dest']]
     if data.has_ground_truth():
         gt = data.get_ground_truth()
@@ -173,10 +173,10 @@ def as_unweight(data, newname, description=""):
         gt = None 
     
     return Dataset(name=newname, description=description, groundtruthObj=gt, edgesObj=edges, directed=data.is_directed(),
-                    weighted=False, overide=False)
+                    weighted=False, overide=overide)
 
 
-def as_unweight_undirected(data, newname, description=""):
+def as_unweight_undirected(data, newname, description="",overide=False):
     edges = data.get_edges()[['src', 'dest']]
     if data.has_ground_truth():
         gt = data.get_ground_truth()
@@ -184,4 +184,4 @@ def as_unweight_undirected(data, newname, description=""):
         gt = None 
     
     return Dataset(name=newname, description=description, groundtruthObj=gt, edgesObj=edges, directed=False,
-                    weighted=False, overide=False)
+                    weighted=False, overide=overide)
