@@ -7,7 +7,6 @@ import unittest
 from gct.dataset import random_dataset
 from gct.alg import clustering
 import sys
-from gct.alg.dct_clustering import seq_louvain, infomap, dct
 from gct.alg.powergraph_clustering import label_propagation, GossipMap, RelaxMap
 
 

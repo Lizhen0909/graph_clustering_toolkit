@@ -6,17 +6,14 @@ import json
 from . import dataset 
 import shutil
     
-class LAWDataset(dataset.Dataset):        
+class LAWDatasetConfig(object):        
 
     def __init__(self, name, with_ground_truth=False, directed=False, weighted=False):
-        super(LAWDataset, self).__init__(name, description="LAW " + name)
         self.with_ground_truth = with_ground_truth
         self.directed = directed
         self.weighted = weighted
 
-        meta_file = config.get_data_file_path(self.name, 'meta.info')
-        if not utils.file_exists(meta_file):
-            json.dump(self.get_meta(), open(meta_file, 'wt')) 
+ 
             
     def has_ground_truth(self):
         return self.with_ground_truth
@@ -95,7 +92,7 @@ class LAWDataset(dataset.Dataset):
 _DATASET_ = {
     }
         
-_DATASET_['cnr-2000'] = LAWDataset('cnr-2000',
+_DATASET_['cnr-2000'] = LAWDatasetConfig('cnr-2000',
                                        with_ground_truth=False ,
                                        weighted=False,
                                        directed=False)        

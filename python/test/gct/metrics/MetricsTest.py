@@ -16,7 +16,7 @@ from gct.alg.cggc_clustering import CGGC
 class Test(unittest.TestCase):
 
     def setUp(self):
-        self.graph_unweighted_undirect = random_dataset.generate_LFR("test_LFR_unw_und", N=128, k=16, maxk=16, muw=0.1, minc=32, beta=1, a=0)
+        self.graph_unweighted_undirect = random_dataset.generate_ovp_LFR("test_LFR_unw_und", N=128, k=16, maxk=16, muw=0.1, minc=32, beta=1, a=0)
         assert not self.graph_unweighted_undirect.is_directed()
         assert not self.graph_unweighted_undirect.is_weighted()
 
