@@ -113,22 +113,4 @@ class Result(collections.MutableMapping):
         return self.get("timecost")        
 
 
-class Clustering(object):
-
-    def __init__(self, name):
-        self.name = name 
-        self.logger = utils.get_logger(self.name)
-        self.result_file = config
-
-    def get_meta(self):
-        raise Exception("NA")
-    
-    def run(self, data):
-        raise Exception("NA")
-        
-    def get_result(self):
-        if hasattr(self, 'result'):
-            return Result(self.result)
-        else:
-            raise Exception("No result found. probably no run has been done")
-                
+           

@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd  
 import os
 import sys
+import glob
 
 
 class Cluster(object):
@@ -62,13 +63,27 @@ class Cluster(object):
                 
     def is_persistent(self):
         return self.path is not None  and utils.file_exists(self.path)
+
+    @property 
+    def index(self):
+        prop_name = "_" + sys._getframe().f_code.co_name 
+
+        def f():
+            df = self.value()
+            return np.unique(df['cluster'].values)
+
+        return utils.set_if_not_exists(self, prop_name, f)
+
+    @property 
+    def num_cluster(self):
+        return len(self.index)
     
     @property 
     def is_overlap(self):
         prop_name = "_" + sys._getframe().f_code.co_name 
 
         def f():
-            (self.node_overlaps > 1).any()
+            return (self.node_overlaps > 1).any()
 
         return utils.set_if_not_exists(self, prop_name, f)
     
@@ -406,12 +421,29 @@ class Dataset(object):
             raise Exception("run command failed: " + str(status))
         return filepath 
 
+    def to_graph_networkx(self):
+        from .. import convert 
+        return convert.to_networkx(self)
 
 def local_exists(name):
     path = config.get_data_file_path(name)
     return  utils.file_exists(path)
 
 
+def list_local():
+    path = config.DATA_PATH
+    return [os.path.basename(u[:-1])  for u in glob.glob(path + "/*/")]
+
+
+def remove_local(name, rm_graph_data=True, rm_clustering_result=True):
+    if rm_graph_data:
+        path = config.get_data_file_path(name)
+        utils.remove_if_file_exit(path, is_dir=True)
+    if rm_clustering_result:
+        path = config.get_result_file_path(name)
+        utils.remove_if_file_exit(path, is_dir=True)
+                
+    
 def load_local(name):
     path = config.get_data_file_path(name, create=False)
     if not utils.file_exists(path):
@@ -424,4 +456,19 @@ def load_local(name):
         gt = {k:Cluster(v) for k, v in meta['parq_ground_truth'].items()}
     return Dataset(name=meta['name'], description=meta['description'], groundtruthObj=gt, edgesObj=edges, directed=meta['directed'],
                     weighted=meta['weighted'], overide=False)
+
     
+def list_clustering(dsname):
+    path = config.get_result_file_path(dsname)
+    return [os.path.basename(u[:-1])  for u in glob.glob(path + "/*/")]
+
+
+def list_all_clustering(print_format=False):
+    ret = {}
+    for dsname in list_local():
+        ret[dsname] = list_clustering(dsname)
+    if print_format:
+        return ["{}/{}".format(u,v) for u,vv in ret.items() for v in vv ]
+    else:
+        return ret 
+

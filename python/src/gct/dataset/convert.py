@@ -129,7 +129,7 @@ def to_networkit(data):
     return networkit.readGraph(fname, fileformat=networkit.Format.EdgeListSpaceZero, directed=data.is_directed())
 
 
-def to_coo_adjacency_matrix(data, simalarity=False,distance_fun=None):
+def to_coo_adjacency_matrix(data, simalarity=False, distance_fun=None):
     edges = data.get_edges()
     rows = edges['src'].values
     cols = edges['dest'].values
@@ -139,12 +139,12 @@ def to_coo_adjacency_matrix(data, simalarity=False,distance_fun=None):
     else:
         weight = np.ones_like(rows)
     if not simalarity:  # distance
-        if distance_fun is None or distance_fun=='minus':
+        if distance_fun is None or distance_fun == 'minus':
             weight = -weight
         elif distance_fun == 'exp_minus':
-            weight=np.exp(-weight)
+            weight = np.exp(-weight)
         else:
-            raise ValueError("unknown "+distance_fun)
+            raise ValueError("unknown " + distance_fun)
     if data.is_directed():
         return coo_matrix((weight, (rows, cols)), shape=[n, n])
     else:
@@ -153,3 +153,35 @@ def to_coo_adjacency_matrix(data, simalarity=False,distance_fun=None):
         newcols = np.concatenate([cols, rows])
         return coo_matrix((newX, (newrows, newcols)), shape=[n, n])
 
+
+def as_undirected(data, newname, description=""):
+    edges = data.get_edges()
+    if data.has_ground_truth():
+        gt = data.get_ground_truth()
+    else:
+        gt = None 
+    
+    return Dataset(name=newname, description=description, groundtruthObj=gt, edgesObj=edges, directed=False,
+                    weighted=data.is_weighted(), overide=False)
+
+    
+def as_unweight(data, newname, description=""):
+    edges = data.get_edges()[['src', 'dest']]
+    if data.has_ground_truth():
+        gt = data.get_ground_truth()
+    else:
+        gt = None 
+    
+    return Dataset(name=newname, description=description, groundtruthObj=gt, edgesObj=edges, directed=data.is_directed(),
+                    weighted=False, overide=False)
+
+
+def as_unweight_undirected(data, newname, description=""):
+    edges = data.get_edges()[['src', 'dest']]
+    if data.has_ground_truth():
+        gt = data.get_ground_truth()
+    else:
+        gt = None 
+    
+    return Dataset(name=newname, description=description, groundtruthObj=gt, edgesObj=edges, directed=False,
+                    weighted=False, overide=False)

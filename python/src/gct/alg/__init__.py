@@ -1239,3 +1239,6 @@ def run_alg(runname, algname, params):
         raise Exception ("algorithm {} not found. Available algorithms:\n" + str(list_algorithms()))
     fun = getattr(gct.alg, algname)
     return fun(runname, **params)
+
+from gct.alg.clustering import load_result as load_clustering_result, has_result as has_clustering_result
+
