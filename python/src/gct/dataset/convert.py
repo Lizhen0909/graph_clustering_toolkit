@@ -54,7 +54,6 @@ def from_networkx(name, graph, weighted=False, data='weight', default=1, descrip
 def to_igraph(data):
     import igraph 
     edges = data.get_edges()
-    
     g = igraph.Graph(edges=edges[['src', 'dest']].values.tolist(), directed=data.is_directed()) 
     if data.is_weighted():
         g.es["weight"] = edges['weight'].values 
@@ -89,7 +88,7 @@ def to_snap(data):
             graph = snap.TUNGraph.Load(FIn)
         return graph 
 
-    if data.is_weighted():
+    if False and data.is_weighted():
         raise Exception("weighted graph is not supported well on snap")
     fname = data.file_edges 
     if not utils.file_exists(fname):
@@ -154,7 +153,7 @@ def to_coo_adjacency_matrix(data, simalarity=False, distance_fun=None):
         return coo_matrix((newX, (newrows, newcols)), shape=[n, n])
 
 
-def as_undirected(data, newname, description="",overide=False):
+def as_undirected(data, newname, description="", overide=False):
     edges = data.get_edges()
     if data.has_ground_truth():
         gt = data.get_ground_truth()
@@ -165,7 +164,7 @@ def as_undirected(data, newname, description="",overide=False):
                     weighted=data.is_weighted(), overide=overide)
 
     
-def as_unweight(data, newname, description="",overide=False):
+def as_unweight(data, newname, description="", overide=False):
     edges = data.get_edges()[['src', 'dest']]
     if data.has_ground_truth():
         gt = data.get_ground_truth()
@@ -176,7 +175,7 @@ def as_unweight(data, newname, description="",overide=False):
                     weighted=False, overide=overide)
 
 
-def as_unweight_undirected(data, newname, description="",overide=False):
+def as_unweight_undirected(data, newname, description="", overide=False):
     edges = data.get_edges()[['src', 'dest']]
     if data.has_ground_truth():
         gt = data.get_ground_truth()
@@ -185,3 +184,18 @@ def as_unweight_undirected(data, newname, description="",overide=False):
     
     return Dataset(name=newname, description=description, groundtruthObj=gt, edgesObj=edges, directed=False,
                     weighted=False, overide=overide)
+
+
+def as_mirror_edges(data, newname, description="", overide=False):
+    edges1 = data.get_edges()
+    edges2 = edges1.copy()
+    edges2['src'] = edges1['src']
+    edges2['dest'] = edges1['dest']
+    edges = pd.concat([edges1, edges2], axis=0)
+    if data.has_ground_truth():
+        gt = data.get_ground_truth()
+    else:
+        gt = None 
+    
+    return Dataset(name=newname, description=description, groundtruthObj=gt, edgesObj=edges, directed=data.is_directed(),
+                    weighted=data.is_weighted(), is_edge_mirrored=True, overide=overide)

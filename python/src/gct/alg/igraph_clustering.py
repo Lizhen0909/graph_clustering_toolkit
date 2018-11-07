@@ -22,8 +22,7 @@ class community_fastgreedy(Clustering):
     ------------------------
     A Clauset, MEJ Newman and C Moore: Finding community structure in very large networks. Phys Rev E 70, 066111 (2004).
     '''
-    def __init__(self):
-        name = "igraph-community_fastgreedy"
+    def __init__(self,name = "igraph-community_fastgreedy"):
         super(community_fastgreedy, self).__init__(name) 
     
     def get_meta(self):
@@ -33,6 +32,7 @@ class community_fastgreedy(Clustering):
         if (data.is_directed())  :
             raise Exception("only undirected is supported")
         g = convert.to_igraph(data)
+        print (data.get_edges())
         timecost, ret = utils.timeit(lambda: g.community_fastgreedy(weights='weight' if data.is_weighted() else None))
         vc = ret.as_clustering()
         clusters = {}
@@ -68,8 +68,7 @@ class community_infomap(Clustering):
     M. Rosvall and C. T. Bergstrom: Maps of information flow reveal community structure in complex networks, PNAS 105, 1118 (2008). http://dx.doi.org/10.1073/pnas.0706851105, http://arxiv.org/abs/0707.0609.
     M. Rosvall, D. Axelsson, and C. T. Bergstrom: The map equation, Eur. Phys. J. Special Topics 178, 13 (2009). http://dx.doi.org/10.1140/epjst/e2010-01179-1, http://arxiv.org/abs/0906.1405.
     '''
-    def __init__(self):
-        name = "igraph-community_infomap"
+    def __init__(self,name = "igraph-community_infomap"):
         super(community_infomap, self).__init__(name) 
     
     def get_meta(self):
@@ -114,8 +113,7 @@ class community_leading_eigenvector(Clustering):
     MEJ Newman: Finding community structure in networks using the eigenvectors of matrices, arXiv:physics/0605087
     '''
 
-    def __init__(self):
-        name = "igraph-community_leading_eigenvector"
+    def __init__(self,name = "igraph-community_leading_eigenvector"):
         super(community_leading_eigenvector, self).__init__(name) 
     
     def get_meta(self):
@@ -160,8 +158,7 @@ class community_label_propagation(Clustering):
     Raghavan, U.N. and Albert, R. and Kumara, S. Near linear time algorithm to detect community structures in large-scale networks. Phys Rev E 76:036106, 2007. http://arxiv.org/abs/0709.2938.
     '''
 
-    def __init__(self):
-        name = "igraph-community_label_propagation"
+    def __init__(self,name = "igraph-community_label_propagation"):
         super(community_label_propagation, self).__init__(name) 
     
     def get_meta(self):
@@ -205,8 +202,7 @@ class community_multilevel(Clustering):
     ------------------------
     VD Blondel, J-L Guillaume, R Lambiotte and E Lefebvre: Fast unfolding of community hierarchies in large networks, J Stat Mech P10008 (2008), http://arxiv.org/abs/0803.0476
     '''
-    def __init__(self):
-        name = "igraph-community_multilevel"
+    def __init__(self,name = "igraph-community_multilevel"):
         super(community_multilevel, self).__init__(name) 
     
     def get_meta(self):
@@ -250,8 +246,8 @@ class community_optimal_modularity(Clustering):
     ------------------------
     TBD
     '''
-    def __init__(self):
-        name = "igraph-community_optimal_modularity"
+    def __init__(self,name = "igraph-community_optimal_modularity"):
+        
         super(community_optimal_modularity, self).__init__(name) 
     
     def get_meta(self):
@@ -295,8 +291,8 @@ class community_edge_betweenness(Clustering):
     ------------------------
      M Girvan and MEJ Newman: Community structure in social and biological networks, Proc. Nat. Acad. Sci. USA 99, 7821-7826 (2002)
     '''
-    def __init__(self):
-        name = "igraph-community_edge_betweenness"
+    def __init__(self,name = "igraph-community_edge_betweenness"):
+        
         super(community_edge_betweenness, self).__init__(name) 
     
     def get_meta(self):
@@ -340,8 +336,7 @@ class community_spinglass(Clustering):
     Reichardt J and Bornholdt S: Statistical mechanics of community detection. Phys Rev E 74:016110 (2006). http://arxiv.org/abs/cond-mat/0603718.
     Traag VA and Bruggeman J: Community detection in networks with positive and negative links. Phys Rev E 80:036115 (2009). http://arxiv.org/abs/0811.2329.
     '''
-    def __init__(self):
-        name = "igraph-community_spinglass"
+    def __init__(self,name = "igraph-community_spinglass"):
         super(community_spinglass, self).__init__(name) 
     
     def get_meta(self):
@@ -385,8 +380,7 @@ class community_walktrap(Clustering):
     Pascal Pons, Matthieu Latapy: Computing communities in large networks using random walks, http://arxiv.org/abs/physics/0512106
     '''
 
-    def __init__(self):
-        name = "igraph-community_walktrap"
+    def __init__(self,name = "igraph-community_walktrap"):
         super(community_walktrap, self).__init__(name) 
     
     def get_meta(self):

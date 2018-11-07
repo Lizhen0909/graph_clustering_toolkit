@@ -7,7 +7,7 @@ import pandas as pd
 import os
 import sys
 import glob
-
+from gct.alg.clustering import Result
 
 class Cluster(object):
 
@@ -17,6 +17,10 @@ class Cluster(object):
         self.path = None 
         if isinstance(cluster, str):
             self.path = utils.abspath(cluster)
+        elif isinstance(cluster, Result):
+            self.cluster = cluster.clusters(as_dataframe=True)
+        elif isinstance(cluster, dict):
+            self.cluster = cluster.clusters(Result(cluster).clusters(as_dataframe=True))            
         elif isinstance(cluster, pd.DataFrame):
             if not 'cluster' in cluster.columns or not 'node' in cluster.columns:
                 raise ValueError("arg is not right")
@@ -140,7 +144,7 @@ class Cluster(object):
 class Dataset(object):
 
     def __init__(self, name=None, description="", groundtruthObj=None, edgesObj=None, directed=False,
-                 weighted=False, overide=False, additional_meta=None):
+                 weighted=False, overide=False, additional_meta=None,is_edge_mirrored=False):
         assert edgesObj is not None 
         self.name = name 
         self.description = description
@@ -148,6 +152,7 @@ class Dataset(object):
         self.logger = utils.get_logger("{}:{}".format(type(self).__name__, self.name))
         self.directed = directed 
         self.weighted = weighted
+        self.is_edge_mirrored=is_edge_mirrored
          
         self.parq_edges = None
          
@@ -159,7 +164,9 @@ class Dataset(object):
             self.file_scanbin = config.get_data_file_path(self.name, 'scanbin')
             self.file_anyscan = config.get_data_file_path(self.name, 'anyscan.txt')
             self.file_snap = config.get_data_file_path(self.name, 'snap.bin')
-        
+            self.file_mcl_mci = config.get_data_file_path(self.name, 'mcl.mci')
+            self.file_mcl_tab = config.get_data_file_path(self.name, 'mcl.tab')
+                    
         self.set_ground_truth(groundtruthObj)
         self.set_edges(edgesObj)
         
@@ -288,15 +295,42 @@ class Dataset(object):
                 elif isinstance(v, np.ndarray):
                     arr = v
                 else:
-                    raise ValueError("arg is not right")
+                    raise ValueError("arg is not a list, ndarray or dataframe")
                 if len(arr.shape) != 2  or arr.shape[1] != 2 + int(self.is_weighted()):
-                    raise ValueError("arg is not right")
+                    raise ValueError("data shape is not correct: " + str(arr.shape))
                 if self.is_weighted():
                     self.edges = pd.DataFrame(arr, columns=['src', 'dest', 'weight'])
                 else:
                     self.edges = pd.DataFrame(arr, columns=['src', 'dest'])
-            return self 
                     
+            def clean_edges():
+                edges = self.edges
+                if self.is_weighted():
+                    assert 'weight' in edges.columns
+                else:
+                    assert 'weight' not in edges.columns
+
+                edges['src'] = edges['src'].astype(np.int)
+                edges['dest'] = edges['dest'].astype(np.int)
+                if self.is_weighted(): 
+                    edges['weight'] = edges['weight'].astype(np.float32)
+                print("AAA",edges)
+                if not self.is_edge_mirrored:
+                    edges1 = edges[edges['src'] <= edges['dest']]
+                    edges2 = edges[edges['src'] > edges['dest']]
+                    edges2.rename(columns={'src': 'dest', 'dest': 'src'}, inplace=True)
+                    edges = pd.concat([edges1, edges2[edges1.columns]], axis=0)
+                
+                self.edges = edges
+
+            if not self.is_directed():  clean_edges()
+            
+            self.edges = self.edges.drop_duplicates()
+            self.num_edge = len(self.edges)
+            self.num_node = len(np.unique(self.edges[['src', 'dest']].values.ravel()))
+            clean_edges()
+            return self 
+
     def __str__(self, *args, **kwargs):
         d = self.get_meta()
         return json.dumps(d)
@@ -313,7 +347,7 @@ class Dataset(object):
     # return edge list
     def get_edges(self):
         if not hasattr(self, 'edges'):
-            self.logger.info("reading" + self.parq_edges)
+            self.logger.info("reading " + self.parq_edges)
             self.edges = fastparquet.ParquetFile(self.parq_edges).to_pandas() 
         return self.edges            
     
@@ -382,6 +416,22 @@ class Dataset(object):
             raise Exception("run command failed: " + str(status))
         return filepath 
 
+    def to_mcl_mci(self, filepath=None):
+        if (filepath == None):
+            filepath = self.file_mcl_mci
+            if utils.file_exists(filepath):
+                return filepath         
+        if not utils.file_exists(self.file_edges): self.to_edgelist()
+        if not self.is_directed():
+            cmd = "{} --stream-mirror -123 {} -o {} --write-binary".format(config.MCL_CONVERT_PROG, self.file_edges, filepath)
+        else:
+            cmd = "{} -123 {} -o {} --write-binary".format(config.MCL_CONVERT_PROG, self.file_edges, filepath)
+        self.logger.info("running " + cmd)
+        status = utils.shell_run_and_wait(cmd)
+        if (status != 0):
+            raise Exception("run command failed: " + str(status))
+        return filepath 
+
     def to_anyscan(self, filepath=None):
         if self.is_directed():
             raise Exception("directed graph not supported")
@@ -443,19 +493,21 @@ class Dataset(object):
         from gct.dataset import convert 
         return convert.to_coo_adjacency_matrix(self)            
     
-    def as_undirected(self, newname, description="",overide=False):
+    def as_undirected(self, newname, description="", overide=False):
         from gct.dataset import convert
         return convert.as_undirected(self, newname=newname, description=description, overide=overide)
-    
         
-    def as_unweight(self, newname, description="",overide=False):
+    def as_unweight(self, newname, description="", overide=False):
         from gct.dataset import convert
         return convert.as_unweight(self, newname=newname, description=description, overide=overide)
     
-    
-    def as_unweight_undirected(self, newname, description="",overide=False):
+    def as_unweight_undirected(self, newname, description="", overide=False):
         from gct.dataset import convert
         return convert.as_unweight_undirected(self, newname=newname, description=description, overide=overide)
+
+    def as_mirror_edges(self, newname, description="", overide=False):
+        from gct.dataset import convert
+        return convert.as_mirror_edges(self, newname=newname, description=description, overide=overide)
 
 
 def local_exists(name):
@@ -475,7 +527,12 @@ def remove_local(name, rm_graph_data=True, rm_clustering_result=True):
     if rm_clustering_result:
         path = config.get_result_file_path(name)
         utils.remove_if_file_exit(path, is_dir=True)
-                
+
+
+def create_dataset(name, edgesObj, groundtruthObj=None, directed=False, weighted=False, description="", overide=False):
+    return Dataset(name=name, edgesObj=edgesObj, groundtruthObj=groundtruthObj, directed=directed, weighted=weighted, \
+                    description=description, overide=overide)                
+
     
 def load_local(name):
     path = config.get_data_file_path(name, create=False)

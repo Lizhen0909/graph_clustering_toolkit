@@ -102,9 +102,9 @@ def shell_run_and_wait(command, working_dir=None, env=None):
         os.chdir(working_dir)
     command = command.split(" ")
     import subprocess
-    # process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
-    process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE,
-                     stderr=subprocess.STDOUT)
+    
+    #process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    process = subprocess.Popen(command, env=env)
     process.wait()
     if working_dir is not None:
         os.chdir(curr_dir)

@@ -64,7 +64,7 @@ class CGGC(Clustering):
         return {'lib':"CGCC", "name": 'CGCC' }
     
     def run(self, data, startk=None, finalk=None, runs=None, ensemblesize=None, algorithm=None, seed=None):
-        if (data.is_directed() or data.is_weighted()):
+        if False and (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")
         
         params = locals()

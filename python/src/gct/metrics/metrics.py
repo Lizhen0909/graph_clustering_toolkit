@@ -559,7 +559,7 @@ class ClusterComparator(object):
             nodes = set(df1['node']).intersection(set(df2['node']))
             self.logger.info ("resulting {} nodes out of {},{}".format(len(nodes), len(df1), len(df2)))
             df1 = df1[df1['node'].isin(nodes)].set_index('node')
-            df2 = df2[df2['node'].isin(nodes)].set_index('node').loc[df2.index]
+            df2 = df2[df2['node'].isin(nodes)].set_index('node').loc[df1.index]
             df2.index.name = 'node'
             return df1, df2 
 
@@ -725,6 +725,8 @@ class ClusterComparator(object):
     '''        
 
     def OvpNMI(self, sync=None, allnmi=None, omega=None, membership=None, verbose=None):
+        if self.clusterobj1.num_cluster<2 or self.clusterobj2.num_cluster<2:
+            return None  
         params = locals(); del params['self'];del params['sync']
         params = {u.replace('_', '-'):v for u, v in params.items() if v}
         nonbools = [ 'membership']
@@ -740,6 +742,7 @@ class ClusterComparator(object):
             cmd.append("--sync")
 
         with utils.TempDir() as tmp_dir:
+            #tmp_dir="/tmp/abc"
             cnl1 = self.clusterobj1.make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster1.cnl'))
             cnl2 = self.clusterobj2.make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster2.cnl'))
             cmd.append(cnl1)

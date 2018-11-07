@@ -35,7 +35,7 @@ class Scanpp(Clustering):
     
     def run(self, data, mu=1, epsilon=0):
         params = {'mu':mu, 'epsilon':epsilon}
-        if (data.is_directed() or data.is_weighted()):
+        if False and (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_edges):
             data.to_edgelist()
@@ -142,7 +142,7 @@ class AnyScan(Clustering):
             thread = multiprocessing.cpu_count()
             params['thread'] = thread 
 
-        if (data.is_directed() or data.is_weighted()):
+        if False and (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_anyscan):
             data.to_anyscan()
@@ -218,7 +218,7 @@ class pScan(Clustering):
         assert prog in ['pScan', 'ppScan', 'ppScanSSE']
         
         params = {'mu':mu, 'epsilon':epsilon, 'prog':prog}
-        if (data.is_directed() or data.is_weighted()):
+        if False and (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_scanbin):
             data.to_scanbin()

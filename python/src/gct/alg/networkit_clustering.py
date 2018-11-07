@@ -24,8 +24,7 @@ class LPDegreeOrdered(Clustering):
     ------------------------
     TBD
     '''
-    def __init__(self):
-        name = "networkit-LPDegreeOrdered"
+    def __init__(self,name = "networkit-LPDegreeOrdered"):
         super(LPDegreeOrdered, self).__init__(name) 
     
     def get_meta(self):
@@ -66,8 +65,7 @@ class CutClustering(Clustering):
     ------------------------
     Tarjan, Robert E.; Tsioutsiouliklis, Kostas. Graph Clustering and Minimum Cut Trees. Internet Mathematics 1 (2003), no. 4, 385–408.
     '''
-    def __init__(self):
-        name = "networkit-CutClustering"
+    def __init__(self,name = "networkit-CutClustering"):
         super(CutClustering, self).__init__(name) 
     
     def get_meta(self):
@@ -119,8 +117,8 @@ class PLP(Clustering):
     ------------------------
     TBD
     '''
-    def __init__(self):
-        name = "networkit-PLP"
+    def __init__(self,name = "networkit-PLP"):
+        
         super(PLP, self).__init__(name) 
     
     def get_meta(self):
@@ -172,8 +170,8 @@ class PLM(Clustering):
     ------------------------
     TBD
     '''
-    def __init__(self):
-        name = "networkit-PLM"
+    def __init__(self,name = "networkit-PLM"):
+        
         super(PLM, self).__init__(name) 
     
     def get_meta(self):

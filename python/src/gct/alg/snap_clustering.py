@@ -23,15 +23,15 @@ class Clauset_Newman_Moore(Clustering):
     Clauset, Aaron, Mark EJ Newman, and Cristopher Moore. "Finding community structure in very large networks." Physical review E 70.6 (2004): 066111.
     '''   
     
-    def __init__(self):
-        name = "SNAP-Clauset_Newman_Moore"
+    def __init__(self,name = "SNAP-Clauset_Newman_Moore"):
+        
         super(Clauset_Newman_Moore, self).__init__(name) 
     
     def get_meta(self):
         return {'lib':"snap", "name": 'Clauset_Newman_Moore' }
     
     def run(self, data):
-        if (data.is_directed() or data.is_weighted()):
+        if False and (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")
         UGraph = convert.to_snap(data)
         CmtyV = snap.TCnComV()
@@ -78,8 +78,8 @@ class Girvan_Newman(Clustering):
     Girvan, Michelle, and Mark EJ Newman. "Community structure in social and biological networks." Proceedings of the national academy of sciences 99.12 (2002): 7821-7826.
     '''   
 
-    def __init__(self):
-        name = "SNAP-Girvan_Newman"
+    def __init__(self,name = "SNAP-Girvan_Newman"):
+        
         super(Girvan_Newman, self).__init__(name) 
     
     def get_meta(self):

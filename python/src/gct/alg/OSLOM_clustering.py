@@ -116,6 +116,7 @@ class Infohiermap(Clustering):
             data.to_pajek()
         
         with utils.TempDir() as tmp_dir:
+            #tmp_dir="/tmp/abc"
             pajek = os.path.join(tmp_dir, 'pajek.txt')
             utils.remove_if_file_exit(pajek)
             os.symlink(data.file_pajek, pajek)
@@ -129,7 +130,7 @@ class Infohiermap(Clustering):
     
             outputfile = glob.glob(tmp_dir + "/pajek.tree")[0]
             import pandas as pd 
-            output = pd.read_csv(outputfile, sep=" ", skiprows=1, header=None)
+            output = pd.read_csv(outputfile, sep=" ", skiprows=1, header=None, dtype={0:np.str})
             output['cluster'] = output.loc[:, 0].map(lambda u: int(u.split(':')[0]))
             output['node'] = output.loc[:, 2].astype(np.int)
         clusters = output[['cluster', 'node']]

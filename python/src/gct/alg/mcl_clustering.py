@@ -32,31 +32,39 @@ class MCL(Clustering):
             raise Exception("only undirected is supported")
         
         params = dict(kwargs)
-        params['abc'] = '' 
+        #params['abc'] = '' 
         params['o'] = 'output'
         params = {u:v for u, v in params.items() if v is not None }
         
-        if not utils.file_exists(data.file_edges):
-            data.to_edgelist()
+        if not utils.file_exists(data.file_mcl_mci):
+            data.to_mcl_mci()
+            if not utils.file_exists(data.file_mcl_mci):
+                raise Exception("failed to crate mcl mci format file")
         
-        cmd = "{} {} {}".format(config.MCL_PROG, data.file_edges,
-            " ".join(['{}{} {}'.format('-' if len(u) == 1 else '--', u, v).strip() for u, v in params.items()]))
-        self.logger.info("Running " + cmd)
 
         with utils.TempDir() as tmp_dir:
-            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            cmd1 = "{} {} {}".format(config.MCL_PROG, data.file_mcl_mci,
+                " ".join(['{}{} {}'.format('-' if len(u) == 1 else '--', u, v).strip() for u, v in params.items()]))
+            cmd2 = "{} -imx {} -o cluster.output".format(config.MCLDUMP_PROG, 'output')
+            cmdfile = os.path.join(tmp_dir,"tmpcmd.sh")
+            with open(cmdfile,'wt') as f :
+                f.write(cmd1+"\n")            
+                f.write(cmd2+"\n")
+            self.logger.info("Running " + cmd1)
+            self.logger.info("Running " + cmd2)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait("bash "+cmdfile, tmp_dir))
             if status != 0: 
                 raise Exception("Run command with error status code {}".format(status))
             
-            with open (os.path.join(tmp_dir, "output"), "r") as output:
+            with open (os.path.join(tmp_dir, "cluster.output"), "r") as output:
                 lines = [u.strip() for u in output.readlines()]
 
         from collections import defaultdict
         clusters = defaultdict(list)
-        for c, line in enumerate(lines):
-            if line.startswith('#'):continue
-            for n in line.split("\t"): 
-                clusters[c].append(int(n))
+        for line in lines:
+            cluster,node=line.split("\t")[:2]
+            clusters[int(cluster)].append(int(node))
         
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         

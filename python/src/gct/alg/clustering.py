@@ -31,7 +31,7 @@ def save_result(result):
             with open(fpath, 'wt') as f:
                 json.dump(result, f)
         except:
-            utils.remove_if_file_exit(fpath, is_dir=True)
+            utils.remove_if_file_exit(fpath, is_dir=False)
             raise
 
 

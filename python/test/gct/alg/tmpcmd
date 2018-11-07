@@ -1,1 +1,0 @@
-/home/bo/graph_clustering_toolkit/submodules/graph-cluster/lso-cluster /tmp/abc/edges.txt --loss {pmod,3} -o lsooutput

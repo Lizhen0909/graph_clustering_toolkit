@@ -232,7 +232,7 @@ class DBSCAN(Clustering):
         
         params['metric'] = 'precomputed'
         A = convert.to_coo_adjacency_matrix(data, simalarity=False, distance_fun='exp_minus')
-        params['eps'] = np.median(A.data)
+        params['eps'] = float(np.median(A.data))
 
         def fun():
             obj = sklearn.cluster.DBSCAN(**params)
@@ -242,7 +242,7 @@ class DBSCAN(Clustering):
         
         clusters = DefaultDict(list)
         for i, c in enumerate(res):
-            clusters[str(c)].append(i)
+            clusters[str(int(c))].append(i)
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
 
         result = {}
