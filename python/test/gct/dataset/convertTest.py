@@ -56,21 +56,40 @@ class Test(unittest.TestCase):
         assert edges['dest'].dtype==np.int
         self.assertEqual(3, d.num_node)
         self.assertEqual(5, d.num_edge)
+
+    def testAsUndirect(self):
+        name =sys._getframe().f_code.co_name 
+
+        lst = [[1, 2], [2, 2], [2, 3],[2, 3], [3,2]]
+        d = convert.from_edgelist(name, lst,directed=True)
+        print (d.get_edges())
+        self.assertEqual(3, d.num_node)
+        self.assertEqual(4, d.num_edge)
+        edges =d.get_edges()
+        assert edges['src'].dtype==np.int
+        assert edges['dest'].dtype==np.int
         
+        d= d.as_undirected(newname=None)
+        edges =d.get_edges()
+        print (d.get_edges())
+        assert edges['src'].dtype==np.int
+        assert edges['dest'].dtype==np.int
+        self.assertEqual(3, d.num_node)
+        self.assertEqual(3, d.num_edge)
+                
     def testFromEdgelist(self):
         name = "testFromEdgelist"
         
         lst = [[1, 2], [2, 2], [2, 3]]
         d = convert.from_edgelist(name, lst)
-        print (name, d) 
 
         lst = [[1, 2, 0.4], [2, 2, 2], [2, 3, 12]]
         d = convert.from_edgelist(name, lst)
-        print (name, d) 
         edges =d.get_edges()
         assert edges['src'].dtype==np.int
         assert edges['dest'].dtype==np.int
-        assert edges['weight'].dtype==np.float
+        assert edges['weight'].dtype==np.float32
+        
     def testToNextworkx(self):
         for data in self.graphs: 
             g = convert.to_networkx(data)

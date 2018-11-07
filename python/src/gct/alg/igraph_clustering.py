@@ -32,7 +32,6 @@ class community_fastgreedy(Clustering):
         if (data.is_directed())  :
             raise Exception("only undirected is supported")
         g = convert.to_igraph(data)
-        print (data.get_edges())
         timecost, ret = utils.timeit(lambda: g.community_fastgreedy(weights='weight' if data.is_weighted() else None))
         vc = ret.as_clustering()
         clusters = {}

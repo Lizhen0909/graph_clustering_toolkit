@@ -8,6 +8,8 @@ import os
 import sys
 import glob
 from gct.alg.clustering import Result
+import traceback
+
 
 class Cluster(object):
 
@@ -144,7 +146,7 @@ class Cluster(object):
 class Dataset(object):
 
     def __init__(self, name=None, description="", groundtruthObj=None, edgesObj=None, directed=False,
-                 weighted=False, overide=False, additional_meta=None,is_edge_mirrored=False):
+                 weighted=False, overide=False, additional_meta=None, is_edge_mirrored=False):
         assert edgesObj is not None 
         self.name = name 
         self.description = description
@@ -152,7 +154,7 @@ class Dataset(object):
         self.logger = utils.get_logger("{}:{}".format(type(self).__name__, self.name))
         self.directed = directed 
         self.weighted = weighted
-        self.is_edge_mirrored=is_edge_mirrored
+        self.is_edge_mirrored = is_edge_mirrored
          
         self.parq_edges = None
          
@@ -235,7 +237,8 @@ class Dataset(object):
         d = {'name': self.name ,
             'weighted': self.is_weighted(),
              'has_ground_truth':self.has_ground_truth(),
-             'directed': self.is_directed()}
+             'directed': self.is_directed(),
+             'is_edge_mirrored':self.is_edge_mirrored}
         d['parq_edges'] = self.parq_edges
         
         if self.has_ground_truth():
@@ -314,21 +317,19 @@ class Dataset(object):
                 edges['dest'] = edges['dest'].astype(np.int)
                 if self.is_weighted(): 
                     edges['weight'] = edges['weight'].astype(np.float32)
-                print("AAA",edges)
-                if not self.is_edge_mirrored:
+
+                if not self.is_edge_mirrored and not self.is_directed():
                     edges1 = edges[edges['src'] <= edges['dest']]
                     edges2 = edges[edges['src'] > edges['dest']]
                     edges2.rename(columns={'src': 'dest', 'dest': 'src'}, inplace=True)
                     edges = pd.concat([edges1, edges2[edges1.columns]], axis=0)
-                
                 self.edges = edges
 
-            if not self.is_directed():  clean_edges()
+            clean_edges()
             
             self.edges = self.edges.drop_duplicates()
             self.num_edge = len(self.edges)
             self.num_node = len(np.unique(self.edges[['src', 'dest']].values.ravel()))
-            clean_edges()
             return self 
 
     def __str__(self, *args, **kwargs):

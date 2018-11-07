@@ -189,8 +189,8 @@ def as_unweight_undirected(data, newname, description="", overide=False):
 def as_mirror_edges(data, newname, description="", overide=False):
     edges1 = data.get_edges()
     edges2 = edges1.copy()
-    edges2['src'] = edges1['src']
-    edges2['dest'] = edges1['dest']
+    edges2['src'] = edges1['dest']
+    edges2['dest'] = edges1['src']
     edges = pd.concat([edges1, edges2], axis=0)
     if data.has_ground_truth():
         gt = data.get_ground_truth()

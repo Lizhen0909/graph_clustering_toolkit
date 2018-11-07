@@ -18,6 +18,7 @@ class GraphMetrics(object):
     '''
     metrics for a graph. e.g. density, diameter etc.
     '''
+
     def __init__(self, data):
         if data.is_directed() or data.is_weighted():
             print ("Warning! Graph will be taken as undirected.")
@@ -104,6 +105,7 @@ class GraphClusterMetrics(object):
     '''
     metrics for a clustering of a graph. e.g. modularity.
     '''
+
     def __init__(self, data, clusterobj):
         if data.is_directed() or data.is_weighted():
             print ("Warning! Graph will be taken as undirected and unweighted.")
@@ -531,6 +533,7 @@ class ClusterComparator(object):
     metrics for two clustering. e.g. nmi, overlap nmi etc.
     In case that some metrics requires ground truth, take ground truth as the first parameter.
     '''
+
     def __init__(self, clusterobj1, clusterobj2):
         self.logger = utils.get_logger("{}".format(type(self).__name__))
 
@@ -725,8 +728,8 @@ class ClusterComparator(object):
     '''        
 
     def OvpNMI(self, sync=None, allnmi=None, omega=None, membership=None, verbose=None):
-        if self.clusterobj1.num_cluster<2 or self.clusterobj2.num_cluster<2:
-            return None  
+        if self.clusterobj1.num_cluster < 2 or self.clusterobj2.num_cluster < 2:
+            return {"NMImax":None}
         params = locals(); del params['self'];del params['sync']
         params = {u.replace('_', '-'):v for u, v in params.items() if v}
         nonbools = [ 'membership']
@@ -742,7 +745,7 @@ class ClusterComparator(object):
             cmd.append("--sync")
 
         with utils.TempDir() as tmp_dir:
-            #tmp_dir="/tmp/abc"
+            # tmp_dir="/tmp/abc"
             cnl1 = self.clusterobj1.make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster1.cnl'))
             cnl2 = self.clusterobj2.make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster2.cnl'))
             cmd.append(cnl1)
@@ -753,7 +756,8 @@ class ClusterComparator(object):
             with open(os.path.join(tmp_dir, "tmpcmd"), 'wt') as f: f.write(cmd)            
             timecost, status = utils.timeit(lambda: utils.shell_run_and_wait("bash tmpcmd", tmp_dir))
             if status != 0: 
-                raise Exception("Run command with error status code {}".format(status))
+                self.logger.error(Exception("Run command with error status code {}".format(status)))
+                return {"NMImax":None} 
             
             with open (os.path.join(tmp_dir, "ovpnmioutput"), "r") as output:
                 line = [u.strip() for u in output.readlines() if not u.startswith('#')][0]
@@ -981,4 +985,4 @@ class ClusterComparator(object):
                 ret [lines[0].split(" ")[0].strip()] = float(lines[1])
                 if len(lines) == 4:
                     ret [lines[2].split(" ")[0].strip()] = float(lines[3])
-            return ret,params 
+            return ret, params 
