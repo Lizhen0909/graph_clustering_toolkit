@@ -182,7 +182,7 @@ def get_LFR_prog(weighted, directed, hier=False):
 
 
 def get_cdc_prog(name, is_directed):
-    if name in {'k_clique','2009-cis'}:
+    if name in {'k_clique','2009-cis','2009-eagle'}:
         return os.path.join(GCT_HOME, "submodules/CommunityDetectionCodes/", name)
     else:
         raise Exception("Unknown " + name)

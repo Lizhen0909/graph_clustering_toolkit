@@ -7,7 +7,8 @@ import unittest
 from gct.dataset import random_dataset
 from gct.alg import clustering
 import sys
-from gct.alg.cdc_clustering import CliquePercolation, Connected_Iterative_Scan
+from gct.alg.cdc_clustering import CliquePercolation, Connected_Iterative_Scan,\
+    EAGLE
 
 
 class Test(unittest.TestCase):
@@ -52,6 +53,13 @@ class Test(unittest.TestCase):
             print(sys._getframe().f_code.co_name)
             print (alg.run(data, l=0.).get_result())
             print (clustering.load_result(data.name, alg.name))
+            
+    def test_EAGLE(self):
+        for data in  self.graphs: 
+            alg = EAGLE()
+            print(sys._getframe().f_code.co_name)
+            print (alg.run(data, nThread=2).get_result())
+            print (clustering.load_result(data.name, alg.name))            
 
 
 if __name__ == "__main__":

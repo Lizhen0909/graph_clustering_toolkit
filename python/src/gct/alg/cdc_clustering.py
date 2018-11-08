@@ -6,6 +6,8 @@ Created on Oct 27, 2018
 from gct.alg.clustering import Clustering, save_result
 from gct import utils, config
 import os
+import subprocess
+import multiprocessing
 
 prefix = 'cdc'
 
@@ -136,6 +138,76 @@ class Connected_Iterative_Scan(Clustering):
             if line:
                 clusters[i] = [int(u) for u in line.split("|")]
         
+        self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['runname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+
+        save_result(result)
+        self.result = result 
+        return self 
+    
+    
+class EAGLE(Clustering):
+    '''
+    EAGLE (agglomerativE hierarchicAl clusterinG based on maximaL cliquE)
+    
+    Arguments
+    --------------------
+    Sinopsi: ./2009-eagle nThreads src <dir|undir> [dest]
+
+    ------------------------
+    Shen, Huawei, et al. "Detect overlapping and hierarchical community structure in networks." 
+    Physica A: Statistical Mechanics and its Applications 388.8 (2009): 1706-1712.
+    '''
+
+    def __init__(self, name="EAGLE"):
+        
+        super(EAGLE, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"cdc", "name": 'EAGLE' }
+
+    def run(self, data, nThread=None, seed=None):
+        if False and (data.is_directed()):
+            raise Exception("only undirected is supported")
+        
+        if nThread is None or nThread<1:
+            nThread= max(1,multiprocessing.cpu_count()-1)
+        params = {'nThread':nThread}
+        if seed  is not None: self.logger.info("seed ignored")
+        
+        if not utils.file_exists(data.file_edges):
+            data.to_edgelist()
+
+        with utils.TempDir() as tmp_dir:
+            utils.link_file(data.file_edges, tmp_dir, "edges.txt")
+            cmd = [config.get_cdc_prog('2009-eagle', data.is_directed)]
+            cmd.append(str(nThread))
+            cmd.append("edges.txt")
+            cmd.append("dir" if data.is_directed() else "undir")
+            cmd.append("output")
+            cmd = " ".join(cmd)
+            self.logger.info("Running " + cmd)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            with open (os.path.join(tmp_dir, "output"), "r") as output:
+                lines = [u.strip() for u in output.readlines()]
+
+        clusters = {}
+        n_cluster=int(lines[0])
+        for i, line in enumerate(lines[1:]):
+            if line:
+                clusters[i] = [int(u) for u in line.split(" ")[1:]]
+        assert(len(clusters)==n_cluster)
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
