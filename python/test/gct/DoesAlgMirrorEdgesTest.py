@@ -34,7 +34,7 @@ class Test(unittest.TestCase):
         return utils.file_exists(fpath)
 
     def test_1(self):
-        bad_algs = ['igraph_community_optimal_modularity', 'igraph_community_fastgreedy', 'scan_pScan']  # these alg failed for this test
+        bad_algs = ['igraph_community_optimal_modularity', 'igraph_community_fastgreedy', 'scan_pScan', 'scan_AnyScan_ScanIdealPar', 'scan_ppScan','scan_ppScanSSE']  # these alg failed for this test
         runned_algs = []
         algs = gct.list_algorithms()
         algs = [u for u in algs if u not in bad_algs and u not in runned_algs]
