@@ -110,11 +110,17 @@ def get_powergraph_prog(name, directed=False):
         raise Exception("Unknown " + name)
 
 
+def get_OSLOM_aux_progs():
+    d = dict(zip(['convert', 'community', 'hierarchy'], ['louvain_convert', 'louvain_comm', 'louvain_hier']))
+    return list(d.keys()), [os.path.join(GCT_HOME, "submodules/CommunityDetectionCodes/", u) for u in d.values]
+
+
 def get_OSLOM_prog(name, is_directed):
     if name == 'infomap':
-        prog = os.path.join(GCT_HOME, "submodules/OSLOM2/infomap")
-        # prog += '_dir' if is_directed else "_undir"
-        prog += '_dir'  # undir has bug        
+        if is_directed:
+            prog = os.path.join(GCT_HOME, "submodules/OSLOM2/infomap_dir")
+        else:
+            prog = os.path.join(GCT_HOME, "submodules/OSLOM2/infomap_dir")
         return prog
     elif name == 'Infohiermap':
         prog = os.path.join(GCT_HOME, "submodules/OSLOM/infohiermap")

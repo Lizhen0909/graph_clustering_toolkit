@@ -69,11 +69,20 @@ infomap_dir:
 	mv $(Main_folder)/infomap_dir/infomap infomap_dir
 	mv $(Main_folder)/infomap_dir/infomap_scr infomap_dir_script
 
-community: louvain_script
-convert: louvain_script
-hierarchy: louvain_script
 
-louvain_script:
+MAKE_LOUVAIN: community convert hierarchy louvain_script
+
+community: louvain_script
+	cp $(Main_folder)/louvain/community .
+
+convert: louvain_script
+	cp $(Main_folder)/louvain/convert .
+
+hierarchy: louvain_script
+	cp $(Main_folder)/louvain/hierarchy .
+
+louvain_script: 
+
 	echo ""
 	echo "Compiling louvain  method ..."
 	cd $(Main_folder)/louvain/ && \
@@ -81,9 +90,6 @@ louvain_script:
 	./a.out  
 	cd $(Main_folder)/louvain/ && \
 	g++ -o louvain_script order.cpp -O3 
-	mv $(Main_folder)/louvain/louvain_script .
-	mv $(Main_folder)/louvain/community .
-	mv $(Main_folder)/louvain/convert .
-	mv $(Main_folder)/louvain/hierarchy .
+	cp $(Main_folder)/louvain/louvain_script .
 
 
