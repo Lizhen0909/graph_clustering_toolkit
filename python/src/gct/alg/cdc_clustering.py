@@ -84,4 +84,70 @@ class CliquePercolation(Clustering):
         save_result(result)
         self.result = result 
         return self 
+
+class Connected_Iterative_Scan(Clustering):
+    '''
+    Connected Iterative Scan Connected Iterative Scan is also known at times as Locally Optimal Sets.
+    
+    Arguments
+    --------------------
+    ./cis -i network -o output -dl delimiter -s seed file -l lambda value
+
+    ------------------------
+    Kelley, Stephen. The existence and discovery of overlapping communities in large-scale networks. 
+    Diss. Rensselaer Polytechnic Institute, 2009.
+    '''
+
+    def __init__(self, name="Connected_Iterative_Scan"):
+        
+        super(Connected_Iterative_Scan, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"cdc", "name": 'Connected_Iterative_Scan' }
+
+    def run(self, data, l=None, seed=None):
+        if False and (data.is_directed()):
+            raise Exception("only undirected is supported")
+        
+        params = {'l':l}
+        if seed  is not None: self.logger.info("seed ignored")
+        
+        if not utils.file_exists(data.file_edges):
+            data.to_edgelist()
+
+        with utils.TempDir() as tmp_dir:
+            utils.link_file(data.file_edges, tmp_dir, "edges.txt")
+            cmd = [config.get_cdc_prog('2009-cis', data.is_directed)]
+            cmd.append("-i edges.txt -o output")
+            if l is not None: cmd.append("-l {}".format(l))
+
+            cmd = " ".join(cmd)
+            self.logger.info("Running " + cmd)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            with open (os.path.join(tmp_dir, "output"), "r") as output:
+                lines = [u.strip() for u in output.readlines()]
+
+        clusters = {}
+        for i, line in enumerate(lines):
+            if line:
+                clusters[i] = [int(u) for u in line.split("|")]
+        
+        self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['runname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+
+        save_result(result)
+        self.result = result 
+        return self 
+    
     
