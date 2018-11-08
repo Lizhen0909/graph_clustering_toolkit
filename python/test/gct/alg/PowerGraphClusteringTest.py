@@ -7,7 +7,7 @@ import unittest
 from gct.dataset import random_dataset
 from gct.alg import clustering
 import sys
-from gct.alg.powergraph_clustering import label_propagation, GossipMap, RelaxMap
+from gct.alg.powergraph_clustering import pg_label_propagation, GossipMap, RelaxMap
 
 
 class Test(unittest.TestCase):
@@ -37,7 +37,7 @@ class Test(unittest.TestCase):
 
     def test_label_propagation(self):
         for data in  self.graphs: 
-            alg = label_propagation()
+            alg = pg_label_propagation()
             print(sys._getframe().f_code.co_name) 
             print (alg.run(data).get_result())
             print (clustering.load_result(data.name, alg.name))

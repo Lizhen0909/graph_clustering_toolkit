@@ -6,7 +6,7 @@ Created on Oct 27, 2018
 from gct.alg.clustering import Clustering, save_result
 from gct import utils, config
 import os
-
+import numpy as np 
 prefix = 'cgcc'
 
 class CGGC(Clustering):
@@ -69,6 +69,10 @@ class CGGC(Clustering):
         
         params = locals()
         del(params['self']);del(params['data'])
+        if seed is None:
+            seed = np.random.randint(999999)
+        params['seed'] = seed
+        
         params['inpfmt'] = 'e' 
         params['outfile'] = 'output'
         params['outfmt'] = 'l'

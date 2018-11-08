@@ -30,9 +30,11 @@ class LPDegreeOrdered(Clustering):
     def get_meta(self):
         return {'lib':"networkit", "name": 'LPDegreeOrdered' }
     
-    def run(self, data):
+    def run(self, data,seed=None):
         if False and (data.is_directed())  :
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
+        
         g = convert.to_networkit(data)
         timecost, ret = utils.timeit(lambda: networkit.community.detectCommunities(g, algo=networkit.community.LPDegreeOrdered(g)))
         clusters = {}
@@ -71,9 +73,10 @@ class CutClustering(Clustering):
     def get_meta(self):
         return {'lib':"networkit", "name": 'CutClustering' }
     
-    def run(self, data, alpha=0.1):
+    def run(self, data, alpha=0.1, seed=None):
         if False and (data.is_directed())  :
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
         
         params = {'alpha':alpha}
         g = convert.to_networkit(data)
@@ -124,9 +127,10 @@ class PLP(Clustering):
     def get_meta(self):
         return {'lib':"networkit", "name": 'PLP' }
     
-    def run(self, data, updateThreshold=None, maxIterations=None):
+    def run(self, data, updateThreshold=None, maxIterations=None, seed=None):
         if False and (data.is_directed())  :
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
         
         params = {"updateThreshold": updateThreshold, 'maxIterations':maxIterations }
         params = {k:v for k, v in params.items() if v is not None }
@@ -177,11 +181,12 @@ class PLM(Clustering):
     def get_meta(self):
         return {'lib':"networkit", "name": 'PLM' }
     
-    def run(self, data, refine=False, gamma=1.0, par="balanced", maxIter=32, turbo=True, recurse=True):
+    def run(self, data, refine=False, gamma=1.0, par="balanced", maxIter=32, turbo=True, recurse=True, seed=None):
         if False and (data.is_directed())  :
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
         
-        params = locals();del params['data'];del params['self']
+        params = locals();del params['data'];del params['self']; del params['seed']
         
         g = convert.to_networkit(data)
         fun = lambda: networkit.community.detectCommunities(g, algo=networkit.community.PLM(g, **params))

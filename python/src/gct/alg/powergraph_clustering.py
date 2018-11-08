@@ -12,7 +12,7 @@ import numpy as np
 
 prefix='alg'
 
-class label_propagation(Clustering):
+class pg_label_propagation(Clustering):
     '''
     A wrapper of *LPA* algorithm from PowerGraph. 
 
@@ -44,13 +44,14 @@ class label_propagation(Clustering):
     '''    
 
     def __init__(self, name="powergraph_label_propagation"):
-        super(label_propagation, self).__init__(name) 
+        super(pg_label_propagation, self).__init__(name) 
     
     def get_meta(self):
         return {'lib':"powergraph", "name": 'label_propagation' }
     
-    def run(self, data, execution='async', ncpus=None, scheduler=None, engine_opts=None, graph_opts=None, scheduler_opts=None):
-        params = locals();del params['self'];del params['data']
+    def run(self, data, execution='async', ncpus=None, scheduler=None, engine_opts=None, graph_opts=None, scheduler_opts=None,seed=None):
+        if seed is not None:self.logger.info("seed ignored")        
+        params = locals();del params['self'];del params['data'];del params['seed']
         params = {u:v for u, v in params.items() if v is not None}
         if (data.is_directed() or data.is_weighted()) and False:
             raise Exception("only undirected and unweighted graph is supported")
@@ -147,9 +148,12 @@ class GossipMap(Clustering):
     def get_meta(self):
         return {'lib':"powergraph", "name": 'GossipMap' }
     
-    def run(self, data, thresh=None, tol=None, maxiter=None, maxspiter=None, trials=None, interval=None, outmode=None, ncpus=None, scheduler=None, engine_opts=None, graph_opts=None, scheduler_opts=None):
-        params = locals();del params['self'];del params['data']
+    def run(self, data, thresh=None, tol=None, maxiter=None, maxspiter=None, trials=None, interval=None, outmode=None, ncpus=None, scheduler=None, engine_opts=None, graph_opts=None, scheduler_opts=None, seed=None):
+        if seed is not None:self.logger.info("seed ignored")
+        params = locals();del params['self'];del params['data']; del params['seed']
         params = {u:v for u, v in params.items() if v is not None}
+
+        
         if (data.is_directed() or data.is_weighted()) and False:
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_edges):
@@ -160,7 +164,8 @@ class GossipMap(Clustering):
             utils.remove_if_file_exit(pajek)
             os.symlink(data.file_edges, pajek)
             args = " ".join (["--{} {}".format(u, v) for u, v in params.items()])
-            cmd = "{} --graph {} --prefix output.cluster {}".format(config.get_powergraph_prog('GossipMap', data.is_directed()), pajek, args).strip()
+            cmd = "{} --graph {} --prefix output.cluster {}".format(config.get_powergraph_prog('GossipMap', data.is_directed()), 
+                                                                    pajek, args).strip()
                         
             self.logger.info("Running " + cmd) 
             

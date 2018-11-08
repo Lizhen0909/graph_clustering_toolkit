@@ -33,8 +33,9 @@ class Scanpp(Clustering):
     def get_meta(self):
         return {'lib':"scanpp (no code)", "name": 'scanpp' }
     
-    def run(self, data, mu=1, epsilon=0):
+    def run(self, data, mu=1, epsilon=0, seed=None):
         params = {'mu':mu, 'epsilon':epsilon}
+        if seed is not None:self.logger.info("seed ignored")        
         if False and (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_edges):
@@ -135,9 +136,10 @@ class AnyScan(Clustering):
     AnySCAN uses ltcmalloc for aiding the memory allocation. 
     '''    
 
-    def run(self, data, algorithm=4, minpts=4, epsilon=0.5, alpha=32768 , beta=32768 , thread=-1):
+    def run(self, data, algorithm=4, minpts=4, epsilon=0.5, alpha=32768 , beta=32768 , thread=-1, seed=None):
         params = locals()
         del(params['self']);del(params['data'])
+        if seed is not None:self.logger.info("seed ignored")        
         if thread < 1: 
             thread = multiprocessing.cpu_count()
             params['thread'] = thread 
@@ -214,9 +216,10 @@ class pScan(Clustering):
     def get_meta(self):
         return {'lib':"pScan (has code)", "name": 'pScan or ppScan or ppScanSSE' }
 
-    def run(self, data, mu=1, epsilon=0, prog='pScan'):
+    def run(self, data, mu=1, epsilon=0, prog='pScan',seed=None):
         assert prog in ['pScan', 'ppScan', 'ppScanSSE']
-        
+        if seed is not None:self.logger.info("seed ignored")
+                
         params = {'mu':mu, 'epsilon':epsilon, 'prog':prog}
         if False and (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")

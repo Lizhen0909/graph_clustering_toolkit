@@ -242,7 +242,7 @@ class lso_cluster(Clustering):
             del argparams['loss']
 
         if not utils.file_exists(data.file_edges):
-            data.to_edgelist()()
+            data.to_edgelist()
         
         with utils.TempDir() as tmp_dir:
             pajek = utils.link_file(data.file_edges, dest_dir=tmp_dir, destname='edges.txt')

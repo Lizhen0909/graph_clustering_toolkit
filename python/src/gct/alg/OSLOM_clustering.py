@@ -306,9 +306,10 @@ class copra(Clustering):
     def get_meta(self):
         return {'lib':"OSLOM", "name": 'copra' }
     
-    def run(self, data, v=5, v1=None, v2=None, prop=None, repeat=None, mo=None, nosplit=False, extrasimplify=False, q=False):
+    def run(self, data, v=5, v1=None, v2=None, prop=None, repeat=None, mo=None, nosplit=False, extrasimplify=False, q=False,seed=None):
         assert (v1 is None and v2 is None) or (v1 is not  None and v2 is not None)
         params = locals();del params['self'];del params['data']
+        if seed is not None:self.logger.info("seed ignored")        
         if (data.is_directed() or data.is_weighted()) and False:
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_edges):

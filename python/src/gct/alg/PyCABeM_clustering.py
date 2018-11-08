@@ -44,10 +44,12 @@ class HiReCS(Clustering):
         return {'lib':"HiReCS", "name": 'HiReCS' }
 
 
-    def run(self, data, f=False, m=None):
+    def run(self, data, f=False, m=None,seed=None):
         
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
+        
         params = {}
         params['f'] = f
         params['m'] = m 
@@ -119,9 +121,10 @@ class LabelRank(Clustering):
     def get_meta(self):
         return {'lib':"GANXiS", "name": 'LabelRank' }
 
-    def run(self, data, cutoff_r=0.01, inflation_in=2, NBDisimilarity_q=0.3):
+    def run(self, data, cutoff_r=0.01, inflation_in=2, NBDisimilarity_q=0.3, seed=None):
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")        
         params = locals();del params['self'];del params['data']
 
         if not utils.file_exists(data.file_edges):

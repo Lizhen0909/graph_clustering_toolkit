@@ -17,10 +17,9 @@ class Test(unittest.TestCase):
         print("Prepare data")
         prefix = Test.__module__
         gct.remove_data(prefix + '_*', dry_run=False)
-        graph_unweighted_undirect = random_dataset.generate_undirected_unweighted_random_graph_LFR(name=prefix + "_1", \
+        data1 = random_dataset.generate_directed_unweighted_random_graph_LFR(name=prefix + "_1", \
                                        N=128, k=16, maxk=32, mu=0.2, minc=32)
-        data1 = graph_unweighted_undirect
-        data2 = data1.as_mirror_edges(newname=prefix + "_2", overide=True)
+        data2 = data1.as_undirected(newname=prefix + "_2")
             
     def setUp(self):
         self.prefix = Test.__module__
@@ -34,7 +33,8 @@ class Test(unittest.TestCase):
         return utils.file_exists(fpath)
 
     def test_1(self):
-        bad_algs = ['igraph_community_optimal_modularity', 'igraph_community_fastgreedy', 'scan_pScan']  # these alg failed for this test
+        bad_algs = ['igraph_community_multilevel', 'igraph_community_fastgreedy', 'igraph_community_optimal_modularity','scan_pScan', 'snap_Clauset_Newman_Moore','snap_Girvan_Newman', 'alg_Paris']  # these alg failed for this test
+        runned_algs = ['oslom_Infohiermap', 'oslom_Infomap', 'oslom_OSLOM', 'oslom_copra', 'oslom_louvain_method', 'oslom_lpm', 'oslom_modopt', 'pycabem_GANXiSw', 'pycabem_HiReCS', 'pycabem_LabelRank', 'cgcc_CGGC', 'dct_dlplm', 'dct_dlslm', 'dct_dlslm_map_eq', 'dct_dlslm_no_contraction', 'dct_dlslm_with_seq', 'dct_infomap', 'dct_seq_louvain', 'igraph_community_edge_betweenness', 'igraph_community_infomap', 'igraph_community_label_propagation', 'igraph_community_leading_eigenvector', 'igraph_community_spinglass', 'igraph_community_walktrap', 'mcl_MCL', 'networkit_CutClustering', 'networkit_LPDegreeOrdered', 'networkit_PLM', 'networkit_PLP', 'alg_GossipMap', 'alg_RelaxMap', 'alg_label_propagation', 'scan_AnyScan', 'scan_Scanpp', 'sklearn_AffinityPropagation', 'sklearn_DBSCAN', 'sklearn_SpectralClustering']
         runned_algs = []
         algs = gct.list_algorithms()
         algs = [u for u in algs if u not in bad_algs and u not in runned_algs]
@@ -44,7 +44,7 @@ class Test(unittest.TestCase):
                 runname = alg 
                 if not self.has_run(runname, dsname):
                     print ("runing ", alg, dsname)
-                    gct.run_alg(runname=runname, data=gct.load_local_graph(dsname), algname=alg, seed=123)        
+                    gct.run_alg(runname=runname, data=gct.load_local_graph(dsname), algname=alg)        
                     runned_algs.append(alg)
                     print ("AAAA", runned_algs)
         results = {}

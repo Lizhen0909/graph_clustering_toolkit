@@ -864,7 +864,7 @@ def alg_label_propagation(name, graph, **kwargs):
     Gonzalez, Joseph E., et al. "Powergraph: distributed graph-parallel computation on natural graphs." OSDI. Vol. 12. No. 1. 2012.
     
     '''
-    obj = gct.alg.powergraph_clustering.label_propagation(name)
+    obj = gct.alg.powergraph_clustering.pg_label_propagation(name)
     return obj.run(graph, **kwargs)
 
 

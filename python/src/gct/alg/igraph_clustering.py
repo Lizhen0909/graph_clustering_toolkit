@@ -28,9 +28,10 @@ class community_fastgreedy(Clustering):
     def get_meta(self):
         return {'lib':"igraph", "name": 'community_fastgreedy' }
     
-    def run(self, data):
-        if (data.is_directed())  :
+    def run(self, data,seed=None):
+        if False and (data.is_directed())  :
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
         g = convert.to_igraph(data)
         timecost, ret = utils.timeit(lambda: g.community_fastgreedy(weights='weight' if data.is_weighted() else None))
         vc = ret.as_clustering()
@@ -73,9 +74,10 @@ class community_infomap(Clustering):
     def get_meta(self):
         return {'lib':"igraph", "name": 'community_infomap' }
     
-    def run(self, data):
+    def run(self, data, seed=None):
         if (data.is_directed()) and False:
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")        
         g = convert.to_igraph(data)
         timecost, ret = utils.timeit(lambda: g.community_infomap(edge_weights='weight' if data.is_weighted() else None))
         vc = ret
@@ -118,9 +120,10 @@ class community_leading_eigenvector(Clustering):
     def get_meta(self):
         return {'lib':"igraph", "name": 'community_leading_eigenvector' }
     
-    def run(self, data):
-        if (data.is_directed()):
+    def run(self, data,seed=None):
+        if False and (data.is_directed()):
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")        
         g = convert.to_igraph(data)
         timecost, ret = utils.timeit(lambda: g.community_leading_eigenvector(weights='weight' if data.is_weighted() else None))
         vc = ret
@@ -163,9 +166,10 @@ class community_label_propagation(Clustering):
     def get_meta(self):
         return {'lib':"igraph", "name": 'community_label_propagation' }
     
-    def run(self, data):
+    def run(self, data, seed=None):
         if (data.is_directed()) and False:
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
         g = convert.to_igraph(data)
         timecost, ret = utils.timeit(lambda: g.community_label_propagation(weights='weight' if data.is_weighted() else None))
         vc = ret
@@ -207,9 +211,10 @@ class community_multilevel(Clustering):
     def get_meta(self):
         return {'lib':"igraph", "name": 'community_multilevel' }
     
-    def run(self, data):
-        if (data.is_directed()):
+    def run(self, data, seed=None):
+        if False and (data.is_directed()):
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
         g = convert.to_igraph(data)
         timecost, ret = utils.timeit(lambda: g.community_multilevel(weights='weight' if data.is_weighted() else None))
         vc = ret
@@ -252,9 +257,10 @@ class community_optimal_modularity(Clustering):
     def get_meta(self):
         return {'lib':"igraph", "name": 'community_optimal_modularity' }
     
-    def run(self, data):
+    def run(self, data, seed=None):
         if (data.is_directed()) and False:
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
         g = convert.to_igraph(data)
         timecost, ret = utils.timeit(lambda: g.community_optimal_modularity(weights='weight' if data.is_weighted() else None))
         vc = ret
@@ -297,9 +303,10 @@ class community_edge_betweenness(Clustering):
     def get_meta(self):
         return {'lib':"igraph", "name": 'community_edge_betweenness' }
     
-    def run(self, data):
+    def run(self, data, seed=None):
         if (data.is_directed()) and False:
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
         g = convert.to_igraph(data)
         timecost, ret = utils.timeit(lambda: g.community_edge_betweenness(weights='weight' if data.is_weighted() else None))
         vc = ret.as_clustering()
@@ -341,9 +348,10 @@ class community_spinglass(Clustering):
     def get_meta(self):
         return {'lib':"igraph", "name": 'community_spinglass' }
     
-    def run(self, data):
+    def run(self, data,seed=None):
         if (data.is_directed()) and False:
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
         g = convert.to_igraph(data)
         timecost, ret = utils.timeit(lambda: g.community_spinglass(weights='weight' if data.is_weighted() else None))
         vc = ret 
@@ -385,9 +393,10 @@ class community_walktrap(Clustering):
     def get_meta(self):
         return {'lib':"igraph", "name": 'community_walktrap' }
     
-    def run(self, data):
+    def run(self, data, seed=None):
         if (data.is_directed()) and False:
             raise Exception("only undirected is supported")
+        if seed is not None:self.logger.info("seed ignored")
         g = convert.to_igraph(data)
         timecost, ret = utils.timeit(lambda: g.community_walktrap(weights='weight' if data.is_weighted() else None))
         vc = ret.as_clustering()

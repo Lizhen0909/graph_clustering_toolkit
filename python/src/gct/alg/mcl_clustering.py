@@ -28,10 +28,15 @@ class MCL(Clustering):
         return {'lib':"mcl", "name": 'mcl' }
 
     def run(self, data, **kwargs):
-        if (data.is_directed()):
+        if False and (data.is_directed()):
             raise Exception("only undirected is supported")
         
         params = dict(kwargs)
+        if "seed" in params:
+            if params['seed'] is not None:
+                self.logger.info("seed ignored")
+            del params['seed']
+            
         #params['abc'] = '' 
         params['o'] = 'output'
         params = {u:v for u, v in params.items() if v is not None }

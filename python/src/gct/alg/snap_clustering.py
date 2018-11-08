@@ -30,9 +30,10 @@ class Clauset_Newman_Moore(Clustering):
     def get_meta(self):
         return {'lib':"snap", "name": 'Clauset_Newman_Moore' }
     
-    def run(self, data):
+    def run(self, data,seed =None):
         if False and (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")
+        if seed is not None:self.logger.info("seed ignored")        
         UGraph = convert.to_snap(data)
         CmtyV = snap.TCnComV()
         timecost, modularity = utils.timeit(lambda: snap.CommunityCNM(UGraph, CmtyV))
@@ -85,9 +86,10 @@ class Girvan_Newman(Clustering):
     def get_meta(self):
         return {'lib':"snap", "name": 'Girvan_Newman' }
     
-    def run(self, data):
-#         if (data.is_directed() or data.is_weighted()):
-#             raise Exception("only undirected and unweighted graph is supported")
+    def run(self, data, seed=None):
+        if False and (data.is_directed() or data.is_weighted()):
+            raise Exception("only undirected and unweighted graph is supported")
+        if seed is not None:self.logger.info("seed ignored")
         UGraph = convert.to_snap(data)
         CmtyV = snap.TCnComV()
         timecost, modularity = utils.timeit(lambda: snap.CommunityGirvanNewman(UGraph, CmtyV))

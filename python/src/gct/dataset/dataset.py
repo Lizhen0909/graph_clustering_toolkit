@@ -434,7 +434,7 @@ class Dataset(object):
         return filepath 
 
     def to_anyscan(self, filepath=None):
-        if self.is_directed():
+        if False and self.is_directed():
             raise Exception("directed graph not supported")
         if (filepath == None):
             filepath = self.file_anyscan

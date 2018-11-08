@@ -49,11 +49,12 @@ class AffinityPropagation(Clustering):
     def get_meta(self):
         return {'lib':"sklearn", "name": 'AffinityPropagation' }
 
-    def run(self, data, damping=None, max_iter=None, convergence=None, verbose=None):
+    def run(self, data, damping=None, max_iter=None, convergence=None, verbose=None, seed=None):
         
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
-        params = locals();del params['self'];del params['data']
+        if seed is not None:self.logger.info("seed ignored")        
+        params = locals();del params['self'];del params['data'];del params['seed']
         params = {u:v for u, v in params.items() if v is not None}
         params['affinity'] = 'precomputed'
         params['copy'] = False
@@ -152,6 +153,9 @@ class SpectralClustering(Clustering):
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
         params = dict(kargs)
+        if "seed" in params:
+            if  params['seed'] is not None:self.logger.info("seed ignored")
+            del params['seed']
         params['affinity'] = 'precomputed'
         if  False and ('eigen_solver' not in params or params['eigen_solver'] is None):
             if utils.check_module_available('pyamg'):
@@ -229,7 +233,10 @@ class DBSCAN(Clustering):
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
         params = dict(kargs)
-        
+        if 'seed' in params:
+            if params['seed'] is not None:  self.logger.info("seed ignored")
+            del params['seed']
+
         params['metric'] = 'precomputed'
         A = convert.to_coo_adjacency_matrix(data, simalarity=False, distance_fun='exp_minus')
         params['eps'] = float(np.median(A.data))
