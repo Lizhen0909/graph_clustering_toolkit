@@ -9,6 +9,7 @@ import sys
 import glob
 from gct.alg.clustering import Result
 import traceback
+from gct.utils import TempDir
 
 
 class Cluster(object):
@@ -168,6 +169,13 @@ class Dataset(object):
             self.file_snap = config.get_data_file_path(self.name, 'snap.bin')
             self.file_mcl_mci = config.get_data_file_path(self.name, 'mcl.mci')
             self.file_mcl_tab = config.get_data_file_path(self.name, 'mcl.tab')
+            self.file_topgc = config.get_data_file_path(self.name, 'topgc.txt')
+            self.file_mirror_edges = config.get_data_file_path(self.name, 'edges_mirror.txt')
+            
+            if self.is_weighted():
+                self.file_unweighted_edges = self.file_edges
+            else:
+                self.file_unweighted_edges = config.get_data_file_path(self.name, 'unweighted_edges.txt')
                     
         self.set_ground_truth(groundtruthObj)
         self.set_edges(edgesObj)
@@ -478,6 +486,69 @@ class Dataset(object):
             raise Exception("run command failed: " + str(status))
         return filepath 
 
+    def to_unweighted_fromat(self, filepath=None):
+        if (filepath == None):
+            filepath = self.file_unweighted_edges
+            if utils.file_exists(filepath):
+                return filepath         
+        edges = self.get_edges()[['src', 'dest']]
+        edges.to_csv(filepath, header=None, index=None, sep=" ")
+        return filepath 
+
+    def to_topgc_fromat_backup(self, filepath=None):
+        if (filepath == None):
+            filepath = self.file_topgc
+            if utils.file_exists(filepath):
+                return filepath         
+        if not utils.file_exists(self.file_mirror_edges): self.to_mirror_edges_format()
+        with TempDir() as tmp_dir:
+            cmd = "cat {} | {} >  {} || rm {}".format(self.file_mirror_edges, config.get_cdc_prog('mkidx'),
+                                                  filepath, filepath )
+            self.logger.info("Running " + cmd)
+            with open(os.path.join(tmp_dir, "tmpcmd"), 'wt') as f :
+                f.write(cmd)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait("bash -x tmpcmd", tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+        assert utils.file_exists(filepath)
+        return filepath 
+
+    def to_topgc_fromat(self, filepath=None):
+        if (filepath == None):
+            filepath = self.file_topgc
+            if utils.file_exists(filepath):
+                return filepath         
+        if not utils.file_exists(self.file_edges): self.to_edgelist()
+        with TempDir() as tmp_dir:
+            cmd = "cat {}|sort -k1,1 -k2,2 -n | {} >  {} || rm {}".format(self.file_edges, config.get_cdc_prog('mkidx'),
+                                                  filepath, filepath )
+            self.logger.info("Running " + cmd)
+            with open(os.path.join(tmp_dir, "tmpcmd"), 'wt') as f :
+                f.write(cmd)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait("bash -x tmpcmd", tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+        assert utils.file_exists(filepath)
+        return filepath 
+
+    def to_mirror_edges_format(self, filepath=None):
+        if (filepath == None):
+            filepath = self.file_mirror_edges
+            if utils.file_exists(filepath):
+                return filepath         
+        edges1=self.get_edges()
+        edges2=edges1.copy()
+        edges2['src']=edges1['dest']
+        edges2['dest']=edges1['src']
+        edges2=edges2[edges1.columns]
+        edges=pd.concat([edges1,edges2]).drop_duplicates().sort_values(['src','dest'])
+        edges.to_csv(filepath, header=None, index=None, sep=" ")
+        return filepath 
+
+        
+    ##### to third party graph 
     def to_graph_igraph(self):
         from gct.dataset import convert 
         return convert.to_igraph(self)
