@@ -13,6 +13,7 @@ import time
 import sys
 import subprocess
 import importlib
+from Cython.Build.Cythonize import multiprocessing
 
 
 def file_exists(file_path):
@@ -31,6 +32,7 @@ def remove_if_file_exit(fname, is_dir=False):
         else:
             os.remove(fname)
 
+
 def set_if_not_exists(self, name, fun):
     if hasattr(self, name):
         return getattr(self, name)
@@ -39,6 +41,7 @@ def set_if_not_exists(self, name, fun):
         value = fun()
         setattr(self, name, value)
         return value 
+
 
 def abspath(fpath):
     return os.path.abspath(fpath)
@@ -103,7 +106,7 @@ def shell_run_and_wait(command, working_dir=None, env=None):
     command = command.split(" ")
     import subprocess
     
-    #process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    # process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     process = subprocess.Popen(command, env=env)
     process.wait()
     if working_dir is not None:
@@ -146,7 +149,7 @@ def link_file(path, dest_dir=None, destname=None):
     if not os.path.exists(path):
         raise Exception("source path not found: " + path)
     if dest_dir is None:
-        destpath=destname
+        destpath = destname
     else: 
         if destname is None :
             destname = path.split("/")[-1]
@@ -165,9 +168,10 @@ def try_import(module_name, module_path):
         return importlib.import_module(module_name)
     except: 
         if not module_path in sys.path:
-            sys.path.insert(0,module_path)
-            #print(module_name,module_path)
+            sys.path.insert(0, module_path)
+            # print(module_name,module_path)
         return importlib.import_module(module_name)
+
 
 def check_module_available(module_name):
     try:
@@ -175,3 +179,13 @@ def check_module_available(module_name):
         return True 
     except ImportError: 
         return False
+
+    
+def get_num_thread(nthread=None):
+    if nthread is not None and nthread > 0: return nthread
+    if 'OMP_NUM_THREADS' in os.environ:
+        nthread = int(os.environ['OMP_NUM_THREADS'])
+    if nthread is None  or nthread < 1:
+        nthread = max(1, multiprocessing.cpu_count() - 1)
+    return nthread  
+    

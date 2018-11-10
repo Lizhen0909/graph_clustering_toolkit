@@ -39,7 +39,7 @@ class Test(unittest.TestCase):
         for data in  self.graphs: 
             alg = pg_label_propagation()
             print(sys._getframe().f_code.co_name) 
-            print (alg.run(data).get_result())
+            print (alg.run(data,execution='sync',ncpus=4).get_result())
             print (clustering.load_result(data.name, alg.name))
  
     def test_GossipMap(self):

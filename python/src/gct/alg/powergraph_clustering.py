@@ -56,6 +56,10 @@ class pg_label_propagation(Clustering):
         params = {u:v for u, v in params.items() if v is not None}
         if (data.is_directed() or data.is_weighted()) and False:
             raise Exception("only undirected and unweighted graph is supported")
+        ncpus=utils.get_num_thread(ncpus)
+        params['ncpus']=ncpus        
+        params['weighted'] =  data.is_weighted()*1
+        params['directed'] =  data.is_directed()*1
         if not utils.file_exists(data.file_edges):
             data.to_edgelist()
         
@@ -149,11 +153,13 @@ class GossipMap(Clustering):
     def get_meta(self):
         return {'lib':"powergraph", "name": 'GossipMap' }
     
-    def run(self, data, thresh=None, tol=None, maxiter=None, maxspiter=None, trials=None, interval=None, outmode=None, ncpus=None, scheduler=None, engine_opts=None, graph_opts=None, scheduler_opts=None, seed=None):
+    def run(self, data, thresh=None, tol=None, maxiter=None, maxspiter=None, trials=None, interval=None, outmode=None, 
+            ncpus=None, scheduler=None, engine_opts=None, graph_opts=None, scheduler_opts=None, seed=None):
         if seed is not None:self.logger.info("seed ignored")
         params = locals();del params['self'];del params['data']; del params['seed']
         params = {u:v for u, v in params.items() if v is not None}
-        
+        ncpus=utils.get_num_thread(ncpus)
+        params['ncpus']=ncpus
         if (data.is_directed() or data.is_weighted()) and False:
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_edges):
