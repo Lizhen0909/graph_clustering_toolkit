@@ -1034,7 +1034,6 @@ class FastCpm(Clustering):
         
         clusters = {}
         with utils.TempDir() as tmp_dir:
-            tmp_dir="/tmp/abc"
             utils.link_file(data.file_edges, tmp_dir, "edges.txt")
             
             cmd = ["{}".format(config.get_cdc_prog('2012-fast-cpm', data.is_directed))]
@@ -1071,3 +1070,279 @@ class FastCpm(Clustering):
         self.result = result 
         return self 
 
+
+class _MSCDBase(Clustering):
+    '''
+     Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    mscd -g graph -c cext -a alg params [-d] [-w] [-p expar] [-v level] [-h]
+    -a: community detection algorithms followed by scale parameter values (e.g.[1,2], [1:1:10])
+    -p: optional extra parameters for the given algorithm
+    -v: verbose level (default=0, max=2)
+    
+    Reference 
+    ------------------------
+    Le Martelot, Erwan, and Chris Hankin. 
+    "Fast multi-scale detection of relevant communities in large-scale networks." 
+    The Computer Journal 56.9 (2013): 1136-1150.
+    '''
+
+    def __init__(self, name="MSCD", prog=""):
+        assert prog in {'AFG', 'HSLSW', 'LFK', 'LFK2', 'RB', 'RN', 'SO', 'SOM'}
+        self.prog=prog
+        super(_MSCDBase, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"cdc", "name": 'MSCD-'+self.prog }
+
+    def run(self, data,  scale_param="[1.0,2]", extra_param=None, verbose=0,   seed=None):
+        
+        if False and (data.is_directed()):
+            raise Exception("only undirected is supported")
+        
+        if seed  is not None: self.logger.info("seed ignored")
+        params = {'a': self.prog, 'p': extra_param,'v':verbose, 'scale':scale_param}
+        
+        if not utils.file_exists(data.file_edges):
+            data.to_edgelist()
+        
+        clusters = {}
+        with utils.TempDir() as tmp_dir:
+            utils.link_file(data.file_edges, tmp_dir, "graph.edges")
+            
+            cmd = ["{}".format(config.get_cdc_prog('2013-mscd', data.is_directed))]
+            cmd.append("-g {}".format("graph.edges"))
+            if data.is_directed(): cmd.append("-d")
+            if extra_param: cmd.append("-p {}".format(extra_param))
+            cmd.append("-w")
+            if verbose: cmd.append("-v {}".format(verbose))
+            cmd.append("-a {} {}".format(self.prog, scale_param))
+            cmd = " ".join(cmd)
+            self.logger.info("Running " + cmd)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            outputfiles = glob.glob(os.path.join(tmp_dir, "graph_*.coms"))
+            for outputfile in outputfiles:
+                k=float(outputfile.split('/')[-1].split('_')[-1].split('.')[0])
+                                          
+                this_cluster=collections.defaultdict(set)
+                with open (os.path.join(tmp_dir, outputfile), "r") as output:
+                    lines = [u.strip() for u in output.readlines()]
+                for i, line in enumerate(lines):
+                    if line:
+                        for u in line.split(" "):
+                            this_cluster[i].add(int(u))
+                            
+                this_cluster={u:list(v) for u,v in this_cluster.items()}
+                self.logger.info("Made %d clusters with k=%d" % (len(this_cluster), k))
+                
+                clusters[k]=this_cluster
+            
+        self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['multiclusters'] = True
+        result['runname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+
+        save_result(result)
+        self.result = result 
+        return self 
+
+class MSCD_RB(_MSCDBase):
+    '''
+     (Reichardt and Bornholdt’s) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    Reference 
+    ------------------------
+    Reichardt, Jörg, and Stefan Bornholdt. "Statistical mechanics of community detection." Physical Review E 74.1 (2006): 016110.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    '''
+
+    def __init__(self, name="MSCD_RB"):
+        super(MSCD_RB, self).__init__(name, prog="RB") 
+    
+class MSCD_HSLSW(_MSCDBase):
+    '''
+     (Huang et al.’s) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+
+    The optional extra parameters must be given in order as a list with ',' between values and no space. The parameters are:
+    - for HSLSW:
+      1. Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)
+      
+    Reference 
+    ------------------------
+    Huang, Jianbin, et al. "Towards online multiresolution community detection in large-scale networks." PloS one 6.8 (2011): e23829.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    '''
+
+    def __init__(self, name="MSCD_HSLSW"):
+        super(MSCD_HSLSW, self).__init__(name, prog="HSLSW") 
+
+
+class MSCD_LFK(_MSCDBase):
+    '''
+     (Lancichinetti et al.’s) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    The optional extra parameters must be given in order as a list with ',' between values and no space. The parameters are:
+    - for LFK:
+      1. Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)
+      2. When growing a community, maximum number of neighbours from the sorted list of candidate nodes that can fail to join before the failures makes the growth stop. (default: infinite / value 0)
+      3. When growing a community, maximum number of iterations through all nodes during which nodes can be removed. (default: infinite / value 0)
+      Ex: To merge communities with 30% of overlapping nodes
+          mscd -g network.edges -w -c coms -p 0.3 -a LFK [1:-0.01:0]
+
+    Reference 
+    ------------------------
+    Lancichinetti, Andrea, Santo Fortunato, and János Kertész. "Detecting the overlapping and hierarchical community structure in complex networks." New Journal of Physics 11.3 (2009): 033015.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    '''
+
+    def __init__(self, name="MSCD_LFK"):
+        super(MSCD_LFK, self).__init__(name, prog="LFK") 
+
+class MSCD_LFK2(_MSCDBase):
+    '''
+     ( Lancichinetti et al.’s multi-threaded ) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    The optional extra parameters must be given in order as a list with ',' between values and no space. The parameters are:
+    - for LFK2:
+      1. Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)
+      2. Maximum number of additional threads the program can use (default: number of cores available / value 0)
+      3. Maximum number of seeds to start growing communities. (default: infinite / value 0)
+      4. Recursive level of seed neighbours not to use as seeds must be 0, 1 or 2. (default 1) (i.e. with 1, all the neighbours of a seed cannot be added as a seed)
+      
+    Reference 
+    ------------------------
+    Lancichinetti, Andrea, Santo Fortunato, and János Kertész. "Detecting the overlapping and hierarchical community structure in complex networks." New Journal of Physics 11.3 (2009): 033015.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    '''
+
+    def __init__(self, name="MSCD_LFK2"):
+        super(MSCD_LFK2, self).__init__(name, prog="LFK2") 
+
+
+class MSCD_AFG(_MSCDBase):
+    '''
+     (Arenas et al.’s) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    Reference 
+    ------------------------
+    Arenas, Alex, Alberto Fernandez, and Sergio Gomez. "Analysis of the structure of complex networks at different resolution levels." New Journal of Physics 10.5 (2008): 053039.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    '''
+
+    def __init__(self, name="MSCD_AFG"):
+        super(MSCD_AFG, self).__init__(name, prog="AFG") 
+        
+
+class MSCD_RN(_MSCDBase):
+    '''
+     (Ronhovde and Nussinov’s) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    Reference 
+    ------------------------
+    Ronhovde, Peter, and Zohar Nussinov. "Local resolution-limit-free Potts model for community detection." Physical Review E 81.4 (2010): 046114.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    '''
+
+    def __init__(self, name="MSCD_RN"):
+        super(MSCD_RN, self).__init__(name, prog="RN")         
+        
+class MSCD_SO(_MSCDBase):
+    '''
+      stability optimisation (Fast Multi-Scale Community Detection Tools)
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    The optional extra parameters must be given in order as a list with ',' between values and no space. The parameters are:
+    - for SO:
+      1. edge threshold (for walks of length>1 computed edges below this value are discarded) (default: 0)
+      2. memory saving mode (for walks of length>1 the number of networks kept in memory) (default: 0, i.e. off)
+        Ex: mscd -g network.edges -w -c coms -p 0.01,1 -a SO [0:0.1:5]
+      
+    Reference 
+    ------------------------
+    Le Martelot, Erwan, and Chris Hankin. "Multi-scale community detection using stability optimisation within greedy algorithms." arXiv preprint arXiv:1201.3307 (2012).
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    '''
+
+    def __init__(self, name="MSCD_SO"):
+        super(MSCD_SO, self).__init__(name, prog="SO")         
+                
+class MSCD_SOM(_MSCDBase):
+    '''
+      tability optimisation using matrices  (Fast Multi-Scale Community Detection Tools)
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    The optional extra parameters must be given in order as a list with ',' between values and no space. The parameters are:
+    - for SOM:
+      1. memory saving mode (for walks of length>1 the number of networks kept in memory) (default: 0, i.e. off)
+        Ex: mscd -g network.edges -w -c coms -p 1 -a SOM [0:0.1:5]
+    
+    Reference 
+    ------------------------
+    Le Martelot, Erwan, and Chris Hankin. "Multi-scale community detection using stability optimisation within greedy algorithms." arXiv preprint arXiv:1201.3307 (2012).
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    '''
+
+    def __init__(self, name="MSCD_SOM"):
+        super(MSCD_SOM, self).__init__(name, prog="SOM")    
+        
+        
+        
+                        

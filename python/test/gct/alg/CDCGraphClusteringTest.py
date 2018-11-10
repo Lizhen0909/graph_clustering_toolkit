@@ -9,7 +9,8 @@ from gct.alg import clustering
 import sys
 from gct.alg.cdc_clustering import CliquePercolation, Connected_Iterative_Scan, \
     EAGLE, clique_modularity, CONGA, LinkCommunities, TopGC, GCE, MOSES, ParCPM,\
-    DEMON, HDEMON, FastCpm
+    DEMON, HDEMON, FastCpm, MSCD_RB, MSCD_AFG, MSCD_HSLSW, MSCD_LFK, MSCD_LFK2,\
+    MSCD_RN, MSCD_SO, MSCD_SOM
 
 
 class Test(unittest.TestCase):
@@ -130,14 +131,69 @@ class Test(unittest.TestCase):
                 print (alg.run(data).get_result())
                 print (clustering.load_result(data.name, alg.name))                             
 
-    def test_AAA(self):
+    def test_FastCpm(self):
         for data in  self.graphs: 
             alg = FastCpm()
             print("Testing", sys._getframe().f_code.co_name, data.name)
             print (alg.run(data).get_result())
             print (clustering.load_result(data.name, alg.name))                             
 
-                            
+    def test_MSCD_RB(self):
+        for data in  self.graphs: 
+            alg = MSCD_RB()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data,scale_param="[1.2,2]").get_result())
+            print (clustering.load_result(data.name, alg.name))                             
+
+    def test_MSCD_AFG(self):
+        for data in  self.graphs: 
+            alg = MSCD_AFG()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data,scale_param="[1.2,2]").get_result())
+            print (clustering.load_result(data.name, alg.name))    
+
+    def test_MSCD_HSLSW(self):
+        for data in  self.graphs: 
+            alg = MSCD_HSLSW()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data,scale_param="[1.2,2]").get_result())
+            print (clustering.load_result(data.name, alg.name))    
+
+    def test_MSCD_LFK(self):
+        for data in  self.graphs: 
+            alg = MSCD_LFK()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data,scale_param="[1.2,2]").get_result())
+            print (clustering.load_result(data.name, alg.name))   
+
+    def test_MSCD_LFK2(self):
+        for data in  self.graphs: 
+            alg = MSCD_LFK2()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data,scale_param="[1.2,2]").get_result())
+            print (clustering.load_result(data.name, alg.name))   
+
+    def test_MSCD_RN(self):
+        for data in  self.graphs: 
+            alg = MSCD_RN()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data,scale_param="[1.2,2]").get_result())
+            print (clustering.load_result(data.name, alg.name))   
+
+    def test_MSCD_SO(self):
+        for data in  self.graphs: 
+            alg = MSCD_SO()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data,scale_param="[1.2,2]").get_result())
+            print (clustering.load_result(data.name, alg.name))   
+
+    def test_AAA(self):
+        for data in  self.graphs: 
+            alg = MSCD_SOM()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data,scale_param="[1.2,2]").get_result())
+            print (clustering.load_result(data.name, alg.name))   
+                                        
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']
     unittest.main()
