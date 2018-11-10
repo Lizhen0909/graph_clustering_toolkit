@@ -10,7 +10,8 @@ import glob
 import multiprocessing
 import numpy as np 
 
-prefix='alg'
+prefix = 'alg'
+
 
 class pg_label_propagation(Clustering):
     '''
@@ -49,7 +50,7 @@ class pg_label_propagation(Clustering):
     def get_meta(self):
         return {'lib':"powergraph", "name": 'label_propagation' }
     
-    def run(self, data, execution='async', ncpus=None, scheduler=None, engine_opts=None, graph_opts=None, scheduler_opts=None,seed=None):
+    def run(self, data, execution='async', ncpus=None, scheduler=None, engine_opts=None, graph_opts=None, scheduler_opts=None, seed=None):
         if seed is not None:self.logger.info("seed ignored")        
         params = locals();del params['self'];del params['data'];del params['seed']
         params = {u:v for u, v in params.items() if v is not None}
@@ -152,7 +153,6 @@ class GossipMap(Clustering):
         if seed is not None:self.logger.info("seed ignored")
         params = locals();del params['self'];del params['data']; del params['seed']
         params = {u:v for u, v in params.items() if v is not None}
-
         
         if (data.is_directed() or data.is_weighted()) and False:
             raise Exception("only undirected and unweighted graph is supported")
@@ -164,7 +164,7 @@ class GossipMap(Clustering):
             utils.remove_if_file_exit(pajek)
             os.symlink(data.file_edges, pajek)
             args = " ".join (["--{} {}".format(u, v) for u, v in params.items()])
-            cmd = "{} --graph {} --prefix output.cluster {}".format(config.get_powergraph_prog('GossipMap', data.is_directed()), 
+            cmd = "{} --graph {} --prefix output.cluster {}".format(config.get_powergraph_prog('GossipMap', data.is_directed()),
                                                                     pajek, args).strip()
                         
             self.logger.info("Running " + cmd) 
@@ -177,7 +177,7 @@ class GossipMap(Clustering):
             import pandas as pd 
             df_from_each_file = [pd.read_csv(f, sep="\t", header=None) for f in outputfiles]
             output = pd.concat(df_from_each_file, ignore_index=True)
-            output.columns = ['node', 'cluster','score']
+            output.columns = ['node', 'cluster', 'score']
             
         clusters = output[['cluster', 'node']]
         clusters = clusters.groupby('cluster').apply(lambda u: list(u['node'])).to_dict()
@@ -229,10 +229,10 @@ class RelaxMap(Clustering):
     def run(self, data, seed=None, thread=None, threshold=1e-3, vThresh=0.0, maxIter=10, prior=True):
         if seed is None:
             seed = np.random.randint(999999)
-        if thread is None or thread < 1:
-            thread = multiprocessing.cpu_count()
         params = locals();del params['self'];del params['data']
-        params = {u:v for u, v in params.items() if v is not None}
+        params = {u:v for u, v in params.items() if v is not None}                    
+        thread = utils.get_num_thread(thread)
+        params['thread'] = thread 
         
         if (data.is_directed() or data.is_weighted()) and False:
             raise Exception("only undirected and unweighted graph is supported")
@@ -253,11 +253,11 @@ class RelaxMap(Clustering):
             if status != 0:
                 raise Exception("Run command with error status code {}".format(status))
         
-            outputfile= os.path.join(tmp_dir , "edges.tree")
+            outputfile = os.path.join(tmp_dir , "edges.tree")
             import pandas as pd 
             output = pd.read_csv(outputfile, sep=" ", header=None, skiprows=1)
-            output['node']=output.loc[:,2].astype(np.int)
-            output['cluster']=output.loc[:,0].map(lambda u: u.split(':')[0]).astype(np.int)
+            output['node'] = output.loc[:, 2].astype(np.int)
+            output['cluster'] = output.loc[:, 0].map(lambda u: u.split(':')[0]).astype(np.int)
             
         clusters = output[['cluster', 'node']]
         clusters = clusters.groupby('cluster').apply(lambda u: list(u['node'])).to_dict()

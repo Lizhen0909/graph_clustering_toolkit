@@ -128,9 +128,8 @@ class _AnyScan(Clustering):
         params = locals()
         del(params['self']);del(params['data'])
         if seed is not None:self.logger.info("seed ignored")        
-        if thread < 1: 
-            thread = multiprocessing.cpu_count()
-            params['thread'] = thread 
+        thread = utils.get_num_thread(thread)
+        params['thread'] = thread 
 
         if False and (data.is_directed() or data.is_weighted()):
             raise Exception("only undirected and unweighted graph is supported")

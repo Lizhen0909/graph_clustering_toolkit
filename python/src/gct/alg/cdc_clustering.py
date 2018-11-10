@@ -772,7 +772,7 @@ class ParCPM(Clustering):
             raise Exception("only undirected is supported")
         
         if seed  is not None: self.logger.info("seed ignored")
-        if n_thread is None or n_thread < 1: n_thread = max(1, multiprocessing.cpu_count() - 1)
+        n_thread = utils.get_num_thread(n_thread )
         params = {'n_thread':n_thread, 'W':W, 'poc':poc }
         
         if not utils.file_exists(data.file_edges):
