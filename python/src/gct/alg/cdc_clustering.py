@@ -6,9 +6,12 @@ Created on Oct 27, 2018
 from gct.alg.clustering import Clustering, save_result
 from gct import utils, config
 import os
-import subprocess
+import numpy as np
+import pandas as pd  
 import multiprocessing
 import numbers
+import glob
+import collections
 
 prefix = 'cdc'
 
@@ -446,12 +449,12 @@ class LinkCommunities(Clustering):
                 if status != 0: 
                     raise Exception("Run command with error status code {}".format(status))
                                                 
-                with open (os.path.join(tmp_dir,outputfile), "r") as output:
+                with open (os.path.join(tmp_dir, outputfile), "r") as output:
                     lines = [u.strip() for u in output.readlines()]
                 this_clusters = {}
                 for i, line in enumerate(lines):
                     if line:
-                        this_clusters[i] = list(set([int(u) for u in line.replace(","," ").split(" ")]))
+                        this_clusters[i] = list(set([int(u) for u in line.replace(",", " ").split(" ")]))
                 self.logger.info("Made %d clusters in %f seconds" % (len(this_clusters), timecost))
                                     
                 clusters[t] = this_clusters
@@ -533,11 +536,11 @@ class TopGC(Clustering):
     def get_meta(self):
         return {'lib':"cdc", "name": 'TopGC' }
 
-    def run(self, data,  seed=None, **kwargs):
+    def run(self, data, seed=None, **kwargs):
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
-        params=dict(kwargs)
-        params={u:v for u,v in params.items() if v is not None}
+        params = dict(kwargs)
+        params = {u:v for u, v in params.items() if v is not None}
         if seed  is not None: self.logger.info("seed ignored")
         
         if not utils.file_exists(data.file_topgc):
@@ -552,8 +555,8 @@ class TopGC(Clustering):
             cmd.append("-i {}".format("edges.topgc"))
             if data.is_directed(): cmd.append("-d")
             for u, v in params.items():
-                cmd.append("-{} {}".format(u,v))
-            cmd=" ".join(cmd)
+                cmd.append("-{} {}".format(u, v))
+            cmd = " ".join(cmd)
             self.logger.info("Running " + cmd)
             
             timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
@@ -563,13 +566,12 @@ class TopGC(Clustering):
             if 1:            
                 outputfile = "edges.topgc.clusters_directed" if data.is_directed() else "edges.topgc.clusters"
                                                 
-                with open (os.path.join(tmp_dir,outputfile), "r") as output:
+                with open (os.path.join(tmp_dir, outputfile), "r") as output:
                     lines = [u.strip() for u in output.readlines()]
                 for i, line in enumerate(lines):
                     if line:
                         clusters[i] = list(set([int(u) for u in line.split("\t")]))
                 self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
-                                    
         
         result = {}
         result['runname'] = self.name
@@ -622,8 +624,8 @@ class GCE(Clustering):
     def run(self, data, minimumCliqueSizeK=4, overlapToDiscardEta=0.6, fitnessExponentAlpha=1.0, CCHthresholdPhi=0.75, seed=None):
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
-        params=dict(locals());del params['self'];del params['data'];del params['seed']
-        params={u:v for u,v in params.items() if v is not None}
+        params = dict(locals());del params['self'];del params['data'];del params['seed']
+        params = {u:v for u, v in params.items() if v is not None}
         if seed  is not None: self.logger.info("seed ignored")
         
         if not utils.file_exists(data.file_edges):
@@ -639,7 +641,7 @@ class GCE(Clustering):
             cmd.append(str(overlapToDiscardEta))
             cmd.append(str(fitnessExponentAlpha))
             cmd.append(str(CCHthresholdPhi))
-            cmd=" ".join(cmd)
+            cmd = " ".join(cmd)
             self.logger.info("Running " + cmd)
             
             timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
@@ -649,13 +651,12 @@ class GCE(Clustering):
             if 1:            
                 outputfile = "cluster.output"
                                                 
-                with open (os.path.join(tmp_dir,outputfile), "r") as output:
+                with open (os.path.join(tmp_dir, outputfile), "r") as output:
                     lines = [u.strip() for u in output.readlines()]
                 for i, line in enumerate(lines):
                     if line:
                         clusters[i] = list(set([int(u) for u in line.split(" ")]))
                 self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
-                                    
         
         result = {}
         result['runname'] = self.name
@@ -668,4 +669,176 @@ class GCE(Clustering):
         save_result(result)
         self.result = result 
         return self 
+
+
+class MOSES(Clustering):
+    '''
+     Model-based Overlapping Seed Expansion
+        
+    Arguments
+    --------------------
    
+    Reference 
+    ------------------------
+    Aaron McDaid, Neil Hurley. Detecting highly overlapping communities with Model-based Overlapping Seed Expansion. ASONAM 2010    
+    '''
+
+    def __init__(self, name="MOSES"):
+        
+        super(MOSES, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"cdc", "name": 'MOSES' }
+
+    def run(self, data, seed=None):
+        if False and (data.is_directed()):
+            raise Exception("only undirected is supported")
+        if seed is None:
+            seed = np.random.randint(999999)
+        params = {'seed':seed}
+        
+        if not utils.file_exists(data.file_edges):
+            data.to_edgelist()
+        
+        clusters = {}
+        with utils.TempDir() as tmp_dir:
+            utils.link_file(data.file_edges, tmp_dir, "edges.txt")
+            
+            cmd = ["{}".format(config.get_cdc_prog('2011-moses', data.is_directed))]
+            cmd.append('edges.txt')
+            cmd.append('cluster.output')
+            if seed: cmd.append('--seed {}'.format(seed))
+            cmd = " ".join(cmd)
+            self.logger.info("Running " + cmd)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+
+            if 1:            
+                outputfile = "cluster.output"
+                                                
+                with open (os.path.join(tmp_dir, outputfile), "r") as output:
+                    lines = [u.strip() for u in output.readlines()]
+                for i, line in enumerate(lines):
+                    if line:
+                        clusters[i] = list(set([int(u) for u in line.split(" ")]))
+                self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['runname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+
+        save_result(result)
+        self.result = result 
+        return self 
+
+
+class ParCPM(Clustering):
+    '''
+     Model-based Overlapping Seed Expansion
+        
+    Arguments
+    --------------------
+     -P <num_threads>  Specifies the number of parallel threads to be executed.
+                       Default value is 8.
+     -W <exp>          Set the sliding window buffer size to 2**<exp> Bytes.
+                       Default value is 30 for a sliding window buffer size of 2**30 B = 1 GB.
+     -p                Specifies to use the proof-of-concept method COSpoc rather than COS.
+                       With this option, parameter -W is ignored.
+                      
+    Reference 
+    ------------------------
+    Gregori, Enrico, Luciano Lenzini, and Simone Mainardi. 
+    "Parallel k-clique community detection on large-scale networks." 
+    IEEE Transactions on Parallel and Distributed Systems 24.8 (2013): 1651-1660.
+        
+    '''
+
+    def __init__(self, name="ParCPM"):
+        
+        super(ParCPM, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"cdc", "name": 'ParCPM' }
+
+    def run(self, data, n_thread=None, W=30, poc=False, seed=None):
+        
+        if False and (data.is_directed()):
+            raise Exception("only undirected is supported")
+        
+        if seed  is not None: self.logger.info("seed ignored")
+        if n_thread is None or n_thread<1: n_thread=max(1,multiprocessing.cpu_count()-1)
+        params = {'n_thread':n_thread, 'W':W, 'poc':poc }
+        
+        if not utils.file_exists(data.file_edges):
+            data.to_edgelist()
+        
+        clusters = {}
+        with utils.TempDir() as tmp_dir:
+            tmp_dir="/tmp/abc"
+            utils.link_file(data.file_edges, tmp_dir, "edges.txt")
+            
+            cmd = ["{}".format(config.get_cdc_prog('max-clique', data.is_directed))]
+            cmd.append('edges.txt')
+            cmd = " ".join(cmd)
+            self.logger.info("Running " + cmd)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            self.logger.info("Take {} seconds for step 1".format(timecost))
+            
+            cmd = ["{}".format(config.get_cdc_prog('2012-ParCPM', data.is_directed))]
+            cmd.append('-P {}'.format(n_thread))
+            if W: cmd.append('-W {}'.format(W))
+            if poc: cmd.append("-p")
+            cmd.append('edges.txt.mcliques')
+            cmd = " ".join(cmd)
+            self.logger.info("Running " + cmd)
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            
+            nodemap=pd.read_csv(os.path.join(tmp_dir, "edges.txt.map"),header=None, sep=" ")
+            nodemap.set_index(1)
+            nodemap=nodemap.loc[:,0].to_dict()
+            outputfiles = glob.glob(os.path.join(tmp_dir, "*_communities.txt"))
+            for outputfile in outputfiles:
+                if outputfile.endswith('k_num_communities.txt'): continue 
+                k=int(outputfile.split('/')[-1].split('_')[0])
+                                          
+                this_cluster=collections.defaultdict(set)
+                with open (os.path.join(tmp_dir, outputfile), "r") as output:
+                    lines = [u.strip() for u in output.readlines()]
+                for i, line in enumerate(lines):
+                    if line:
+                        a,b=line.split(':')
+                        a=int(a)
+                        for u in b.split(" "):
+                            this_cluster[a].add(nodemap[int(u)])
+                            
+                this_cluster={u:list(v) for u,v in this_cluster.items()}
+                self.logger.info("Made %d clusters with k=%d" % (len(this_cluster), k))
+                
+                clusters[k]=this_cluster
+            
+        self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['multiclusters']=True 
+        result['runname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+
+        save_result(result)
+        self.result = result 
+        return self 

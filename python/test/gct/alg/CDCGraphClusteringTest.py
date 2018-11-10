@@ -8,7 +8,7 @@ from gct.dataset import random_dataset
 from gct.alg import clustering
 import sys
 from gct.alg.cdc_clustering import CliquePercolation, Connected_Iterative_Scan, \
-    EAGLE, clique_modularity, CONGA, LinkCommunities, TopGC, GCE
+    EAGLE, clique_modularity, CONGA, LinkCommunities, TopGC, GCE, MOSES, ParCPM
 
 
 class Test(unittest.TestCase):
@@ -88,12 +88,29 @@ class Test(unittest.TestCase):
             print(sys._getframe().f_code.co_name)
             print (alg.run(data).get_result())
             print (clustering.load_result(data.name, alg.name))            
+
     def test_GCEGC(self):
         for data in  self.graphs: 
             alg = GCE()
             print(sys._getframe().f_code.co_name, data.name)
             print (alg.run(data).get_result())
-            print (clustering.load_result(data.name, alg.name))                
+            print (clustering.load_result(data.name, alg.name))
+
+    def test_MOSES(self):
+        for data in  self.graphs: 
+            alg = MOSES()
+            print(sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data).get_result())
+            print (clustering.load_result(data.name, alg.name))    
+            
+    def test_ParCPM(self):
+        for data in  self.graphs: 
+            alg = ParCPM()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data).get_result())
+            print (clustering.load_result(data.name, alg.name))                             
+
+                            
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']
     unittest.main()
