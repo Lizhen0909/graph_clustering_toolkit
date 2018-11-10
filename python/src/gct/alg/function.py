@@ -286,6 +286,567 @@ def pycabem_LabelRank(name, graph, **kwargs):
     return obj.run(graph, **kwargs)
 
 
+def cdc_CONGA(name, graph, **kwargs):
+    '''
+
+    Cluster-Overlap Newman Girvan Algorithm
+        
+    Arguments
+    --------------------
+    Usage: java conga.CONGA <file> [-e] [-g f] [-n nC] [-s] [-cd t] [-f v] [-r]
+                             [-mem] [-m c] [-mo c] [-vad c] [-ov c]
+                             [-dia c] [-h h] [-GN] [-peacock s] [-w eW]
+    Options:
+      -n   Find clustering containing nC clusters. Default: 0.
+      -s   Silent operation: don't display steps in algorithm.
+      -r   Recompute clusters even if clustering file exists.
+      -h   Use region with horizon h. Default: unlimited.
+      -w   Include edge weights in computations. A positive number or 'min', 'mean','max'.  Default: unweighted. 
+
+    Reference 
+    ------------------------
+    Gregory, Steve. "An algorithm to find overlapping community structure in networks." European Conference on Principles of Data Mining and Knowledge Discovery. Springer, Berlin, Heidelberg, 2007.    
+    Gregory, Steve. "A fast algorithm to find overlapping communities in networks." Joint European Conference on Machine Learning and Knowledge Discovery in Databases. Springer, Berlin, Heidelberg, 2008.
+    
+    '''
+    obj = gct.alg.cdc_clustering.CONGA(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_CliquePercolation(name, graph, **kwargs):
+    '''
+
+    The sequential clique percolation algorithm is method for detecting clique percolation communities. 
+    It is an alternative to CFinder: instead of finding maximal cliques in a graph and producing communities 
+    of all the possible clique sizes, the SCP algorithm finds all the cliques of single size and produces 
+    the community structure for all the possible thresholds. 
+    The SCP algorithm should work well even for large sparse networks, 
+    but might have trouble for dense networks and cliques of large size.
+    
+    Arguments
+    --------------------
+    Usage: ./k_clique [inputfile] [options]
+    Options:
+            -k=[clique size] : The size of the clique.
+            -v : Verbose mode.
+    
+    Reference             
+    ------------------------
+    Kumpula, Jussi M., et al. "Sequential algorithm for fast clique percolation." Physical Review E 78.2 (2008): 026109.
+    
+    '''
+    obj = gct.alg.cdc_clustering.CliquePercolation(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_Connected_Iterative_Scan(name, graph, **kwargs):
+    '''
+
+    Connected Iterative Scan Connected Iterative Scan is also known at times as Locally Optimal Sets.
+    
+    Arguments
+    --------------------
+    ./cis -i network -o output -dl delimiter -s seed file -l lambda value
+
+    Reference 
+    ------------------------
+    Kelley, Stephen. The existence and discovery of overlapping communities in large-scale networks. 
+    Diss. Rensselaer Polytechnic Institute, 2009.
+    
+    '''
+    obj = gct.alg.cdc_clustering.Connected_Iterative_Scan(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_DEMON(name, graph, **kwargs):
+    '''
+
+     DEMON
+        
+    Arguments
+    --------------------
+    epsilon  the tolerance required in order to merge communities
+    min_community_size: min_community_size
+    
+    Reference 
+    ------------------------
+    Michele Coscia, Giulio Rossetti, Fosca Giannotti, Dino Pedreschi:
+    DEMON: a local-first discovery method for overlapping communities.
+    KDD 2012:615-623
+    
+    '''
+    obj = gct.alg.cdc_clustering.DEMON(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_EAGLE(name, graph, **kwargs):
+    '''
+
+    EAGLE (agglomerativE hierarchicAl clusterinG based on maximaL cliquE)
+    
+    Arguments
+    --------------------
+    Sinopsi: ./2009-eagle nThreads src <dir|undir> [dest]
+
+    Reference 
+    ------------------------
+    Shen, Huawei, et al. "Detect overlapping and hierarchical community structure in networks." 
+    Physica A: Statistical Mechanics and its Applications 388.8 (2009): 1706-1712.
+    
+    '''
+    obj = gct.alg.cdc_clustering.EAGLE(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_FastCpm(name, graph, **kwargs):
+    '''
+
+     Find maximal cliques, via the Bron Kerbosch algorithm, http://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm. Then perform k-clique percolation on these cliques, for a given value of k.
+        
+    Arguments
+    --------------------
+    k:  k for k-clique
+    
+    Reference 
+    ------------------------
+    Reid, Fergal, Aaron McDaid, and Neil Hurley. 
+    "Percolation computation in complex networks." 
+    Proceedings of the 2012 international conference on advances in social networks analysis and mining (asonam 2012). 
+    IEEE Computer Society, 2012.
+    
+    '''
+    obj = gct.alg.cdc_clustering.FastCpm(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_GCE(name, graph, **kwargs):
+    '''
+
+     Greedy Clique Expansion
+        
+    Arguments
+    --------------------
+    Greedy Clique Expansion Community Finder
+    Community finder. Requires edge list of nodes. Processes graph in undirected, unweighted form. 
+    Edgelist must be two values separated with non digit character.
+    
+    Use with either full (if specify all 5) or default (specify just graph file) parameters:
+    Full parameters are:
+    The name of the file to load
+    The minimum size of cliques to use as seeds. Recommend 4 as default, unless particularly small communities are required (in which case use 3).
+    The minimum value for one seed to overlap with another seed before it is considered sufficiently overlapping to be discarded (eta). 1 is complete overlap. However smaller values may be used to prune seeds more aggressively. A value of 0.6 is recommended.
+    The alpha value to use in the fitness function greedily expanding the seeds. 1.0 is recommended default. Values between .8 and 1.5 may be useful. As the density of edges increases, alpha may need to be increased to stop communities expanding to engulf the whole graph. If this occurs, a warning message advising that a higher value of alpha be used, will be printed.
+    The proportion of nodes (phi) within a core clique that must have already been covered by other cliques, for the clique to be 'sufficiently covered' in the Clique Coveage Heuristic
+    
+    Usage: ./2011-gce graphfilename minimumCliqueSizeK overlapToDiscardEta fitnessExponentAlpha CCHthresholdPhi
+    
+    Usage (with defaults): ./2011-gce graphfilename
+    This will run with the default values of: minimumCliqueSizeK 4, overlapToDiscardEta 0.6, fitnessExponentAlpha 1.0, CCHthresholdPhi .75
+
+    Reference 
+    ------------------------
+    Lee, Conrad, et al. "Detecting highly overlapping community structure by greedy clique expansion." arXiv preprint arXiv:1002.1827 (2010).    
+    
+    '''
+    obj = gct.alg.cdc_clustering.GCE(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_HDEMON(name, graph, **kwargs):
+    '''
+
+     Hierarchical Demon
+        
+    Arguments
+    --------------------
+    epsilon  the tolerance required in order to merge communities
+    min_community_size: min_community_size
+    
+    Reference 
+    ------------------------
+    M. Coscia, G. Rossetti, F. Giannotti, D. Pedreschi:
+    Uncovering Hierarchical and Overlapping Communities with a Local-First Approach, TKDD 2015
+    
+    '''
+    obj = gct.alg.cdc_clustering.HDEMON(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_LinkCommunities(name, graph, **kwargs):
+    '''
+
+    Link communities algorithm
+        
+    Arguments
+    --------------------
+    ./calcJaccards input.pairs output.jaccs
+    ./clusterJaccards network.pairs network.jaccs network.clusters network.cluster_stats threshold
+
+    Reference 
+    ------------------------
+    Yong-Yeol Ahn, James P. Bagrow, and Sune Lehmann, Link communities reveal multiscale complexity in networks, Nature 466, 761 (2010)
+    
+    '''
+    obj = gct.alg.cdc_clustering.LinkCommunities(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_MOSES(name, graph, **kwargs):
+    '''
+
+     Model-based Overlapping Seed Expansion
+        
+    Arguments
+    --------------------
+   
+    Reference 
+    ------------------------
+    Aaron McDaid, Neil Hurley. Detecting highly overlapping communities with Model-based Overlapping Seed Expansion. ASONAM 2010    
+    
+    '''
+    obj = gct.alg.cdc_clustering.MOSES(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_MSCD_AFG(name, graph, **kwargs):
+    '''
+
+     (Arenas et al.’s) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    Reference 
+    ------------------------
+    Arenas, Alex, Alberto Fernandez, and Sergio Gomez. "Analysis of the structure of complex networks at different resolution levels." New Journal of Physics 10.5 (2008): 053039.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    
+    '''
+    obj = gct.alg.cdc_clustering.MSCD_AFG(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_MSCD_HSLSW(name, graph, **kwargs):
+    '''
+
+     (Huang et al.’s) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+
+    The optional extra parameters must be given in order as a list with ',' between values and no space. The parameters are:
+    - for HSLSW:
+      1. Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)
+      
+    Reference 
+    ------------------------
+    Huang, Jianbin, et al. "Towards online multiresolution community detection in large-scale networks." PloS one 6.8 (2011): e23829.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    
+    '''
+    obj = gct.alg.cdc_clustering.MSCD_HSLSW(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_MSCD_LFK(name, graph, **kwargs):
+    '''
+
+     (Lancichinetti et al.’s) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    The optional extra parameters must be given in order as a list with ',' between values and no space. The parameters are:
+    - for LFK:
+      1. Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)
+      2. When growing a community, maximum number of neighbours from the sorted list of candidate nodes that can fail to join before the failures makes the growth stop. (default: infinite / value 0)
+      3. When growing a community, maximum number of iterations through all nodes during which nodes can be removed. (default: infinite / value 0)
+      Ex: To merge communities with 30% of overlapping nodes
+          mscd -g network.edges -w -c coms -p 0.3 -a LFK [1:-0.01:0]
+
+    Reference 
+    ------------------------
+    Lancichinetti, Andrea, Santo Fortunato, and János Kertész. "Detecting the overlapping and hierarchical community structure in complex networks." New Journal of Physics 11.3 (2009): 033015.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    
+    '''
+    obj = gct.alg.cdc_clustering.MSCD_LFK(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_MSCD_LFK2(name, graph, **kwargs):
+    '''
+
+     ( Lancichinetti et al.’s multi-threaded ) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    The optional extra parameters must be given in order as a list with ',' between values and no space. The parameters are:
+    - for LFK2:
+      1. Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)
+      2. Maximum number of additional threads the program can use (default: number of cores available / value 0)
+      3. Maximum number of seeds to start growing communities. (default: infinite / value 0)
+      4. Recursive level of seed neighbours not to use as seeds must be 0, 1 or 2. (default 1) (i.e. with 1, all the neighbours of a seed cannot be added as a seed)
+      
+    Reference 
+    ------------------------
+    Lancichinetti, Andrea, Santo Fortunato, and János Kertész. "Detecting the overlapping and hierarchical community structure in complex networks." New Journal of Physics 11.3 (2009): 033015.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    
+    '''
+    obj = gct.alg.cdc_clustering.MSCD_LFK2(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_MSCD_RB(name, graph, **kwargs):
+    '''
+
+     (Reichardt and Bornholdt’s) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    Reference 
+    ------------------------
+    Reichardt, Jörg, and Stefan Bornholdt. "Statistical mechanics of community detection." Physical Review E 74.1 (2006): 016110.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    
+    '''
+    obj = gct.alg.cdc_clustering.MSCD_RB(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_MSCD_RN(name, graph, **kwargs):
+    '''
+
+     (Ronhovde and Nussinov’s) Fast Multi-Scale Community Detection Tools
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    Reference 
+    ------------------------
+    Ronhovde, Peter, and Zohar Nussinov. "Local resolution-limit-free Potts model for community detection." Physical Review E 81.4 (2010): 046114.
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    
+    '''
+    obj = gct.alg.cdc_clustering.MSCD_RN(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_MSCD_SO(name, graph, **kwargs):
+    '''
+
+      stability optimisation (Fast Multi-Scale Community Detection Tools)
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    The optional extra parameters must be given in order as a list with ',' between values and no space. The parameters are:
+    - for SO:
+      1. edge threshold (for walks of length>1 computed edges below this value are discarded) (default: 0)
+      2. memory saving mode (for walks of length>1 the number of networks kept in memory) (default: 0, i.e. off)
+        Ex: mscd -g network.edges -w -c coms -p 0.01,1 -a SO [0:0.1:5]
+      
+    Reference 
+    ------------------------
+    Le Martelot, Erwan, and Chris Hankin. "Multi-scale community detection using stability optimisation within greedy algorithms." arXiv preprint arXiv:1201.3307 (2012).
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    
+    '''
+    obj = gct.alg.cdc_clustering.MSCD_SO(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_MSCD_SOM(name, graph, **kwargs):
+    '''
+
+      tability optimisation using matrices  (Fast Multi-Scale Community Detection Tools)
+        
+    Arguments
+    --------------------
+    scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+    extra_param: optional extra parameters for the given algorithm
+    verbose: verbose level (default=0, max=2)
+    
+    The optional extra parameters must be given in order as a list with ',' between values and no space. The parameters are:
+    - for SOM:
+      1. memory saving mode (for walks of length>1 the number of networks kept in memory) (default: 0, i.e. off)
+        Ex: mscd -g network.edges -w -c coms -p 1 -a SOM [0:0.1:5]
+    
+    Reference 
+    ------------------------
+    Le Martelot, Erwan, and Chris Hankin. "Multi-scale community detection using stability optimisation within greedy algorithms." arXiv preprint arXiv:1201.3307 (2012).
+    Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
+    
+    '''
+    obj = gct.alg.cdc_clustering.MSCD_SOM(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_ParCPM(name, graph, **kwargs):
+    '''
+
+     Model-based Overlapping Seed Expansion
+        
+    Arguments
+    --------------------
+     -P <num_threads>  Specifies the number of parallel threads to be executed.
+                       Default value is 8.
+     -W <exp>          Set the sliding window buffer size to 2**<exp> Bytes.
+                       Default value is 30 for a sliding window buffer size of 2**30 B = 1 GB.
+     -p                Specifies to use the proof-of-concept method COSpoc rather than COS.
+                       With this option, parameter -W is ignored.
+                      
+    Reference 
+    ------------------------
+    Gregori, Enrico, Luciano Lenzini, and Simone Mainardi. 
+    "Parallel k-clique community detection on large-scale networks." 
+    IEEE Transactions on Parallel and Distributed Systems 24.8 (2013): 1651-1660.
+        
+    
+    '''
+    obj = gct.alg.cdc_clustering.ParCPM(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_SVINET(name, graph, **kwargs):
+    '''
+
+     SVINET implements sampling based algorithms that derive from stochastic variational inference under the (assortative) mixed-membership stochastic blockmodel.
+        
+    Arguments
+    --------------------
+    SVINET: fast stochastic variational inference of undirected networks
+    svinet [OPTIONS]
+            -file <name>    input tab-separated file with a list of undirected links
+            -n <N>          number of nodes in network
+            -k <K>          number of communities
+            -batch          run batch variational inference
+            -stratified     use stratified sampling
+             * use with rpair or rnode options
+            -rnode          inference using random node sampling
+            -rpair          inference using random pair sampling
+            -link-sampling  inference using link sampling 
+            -infset         inference using informative set sampling
+            -rfreq          set the frequency at which
+             * convergence is estimated
+             * statistics, e.g., heldout likelihood are computed
+            -max-iterations         maximum number of iterations (use with -no-stop to avoid stopping in an earlier iteration)
+            -no-stop                disable stopping criteria
+            -seed           set GSL random generator seed
+    
+    Reference 
+    ------------------------
+    Prem K. Gopalan, David M. Blei. Efficient discovery of overlapping communities in massive networks. To appear in the Proceedings of the National Academy of Sciences, 2013
+    
+    '''
+    obj = gct.alg.cdc_clustering.SVINET(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_TopGC(name, graph, **kwargs):
+    '''
+
+     Top Graph Clusters (TopGC)
+        
+    Arguments
+    --------------------
+    Usage: java -jar TopGC.jar -i inputGraph [-p mostProm] [-max maxClusterSize] [-min minClusterSize] [-lambda overlapThreshold] [-l wordLength] [-m m] [-w numWords] [-trials trials]
+    
+    Options:
+    -----
+
+    -max    maxClusterSize
+            The maximum size allowed for a cluster.
+            Default is 20.
+
+    -min    minClusterSize
+            The minimum size allowed for a cluster.
+            Default is 5.
+
+    -p    mostProm
+            The pruning parameter. Limits the number of nodes to
+            consider for final clustering. Lower values will
+            achieve greater pruning, as well as limit memory
+            usage of the program. Ranges from 1 to graph size.
+            Default is 0.3*(# of nodes in graph) or
+            50,000 (whichever is smaller).
+
+    -lambda    overlapThreshold
+            The maximum overlap allowed between the nodes of
+            two clusters. Calculated as the ratio of the
+            size of their intersection and the smallest cluster
+            size. A double value ranging from 0 to 1.
+            Default is 0.2.
+
+    -l    wordLength
+            Length of node signature. Experimentally, higher 
+            values tend to achieve greater precision, though 
+            lower recall.
+
+    -m    m
+            Number of minhash values to obtain per node.
+
+    -w    w
+            Number of signatures to create per node.
+            Higher values may be necessary in graphs with loose
+            clusters.
+
+    -trials    trials
+            The number of neighborhood instances to create
+            per node. Used only in weighted graphs.    
+
+    Reference 
+    ------------------------
+    Macropol, Kathy, and Ambuj Singh. "Scalable discovery of best clusters on large graphs." Proceedings of the VLDB Endowment 3.1-2 (2010): 693-702.
+    
+    '''
+    obj = gct.alg.cdc_clustering.TopGC(name)
+    return obj.run(graph, **kwargs)
+
+
+def cdc_clique_modularity(name, graph, **kwargs):
+    '''
+
+    Detecting Communities in Networks by Merging Cliques
+        
+    Arguments
+    --------------------
+    java -cp CM.jar clique_modularity.CM <networkFile> -m <method> -c <nComm>
+    where method is BK or KJ
+
+    Reference 
+    ------------------------
+    Yan, Bowen, and Steve Gregory. "Detecting communities in networks by merging cliques." Intelligent Computing and Intelligent Systems, 2009. ICIS 2009. IEEE International Conference on. Vol. 1. IEEE, 2009.
+    
+    '''
+    obj = gct.alg.cdc_clustering.clique_modularity(name)
+    return obj.run(graph, **kwargs)
+
+
 def cgcc_CGGC(name, graph, **kwargs):
     '''
 
@@ -1041,7 +1602,7 @@ def scan_ppScan(name, graph, **kwargs):
 def scan_ppScanSSE(name, graph, **kwargs):
     '''
 
-    A wrapper of *pScan, ppScan, ppScanSSE* algorithm  
+    A wrapper of *ppScanSSE* algorithm  
 
     Arguments
     --------------------
@@ -1350,4 +1911,4 @@ def alg_streamcom(name, graph, **kwargs):
     return obj.run(graph, **kwargs)
 
 
-__ALG_LIST__ += ['oslom_Infohiermap', 'oslom_Infomap', 'oslom_OSLOM', 'oslom_copra', 'oslom_louvain_method', 'oslom_lpm', 'oslom_modopt', 'pycabem_GANXiSw', 'pycabem_HiReCS', 'pycabem_LabelRank', 'cgcc_CGGC', 'dct_dlplm', 'dct_dlslm', 'dct_dlslm_map_eq', 'dct_dlslm_no_contraction', 'dct_dlslm_with_seq', 'dct_infomap', 'dct_seq_louvain', 'igraph_community_edge_betweenness', 'igraph_community_fastgreedy', 'igraph_community_infomap', 'igraph_community_label_propagation', 'igraph_community_leading_eigenvector', 'igraph_community_multilevel', 'igraph_community_optimal_modularity', 'igraph_community_spinglass', 'igraph_community_walktrap', 'mcl_MCL', 'networkit_CutClustering', 'networkit_LPDegreeOrdered', 'networkit_PLM', 'networkit_PLP', 'alg_GossipMap', 'alg_RelaxMap', 'alg_pg_label_propagation', 'scan_AnyScan_Scan', 'scan_AnyScan_ScanIdealPar', 'scan_AnyScan_anyScan', 'scan_AnyScan_anyScanParl', 'scan_AnyScan_pScan', 'scan_Scanpp', 'scan_pScan', 'scan_ppScan', 'scan_ppScanSSE', 'sklearn_AffinityPropagation', 'sklearn_DBSCAN', 'sklearn_SpectralClustering', 'snap_Clauset_Newman_Moore', 'snap_Girvan_Newman', 'alg_Paris', 'alg_lso_cluster', 'alg_streamcom']
+__ALG_LIST__ += ['oslom_Infohiermap', 'oslom_Infomap', 'oslom_OSLOM', 'oslom_copra', 'oslom_louvain_method', 'oslom_lpm', 'oslom_modopt', 'pycabem_GANXiSw', 'pycabem_HiReCS', 'pycabem_LabelRank', 'cdc_CONGA', 'cdc_CliquePercolation', 'cdc_Connected_Iterative_Scan', 'cdc_DEMON', 'cdc_EAGLE', 'cdc_FastCpm', 'cdc_GCE', 'cdc_HDEMON', 'cdc_LinkCommunities', 'cdc_MOSES', 'cdc_MSCD_AFG', 'cdc_MSCD_HSLSW', 'cdc_MSCD_LFK', 'cdc_MSCD_LFK2', 'cdc_MSCD_RB', 'cdc_MSCD_RN', 'cdc_MSCD_SO', 'cdc_MSCD_SOM', 'cdc_ParCPM', 'cdc_SVINET', 'cdc_TopGC', 'cdc_clique_modularity', 'cgcc_CGGC', 'dct_dlplm', 'dct_dlslm', 'dct_dlslm_map_eq', 'dct_dlslm_no_contraction', 'dct_dlslm_with_seq', 'dct_infomap', 'dct_seq_louvain', 'igraph_community_edge_betweenness', 'igraph_community_fastgreedy', 'igraph_community_infomap', 'igraph_community_label_propagation', 'igraph_community_leading_eigenvector', 'igraph_community_multilevel', 'igraph_community_optimal_modularity', 'igraph_community_spinglass', 'igraph_community_walktrap', 'mcl_MCL', 'networkit_CutClustering', 'networkit_LPDegreeOrdered', 'networkit_PLM', 'networkit_PLP', 'alg_GossipMap', 'alg_RelaxMap', 'alg_pg_label_propagation', 'scan_AnyScan_Scan', 'scan_AnyScan_ScanIdealPar', 'scan_AnyScan_anyScan', 'scan_AnyScan_anyScanParl', 'scan_AnyScan_pScan', 'scan_Scanpp', 'scan_pScan', 'scan_ppScan', 'scan_ppScanSSE', 'sklearn_AffinityPropagation', 'sklearn_DBSCAN', 'sklearn_SpectralClustering', 'snap_Clauset_Newman_Moore', 'snap_Girvan_Newman', 'alg_Paris', 'alg_lso_cluster', 'alg_streamcom']
