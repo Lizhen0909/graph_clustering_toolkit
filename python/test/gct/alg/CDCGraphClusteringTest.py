@@ -8,7 +8,8 @@ from gct.dataset import random_dataset
 from gct.alg import clustering
 import sys
 from gct.alg.cdc_clustering import CliquePercolation, Connected_Iterative_Scan, \
-    EAGLE, clique_modularity, CONGA, LinkCommunities, TopGC, GCE, MOSES, ParCPM
+    EAGLE, clique_modularity, CONGA, LinkCommunities, TopGC, GCE, MOSES, ParCPM,\
+    DEMON, HDEMON, FastCpm
 
 
 class Test(unittest.TestCase):
@@ -106,6 +107,32 @@ class Test(unittest.TestCase):
     def test_ParCPM(self):
         for data in  self.graphs: 
             alg = ParCPM()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data).get_result())
+            print (clustering.load_result(data.name, alg.name))                             
+
+
+    def test_DEMON(self):
+        for data in  self.graphs: 
+            alg = DEMON()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data).get_result())
+            print (clustering.load_result(data.name, alg.name))                             
+
+    def test_HDEMON(self):
+        for data in  self.graphs: 
+            alg = HDEMON()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            if data.is_directed():
+                with self.assertRaises(Exception):                
+                    print (alg.run(data).get_result())
+            else:
+                print (alg.run(data).get_result())
+                print (clustering.load_result(data.name, alg.name))                             
+
+    def test_AAA(self):
+        for data in  self.graphs: 
+            alg = FastCpm()
             print("Testing", sys._getframe().f_code.co_name, data.name)
             print (alg.run(data).get_result())
             print (clustering.load_result(data.name, alg.name))                             

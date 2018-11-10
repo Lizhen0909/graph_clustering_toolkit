@@ -780,7 +780,6 @@ class ParCPM(Clustering):
         
         clusters = {}
         with utils.TempDir() as tmp_dir:
-            tmp_dir="/tmp/abc"
             utils.link_file(data.file_edges, tmp_dir, "edges.txt")
             
             cmd = ["{}".format(config.get_cdc_prog('max-clique', data.is_directed))]
@@ -842,3 +841,233 @@ class ParCPM(Clustering):
         save_result(result)
         self.result = result 
         return self 
+
+
+class DEMON(Clustering):
+    '''
+     DEMON
+        
+    Arguments
+    --------------------
+    epsilon  the tolerance required in order to merge communities
+    min_community_size: min_community_size
+    
+    Reference 
+    ------------------------
+    Michele Coscia, Giulio Rossetti, Fosca Giannotti, Dino Pedreschi:
+    DEMON: a local-first discovery method for overlapping communities.
+    KDD 2012:615-623
+    '''
+
+    def __init__(self, name="DEMON"):
+        super(DEMON, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"cdc", "name": 'DEMON' }
+
+    def run(self, data, epsilon=0.25,min_community_size=3, seed=None):
+        
+        if False and (data.is_directed()):
+            raise Exception("only undirected is supported")
+        
+        if seed  is not None: self.logger.info("seed ignored")
+        params = {'epsilon':epsilon,'min_community_size':min_community_size }
+        
+        if not utils.file_exists(data.file_edges):
+            data.to_edgelist()
+        
+        clusters = {}
+        with utils.TempDir() as tmp_dir:
+            utils.link_file(data.file_edges, tmp_dir, "edges.txt")
+            
+            cmd = ["python {}".format(config.get_cdc_prog('Demon.py', data.is_directed))]
+            cmd.append('edges.txt')
+            cmd.append('w' if data.is_weighted() else 'uw')
+            cmd.append('d' if data.is_directed() else 'ud')
+            cmd.append(str(epsilon))
+            cmd.append(str(min_community_size))
+            cmd = " ".join(cmd)
+            self.logger.info("Running " + cmd)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            
+            outputfile = "communities.txt"
+                                            
+            with open (os.path.join(tmp_dir, outputfile), "r") as output:
+                lines = [u.strip() for u in output.readlines()]
+            for i, line in enumerate(lines):
+                if line:
+                    clusters[i] = list(set([int(u) for u in line.split(" ")]))
+            
+        self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['runname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+
+        save_result(result)
+        self.result = result 
+        return self 
+
+class HDEMON(Clustering):
+    '''
+     Hierarchical Demon
+        
+    Arguments
+    --------------------
+    epsilon  the tolerance required in order to merge communities
+    min_community_size: min_community_size
+    
+    Reference 
+    ------------------------
+    M. Coscia, G. Rossetti, F. Giannotti, D. Pedreschi:
+    Uncovering Hierarchical and Overlapping Communities with a Local-First Approach, TKDD 2015
+    '''
+
+    def __init__(self, name="HDEMON"):
+        super(HDEMON, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"cdc", "name": 'HDEMON' }
+
+    def run(self, data, epsilon=0.25,min_community_size=5, seed=None):
+        
+        if False and (data.is_directed()):
+            raise Exception("only undirected is supported")
+        
+        if seed  is not None: self.logger.info("seed ignored")
+        params = {'epsilon':epsilon,'min_community_size':min_community_size }
+        
+        if not utils.file_exists(data.file_edges):
+            data.to_edgelist()
+        
+        clusters = {}
+        with utils.TempDir() as tmp_dir:
+            utils.link_file(data.file_edges, tmp_dir, "edges.txt")
+            
+            cmd = ["python {}".format(config.get_cdc_prog('HDemon.py', data.is_directed))]
+            cmd.append('edges.txt')
+            cmd.append('w' if data.is_weighted() else 'uw')
+            cmd.append('d' if data.is_directed() else 'ud')
+            cmd.append(str(epsilon))
+            cmd.append(str(min_community_size))
+            cmd = " ".join(cmd)
+            self.logger.info("Running " + cmd)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            
+            outputfiles = glob.glob(os.path.join(tmp_dir, "communities-*"))
+            for outputfile in outputfiles:
+                k=int(outputfile.split('/')[-1].split('-')[-1])
+                                          
+                this_cluster=collections.defaultdict(set)
+                with open (os.path.join(tmp_dir, outputfile), "r") as output:
+                    lines = [u.strip() for u in output.readlines()]
+                for i, line in enumerate(lines):
+                    if line:
+                        for u in line.split(" "):
+                            this_cluster[i].add(int(u))
+                            
+                this_cluster={u:list(v) for u,v in this_cluster.items()}
+                self.logger.info("Made %d clusters with k=%d" % (len(this_cluster), k))
+                
+                clusters[k]=this_cluster
+            
+            
+        self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['multilevel'] = True         
+        result['runname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+
+        save_result(result)
+        self.result = result 
+        return self 
+
+class FastCpm(Clustering):
+    '''
+     Find maximal cliques, via the Bron Kerbosch algorithm, http://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm. Then perform k-clique percolation on these cliques, for a given value of k.
+        
+    Arguments
+    --------------------
+    k:  k for k-clique
+    
+    Reference 
+    ------------------------
+    Reid, Fergal, Aaron McDaid, and Neil Hurley. 
+    "Percolation computation in complex networks." 
+    Proceedings of the 2012 international conference on advances in social networks analysis and mining (asonam 2012). 
+    IEEE Computer Society, 2012.
+    '''
+
+    def __init__(self, name="FastCpm"):
+        super(FastCpm, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"cdc", "name": 'FastCpm' }
+
+    def run(self, data, k=4,  seed=None):
+        
+        if False and (data.is_directed()):
+            raise Exception("only undirected is supported")
+        
+        if seed  is not None: self.logger.info("seed ignored")
+        params = {'k':k}
+        
+        if not utils.file_exists(data.file_edges):
+            data.to_edgelist()
+        
+        clusters = {}
+        with utils.TempDir() as tmp_dir:
+            tmp_dir="/tmp/abc"
+            utils.link_file(data.file_edges, tmp_dir, "edges.txt")
+            
+            cmd = ["{}".format(config.get_cdc_prog('2012-fast-cpm', data.is_directed))]
+            cmd.append('edges.txt')
+            cmd.append(str(k))
+            cmd.append(str('output.cluster'))
+            cmd = " ".join(cmd)
+            self.logger.info("Running " + cmd)
+            
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            
+            outputfile = "output.cluster"
+                                            
+            with open (os.path.join(tmp_dir, outputfile), "r") as output:
+                lines = [u.strip() for u in output.readlines()]
+            for i, line in enumerate(lines):
+                if line:
+                    clusters[i] = list(set([int(u) for u in line.split(" ")]))
+            
+        self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['runname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+
+        save_result(result)
+        self.result = result 
+        return self 
+
