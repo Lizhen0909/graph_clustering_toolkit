@@ -287,6 +287,24 @@ class Dataset(object):
         else:
             self.ground_truth = {"default":to_cluster(obj)}
 
+    @property 
+    def num_node_edge(self):
+        def f():
+            df=self.get_edges()
+            m=len(df)
+            n = len(set(np.unique(self.edges[['src', 'dest']].values)))
+            return (n,m)
+        prop_name = "_" + sys._getframe().f_code.co_name        
+        return utils.set_if_not_exists(self,prop_name, f)
+
+    @property 
+    def num_node(self):
+        return self.num_node_edge[0]
+
+    @property 
+    def num_edge(self):
+        return self.num_node_edge[1]
+        
     def set_edges(self, obj):
         v = obj
         if isinstance(v, str):

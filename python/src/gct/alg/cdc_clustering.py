@@ -772,7 +772,7 @@ class ParCPM(Clustering):
             raise Exception("only undirected is supported")
         
         if seed  is not None: self.logger.info("seed ignored")
-        if n_thread is None or n_thread<1: n_thread=max(1,multiprocessing.cpu_count()-1)
+        if n_thread is None or n_thread < 1: n_thread = max(1, multiprocessing.cpu_count() - 1)
         params = {'n_thread':n_thread, 'W':W, 'poc':poc }
         
         if not utils.file_exists(data.file_edges):
@@ -803,34 +803,33 @@ class ParCPM(Clustering):
             if status != 0: 
                 raise Exception("Run command with error status code {}".format(status))
             
-            
-            nodemap=pd.read_csv(os.path.join(tmp_dir, "edges.txt.map"),header=None, sep=" ")
+            nodemap = pd.read_csv(os.path.join(tmp_dir, "edges.txt.map"), header=None, sep=" ")
             nodemap.set_index(1)
-            nodemap=nodemap.loc[:,0].to_dict()
+            nodemap = nodemap.loc[:, 0].to_dict()
             outputfiles = glob.glob(os.path.join(tmp_dir, "*_communities.txt"))
             for outputfile in outputfiles:
                 if outputfile.endswith('k_num_communities.txt'): continue 
-                k=int(outputfile.split('/')[-1].split('_')[0])
+                k = int(outputfile.split('/')[-1].split('_')[0])
                                           
-                this_cluster=collections.defaultdict(set)
+                this_cluster = collections.defaultdict(set)
                 with open (os.path.join(tmp_dir, outputfile), "r") as output:
                     lines = [u.strip() for u in output.readlines()]
                 for i, line in enumerate(lines):
                     if line:
-                        a,b=line.split(':')
-                        a=int(a)
+                        a, b = line.split(':')
+                        a = int(a)
                         for u in b.split(" "):
                             this_cluster[a].add(nodemap[int(u)])
                             
-                this_cluster={u:list(v) for u,v in this_cluster.items()}
+                this_cluster = {u:list(v) for u, v in this_cluster.items()}
                 self.logger.info("Made %d clusters with k=%d" % (len(this_cluster), k))
                 
-                clusters[k]=this_cluster
+                clusters[k] = this_cluster
             
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
         result = {}
-        result['multiclusters']=True 
+        result['multiclusters'] = True 
         result['runname'] = self.name
         result['params'] = params
         result['dataname'] = data.name
@@ -865,13 +864,13 @@ class DEMON(Clustering):
     def get_meta(self):
         return {'lib':"cdc", "name": 'DEMON' }
 
-    def run(self, data, epsilon=0.25,min_community_size=3, seed=None):
+    def run(self, data, epsilon=0.25, min_community_size=3, seed=None):
         
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
         
         if seed  is not None: self.logger.info("seed ignored")
-        params = {'epsilon':epsilon,'min_community_size':min_community_size }
+        params = {'epsilon':epsilon, 'min_community_size':min_community_size }
         
         if not utils.file_exists(data.file_edges):
             data.to_edgelist()
@@ -892,7 +891,6 @@ class DEMON(Clustering):
             timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
             if status != 0: 
                 raise Exception("Run command with error status code {}".format(status))
-            
             
             outputfile = "communities.txt"
                                             
@@ -916,6 +914,7 @@ class DEMON(Clustering):
         self.result = result 
         return self 
 
+
 class HDEMON(Clustering):
     '''
      Hierarchical Demon
@@ -937,13 +936,13 @@ class HDEMON(Clustering):
     def get_meta(self):
         return {'lib':"cdc", "name": 'HDEMON' }
 
-    def run(self, data, epsilon=0.25,min_community_size=5, seed=None):
+    def run(self, data, epsilon=0.25, min_community_size=5, seed=None):
         
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
         
         if seed  is not None: self.logger.info("seed ignored")
-        params = {'epsilon':epsilon,'min_community_size':min_community_size }
+        params = {'epsilon':epsilon, 'min_community_size':min_community_size }
         
         if not utils.file_exists(data.file_edges):
             data.to_edgelist()
@@ -965,12 +964,11 @@ class HDEMON(Clustering):
             if status != 0: 
                 raise Exception("Run command with error status code {}".format(status))
             
-            
             outputfiles = glob.glob(os.path.join(tmp_dir, "communities-*"))
             for outputfile in outputfiles:
-                k=int(outputfile.split('/')[-1].split('-')[-1])
+                k = int(outputfile.split('/')[-1].split('-')[-1])
                                           
-                this_cluster=collections.defaultdict(set)
+                this_cluster = collections.defaultdict(set)
                 with open (os.path.join(tmp_dir, outputfile), "r") as output:
                     lines = [u.strip() for u in output.readlines()]
                 for i, line in enumerate(lines):
@@ -978,11 +976,10 @@ class HDEMON(Clustering):
                         for u in line.split(" "):
                             this_cluster[i].add(int(u))
                             
-                this_cluster={u:list(v) for u,v in this_cluster.items()}
+                this_cluster = {u:list(v) for u, v in this_cluster.items()}
                 self.logger.info("Made %d clusters with k=%d" % (len(this_cluster), k))
                 
-                clusters[k]=this_cluster
-            
+                clusters[k] = this_cluster
             
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
@@ -998,6 +995,7 @@ class HDEMON(Clustering):
         save_result(result)
         self.result = result 
         return self 
+
 
 class FastCpm(Clustering):
     '''
@@ -1021,7 +1019,7 @@ class FastCpm(Clustering):
     def get_meta(self):
         return {'lib':"cdc", "name": 'FastCpm' }
 
-    def run(self, data, k=4,  seed=None):
+    def run(self, data, k=4, seed=None):
         
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
@@ -1046,7 +1044,6 @@ class FastCpm(Clustering):
             timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
             if status != 0: 
                 raise Exception("Run command with error status code {}".format(status))
-            
             
             outputfile = "output.cluster"
                                             
@@ -1091,19 +1088,19 @@ class _MSCDBase(Clustering):
 
     def __init__(self, name="MSCD", prog=""):
         assert prog in {'AFG', 'HSLSW', 'LFK', 'LFK2', 'RB', 'RN', 'SO', 'SOM'}
-        self.prog=prog
+        self.prog = prog
         super(_MSCDBase, self).__init__(name) 
     
     def get_meta(self):
-        return {'lib':"cdc", "name": 'MSCD-'+self.prog }
+        return {'lib':"cdc", "name": 'MSCD-' + self.prog }
 
-    def run(self, data,  scale_param="[1.0,2]", extra_param=None, verbose=0,   seed=None):
+    def run(self, data, scale_param="[1.0,2]", extra_param=None, verbose=0, seed=None):
         
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
         
         if seed  is not None: self.logger.info("seed ignored")
-        params = {'a': self.prog, 'p': extra_param,'v':verbose, 'scale':scale_param}
+        params = {'a': self.prog, 'p': extra_param, 'v':verbose, 'scale':scale_param}
         
         if not utils.file_exists(data.file_edges):
             data.to_edgelist()
@@ -1128,9 +1125,9 @@ class _MSCDBase(Clustering):
             
             outputfiles = glob.glob(os.path.join(tmp_dir, "graph_*.coms"))
             for outputfile in outputfiles:
-                k=float(outputfile.split('/')[-1].split('_')[-1].split('.')[0])
+                k = float(outputfile.split('/')[-1].split('_')[-1].split('.')[0])
                                           
-                this_cluster=collections.defaultdict(set)
+                this_cluster = collections.defaultdict(set)
                 with open (os.path.join(tmp_dir, outputfile), "r") as output:
                     lines = [u.strip() for u in output.readlines()]
                 for i, line in enumerate(lines):
@@ -1138,10 +1135,10 @@ class _MSCDBase(Clustering):
                         for u in line.split(" "):
                             this_cluster[i].add(int(u))
                             
-                this_cluster={u:list(v) for u,v in this_cluster.items()}
+                this_cluster = {u:list(v) for u, v in this_cluster.items()}
                 self.logger.info("Made %d clusters with k=%d" % (len(this_cluster), k))
                 
-                clusters[k]=this_cluster
+                clusters[k] = this_cluster
             
         self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
         
@@ -1157,6 +1154,7 @@ class _MSCDBase(Clustering):
         save_result(result)
         self.result = result 
         return self 
+
 
 class MSCD_RB(_MSCDBase):
     '''
@@ -1176,6 +1174,7 @@ class MSCD_RB(_MSCDBase):
 
     def __init__(self, name="MSCD_RB"):
         super(MSCD_RB, self).__init__(name, prog="RB") 
+
     
 class MSCD_HSLSW(_MSCDBase):
     '''
@@ -1227,6 +1226,7 @@ class MSCD_LFK(_MSCDBase):
 
     def __init__(self, name="MSCD_LFK"):
         super(MSCD_LFK, self).__init__(name, prog="LFK") 
+
 
 class MSCD_LFK2(_MSCDBase):
     '''
@@ -1293,6 +1293,7 @@ class MSCD_RN(_MSCDBase):
 
     def __init__(self, name="MSCD_RN"):
         super(MSCD_RN, self).__init__(name, prog="RN")         
+
         
 class MSCD_SO(_MSCDBase):
     '''
@@ -1318,6 +1319,7 @@ class MSCD_SO(_MSCDBase):
 
     def __init__(self, name="MSCD_SO"):
         super(MSCD_SO, self).__init__(name, prog="SO")         
+
                 
 class MSCD_SOM(_MSCDBase):
     '''
@@ -1344,5 +1346,122 @@ class MSCD_SOM(_MSCDBase):
         super(MSCD_SOM, self).__init__(name, prog="SOM")    
         
         
+class SVINET(Clustering):
+    '''
+     SVINET implements sampling based algorithms that derive from stochastic variational inference under the (assortative) mixed-membership stochastic blockmodel.
         
-                        
+    Arguments
+    --------------------
+    SVINET: fast stochastic variational inference of undirected networks
+    svinet [OPTIONS]
+            -file <name>    input tab-separated file with a list of undirected links
+            -n <N>          number of nodes in network
+            -k <K>          number of communities
+            -batch          run batch variational inference
+            -stratified     use stratified sampling
+             * use with rpair or rnode options
+            -rnode          inference using random node sampling
+            -rpair          inference using random pair sampling
+            -link-sampling  inference using link sampling 
+            -infset         inference using informative set sampling
+            -rfreq          set the frequency at which
+             * convergence is estimated
+             * statistics, e.g., heldout likelihood are computed
+            -max-iterations         maximum number of iterations (use with -no-stop to avoid stopping in an earlier iteration)
+            -no-stop                disable stopping criteria
+            -seed           set GSL random generator seed
+    
+    Reference 
+    ------------------------
+    Prem K. Gopalan, David M. Blei. Efficient discovery of overlapping communities in massive networks. To appear in the Proceedings of the National Academy of Sciences, 2013
+    '''
+
+    def __init__(self, name="SVINET"):
+        super(SVINET, self).__init__(name) 
+    
+    def get_meta(self):
+        return {'lib':"cdc", "name": 'SVINET' }
+
+    def run(self, data, num_cluster=None, inference="link-sampling", stratified=False, rfreq=None, max_iterations=None, no_stop=False, seed=None):
+        assert inference in ['link-sampling', 'batch', 'rnode', 'rpair', 'infset']
+        if stratified: assert inference in ['rnode', 'rpair']
+        if False and (data.is_directed()):
+            raise Exception("only undirected is supported")
+        if seed is None:
+            seed = np.random.randint(999999)
+        params = {'num_cluster':num_cluster, 'seed':seed, 'stratified':stratified, "rfreq":rfreq, "max_iterations":max_iterations, 'no_stop':no_stop, 'inference':inference}
+        
+        if not utils.file_exists(data.file_edges):
+            data.to_edgelist()
+        
+        clusters = {}
+        n_node = data.num_node
+
+        def estimate_num_cluster():
+            with utils.TempDir() as tmp_dir:
+                utils.link_file(data.file_edges, tmp_dir, "edges.txt")
+                cmd = ["{}".format(config.get_cdc_prog('2013-svinet', data.is_directed))]
+                cmd.append('-file {}'.format('edges.txt'))
+                cmd.append('-n {}'.format(n_node))
+                cmd.append('-k {}'.format(n_node))
+                if data.is_weighted(): cmd.append('-weighted')
+                cmd.append('-findk')
+                cmd .append('&& (cat n*findk/communities_size.txt | wc -l  > num_cluster.txt) ')
+                cmd = " ".join(cmd)
+                with open(os.path.join(tmp_dir, "tmpcmd"), 'wt') as f:
+                    f.write(cmd + "\n")
+                    
+                self.logger.info("Running " + cmd)
+                
+                timecost, status = utils.timeit(lambda: utils.shell_run_and_wait("bash -x tmpcmd", tmp_dir))
+                if status != 0: 
+                    raise Exception("Run command with error status code {}".format(status))
+                with open(os.path.join(tmp_dir, "num_cluster.txt")) as f:
+                    n = int(f.readlines()[0].strip())
+                self.logger.info("Find k=%d  in %f seconds" % (n, timecost))
+                return n
+
+        if num_cluster is None or num_cluster < 1:
+                num_cluster = estimate_num_cluster()
+                    
+        with utils.TempDir() as tmp_dir:
+            utils.link_file(data.file_edges, tmp_dir, "edges.txt")
+            cmd = ["{}".format(config.get_cdc_prog('2013-svinet', data.is_directed))]
+            cmd.append('-file {}'.format('edges.txt'))
+            cmd.append('-n {}'.format(n_node))
+            cmd.append('-k {}'.format(num_cluster))
+            if data.is_weighted(): cmd.append('-weighted')
+            cmd.append('-' + inference)
+            if stratified: cmd.append('-stratified')
+            if rfreq: cmd.append('-rfreq {}'.format(rfreq))
+            if max_iterations: cmd.append('-max-iterations {}'.format(max_iterations))
+            if no_stop: cmd.append('-no-stop')
+            if seed:  cmd.append('-seed {}'.format(seed))
+            cmd = " ".join(cmd)
+                
+            self.logger.info("Running " + cmd)
+            timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, tmp_dir))
+            if status != 0: 
+                raise Exception("Run command with error status code {}".format(status))
+            
+            outputfile = glob.glob(os.path.join(tmp_dir, 'n{}-k{}-*-seed{}-*'.format(n_node, num_cluster, seed), 'communities.txt'))[0]
+            self.logger.info("read output form " + outputfile)
+            with open (os.path.join(tmp_dir, outputfile), "r") as output:
+                lines = [u.strip() for u in output.readlines()]
+            for i, line in enumerate(lines):
+                if line:
+                    clusters[i] = list(set([int(u) for u in line.split(" ")]))
+            
+        self.logger.info("Made %d clusters in %f seconds" % (len(clusters), timecost))
+        
+        result = {}
+        result['runname'] = self.name
+        result['params'] = params
+        result['dataname'] = data.name
+        result['meta'] = self.get_meta()
+        result['timecost'] = timecost
+        result['clusters'] = clusters 
+
+        save_result(result)
+        self.result = result 
+        return self                         

@@ -184,7 +184,7 @@ def get_LFR_prog(weighted, directed, hier=False):
 def get_cdc_prog(name, is_directed=None):
     if name in {'k_clique', '2009-cis', '2009-eagle', 'conga-1.0-SNAPSHOT.jar', 'calcJaccards', 'clusterJaccards',
                 'topgc-1.0-SNAPSHOT.jar', 'mkidx', '2011-gce', '2011-moses', 'max-clique',
-                '2012-ParCPM', '2012-fast-cpm', '2013-mscd'}:
+                '2012-ParCPM', '2012-fast-cpm', '2013-mscd','2013-svinet'}:
         return os.path.join(GCT_HOME, "submodules/CommunityDetectionCodes/", name)
     elif name in {'Demon.py', 'HDemon.py'}:
         return os.path.join(GCT_HOME, "submodules/CommunityDetectionCodes/Algorithms/2012-DEMON", name)

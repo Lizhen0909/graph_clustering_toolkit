@@ -10,7 +10,7 @@ import sys
 from gct.alg.cdc_clustering import CliquePercolation, Connected_Iterative_Scan, \
     EAGLE, clique_modularity, CONGA, LinkCommunities, TopGC, GCE, MOSES, ParCPM,\
     DEMON, HDEMON, FastCpm, MSCD_RB, MSCD_AFG, MSCD_HSLSW, MSCD_LFK, MSCD_LFK2,\
-    MSCD_RN, MSCD_SO, MSCD_SOM
+    MSCD_RN, MSCD_SO, MSCD_SOM, SVINET
 
 
 class Test(unittest.TestCase):
@@ -187,12 +187,20 @@ class Test(unittest.TestCase):
             print (alg.run(data,scale_param="[1.2,2]").get_result())
             print (clustering.load_result(data.name, alg.name))   
 
-    def test_AAA(self):
+    def test_MSCD_SOM(self):
         for data in  self.graphs: 
             alg = MSCD_SOM()
             print("Testing", sys._getframe().f_code.co_name, data.name)
             print (alg.run(data,scale_param="[1.2,2]").get_result())
             print (clustering.load_result(data.name, alg.name))   
+
+    def test_AAA(self):
+        for data in  self.graphs: 
+            alg = SVINET()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(data ).get_result())
+            print (clustering.load_result(data.name, alg.name))   
+
                                         
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']
