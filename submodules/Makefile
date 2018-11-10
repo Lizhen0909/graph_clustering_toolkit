@@ -5,7 +5,7 @@
 
 
 
-all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap powergraph webgraph
+all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap powergraph genconvnmi ovpnmi xmeasures hirecs GANXiS lso-cluster CDC #webgraph
 
 clean: 
 	cd OSLOM2 && make clean
@@ -24,10 +24,16 @@ relaxmap:
 LFR:
 	cd LFR-Benchmark_UndirWeightOvp && if [ ! -f lfrbench_udwov ]; then  make; fi
 
-powergraph:
-	if [ ! -d PowerGraph/release ]; then  cd PowerGraph && ./configure  --no_jvm; fi
-	if [ ! -f PowerGraph/release/apps/label_propagation/label_propagation ]; then  cd PowerGraph/release/apps/label_propagation && make; fi
+powergraph: PowerGraph/label_propagation PowerGraph/GossipMap
+PowerGraph/label_propagation: powergraph_build
+	cp PowerGraph/release/apps/label_propagation/label_propagation PowerGraph/
+PowerGraph/GossipMap: powergraph_build
+	cp PowerGraph/release/apps/GossipMap/GossipMap PowerGraph/
+powergraph_build: 
+	if [ ! -d PowerGraph/release ]; then  cd PowerGraph && ./configure  --no_jvm; fi 
+	if [ ! -f PowerGraph/release/apps/label_propagation/label_propagation ]; then  cd PowerGraph/release/apps/label_propagation && make; fi 
 	if [ ! -f PowerGraph/release/apps/GossipMap/GossipMap ]; then  cd PowerGraph/release/apps/GossipMap && make; fi
+
 
 LIGRA:
 	cd ligra && \
@@ -77,7 +83,12 @@ CGGC/rgmc:
 	cd CGGC && \
 	make release && cp bin/Release/rgmc .
 
-dct:
+dct: distributed_clustering_thrill/seq_louvain 
+
+distributed_clustering_thrill/seq_louvain: distributed_clustering_thrill/BUILD_DONE
+	cd distributed_clustering_thrill && find build -executable -type f  -exec cp {} . \;
+
+distributed_clustering_thrill/BUILD_DONE:
 	if [ ! -f distributed_clustering_thrill/BUILD_DONE ] ; then \
 		cd distributed_clustering_thrill && \
 		git submodule update --init --recursive && \
@@ -103,7 +114,6 @@ genconvnmi_bk:
 	fi
 
 genconvnmi: GenConvNMI/gecmi
-
 GenConvNMI/gecmi:
 	cd GenConvNMI && make release && cp bin/Release/gecmi . \
 
@@ -133,4 +143,5 @@ lso-cluster: graph-cluster/lso-cluster
 graph-cluster/lso-cluster:
 	cd graph-cluster && make lso-cluster
 
-
+CDC: 
+	cd CommunityDetectionCodes && make

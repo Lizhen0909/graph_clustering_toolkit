@@ -83,14 +83,14 @@ def get_result_file_path(dsname, runname="", create=False):
 
 def get_dct_prog(name, directed=False):
     if name == 'seq_louvain':
-        prog = os.path.join(GCT_HOME, "submodules/distributed_clustering_thrill/build/seq_louvain")
+        prog = os.path.join(GCT_HOME, "submodules/distributed_clustering_thrill/seq_louvain")
         return prog
     elif name == 'infomap':
-        prog = os.path.join(GCT_HOME, "submodules/distributed_clustering_thrill/build/infomap")
+        prog = os.path.join(GCT_HOME, "submodules/distributed_clustering_thrill/infomap")
         if directed: prog += '_directed'
         return prog 
     elif name.startswith('dlslm') or name in ['dlplm']:
-        prog = os.path.join(GCT_HOME, "submodules/distributed_clustering_thrill/build/" + name)
+        prog = os.path.join(GCT_HOME, "submodules/distributed_clustering_thrill/" + name)
         return prog             
     else:
         raise Exception("Unknown " + name)
@@ -98,10 +98,10 @@ def get_dct_prog(name, directed=False):
     
 def get_powergraph_prog(name, directed=False):
     if name in ['label_propagation']:
-        prog = os.path.join(GCT_HOME, "submodules/PowerGraph/release/apps/label_propagation/label_propagation")
+        prog = os.path.join(GCT_HOME, "submodules/PowerGraph/label_propagation")
         return prog             
     elif name in ['GossipMap']:
-        prog = os.path.join(GCT_HOME, "submodules/PowerGraph/release/apps/GossipMap/GossipMap")
+        prog = os.path.join(GCT_HOME, "submodules/PowerGraph/GossipMap")
         return prog
     elif name in ['RelaxMap']:
         prog = os.path.join(GCT_HOME, "submodules/RelaxMap/ompRelaxmap")
