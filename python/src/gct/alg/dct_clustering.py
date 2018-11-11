@@ -40,7 +40,7 @@ class seq_louvain(Clustering):
         if (data.is_directed() or data.is_weighted()) and False:
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_edges):
-            data.to_edgelist()()
+            data.to_edgelist()
         
         with utils.TempDir() as tmp_dir:
             pajek = utils.link_file(data.file_edges, dest_dir=tmp_dir, destname='edges.txt')
@@ -102,7 +102,7 @@ class infomap(Clustering):
         if (data.is_directed() or data.is_weighted()) and False:
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_edges):
-            data.to_edgelist()()
+            data.to_edgelist()
         
         with utils.TempDir() as tmp_dir:
             pajek = utils.link_file(data.file_edges, dest_dir=tmp_dir, destname='edges.txt')
@@ -165,7 +165,7 @@ class _dct(Clustering):
         if (data.is_directed() or data.is_weighted()) and False:
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_edges):
-            data.to_edgelist()()
+            data.to_edgelist()
         
         with utils.TempDir() as tmp_dir:
             #tmp_dir = "/tmp/abc"

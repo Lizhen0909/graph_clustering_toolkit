@@ -289,13 +289,15 @@ class Dataset(object):
 
     @property 
     def num_node_edge(self):
+
         def f():
-            df=self.get_edges()
-            m=len(df)
+            df = self.get_edges()
+            m = len(df)
             n = len(set(np.unique(self.edges[['src', 'dest']].values)))
-            return (n,m)
-        prop_name = "_" + sys._getframe().f_code.co_name        
-        return utils.set_if_not_exists(self,prop_name, f)
+            return (n, m)
+
+        prop_name = "_num_node_edge"        
+        return utils.set_if_not_exists(self, prop_name, f)
 
     @property 
     def num_node(self):
@@ -354,8 +356,9 @@ class Dataset(object):
             clean_edges()
             
             self.edges = self.edges.drop_duplicates()
-            self.num_edge = len(self.edges)
-            self.num_node = len(np.unique(self.edges[['src', 'dest']].values.ravel()))
+            num_edge = len(self.edges)
+            num_node = len(np.unique(self.edges[['src', 'dest']].values.ravel()))
+            self._num_node_edge = (num_node, num_edge)
             return self 
 
     def __str__(self, *args, **kwargs):
@@ -521,7 +524,7 @@ class Dataset(object):
         if not utils.file_exists(self.file_mirror_edges): self.to_mirror_edges_format()
         with TempDir() as tmp_dir:
             cmd = "cat {} | {} >  {} || rm {}".format(self.file_mirror_edges, config.get_cdc_prog('mkidx'),
-                                                  filepath, filepath )
+                                                  filepath, filepath)
             self.logger.info("Running " + cmd)
             with open(os.path.join(tmp_dir, "tmpcmd"), 'wt') as f :
                 f.write(cmd)
@@ -540,7 +543,7 @@ class Dataset(object):
         if not utils.file_exists(self.file_edges): self.to_edgelist()
         with TempDir() as tmp_dir:
             cmd = "cat {}|sort -k1,1 -k2,2 -n | {} >  {} || rm {}".format(self.file_edges, config.get_cdc_prog('mkidx'),
-                                                  filepath, filepath )
+                                                  filepath, filepath)
             self.logger.info("Running " + cmd)
             with open(os.path.join(tmp_dir, "tmpcmd"), 'wt') as f :
                 f.write(cmd)
@@ -556,15 +559,14 @@ class Dataset(object):
             filepath = self.file_mirror_edges
             if utils.file_exists(filepath):
                 return filepath         
-        edges1=self.get_edges()
-        edges2=edges1.copy()
-        edges2['src']=edges1['dest']
-        edges2['dest']=edges1['src']
-        edges2=edges2[edges1.columns]
-        edges=pd.concat([edges1,edges2]).drop_duplicates().sort_values(['src','dest'])
+        edges1 = self.get_edges()
+        edges2 = edges1.copy()
+        edges2['src'] = edges1['dest']
+        edges2['dest'] = edges1['src']
+        edges2 = edges2[edges1.columns]
+        edges = pd.concat([edges1, edges2]).drop_duplicates().sort_values(['src', 'dest'])
         edges.to_csv(filepath, header=None, index=None, sep=" ")
         return filepath 
-
         
     ##### to third party graph 
     def to_graph_igraph(self):
