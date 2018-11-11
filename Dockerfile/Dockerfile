@@ -22,7 +22,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
     echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
     echo "conda activate base" >> ~/.bashrc
 
-RUN  /opt/conda/bin/conda create  -c conda-forge --name python3 python=3.6 pandas seaborn scikit-learn cython matplotlib networkx python-igraph tabulate fastparquet python-snappy dask pyamg && \
+RUN  /opt/conda/bin/conda create  -c conda-forge --name python3 python=3.6 ipykernel pandas seaborn scikit-learn cython matplotlib networkx python-igraph tabulate fastparquet python-snappy dask pyamg && \
     /opt/conda/bin/conda clean -tipsy
 
 RUN . /etc/profile.d/conda.sh && conda activate python3 && mkdir -p /tmp/snap_build && cd /tmp/snap_build && wget http://snap.stanford.edu/snappy/release/beta/snap-5.0.9-64-3.0-centos6.5-x64-py3.6.tar.gz && tar xf snap*.tar.gz && cd snap* && python setup.py install && rm -fr /tmp/snap_build && \
