@@ -82,13 +82,10 @@ hierarchy: louvain_script
 	cp $(Main_folder)/louvain/hierarchy .
 
 louvain_script: 
-
-	echo ""
-	echo "Compiling louvain  method ..."
+	echo "Compiling louvain  method ..." && \
 	cd $(Main_folder)/louvain/ && \
 	g++ script_to_compile.cpp  && \
-	./a.out  
-	cd $(Main_folder)/louvain/ && \
+	./a.out  && \
 	g++ -o louvain_script order.cpp -O3 
 	cp $(Main_folder)/louvain/louvain_script .
 
