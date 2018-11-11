@@ -34,12 +34,12 @@
 [submodule "submodules/paris"]
 	path = submodules/paris
 	url = https://github.com/tbonald/paris.git
-[submodule "submodules/graph-cluster"]
-	path = submodules/graph-cluster
-	url = https://github.com/archels/graph-cluster
 [submodule "submodules/lcelib"]
 	path = submodules/lcelib
 	url = https://github.com/CxAalto/lcelib
 [submodule "submodules/CommunityDetectionCodes"]
 	path = submodules/CommunityDetectionCodes
 	url = https://github.com/Lizhen0909/CommunityDetectionCodes.git
+[submodule "submodules/graph-cluster"]
+	path = submodules/graph-cluster
+	url = https://github.com/twanvl/graph-cluster.git
