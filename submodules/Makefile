@@ -1,4 +1,5 @@
-# sudo apt-get install google-perftools libboost-all-dev libbz2-dev libxml2-dev libjemalloc-dev libcurl-dev openssl libcurl4-openssl-dev libssl-dev libtbb-dev libarmadillo-dev libgsl-dev
+# sudo apt-get install google-perftools libbz2-dev libxml2-dev libjemalloc-dev openssl libcurl4-openssl-dev libssl-dev libtbb-dev libarmadillo-dev libgsl-dev
+sudo apt-get install git libboost-program-options-dev
 # conda create --name python3 python=3.6 pandas seaborn scikit-learn cython matplotlib networkx python-igraph tabulate fastparquet python-snappy dask pyamg
 # python3 -m pip install --user --upgrade pip==9.0.3
 # http://snap.stanford.edu/snappy/release/beta/snap-5.0.9-64-3.0-centos6.5-x64-py3.6.tar.gz
