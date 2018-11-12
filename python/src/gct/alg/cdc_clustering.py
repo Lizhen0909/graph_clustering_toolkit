@@ -61,7 +61,7 @@ class CliquePercolation(Clustering):
             if verbose: cmd.append('-v')
             if k is not None: cmd.append("-k={}".format(k))
             if data.is_weighted(): cmd.append("-w")
-            if k is not None: cmd.append("-o=output")
+            cmd.append("-o=output")
 
             cmd = " ".join(cmd)
             self.logger.info("Running " + cmd)
