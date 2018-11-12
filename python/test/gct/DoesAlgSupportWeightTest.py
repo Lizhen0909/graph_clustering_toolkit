@@ -35,6 +35,7 @@ class Test(unittest.TestCase):
             for i in [0, 1, 2]:
                 for j in [3, 4, 5]:
                     a.append([i, j, 0.000001])        
+            a.append([6, 4, 0.000001])        
         
         gt = {0:[0, 1, 2], 1:[3, 4, 5], 2:[6, 7, 8]}
         gt = [[v, u] for u, vv in gt.items() for v in vv]
@@ -56,8 +57,13 @@ class Test(unittest.TestCase):
         return utils.file_exists(fpath)
 
     def test_1(self):
-        bad_algs = ['cgcc_CGGC', 'igraph_community_spinglass', 'scan_Scanpp', 'scan_pScan', 'igraph_community_edge_betweenness']  # these alg failed for this test
+        bad_algs = [
+	'cdc_SVINET', #has bug
+	'scan_AnyScan_ScanIdealPar', #never finish
+	'scan_Scanpp', #never finish
+	]  # these alg failed for this test
         runned_algs = []
+
         algs = gct.list_algorithms()
         algs = [u for u in algs if u not in bad_algs and u not in runned_algs]
         datasets = [self.prefix + "_w1", self.prefix + "_uw1"]
@@ -66,7 +72,7 @@ class Test(unittest.TestCase):
                 runname = alg 
                 if not self.has_run(runname, dsname):
                     print ("runing ", alg, dsname)
-                    gct.run_alg(runname=runname, data=gct.load_local_graph(dsname), algname=alg)        
+                    gct.run_alg(runname=runname, data=gct.load_local_graph(dsname), algname=alg, seed=123)        
                     runned_algs.append(alg)
                     print ("AAAA", runned_algs)
         results = {}
@@ -105,6 +111,9 @@ class Test(unittest.TestCase):
                     columns += ['nmi_t2', 'ovpnmi_t2']
                     
                     lst.append(a)
+
+        for alg in bad_algs:
+            lst.append([alg] + [None] * (len(columns) - 1))
                     
         rdf = pd.DataFrame(lst, columns=columns)
         with pd.option_context('display.max_rows', 2000, 'display.max_columns', 200):
@@ -114,3 +123,4 @@ class Test(unittest.TestCase):
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']
     unittest.main()
+
