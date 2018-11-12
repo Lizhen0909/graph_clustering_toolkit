@@ -128,7 +128,9 @@ xmeasures: xmeasures/xmeasures
 xmeasures/xmeasures:
 	cd xmeasures && make release && cp bin/Release/xmeasures . ; \
 
-hirecs: hirecs/hirecs hirecs/libhirecs.so
+hirecs: hirecs/hirecs hirecs/libhirecs.so hirecs/pajek_hig.py
+hirecs/pajek_hig.py:
+	cd hirecs && cp pytools/pajek_hig.py .
 hirecs/hirecs:
 	cd hirecs && cp client/bin/Release/hirecs . && chmod u+x hirecs
 hirecs/libhirecs.so:
