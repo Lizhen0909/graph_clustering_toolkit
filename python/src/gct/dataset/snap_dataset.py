@@ -11,16 +11,16 @@ class SNAPConfig(object):
 
     def __init__(self, name, files, graph_file, ground_truth_file, description="",
                  with_ground_truth=False, directed=False, weighted=False):
-        self.logger = utils.get_logger("{}:{}".format(type(self).__name__, name ))        
-        self.name=name 
-        self.description=description
+        self.logger = utils.get_logger("{}:{}".format(type(self).__name__, name))        
+        self.name = name 
+        self.description = description
         self.files = files 
         self.with_ground_truth = with_ground_truth
         self.directed = directed
         self.weighted = weighted
         self.local_files = [config.get_download_file_path(name, u.split('/')[-1]) for u in files ]
         self.graph_file = config.get_download_file_path(self.name, graph_file)
-        self.ground_truth_file = config.get_download_file_path(self.name, ground_truth_file) 
+        self.ground_truth_file = config.get_download_file_path(self.name, ground_truth_file, True) 
 
     def has_downloaded(self):
         for fname in self.local_files:

@@ -127,14 +127,18 @@ def pandas_show_all(df):
 
 
 def urlretrieve(src, dst):
-    if sys.version_info[0] >= 3:
-        from urllib.request import urlretrieve
-    else:
-        # Not Python 3 - today, it is most likely to be Python 2
-        # But note that this might need an update when Python 4
-        # might be around one day
-        from urllib import urlretrieve
-    return urlretrieve(src, dst)
+    try:
+        if sys.version_info[0] >= 3:
+            from urllib.request import urlretrieve
+        else:
+            # Not Python 3 - today, it is most likely to be Python 2
+            # But note that this might need an update when Python 4
+            # might be around one day
+            from urllib import urlretrieve
+        return urlretrieve(src, dst)
+    except:
+        remove_if_file_exit(fname=dst, is_dir=False)
+        raise
 
 
 def check_output(lst):
