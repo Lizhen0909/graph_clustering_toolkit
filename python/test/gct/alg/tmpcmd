@@ -1,1 +1,0 @@
-/home/bo/graph_clustering_toolkit/submodules/CommunityDetectionCodes/2013-svinet -file edges.txt -n 128 -k 128 -findk && (cat n*findk/communities_size.txt | wc -l  > num_cluster.txt) 

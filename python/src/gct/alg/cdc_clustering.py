@@ -12,6 +12,7 @@ import multiprocessing
 import numbers
 import glob
 import collections
+from gct.exception import UnsupportedException
 
 prefix = 'cdc'
 
@@ -45,8 +46,8 @@ class CliquePercolation(Clustering):
         return {'lib':"cdc", "name": 'CliquePercolation' }
 
     def run(self, data, k=None, verbose=False, seed=None):
-        if (data.is_directed()):
-            raise Exception("only undirected is supported")
+        if (data.is_directed() or data.is_edge_mirrored):
+            raise UnsupportedException("only undirected and unmirrored graph is supported for " + self.get_meta()['name'])
         
         params = {'k':k}
         if seed  is not None: self.logger.info("seed ignored")
@@ -772,7 +773,7 @@ class ParCPM(Clustering):
             raise Exception("only undirected is supported")
         
         if seed  is not None: self.logger.info("seed ignored")
-        n_thread = utils.get_num_thread(n_thread )
+        n_thread = utils.get_num_thread(n_thread)
         params = {'n_thread':n_thread, 'W':W, 'poc':poc }
         
         if not utils.file_exists(data.file_edges):

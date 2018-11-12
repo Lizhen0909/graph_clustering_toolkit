@@ -35,6 +35,7 @@ def save_result(result):
             raise
 
 
+        
 class Result(collections.MutableMapping):
 
     def __init__(self, result):

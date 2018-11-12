@@ -1,8 +1,9 @@
 import gct.alg
+from gct.exception import UnsupportedException
+import sys
 __ALG_LIST__=[]
 
 #### begin generated algorithm methods
- 
 def oslom_Infohiermap(name, graph, **kwargs):
     '''
 
@@ -20,8 +21,12 @@ def oslom_Infohiermap(name, graph, **kwargs):
     e18209 (2011).     
     
     '''
-    obj = gct.alg.OSLOM_clustering.Infohiermap(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.OSLOM_clustering.Infohiermap(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def oslom_Infomap(name, graph, **kwargs):
@@ -41,8 +46,12 @@ def oslom_Infomap(name, graph, **kwargs):
     USA 105, 11181123 (2008).
     
     '''
-    obj = gct.alg.OSLOM_clustering.Infomap(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.OSLOM_clustering.Infomap(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def oslom_OSLOM(name, graph, **kwargs):
@@ -87,8 +96,12 @@ def oslom_OSLOM(name, graph, **kwargs):
     nificant communities in networks PloS One 6, e18961 (2011)
     
     '''
-    obj = gct.alg.OSLOM_clustering.OSLOM(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.OSLOM_clustering.OSLOM(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def oslom_copra(name, graph, **kwargs):
@@ -119,8 +132,12 @@ def oslom_copra(name, graph, **kwargs):
     New Journal of Physics 11.3 (2009): 033015.  
     
     '''
-    obj = gct.alg.OSLOM_clustering.copra(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.OSLOM_clustering.copra(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def oslom_louvain_method(name, graph, **kwargs):
@@ -139,8 +156,12 @@ def oslom_louvain_method(name, graph, **kwargs):
     munity hierarchies in large networks. J. Stat. Mech. 2008 (10): P10008  
     
     '''
-    obj = gct.alg.OSLOM_clustering.louvain_method(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.OSLOM_clustering.louvain_method(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def oslom_lpm(name, graph, **kwargs):
@@ -159,8 +180,12 @@ def oslom_lpm(name, graph, **kwargs):
     community structures in large-scale networks. Phys. Rev. E 76, 036106 (2007).    
     
     '''
-    obj = gct.alg.OSLOM_clustering.lpm(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.OSLOM_clustering.lpm(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def oslom_modopt(name, graph, **kwargs):
@@ -184,8 +209,12 @@ def oslom_modopt(name, graph, **kwargs):
     (2007).
     
     '''
-    obj = gct.alg.OSLOM_clustering.modopt(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.OSLOM_clustering.modopt(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def pycabem_GANXiSw(name, graph, **kwargs):
@@ -233,8 +262,12 @@ def pycabem_GANXiSw(name, graph, **kwargs):
     
     
     '''
-    obj = gct.alg.PyCABeM_clustering.GANXiSw(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.PyCABeM_clustering.GANXiSw(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def pycabem_HiReCS(name, graph, **kwargs):
@@ -263,8 +296,12 @@ def pycabem_HiReCS(name, graph, **kwargs):
     
     
     '''
-    obj = gct.alg.PyCABeM_clustering.HiReCS(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.PyCABeM_clustering.HiReCS(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def pycabem_LabelRank(name, graph, **kwargs):
@@ -282,8 +319,12 @@ def pycabem_LabelRank(name, graph, **kwargs):
     
     
     '''
-    obj = gct.alg.PyCABeM_clustering.LabelRank(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.PyCABeM_clustering.LabelRank(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_CONGA(name, graph, **kwargs):
@@ -309,8 +350,12 @@ def cdc_CONGA(name, graph, **kwargs):
     Gregory, Steve. "A fast algorithm to find overlapping communities in networks." Joint European Conference on Machine Learning and Knowledge Discovery in Databases. Springer, Berlin, Heidelberg, 2008.
     
     '''
-    obj = gct.alg.cdc_clustering.CONGA(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.CONGA(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_CliquePercolation(name, graph, **kwargs):
@@ -335,8 +380,12 @@ def cdc_CliquePercolation(name, graph, **kwargs):
     Kumpula, Jussi M., et al. "Sequential algorithm for fast clique percolation." Physical Review E 78.2 (2008): 026109.
     
     '''
-    obj = gct.alg.cdc_clustering.CliquePercolation(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.CliquePercolation(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_Connected_Iterative_Scan(name, graph, **kwargs):
@@ -354,8 +403,12 @@ def cdc_Connected_Iterative_Scan(name, graph, **kwargs):
     Diss. Rensselaer Polytechnic Institute, 2009.
     
     '''
-    obj = gct.alg.cdc_clustering.Connected_Iterative_Scan(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.Connected_Iterative_Scan(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_DEMON(name, graph, **kwargs):
@@ -375,8 +428,12 @@ def cdc_DEMON(name, graph, **kwargs):
     KDD 2012:615-623
     
     '''
-    obj = gct.alg.cdc_clustering.DEMON(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.DEMON(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_EAGLE(name, graph, **kwargs):
@@ -394,8 +451,12 @@ def cdc_EAGLE(name, graph, **kwargs):
     Physica A: Statistical Mechanics and its Applications 388.8 (2009): 1706-1712.
     
     '''
-    obj = gct.alg.cdc_clustering.EAGLE(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.EAGLE(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_FastCpm(name, graph, **kwargs):
@@ -415,8 +476,12 @@ def cdc_FastCpm(name, graph, **kwargs):
     IEEE Computer Society, 2012.
     
     '''
-    obj = gct.alg.cdc_clustering.FastCpm(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.FastCpm(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_GCE(name, graph, **kwargs):
@@ -448,8 +513,12 @@ def cdc_GCE(name, graph, **kwargs):
     Lee, Conrad, et al. "Detecting highly overlapping community structure by greedy clique expansion." arXiv preprint arXiv:1002.1827 (2010).    
     
     '''
-    obj = gct.alg.cdc_clustering.GCE(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.GCE(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_HDEMON(name, graph, **kwargs):
@@ -468,8 +537,12 @@ def cdc_HDEMON(name, graph, **kwargs):
     Uncovering Hierarchical and Overlapping Communities with a Local-First Approach, TKDD 2015
     
     '''
-    obj = gct.alg.cdc_clustering.HDEMON(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.HDEMON(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_LinkCommunities(name, graph, **kwargs):
@@ -487,8 +560,12 @@ def cdc_LinkCommunities(name, graph, **kwargs):
     Yong-Yeol Ahn, James P. Bagrow, and Sune Lehmann, Link communities reveal multiscale complexity in networks, Nature 466, 761 (2010)
     
     '''
-    obj = gct.alg.cdc_clustering.LinkCommunities(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.LinkCommunities(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_MOSES(name, graph, **kwargs):
@@ -504,8 +581,12 @@ def cdc_MOSES(name, graph, **kwargs):
     Aaron McDaid, Neil Hurley. Detecting highly overlapping communities with Model-based Overlapping Seed Expansion. ASONAM 2010    
     
     '''
-    obj = gct.alg.cdc_clustering.MOSES(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.MOSES(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_MSCD_AFG(name, graph, **kwargs):
@@ -525,8 +606,12 @@ def cdc_MSCD_AFG(name, graph, **kwargs):
     Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
     
     '''
-    obj = gct.alg.cdc_clustering.MSCD_AFG(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_AFG(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_MSCD_HSLSW(name, graph, **kwargs):
@@ -550,8 +635,12 @@ def cdc_MSCD_HSLSW(name, graph, **kwargs):
     Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
     
     '''
-    obj = gct.alg.cdc_clustering.MSCD_HSLSW(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_HSLSW(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_MSCD_LFK(name, graph, **kwargs):
@@ -579,8 +668,12 @@ def cdc_MSCD_LFK(name, graph, **kwargs):
     Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
     
     '''
-    obj = gct.alg.cdc_clustering.MSCD_LFK(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_LFK(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_MSCD_LFK2(name, graph, **kwargs):
@@ -607,8 +700,12 @@ def cdc_MSCD_LFK2(name, graph, **kwargs):
     Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
     
     '''
-    obj = gct.alg.cdc_clustering.MSCD_LFK2(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_LFK2(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_MSCD_RB(name, graph, **kwargs):
@@ -628,8 +725,12 @@ def cdc_MSCD_RB(name, graph, **kwargs):
     Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
     
     '''
-    obj = gct.alg.cdc_clustering.MSCD_RB(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_RB(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_MSCD_RN(name, graph, **kwargs):
@@ -649,8 +750,12 @@ def cdc_MSCD_RN(name, graph, **kwargs):
     Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
     
     '''
-    obj = gct.alg.cdc_clustering.MSCD_RN(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_RN(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_MSCD_SO(name, graph, **kwargs):
@@ -676,8 +781,12 @@ def cdc_MSCD_SO(name, graph, **kwargs):
     Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
     
     '''
-    obj = gct.alg.cdc_clustering.MSCD_SO(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_SO(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_MSCD_SOM(name, graph, **kwargs):
@@ -702,8 +811,12 @@ def cdc_MSCD_SOM(name, graph, **kwargs):
     Le Martelot, Erwan, and Chris Hankin.  "Fast multi-scale detection of relevant communities in large-scale networks." The Computer Journal 56.9 (2013): 1136-1150.
     
     '''
-    obj = gct.alg.cdc_clustering.MSCD_SOM(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_SOM(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_ParCPM(name, graph, **kwargs):
@@ -728,8 +841,12 @@ def cdc_ParCPM(name, graph, **kwargs):
         
     
     '''
-    obj = gct.alg.cdc_clustering.ParCPM(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.ParCPM(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_SVINET(name, graph, **kwargs):
@@ -763,8 +880,12 @@ def cdc_SVINET(name, graph, **kwargs):
     Prem K. Gopalan, David M. Blei. Efficient discovery of overlapping communities in massive networks. To appear in the Proceedings of the National Academy of Sciences, 2013
     
     '''
-    obj = gct.alg.cdc_clustering.SVINET(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.SVINET(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_TopGC(name, graph, **kwargs):
@@ -824,8 +945,12 @@ def cdc_TopGC(name, graph, **kwargs):
     Macropol, Kathy, and Ambuj Singh. "Scalable discovery of best clusters on large graphs." Proceedings of the VLDB Endowment 3.1-2 (2010): 693-702.
     
     '''
-    obj = gct.alg.cdc_clustering.TopGC(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.TopGC(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cdc_clique_modularity(name, graph, **kwargs):
@@ -843,8 +968,12 @@ def cdc_clique_modularity(name, graph, **kwargs):
     Yan, Bowen, and Steve Gregory. "Detecting communities in networks by merging cliques." Intelligent Computing and Intelligent Systems, 2009. ICIS 2009. IEEE International Conference on. Vol. 1. IEEE, 2009.
     
     '''
-    obj = gct.alg.cdc_clustering.clique_modularity(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cdc_clustering.clique_modularity(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def cgcc_CGGC(name, graph, **kwargs):
@@ -895,8 +1024,12 @@ def cgcc_CGGC(name, graph, **kwargs):
     Graph Partitioning and Graph Clustering 588 (2012): 187.
     
     '''
-    obj = gct.alg.cggc_clustering.CGGC(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.cggc_clustering.CGGC(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def dct_dlplm(name, graph, **kwargs):
@@ -914,8 +1047,12 @@ def dct_dlplm(name, graph, **kwargs):
     European Conference on Parallel Processing. Springer, Cham, 2018.
     
     '''
-    obj = gct.alg.dct_clustering.dlplm(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.dct_clustering.dlplm(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def dct_dlslm(name, graph, **kwargs):
@@ -933,8 +1070,12 @@ def dct_dlslm(name, graph, **kwargs):
     European Conference on Parallel Processing. Springer, Cham, 2018.
     
     '''
-    obj = gct.alg.dct_clustering.dlslm(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.dct_clustering.dlslm(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def dct_dlslm_map_eq(name, graph, **kwargs):
@@ -952,8 +1093,12 @@ def dct_dlslm_map_eq(name, graph, **kwargs):
     European Conference on Parallel Processing. Springer, Cham, 2018.
     
     '''
-    obj = gct.alg.dct_clustering.dlslm_map_eq(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.dct_clustering.dlslm_map_eq(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def dct_dlslm_no_contraction(name, graph, **kwargs):
@@ -971,8 +1116,12 @@ def dct_dlslm_no_contraction(name, graph, **kwargs):
     European Conference on Parallel Processing. Springer, Cham, 2018.
     
     '''
-    obj = gct.alg.dct_clustering.dlslm_no_contraction(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.dct_clustering.dlslm_no_contraction(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def dct_dlslm_with_seq(name, graph, **kwargs):
@@ -990,8 +1139,12 @@ def dct_dlslm_with_seq(name, graph, **kwargs):
     European Conference on Parallel Processing. Springer, Cham, 2018.
     
     '''
-    obj = gct.alg.dct_clustering.dlslm_with_seq(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.dct_clustering.dlslm_with_seq(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def dct_infomap(name, graph, **kwargs):
@@ -1010,8 +1163,12 @@ def dct_infomap(name, graph, **kwargs):
     Physical Journal Special Topics 178(1), 13–23 (2009)
     
     '''
-    obj = gct.alg.dct_clustering.infomap(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.dct_clustering.infomap(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def dct_seq_louvain(name, graph, **kwargs):
@@ -1031,8 +1188,12 @@ def dct_seq_louvain(name, graph, **kwargs):
     2008(10) (2008)
     
     '''
-    obj = gct.alg.dct_clustering.seq_louvain(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.dct_clustering.seq_louvain(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def igraph_community_edge_betweenness(name, graph, **kwargs):
@@ -1049,8 +1210,12 @@ def igraph_community_edge_betweenness(name, graph, **kwargs):
      M Girvan and MEJ Newman: Community structure in social and biological networks, Proc. Nat. Acad. Sci. USA 99, 7821-7826 (2002)
     
     '''
-    obj = gct.alg.igraph_clustering.community_edge_betweenness(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.igraph_clustering.community_edge_betweenness(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def igraph_community_fastgreedy(name, graph, **kwargs):
@@ -1067,8 +1232,12 @@ def igraph_community_fastgreedy(name, graph, **kwargs):
     A Clauset, MEJ Newman and C Moore: Finding community structure in very large networks. Phys Rev E 70, 066111 (2004).
     
     '''
-    obj = gct.alg.igraph_clustering.community_fastgreedy(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.igraph_clustering.community_fastgreedy(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def igraph_community_infomap(name, graph, **kwargs):
@@ -1086,8 +1255,12 @@ def igraph_community_infomap(name, graph, **kwargs):
     M. Rosvall, D. Axelsson, and C. T. Bergstrom: The map equation, Eur. Phys. J. Special Topics 178, 13 (2009). http://dx.doi.org/10.1140/epjst/e2010-01179-1, http://arxiv.org/abs/0906.1405.
     
     '''
-    obj = gct.alg.igraph_clustering.community_infomap(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.igraph_clustering.community_infomap(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def igraph_community_label_propagation(name, graph, **kwargs):
@@ -1104,8 +1277,12 @@ def igraph_community_label_propagation(name, graph, **kwargs):
     Raghavan, U.N. and Albert, R. and Kumara, S. Near linear time algorithm to detect community structures in large-scale networks. Phys Rev E 76:036106, 2007. http://arxiv.org/abs/0709.2938.
     
     '''
-    obj = gct.alg.igraph_clustering.community_label_propagation(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.igraph_clustering.community_label_propagation(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def igraph_community_leading_eigenvector(name, graph, **kwargs):
@@ -1122,8 +1299,12 @@ def igraph_community_leading_eigenvector(name, graph, **kwargs):
     MEJ Newman: Finding community structure in networks using the eigenvectors of matrices, arXiv:physics/0605087
     
     '''
-    obj = gct.alg.igraph_clustering.community_leading_eigenvector(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.igraph_clustering.community_leading_eigenvector(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def igraph_community_multilevel(name, graph, **kwargs):
@@ -1140,8 +1321,12 @@ def igraph_community_multilevel(name, graph, **kwargs):
     VD Blondel, J-L Guillaume, R Lambiotte and E Lefebvre: Fast unfolding of community hierarchies in large networks, J Stat Mech P10008 (2008), http://arxiv.org/abs/0803.0476
     
     '''
-    obj = gct.alg.igraph_clustering.community_multilevel(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.igraph_clustering.community_multilevel(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def igraph_community_optimal_modularity(name, graph, **kwargs):
@@ -1158,8 +1343,12 @@ def igraph_community_optimal_modularity(name, graph, **kwargs):
     TBD
     
     '''
-    obj = gct.alg.igraph_clustering.community_optimal_modularity(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.igraph_clustering.community_optimal_modularity(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def igraph_community_spinglass(name, graph, **kwargs):
@@ -1177,8 +1366,12 @@ def igraph_community_spinglass(name, graph, **kwargs):
     Traag VA and Bruggeman J: Community detection in networks with positive and negative links. Phys Rev E 80:036115 (2009). http://arxiv.org/abs/0811.2329.
     
     '''
-    obj = gct.alg.igraph_clustering.community_spinglass(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.igraph_clustering.community_spinglass(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def igraph_community_walktrap(name, graph, **kwargs):
@@ -1195,8 +1388,12 @@ def igraph_community_walktrap(name, graph, **kwargs):
     Pascal Pons, Matthieu Latapy: Computing communities in large networks using random walks, http://arxiv.org/abs/physics/0512106
     
     '''
-    obj = gct.alg.igraph_clustering.community_walktrap(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.igraph_clustering.community_walktrap(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def mcl_MCL(name, graph, **kwargs):
@@ -1212,8 +1409,12 @@ def mcl_MCL(name, graph, **kwargs):
     Stijn van Dongen, Graph Clustering by Flow Simulation. PhD thesis, University of Utrecht, May 2000
     
     '''
-    obj = gct.alg.mcl_clustering.MCL(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.mcl_clustering.MCL(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def networkit_CutClustering(name, graph, **kwargs):
@@ -1230,8 +1431,12 @@ def networkit_CutClustering(name, graph, **kwargs):
     Tarjan, Robert E.; Tsioutsiouliklis, Kostas. Graph Clustering and Minimum Cut Trees. Internet Mathematics 1 (2003), no. 4, 385–408.
     
     '''
-    obj = gct.alg.networkit_clustering.CutClustering(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.networkit_clustering.CutClustering(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def networkit_LPDegreeOrdered(name, graph, **kwargs):
@@ -1249,8 +1454,12 @@ def networkit_LPDegreeOrdered(name, graph, **kwargs):
     TBD
     
     '''
-    obj = gct.alg.networkit_clustering.LPDegreeOrdered(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.networkit_clustering.LPDegreeOrdered(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def networkit_PLM(name, graph, **kwargs):
@@ -1273,8 +1482,12 @@ def networkit_PLM(name, graph, **kwargs):
     TBD
     
     '''
-    obj = gct.alg.networkit_clustering.PLM(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.networkit_clustering.PLM(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def networkit_PLP(name, graph, **kwargs):
@@ -1298,8 +1511,12 @@ def networkit_PLP(name, graph, **kwargs):
     TBD
     
     '''
-    obj = gct.alg.networkit_clustering.PLP(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.networkit_clustering.PLP(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def alg_GossipMap(name, graph, **kwargs):
@@ -1352,8 +1569,12 @@ def alg_GossipMap(name, graph, **kwargs):
     Bae, Seung-Hee, and Bill Howe. "GossipMap: A distributed community detection algorithm for billion-edge directed graphs." High Performance Computing, Networking, Storage and Analysis, 2015 SC-International Conference for. IEEE, 2015.
     
     '''
-    obj = gct.alg.powergraph_clustering.GossipMap(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.powergraph_clustering.GossipMap(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def alg_RelaxMap(name, graph, **kwargs):
@@ -1382,8 +1603,12 @@ def alg_RelaxMap(name, graph, **kwargs):
     In Proceedings of IEEE 13th International Conference on Data Mining Workshop (ICDMW), 2013
     
     '''
-    obj = gct.alg.powergraph_clustering.RelaxMap(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.powergraph_clustering.RelaxMap(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def alg_pg_label_propagation(name, graph, **kwargs):
@@ -1418,8 +1643,12 @@ def alg_pg_label_propagation(name, graph, **kwargs):
     Gonzalez, Joseph E., et al. "Powergraph: distributed graph-parallel computation on natural graphs." OSDI. Vol. 12. No. 1. 2012.
     
     '''
-    obj = gct.alg.powergraph_clustering.pg_label_propagation(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.powergraph_clustering.pg_label_propagation(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def scan_AnyScan_Scan(name, graph, **kwargs):
@@ -1441,8 +1670,12 @@ def scan_AnyScan_Scan(name, graph, **kwargs):
     Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     
     '''
-    obj = gct.alg.scan_clustering.AnyScan_Scan(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.scan_clustering.AnyScan_Scan(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def scan_AnyScan_ScanIdealPar(name, graph, **kwargs):
@@ -1464,8 +1697,12 @@ def scan_AnyScan_ScanIdealPar(name, graph, **kwargs):
     Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     
     '''
-    obj = gct.alg.scan_clustering.AnyScan_ScanIdealPar(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.scan_clustering.AnyScan_ScanIdealPar(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def scan_AnyScan_anyScan(name, graph, **kwargs):
@@ -1487,8 +1724,12 @@ def scan_AnyScan_anyScan(name, graph, **kwargs):
     Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     
     '''
-    obj = gct.alg.scan_clustering.AnyScan_anyScan(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.scan_clustering.AnyScan_anyScan(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def scan_AnyScan_anyScanParl(name, graph, **kwargs):
@@ -1510,8 +1751,12 @@ def scan_AnyScan_anyScanParl(name, graph, **kwargs):
     Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     
     '''
-    obj = gct.alg.scan_clustering.AnyScan_anyScanParl(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.scan_clustering.AnyScan_anyScanParl(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def scan_AnyScan_pScan(name, graph, **kwargs):
@@ -1533,8 +1778,12 @@ def scan_AnyScan_pScan(name, graph, **kwargs):
     Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     
     '''
-    obj = gct.alg.scan_clustering.AnyScan_pScan(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.scan_clustering.AnyScan_pScan(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def scan_Scanpp(name, graph, **kwargs):
@@ -1555,8 +1804,12 @@ def scan_Scanpp(name, graph, **kwargs):
     Shiokawa H, Fujiwara Y, Onizuka M. SCAN++: efficient algorithm for finding clusters, hubs and outliers on large-scale graphs[J]. Proceedings of the VLDB Endowment, 2015, 8(11): 1178-1189.
     
     '''
-    obj = gct.alg.scan_clustering.Scanpp(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.scan_clustering.Scanpp(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def scan_pScan(name, graph, **kwargs):
@@ -1575,8 +1828,12 @@ def scan_pScan(name, graph, **kwargs):
     Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
     
     '''
-    obj = gct.alg.scan_clustering.pScan(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.scan_clustering.pScan(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def scan_ppScan(name, graph, **kwargs):
@@ -1595,8 +1852,12 @@ def scan_ppScan(name, graph, **kwargs):
     Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
     
     '''
-    obj = gct.alg.scan_clustering.ppScan(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.scan_clustering.ppScan(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def scan_ppScanSSE(name, graph, **kwargs):
@@ -1615,8 +1876,12 @@ def scan_ppScanSSE(name, graph, **kwargs):
     Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
     
     '''
-    obj = gct.alg.scan_clustering.ppScanSSE(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.scan_clustering.ppScanSSE(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def sklearn_AffinityPropagation(name, graph, **kwargs):
@@ -1646,8 +1911,12 @@ def sklearn_AffinityPropagation(name, graph, **kwargs):
     
     
     '''
-    obj = gct.alg.sklearn_clustering.AffinityPropagation(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.sklearn_clustering.AffinityPropagation(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def sklearn_DBSCAN(name, graph, **kwargs):
@@ -1685,8 +1954,12 @@ def sklearn_DBSCAN(name, graph, **kwargs):
     Ester, M., H. P. Kriegel, J. Sander, and X. Xu, “A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise”. In: Proceedings of the 2nd International Conference on Knowledge Discovery and Data Mining, Portland, OR, AAAI Press, pp. 226-231. 1996    
     
     '''
-    obj = gct.alg.sklearn_clustering.DBSCAN(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.sklearn_clustering.DBSCAN(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def sklearn_SpectralClustering(name, graph, **kwargs):
@@ -1746,8 +2019,12 @@ def sklearn_SpectralClustering(name, graph, **kwargs):
     Multiclass spectral clustering, 2003 Stella X. Yu, Jianbo Shi http://www1.icsi.berkeley.edu/~stellayu/publication/doc/2003kwayICCV.pdf
     
     '''
-    obj = gct.alg.sklearn_clustering.SpectralClustering(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.sklearn_clustering.SpectralClustering(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def snap_Clauset_Newman_Moore(name, graph, **kwargs):
@@ -1764,8 +2041,12 @@ def snap_Clauset_Newman_Moore(name, graph, **kwargs):
     Clauset, Aaron, Mark EJ Newman, and Cristopher Moore. "Finding community structure in very large networks." Physical review E 70.6 (2004): 066111.
     
     '''
-    obj = gct.alg.snap_clustering.Clauset_Newman_Moore(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.snap_clustering.Clauset_Newman_Moore(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def snap_Girvan_Newman(name, graph, **kwargs):
@@ -1782,8 +2063,12 @@ def snap_Girvan_Newman(name, graph, **kwargs):
     Girvan, Michelle, and Mark EJ Newman. "Community structure in social and biological networks." Proceedings of the national academy of sciences 99.12 (2002): 7821-7826.
     
     '''
-    obj = gct.alg.snap_clustering.Girvan_Newman(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.snap_clustering.Girvan_Newman(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def alg_Paris(name, graph, **kwargs):
@@ -1800,8 +2085,12 @@ def alg_Paris(name, graph, **kwargs):
     Bonald, Thomas, et al. "Hierarchical Graph Clustering using Node Pair Sampling." arXiv preprint arXiv:1806.01664 (2018).
     
     '''
-    obj = gct.alg.unsorted_clustering.Paris(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.unsorted_clustering.Paris(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def alg_lso_cluster(name, graph, **kwargs):
@@ -1880,8 +2169,12 @@ def alg_lso_cluster(name, graph, **kwargs):
     Graph clustering: does the optimization procedure matter more than the objective function?; Twan van Laarhoven and Elena Marchiori; Physical Review E 87, 012812 (2013)
     
     '''
-    obj = gct.alg.unsorted_clustering.lso_cluster(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.unsorted_clustering.lso_cluster(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 def alg_streamcom(name, graph, **kwargs):
@@ -1907,8 +2200,12 @@ def alg_streamcom(name, graph, **kwargs):
     Hollocou, Alexandre, et al. "A Streaming Algorithm for Graph Clustering." arXiv preprint arXiv:1712.04337 (2017)
     
     '''
-    obj = gct.alg.unsorted_clustering.streamcom(name)
-    return obj.run(graph, **kwargs)
+    try:
+        obj = gct.alg.unsorted_clustering.streamcom(name)
+        return obj.run(graph, **kwargs)
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
 
 
 __ALG_LIST__ += ['oslom_Infohiermap', 'oslom_Infomap', 'oslom_OSLOM', 'oslom_copra', 'oslom_louvain_method', 'oslom_lpm', 'oslom_modopt', 'pycabem_GANXiSw', 'pycabem_HiReCS', 'pycabem_LabelRank', 'cdc_CONGA', 'cdc_CliquePercolation', 'cdc_Connected_Iterative_Scan', 'cdc_DEMON', 'cdc_EAGLE', 'cdc_FastCpm', 'cdc_GCE', 'cdc_HDEMON', 'cdc_LinkCommunities', 'cdc_MOSES', 'cdc_MSCD_AFG', 'cdc_MSCD_HSLSW', 'cdc_MSCD_LFK', 'cdc_MSCD_LFK2', 'cdc_MSCD_RB', 'cdc_MSCD_RN', 'cdc_MSCD_SO', 'cdc_MSCD_SOM', 'cdc_ParCPM', 'cdc_SVINET', 'cdc_TopGC', 'cdc_clique_modularity', 'cgcc_CGGC', 'dct_dlplm', 'dct_dlslm', 'dct_dlslm_map_eq', 'dct_dlslm_no_contraction', 'dct_dlslm_with_seq', 'dct_infomap', 'dct_seq_louvain', 'igraph_community_edge_betweenness', 'igraph_community_fastgreedy', 'igraph_community_infomap', 'igraph_community_label_propagation', 'igraph_community_leading_eigenvector', 'igraph_community_multilevel', 'igraph_community_optimal_modularity', 'igraph_community_spinglass', 'igraph_community_walktrap', 'mcl_MCL', 'networkit_CutClustering', 'networkit_LPDegreeOrdered', 'networkit_PLM', 'networkit_PLP', 'alg_GossipMap', 'alg_RelaxMap', 'alg_pg_label_propagation', 'scan_AnyScan_Scan', 'scan_AnyScan_ScanIdealPar', 'scan_AnyScan_anyScan', 'scan_AnyScan_anyScanParl', 'scan_AnyScan_pScan', 'scan_Scanpp', 'scan_pScan', 'scan_ppScan', 'scan_ppScanSSE', 'sklearn_AffinityPropagation', 'sklearn_DBSCAN', 'sklearn_SpectralClustering', 'snap_Clauset_Newman_Moore', 'snap_Girvan_Newman', 'alg_Paris', 'alg_lso_cluster', 'alg_streamcom']

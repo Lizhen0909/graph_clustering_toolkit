@@ -33,7 +33,7 @@ class Test(unittest.TestCase):
         return utils.file_exists(fpath)
 
     def test_1(self):
-        bad_algs = ['igraph_community_multilevel', 'igraph_community_fastgreedy', 'igraph_community_optimal_modularity','scan_pScan', 'snap_Clauset_Newman_Moore','snap_Girvan_Newman', 'alg_Paris']  # these alg failed for this test
+        bad_algs = ['igraph_community_multilevel', 'igraph_community_fastgreedy', 'igraph_community_optimal_modularity', 'scan_pScan', 'snap_Clauset_Newman_Moore', 'snap_Girvan_Newman', 'alg_Paris']  # these alg failed for this test
         runned_algs = ['oslom_Infohiermap', 'oslom_Infomap', 'oslom_OSLOM', 'oslom_copra', 'oslom_louvain_method', 'oslom_lpm', 'oslom_modopt', 'pycabem_GANXiSw', 'pycabem_HiReCS', 'pycabem_LabelRank', 'cgcc_CGGC', 'dct_dlplm', 'dct_dlslm', 'dct_dlslm_map_eq', 'dct_dlslm_no_contraction', 'dct_dlslm_with_seq', 'dct_infomap', 'dct_seq_louvain', 'igraph_community_edge_betweenness', 'igraph_community_infomap', 'igraph_community_label_propagation', 'igraph_community_leading_eigenvector', 'igraph_community_spinglass', 'igraph_community_walktrap', 'mcl_MCL', 'networkit_CutClustering', 'networkit_LPDegreeOrdered', 'networkit_PLM', 'networkit_PLP', 'alg_GossipMap', 'alg_RelaxMap', 'alg_label_propagation', 'scan_AnyScan', 'scan_Scanpp', 'sklearn_AffinityPropagation', 'sklearn_DBSCAN', 'sklearn_SpectralClustering']
         runned_algs = []
         algs = gct.list_algorithms()
@@ -65,23 +65,26 @@ class Test(unittest.TestCase):
                     dsname2 = self.prefix + "_2"
                     a += [alg, dsname, dsname2]
                     columns += ['alg', 'data1', 'data2']
-                    cluster1 = gct.to_cluster(results[dsname + alg])
-                    cluster2 = gct.to_cluster(results[dsname2 + alg])
-                    compa = gct.ClusterComparator(cluster1, cluster2)
-                    gt = list(gct.load_local_graph(dsname).get_ground_truth().values())[0]                    
-                    a += [compa.sklean_nmi, gt.is_overlap, cluster1.is_overlap, cluster2.is_overlap,
-                          cluster1.num_cluster, cluster2.num_cluster, gt.num_cluster]
-                    columns += ['nmi_12', 'ovp_gt', 'ovp1', 'ovp2', "#c1", "#c2", '#c_gt']
-            
-                    compa = gct.ClusterComparator(gt, cluster1)            
-                    a += [compa.sklean_nmi]
-                    columns += ['nmi_t1']
-                    
-                    compa = gct.ClusterComparator(gt, cluster2)            
-                    a += [compa.sklean_nmi]
-                    columns += ['nmi_t2']
-                    
-                    lst.append(a)
+                    if dsname + alg in results and dsname2 + alg in results:
+                        cluster1 = gct.to_cluster(results[dsname + alg])
+                        cluster2 = gct.to_cluster(results[dsname2 + alg])
+                        compa = gct.ClusterComparator(cluster1, cluster2)
+                        gt = list(gct.load_local_graph(dsname).get_ground_truth().values())[0]                    
+                        a += [compa.sklean_nmi, gt.is_overlap, cluster1.is_overlap, cluster2.is_overlap,
+                              cluster1.num_cluster, cluster2.num_cluster, gt.num_cluster]
+                        columns += ['nmi_12', 'ovp_gt', 'ovp1', 'ovp2', "#c1", "#c2", '#c_gt']
+                
+                        compa = gct.ClusterComparator(gt, cluster1)            
+                        a += [compa.sklean_nmi]
+                        columns += ['nmi_t1']
+                        
+                        compa = gct.ClusterComparator(gt, cluster2)            
+                        a += [compa.sklean_nmi]
+                        columns += ['nmi_t2']
+                        
+                        lst.append(a)
+                    else:
+                        bad_algs.append(alg)
         for alg in bad_algs:
             lst.append([alg] + [None] * (len(columns) - 1))
         rdf = pd.DataFrame(lst, columns=columns)
