@@ -7,6 +7,7 @@ from gct.dataset import convert
 import igraph    
 from gct.alg.clustering import Clustering, save_result
 from gct import utils
+from gct.exception import UnsupportedException
 
 prefix='igraph'
 
@@ -29,8 +30,8 @@ class community_fastgreedy(Clustering):
         return {'lib':"igraph", "name": 'community_fastgreedy' }
     
     def run(self, data,seed=None):
-        if False and (data.is_directed())  :
-            raise Exception("only undirected is supported")
+        if (data.is_directed() or data.is_edge_mirrored):
+            raise UnsupportedException("only undirected and unmirrored graph is supported for " + self.get_meta()['name'])
         if seed is not None:self.logger.info("seed ignored")
         g = convert.to_igraph(data)
         timecost, ret = utils.timeit(lambda: g.community_fastgreedy(weights='weight' if data.is_weighted() else None))

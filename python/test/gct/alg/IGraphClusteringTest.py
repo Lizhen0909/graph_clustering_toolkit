@@ -11,6 +11,7 @@ from gct.alg.igraph_clustering import community_fastgreedy, community_infomap, \
     community_multilevel, community_optimal_modularity, \
     community_edge_betweenness, community_spinglass, community_walktrap
 import sys
+from gct.exception import UnsupportedException
 
 
 class Test(unittest.TestCase):
@@ -39,14 +40,16 @@ class Test(unittest.TestCase):
         pass
 
     def testCommunity_fastgreedy(self):
-        alg = community_fastgreedy()
-        print(sys._getframe().f_code.co_name) 
-        print (alg.run(self.graph_unweighted_undirect).get_result())
-        print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
-        
-        alg = community_fastgreedy()
-        print (alg.run(self.graph_weighted_undirect).get_result())
-        print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
+        for data in  self.graphs: 
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            if data.is_directed():
+                with self.assertRaises(UnsupportedException):
+                    alg = community_fastgreedy()
+                    print (alg.run(data).get_result())
+            else:
+                alg = community_fastgreedy()
+                print (alg.run(data).get_result())
+                print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
 
     def testCommunity_infomap(self):
         alg = community_infomap()
@@ -171,6 +174,7 @@ class Test(unittest.TestCase):
         alg = community_walktrap()
         print (alg.run(self.graph_unweighted_direct).get_result())
         print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name)) 
+
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']
