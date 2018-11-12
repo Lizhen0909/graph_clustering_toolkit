@@ -637,8 +637,9 @@ def load_local(name):
     if meta["has_ground_truth"]:
         gt = {k:Cluster(v) for k, v in meta['parq_ground_truth'].items()}
     additional_meta = None if not "additional" in meta else meta['additional'] 
+    is_edge_mirrored = meta['is_edge_mirrored']
     return Dataset(name=meta['name'], description=meta['description'], groundtruthObj=gt, edgesObj=edges, directed=meta['directed'],
-                    weighted=meta['weighted'], overide=False, additional_meta=additional_meta)
+                    weighted=meta['weighted'], overide=False, additional_meta=additional_meta,is_edge_mirrored=is_edge_mirrored)
 
     
 def list_clustering(dsname):

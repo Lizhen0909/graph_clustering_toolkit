@@ -11,6 +11,8 @@ import igraph
 import snap
 import sys
 import numpy as np 
+from gct.dataset.dataset import load_local
+
 
 class Test(unittest.TestCase):
 
@@ -38,42 +40,48 @@ class Test(unittest.TestCase):
         pass
 
     def testAsMirror(self):
-        name =sys._getframe().f_code.co_name 
+        name = sys._getframe().f_code.co_name 
 
-        lst = [[1, 2], [2, 2], [2, 3],[2, 3], [3,2]]
-        d = convert.from_edgelist(name, lst,directed=False)
+        lst = [[1, 2], [2, 2], [2, 3], [2, 3], [3, 2]]
+        d = convert.from_edgelist(name, lst, directed=False, overide=True)
         print (d.get_edges())
+        self.assertTrue(not d.is_edge_mirrored)
         self.assertEqual(3, d.num_node)
         self.assertEqual(3, d.num_edge)
-        edges =d.get_edges()
-        assert edges['src'].dtype==np.int
-        assert edges['dest'].dtype==np.int
+        edges = d.get_edges()
+        assert edges['src'].dtype == np.int
+        assert edges['dest'].dtype == np.int
         
-        d= d.as_mirror_edges(newname=None)
-        edges =d.get_edges()
+        self.assertTrue(not load_local(name).is_edge_mirrored)
+        
+        newname = name + "_new"
+        d = d.as_mirror_edges(newname=newname, overide=True)
+        edges = d.get_edges()
         print (d.get_edges())
-        assert edges['src'].dtype==np.int
-        assert edges['dest'].dtype==np.int
+        self.assertTrue(d.is_edge_mirrored)        
+        assert edges['src'].dtype == np.int
+        assert edges['dest'].dtype == np.int
         self.assertEqual(3, d.num_node)
         self.assertEqual(5, d.num_edge)
+        self.assertTrue(load_local(newname).is_edge_mirrored)
 
     def testAsUndirect(self):
-        name =sys._getframe().f_code.co_name 
+        name = sys._getframe().f_code.co_name 
 
-        lst = [[1, 2], [2, 2], [2, 3],[2, 3], [3,2]]
-        d = convert.from_edgelist(name, lst,directed=True)
+        lst = [[1, 2], [2, 2], [2, 3], [2, 3], [3, 2]]
+        d = convert.from_edgelist(name, lst, directed=True)
         print (d.get_edges())
         self.assertEqual(3, d.num_node)
         self.assertEqual(4, d.num_edge)
-        edges =d.get_edges()
-        assert edges['src'].dtype==np.int
-        assert edges['dest'].dtype==np.int
+        edges = d.get_edges()
+        assert edges['src'].dtype == np.int
+        assert edges['dest'].dtype == np.int
         
-        d= d.as_undirected(newname=None)
-        edges =d.get_edges()
+        d = d.as_undirected(newname=None)
+        edges = d.get_edges()
         print (d.get_edges())
-        assert edges['src'].dtype==np.int
-        assert edges['dest'].dtype==np.int
+        assert edges['src'].dtype == np.int
+        assert edges['dest'].dtype == np.int
         self.assertEqual(3, d.num_node)
         self.assertEqual(3, d.num_edge)
                 
@@ -85,10 +93,10 @@ class Test(unittest.TestCase):
 
         lst = [[1, 2, 0.4], [2, 2, 2], [2, 3, 12]]
         d = convert.from_edgelist(name, lst)
-        edges =d.get_edges()
-        assert edges['src'].dtype==np.int
-        assert edges['dest'].dtype==np.int
-        assert edges['weight'].dtype==np.float32
+        edges = d.get_edges()
+        assert edges['src'].dtype == np.int
+        assert edges['dest'].dtype == np.int
+        assert edges['weight'].dtype == np.float32
         
     def testToNextworkx(self):
         for data in self.graphs: 
@@ -165,7 +173,7 @@ class Test(unittest.TestCase):
 
         utils.remove_if_file_exit(config.get_data_file_path(name), is_dir=True)
         G = snap.GenRndGnm(snap.PUNGraph, 100, 1000) 
-        d = convert.from_snap(name, G,overide=True )
+        d = convert.from_snap(name, G, overide=True)
         print ("testFromSnap", d) 
 
     def testToNetworkit(self):
