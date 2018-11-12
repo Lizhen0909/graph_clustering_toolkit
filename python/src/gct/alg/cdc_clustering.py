@@ -416,7 +416,7 @@ class LinkCommunities(Clustering):
     def get_meta(self):
         return {'lib':"cdc", "name": 'LinkCommunities' }
 
-    def run(self, data, threshold=[5], seed=None):
+    def run(self, data, threshold=[0.01], seed=None):
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
         if isinstance(threshold, numbers.Number): threshold = [float(threshold)]
