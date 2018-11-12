@@ -65,23 +65,27 @@ class Test(unittest.TestCase):
                     dsname2 = self.prefix + "_2"
                     a += [alg, dsname, dsname2]
                     columns += ['alg', 'data1', 'data2']
-                    cluster1 = gct.to_cluster(results[dsname + alg])
-                    cluster2 = gct.to_cluster(results[dsname2 + alg])
-                    compa = gct.ClusterComparator(cluster1, cluster2)
-                    gt = list(gct.load_local_graph(dsname).get_ground_truth().values())[0]                    
-                    a += [compa.sklean_nmi, gt.is_overlap, cluster1.is_overlap, cluster2.is_overlap,
-                          cluster1.num_cluster, cluster2.num_cluster, gt.num_cluster]
-                    columns += ['nmi_12', 'ovp_gt', 'ovp1', 'ovp2', "#c1", "#c2", '#c_gt']
-            
-                    compa = gct.ClusterComparator(gt, cluster1)            
-                    a += [compa.sklean_nmi]
-                    columns += ['nmi_t1']
-                    
-                    compa = gct.ClusterComparator(gt, cluster2)            
-                    a += [compa.sklean_nmi]
-                    columns += ['nmi_t2']
-                    
-                    lst.append(a)
+                    if dsname + alg in results and dsname2 + alg in results:
+                        cluster1 = gct.to_cluster(results[dsname + alg])
+                        cluster2 = gct.to_cluster(results[dsname2 + alg])
+                        compa = gct.ClusterComparator(cluster1, cluster2)
+                        gt = list(gct.load_local_graph(dsname).get_ground_truth().values())[0]                    
+                        a += [compa.sklean_nmi, gt.is_overlap, cluster1.is_overlap, cluster2.is_overlap,
+                              cluster1.num_cluster, cluster2.num_cluster, gt.num_cluster]
+                        columns += ['nmi_12', 'ovp_gt', 'ovp1', 'ovp2', "#c1", "#c2", '#c_gt']
+                
+                        compa = gct.ClusterComparator(gt, cluster1)            
+                        a += [compa.sklean_nmi]
+                        columns += ['nmi_t1']
+                        
+                        compa = gct.ClusterComparator(gt, cluster2)            
+                        a += [compa.sklean_nmi]
+                        columns += ['nmi_t2']
+                        
+                        lst.append(a)
+                    else:
+                        bad_algs.append(alg)
+
         for alg in bad_algs:
             lst.append([alg] + [None] * (len(columns) - 1))
         rdf = pd.DataFrame(lst, columns=columns)
