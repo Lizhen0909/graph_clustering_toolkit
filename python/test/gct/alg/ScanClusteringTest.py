@@ -6,7 +6,7 @@ Created on Oct 27, 2018
 import unittest
 from gct.dataset import random_dataset
 from gct.alg import clustering
-from gct.alg.scan_clustering import Scanpp, pScan, AnyScan
+from gct.alg.scan_clustering import Scanpp, pScan, _AnyScan
 import sys
 
 
@@ -60,7 +60,7 @@ class Test(unittest.TestCase):
         print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
         
     def testAnyScan(self):
-        alg = AnyScan()
+        alg = _AnyScan()
         for i in range(1, 5):
             print(sys._getframe().f_code.co_name,i) 
             print (alg.run(self.graph_unweighted_undirect, algorithm=i, minpts=3, epsilon=0.5).get_result())

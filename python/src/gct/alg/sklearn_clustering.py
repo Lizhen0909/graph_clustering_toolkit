@@ -156,7 +156,7 @@ class SpectralClustering(Clustering):
         if "seed" in params:
             if  params['seed'] is not None:self.logger.info("seed ignored")
             del params['seed']
-        params['n_jobs'] = utils.get_num_thread(None if "n_jobs" in params else params['n_jobs'])
+        params['n_jobs'] = utils.get_num_thread(None if "n_jobs" not in params else params['n_jobs'])
         params['affinity'] = 'precomputed'
         if  False and ('eigen_solver' not in params or params['eigen_solver'] is None):
             if utils.check_module_available('pyamg'):
@@ -237,7 +237,7 @@ class DBSCAN(Clustering):
         if 'seed' in params:
             if params['seed'] is not None:  self.logger.info("seed ignored")
             del params['seed']
-        params['n_jobs'] = utils.get_num_thread(None if "n_jobs" in params else params['n_jobs'])
+        params['n_jobs'] = utils.get_num_thread(None if "n_jobs" not in params else params['n_jobs'])
         params['metric'] = 'precomputed'
         A = convert.to_coo_adjacency_matrix(data, simalarity=False, distance_fun='exp_minus')
         params['eps'] = float(np.median(A.data))
