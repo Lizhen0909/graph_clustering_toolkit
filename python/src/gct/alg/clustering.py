@@ -34,7 +34,6 @@ def save_result(result):
             utils.remove_if_file_exit(fpath, is_dir=False)
             raise
 
-
         
 class Result(collections.MutableMapping):
 
@@ -78,15 +77,18 @@ class Result(collections.MutableMapping):
     def result(self): 
         return self.store
 
-    def clusters(self, as_dataframe=False):
-        if self.get("multilevel"):
-            max_level = self.get('max_level')
-            if isinstance(list(self.keys())[0], str): 
-                max_level = str(max_level)
-                d = self.get('clusters')[max_level]
+    def clusters(self, as_dataframe=False, key=None):
+        if self.get("multilevel") or self.get("multiclusters"):
+            akey = list(self.get('clusters').keys())[0]
+            default_level = key
+            if key is None: default_level = self.get('max_level')
+            if default_level is None: default_level = akey
+            if isinstance(akey, str): 
+                default_level = str(default_level)
+                d = self.get('clusters')[default_level]
                 d = {int(u):v for u, v in d.items()}
             else:
-                d = self.get('clusters')[max_level]
+                d = self.get('clusters')[default_level]
         else:
             d = self.get('clusters') 
         if as_dataframe:
