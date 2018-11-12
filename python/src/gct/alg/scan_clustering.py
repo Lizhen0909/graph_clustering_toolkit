@@ -343,7 +343,7 @@ class _pScanBase(Clustering):
     def get_meta(self):
         return {'lib':"pScan (has code)", "name": 'pScan or ppScan or ppScanSSE' }
 
-    def run(self, data, mu=1, epsilon=0, prog='pScan', seed=None):
+    def run(self, data, mu=3, epsilon=0.5, prog='pScan', seed=None):
         assert prog in ['pScan', 'ppScan', 'ppScanSSE']
         if seed is not None:self.logger.info("seed ignored")
                 

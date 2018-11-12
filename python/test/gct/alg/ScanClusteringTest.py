@@ -42,11 +42,21 @@ class Test(unittest.TestCase):
         print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
 
     def testPScan(self):
+        for data in  self.graphs: 
+            alg = pScan()
+            print("Testing", sys._getframe().f_code.co_name, data.name)
+            print (alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5, prog='pScan').get_result())
+            print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
+
+    def testPScan2(self):
+        name=sys._getframe().f_code.co_name
+        data = random_dataset.generate_undirected_unweighted_random_graph_LFR(name=name, \
+                                       N=128, k=16, maxk=32, mu=0.2, minc=32)
         alg = pScan()
-        print(sys._getframe().f_code.co_name) 
+        print("Testing", name, data.name)
         print (alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5, prog='pScan').get_result())
         print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
-
+        
     def testPPScan(self):
         alg = pScan()
         print(sys._getframe().f_code.co_name) 
