@@ -2,7 +2,7 @@ import gct.alg
 from gct.alg import cggc_clustering, clustering, dct_clustering, igraph_clustering, \
     mcl_clustering, networkit_clustering, OSLOM_clustering, powergraph_clustering, \
     PyCABeM_clustering, scan_clustering, sklearn_clustering, snap_clustering, \
-    unsorted_clustering
+    cdc_clustering, unsorted_clustering
 
 from gct.alg.function import *
 from gct.alg.function import __ALG_LIST__
