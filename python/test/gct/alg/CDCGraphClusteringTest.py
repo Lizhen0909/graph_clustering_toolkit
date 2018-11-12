@@ -11,6 +11,7 @@ from gct.alg.cdc_clustering import CliquePercolation, Connected_Iterative_Scan, 
     EAGLE, clique_modularity, CONGA, LinkCommunities, TopGC, GCE, MOSES, ParCPM,\
     DEMON, HDEMON, FastCpm, MSCD_RB, MSCD_AFG, MSCD_HSLSW, MSCD_LFK, MSCD_LFK2,\
     MSCD_RN, MSCD_SO, MSCD_SOM, SVINET
+from gct.dataset.dataset import create_dataset
 
 
 class Test(unittest.TestCase):
@@ -194,13 +195,40 @@ class Test(unittest.TestCase):
             print (alg.run(data,scale_param="[1.2,2]").get_result())
             print (clustering.load_result(data.name, alg.name))   
 
-    def test_AAA(self):
+    def test_SVINET(self):
         for data in  self.graphs: 
             alg = SVINET()
             print("Testing", sys._getframe().f_code.co_name, data.name)
             print (alg.run(data ).get_result())
             print (clustering.load_result(data.name, alg.name))   
 
+    def test_AAA(self):
+
+        a = [
+            [0, 1, 1],
+            [0, 2, 1],
+            [1, 2, 1],
+            
+            [3, 4, 1],
+            [3, 5, 1],
+            [4, 5, 1],
+            
+            [6, 7, 1],
+            [7, 8, 1],
+            [6, 8, 1],
+        ]
+        
+        for i in [0, 1, 2]:
+            for j in [3, 4, 5]:
+                a.append([i, j, 0.000001])        
+        a.append([6, 4, 0.000001])        
+        
+        name=sys._getframe().f_code.co_name
+        data = create_dataset(name=name, edgesObj=a,  directed=False, weighted=True, overide=True)
+        alg = SVINET()
+        print("Testing", sys._getframe().f_code.co_name, data.name)
+        print (alg.run(data, max_iterations=1000).get_result())
+        print (clustering.load_result(data.name, alg.name))
                                         
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']

@@ -1405,6 +1405,7 @@ class SVINET(Clustering):
                 cmd.append('-file {}'.format('edges.txt'))
                 cmd.append('-n {}'.format(n_node))
                 cmd.append('-k {}'.format(n_node))
+                if max_iterations: cmd.append('-max-iterations {}'.format(max_iterations))
                 if data.is_weighted(): cmd.append('-weighted')
                 cmd.append('-findk')
                 cmd .append('&& (cat n*findk/communities_size.txt | wc -l  > num_cluster.txt) ')

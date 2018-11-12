@@ -58,7 +58,7 @@ class Test(unittest.TestCase):
 
     def test_1(self):
         bad_algs = [
-	'cdc_SVINET', #has bug
+	#'cdc_SVINET', #has bug
 	'scan_AnyScan_ScanIdealPar', #never finish
 	'scan_Scanpp', #never finish
 	]  # these alg failed for this test
@@ -72,7 +72,10 @@ class Test(unittest.TestCase):
                 runname = alg 
                 if not self.has_run(runname, dsname):
                     print ("runing ", alg, dsname)
-                    gct.run_alg(runname=runname, data=gct.load_local_graph(dsname), algname=alg, seed=123)        
+                    if alg =='cdc_SVINET':
+                        gct.run_alg(runname=runname, data=gct.load_local_graph(dsname), algname=alg, seed=123, max_iterations=1000)        
+                    else:
+                        gct.run_alg(runname=runname, data=gct.load_local_graph(dsname), algname=alg, seed=123)
                     runned_algs.append(alg)
                     print ("AAAA", runned_algs)
         results = {}
