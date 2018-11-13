@@ -10,6 +10,7 @@ import glob
 from gct.alg.clustering import Result
 import traceback
 from gct.utils import TempDir
+from fnmatch import fnmatch
 
 
 class Cluster(object):
@@ -639,7 +640,7 @@ def load_local(name):
     additional_meta = None if not "additional" in meta else meta['additional'] 
     is_edge_mirrored = meta['is_edge_mirrored']
     return Dataset(name=meta['name'], description=meta['description'], groundtruthObj=gt, edgesObj=edges, directed=meta['directed'],
-                    weighted=meta['weighted'], overide=False, additional_meta=additional_meta,is_edge_mirrored=is_edge_mirrored)
+                    weighted=meta['weighted'], overide=False, additional_meta=additional_meta, is_edge_mirrored=is_edge_mirrored)
 
     
 def list_clustering(dsname):
@@ -655,4 +656,46 @@ def list_all_clustering(print_format=False):
         return ["{}/{}".format(u, v) for u, vv in ret.items() for v in vv ]
     else:
         return ret 
+    
+    
+def list_dataset(pattern=None):
+    ret = []
+    cat = 'local'
+    names = list_local()
+    for name in names:
+        ret.append((cat, name))
+        
+    cat = 'snap'
+    from gct.dataset import snap_dataset 
+    names = snap_dataset.list_datasets()
+    for name in names:
+        ret.append((cat, name))        
 
+    cat = 'sample'
+    from gct.dataset import sample_dataset 
+    names = sample_dataset.list_datasets()
+    for name in names:
+        ret.append((cat, name))
+        
+    ret = [u for u in ret if pattern is None or fnmatch(str(u), pattern)]
+    return sorted(ret)
+
+    
+def load_dataset(name, cat=None):
+    cats = ['local', 'snap', 'sample']
+    assert cat is None or cat in cats, "category is not found"
+    if cat is not None: cats = [cat]
+    for cat in cats:
+        if cat == 'local' and local_exists(name):
+            return load_local(name)
+        elif cat == 'snap':
+            from gct.dataset import snap_dataset
+            if name in snap_dataset.list_datasets():
+                return snap_dataset.load_snap_dataset(name)
+        elif cat == 'sample':
+            from gct.dataset import sample_dataset
+            if name in sample_dataset.list_datasets():
+                return sample_dataset.load_sample_dataset(name)
+    raise Exception("data '{}' not found".format(name))
+    
+    
