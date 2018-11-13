@@ -10,16 +10,20 @@ import numpy as np
 from scipy.sparse.coo import coo_matrix
 
 
-def from_edgelist(name, edgelist , directed=False , description="", overide=True):
+def from_edgelist(name, edgelist , groundtruth=None, directed=False , description="", overide=True):
     assert len(edgelist) > 0, "Error, empty edgelist"
-    if len(edgelist[0]) == 2:
+    if isinstance(edgelist, pd.DataFrame):
+        firstrow = edgelist.iloc[0]
+    else:
+        firstrow = edgelist[0]
+    if len(firstrow) == 2:
         weighted = False 
-    elif len(edgelist[0]) == 3:
+    elif len(firstrow) == 3:
         weighted = True 
     else:
         raise Exception("Format not right")
     
-    return Dataset(name=name, edgesObj=edgelist, weighted=weighted, directed=directed, description=description, overide=overide)
+    return Dataset(name=name, edgesObj=edgelist, groundtruthObj=groundtruth, weighted=weighted, directed=directed, description=description, overide=overide)
 
     
 # turn a dataset into a networkx graph

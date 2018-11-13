@@ -12,6 +12,7 @@ import snap
 import sys
 import numpy as np 
 from gct.dataset.dataset import load_local
+import pandas as pd 
 
 
 class Test(unittest.TestCase):
@@ -89,15 +90,56 @@ class Test(unittest.TestCase):
         name = "testFromEdgelist"
         
         lst = [[1, 2], [2, 2], [2, 3]]
-        d = convert.from_edgelist(name, lst)
+        d = convert.from_edgelist(name, lst, overide=True)
 
         lst = [[1, 2, 0.4], [2, 2, 2], [2, 3, 12]]
-        d = convert.from_edgelist(name, lst)
+        d = convert.from_edgelist(name, lst, overide=True)
         edges = d.get_edges()
         assert edges['src'].dtype == np.int
         assert edges['dest'].dtype == np.int
         assert edges['weight'].dtype == np.float32
+
+    def testFromEdgelist_tuple(self):
+        name = "testFromEdgelist_tuple"
         
+        lst = [[1, 2], [2, 2], [2, 3]]
+        lst = [tuple(u) for u in lst]
+        d = convert.from_edgelist(name, lst, overide=True)
+
+        lst = [[1, 2, 0.4], [2, 2, 2], [2, 3, 12]]
+        lst = [tuple(u) for u in lst]
+        d = convert.from_edgelist(name, lst, overide=True)
+        edges = d.get_edges()
+        assert edges['src'].dtype == np.int
+        assert edges['dest'].dtype == np.int
+        assert edges['weight'].dtype == np.float32
+
+    def testFromEdgelist_ndarray(self):
+        name = "testFromEdgelist_tuple"
+        
+        lst = np.array([[1, 2], [2, 2], [2, 3]])
+        d = convert.from_edgelist(name, lst, overide=True)
+
+        lst = np.array([[1, 2, 0.4], [2, 2, 2], [2, 3, 12]])
+        d = convert.from_edgelist(name, lst, overide=True)
+        edges = d.get_edges()
+        assert edges['src'].dtype == np.int
+        assert edges['dest'].dtype == np.int
+        assert edges['weight'].dtype == np.float32        
+
+    def testFromEdgelist_dataframe(self):
+        name = "testFromEdgelist_dataframe"
+        
+        lst = pd.DataFrame([[1, 2], [2, 2], [2, 3]], columns=['src', 'dest'])
+        d = convert.from_edgelist(name, lst, overide=True)
+
+        lst = pd.DataFrame(np.array([[1, 2, 0.4], [2, 2, 2], [2, 3, 12]]), columns=['src', 'dest', 'weight'])
+        d = convert.from_edgelist(name, lst, overide=True)
+        edges = d.get_edges()
+        assert edges['src'].dtype == np.int
+        assert edges['dest'].dtype == np.int
+        assert edges['weight'].dtype == np.float32  
+                        
     def testToNextworkx(self):
         for data in self.graphs: 
             g = convert.to_networkx(data)
