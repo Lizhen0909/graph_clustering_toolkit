@@ -36,6 +36,9 @@ def save_result(result):
 
         
 class Result(collections.MutableMapping):
+    """
+    The result after running a clustering algorithm. An algorithm may result one or multiple clusters. 
+    """
 
     def __init__(self, result):
         if isinstance(result, Result):
@@ -78,6 +81,14 @@ class Result(collections.MutableMapping):
         return self.store
 
     def clusters(self, as_dataframe=False, key=None):
+        '''
+        Get a cluster. 
+        
+        :param as_dataframe: return a Pandas dataframe instread of dict
+        :param key:     if multiple clusters exists, the one with the key is returned.
+        
+        :rtype: A Pandas dataframe or a :meth:`gct.Clustering` 
+        '''
         if self.get("multilevel") or self.get("multiclusters"):
             akey = list(self.get('clusters').keys())[0]
             default_level = key
@@ -98,26 +109,65 @@ class Result(collections.MutableMapping):
                     lst.append([v, k])
             return pd.DataFrame(lst, columns=['node', 'cluster'])
         else:
-            return d
+            return Clustering(d)
+
+    @property
+    def cluster_keys(self):
+        '''
+        keys for multiclusters. 
+        '''
+        if self.is_multiclusters:
+            return self.get('clusters').keys()
+        return None 
+    
+    @property     
+    def is_multilevel(self):
+        """
+        True when the algorithm returns hierarchical clustering. A multiclusters result may not be hierarchical. 
+        """
+        return "multilevel" in self
+    
+    @property     
+    def is_multiclusters(self):
+        """
+        True when the algorithm returns multiple clustering. 
+        """
+        
+        return "multiclusters" in self  or self.is_multilevel
         
     @property     
     def runname(self):
+        '''
+        runname for the result
+        '''
         return self.get("runname")
 
     @property     
     def params(self):
+        '''
+        parameters when the algorithm ran.
+        '''
         return self.get("params")
 
     @property             
     def dataname(self):
+        '''
+        dataset name for the run
+        '''
         return self.get("dataname")
 
     @property       
     def meta(self):
+        '''
+        meta data
+        '''
         return self.get("meta", None)
 
     @property     
     def timecost(self):
+        '''
+        Time (in second) to run the algorithm.
+        '''
         return self.get("timecost")        
 
 

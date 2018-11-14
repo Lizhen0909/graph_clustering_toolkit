@@ -382,8 +382,6 @@ class _pScanBase(Clustering):
         self.result = result 
         return self 
             
-        return self 
-    
     def get_result(self):
         if hasattr(self, 'result'):
             return self.result

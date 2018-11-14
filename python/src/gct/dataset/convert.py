@@ -94,7 +94,7 @@ def from_networkx(name, graph, weighted=False, data='weight', default=1, descrip
 # turn a dataset into a igraph graph
 def to_igraph(data):
     """
-    convert the dataset to a igraph graph.
+    convert the dataset to a `iGraph <http://igraph.org/>`_ graph.
     
     :param data: :py:class:`gct.Dataset`
     :rtype: igraph graph
@@ -112,7 +112,7 @@ def to_igraph(data):
 # turn  a networkx graph into a dataset 
 def from_igraph(name, graph, data='weight', description="", overide=True):
     '''
-    create a datast from iGraph graph
+    create a datast from `iGraph <http://igraph.org/>`_ graph
     
     :param name:         identifier of the dataset
     :param graph:        a igraph graph 
@@ -195,10 +195,9 @@ def from_snap(name, graph, description="", overide=False):
     return Dataset(name, edgesObj=df, weighted=False, directed=directed, description=description, overide=overide)    
 
 
-# turn a dataset into a networkit graph
 def to_networkit(data):
     """
-    convert the dataset to a networkit graph.
+    convert the dataset to a `networkit <https://networkit.github.io/>`_ graph.
     
     :param data: :py:class:`gct.Dataset`
     :rtype: networkit graph
@@ -208,6 +207,25 @@ def to_networkit(data):
     if not utils.file_exists(fname):
         data.to_edgelist()
     return networkit.readGraph(fname, fileformat=networkit.Format.EdgeListSpaceZero, directed=data.is_directed())
+
+
+def to_graph_tool(data):
+    """
+    convert the dataset to a graph-tool graph. 
+    
+    (TBD) graph_tool support weights?
+    
+    :param data: :py:class:`gct.Dataset`
+    :rtype: graph-tool graph
+    """    
+    import graph_tool
+    fname = data.file_edges
+    if not utils.file_exists(fname):
+        data.to_edgelist()
+    
+    g = graph_tool.load_graph_from_csv(fname, directed=data.is_directed(), string_vals=False, skip_first=False, csv_options={"delimiter": " "})
+    
+    return g
 
 
 def to_coo_adjacency_matrix(data, simalarity=False, distance_fun=None):
@@ -243,6 +261,18 @@ def to_coo_adjacency_matrix(data, simalarity=False, distance_fun=None):
 
 
 def as_undirected(data, newname, description="", overide=False):
+    """
+    convert the dataset to undirected dataset 
+    
+    :param data: :py:class:`gct.Dataset`
+    :param newname: the name of the new dataset
+    :param description:    discription
+    :param overide:        When true and the named dataset already exists, it will be deleted
+    
+    :rtype: :py:class:`gct.Dataset`
+    
+    """    
+    
     edges = data.get_edges()
     if data.has_ground_truth():
         gt = data.get_ground_truth()
@@ -253,7 +283,17 @@ def as_undirected(data, newname, description="", overide=False):
                     weighted=data.is_weighted(), overide=overide)
 
     
-def as_unweight(data, newname, description="", overide=False):
+def as_unweighted(data, newname, description="", overide=False):
+    '''
+    convert the dataset to unweighted dataset 
+    
+    :param data: :py:class:`gct.Dataset`
+    :param newname: the name of the new dataset
+    :param description:    discription
+    :param overide:        When true and the named dataset already exists, it will be deleted
+    
+    :rtype: :py:class:`gct.Dataset`
+    '''
     edges = data.get_edges()[['src', 'dest']]
     if data.has_ground_truth():
         gt = data.get_ground_truth()
@@ -264,7 +304,18 @@ def as_unweight(data, newname, description="", overide=False):
                     weighted=False, overide=overide)
 
 
-def as_unweight_undirected(data, newname, description="", overide=False):
+def as_unweighted_undirected(data, newname, description="", overide=False):
+    '''
+    convert the dataset to undirected unweighted dataset 
+    
+    :param data: :py:class:`gct.Dataset`
+    :param newname: the name of the new dataset
+    :param description:    discription
+    :param overide:        When true and the named dataset already exists, it will be deleted
+    
+    :rtype: :py:class:`gct.Dataset`
+    '''
+
     edges = data.get_edges()[['src', 'dest']]
     if data.has_ground_truth():
         gt = data.get_ground_truth()

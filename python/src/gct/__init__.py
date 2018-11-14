@@ -4,7 +4,7 @@ from .alg import *
 from .alg.function import __ALG_LIST__
 from .dataset import *
 from .metrics import *
-from .dataset.dataset import Dataset
+from .dataset.dataset import Dataset, Result
 from .dataset.convert import *
 
 __all__ = __ALG_LIST__ + ['remove_results', 'remove_data', 'to_cluster', 'to_result']

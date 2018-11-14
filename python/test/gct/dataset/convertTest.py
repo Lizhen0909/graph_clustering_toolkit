@@ -144,6 +144,10 @@ class Test(unittest.TestCase):
         for data in self.graphs: 
             g = convert.to_networkx(data)
 
+    def testToGraphTool(self):
+        for data in self.graphs: 
+            g = convert.to_graph_tool(data)
+
     def testFromNextworkx(self):
         name = "testFromNextworkx"
 
