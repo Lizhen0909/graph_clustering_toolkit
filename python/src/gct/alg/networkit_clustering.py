@@ -17,12 +17,10 @@ class LPDegreeOrdered(Clustering):
     Label propagation-based community detection algorithm which processes nodes in increasing order of node degree.
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference 
-    ------------------------
-    TBD
+        TBD
     '''
     def __init__(self,name = "networkit-LPDegreeOrdered"):
         super(LPDegreeOrdered, self).__init__(name) 
@@ -60,12 +58,10 @@ class CutClustering(Clustering):
     A wrapper of *CutClustering* algorithm from NetworKit. 
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference
-    ------------------------
-    Tarjan, Robert E.; Tsioutsiouliklis, Kostas. Graph Clustering and Minimum Cut Trees. Internet Mathematics 1 (2003), no. 4, 385–408.
+        Tarjan, Robert E.; Tsioutsiouliklis, Kostas. Graph Clustering and Minimum Cut Trees. Internet Mathematics 1 (2003), no. 4, 385–408.
     '''
     def __init__(self,name = "networkit-CutClustering"):
         super(CutClustering, self).__init__(name) 
@@ -107,18 +103,17 @@ class PLP(Clustering):
     Parallel label propagation for community detection: Moderate solution quality, very short time to solution.
 
     As described in Ovelgoenne et al: An Ensemble Learning Strategy for Graph Clustering Raghavan et al. proposed 
-    a label propagation algorithm for graph clustering. This algorithm initializes every vertex of a graph with a 
+    a label propagation algorithm for graph clustering. 
+    This algorithm initializes every vertex of a graph with a 
     unique label. Then, in iterative sweeps over the set of vertices the vertex labels are updated. A vertex gets 
     the label that the maximum number of its neighbors have. The procedure is stopped when every vertex has the 
     label that at least half of its neighbors have.
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference
-    ------------------------
-    TBD
+        Ovelgönne, Michael, and Andreas Geyer-Schulz. "An ensemble learning strategy for graph clustering." Graph Partitioning and Graph Clustering 588 (2012): 187.
     '''
     def __init__(self,name = "networkit-PLP"):
         
@@ -162,17 +157,20 @@ class PLM(Clustering):
     Parallel Louvain Method - the Louvain method, optionally extended to a full multi-level algorithm with refinement
 
     Arguments
-    --------------------
-    refine (bool, optional) – Add a second move phase to refine the communities.
-    gamma (double) – Multi-resolution modularity parameter: 1.0 -> standard modularity 0.0 -> one community 2m -> singleton communities
-    par (string) – parallelization strategy
-    maxIter (count) – maximum number of iterations for move phase
-    turbo (bool, optional) – faster but uses O(n) additional memory per thread
-    recurse (bool, optional) – use recursive coarsening, see http://journals.aps.org/pre/abstract/10.1103/PhysRevE.89.049902 for some explanations (default: true)
+        refine (bool, optional) – Add a second move phase to refine the communities.
+        
+        gamma (double) – Multi-resolution modularity parameter: 1.0 -> standard modularity 0.0 -> one community 2m -> singleton communities
+        
+        par (string) – parallelization strategy
+        
+        maxIter (count) – maximum number of iterations for move phase
+        
+        turbo (bool, optional) – faster but uses O(n) additional memory per thread
+        
+        recurse (bool, optional) – use recursive coarsening, see http://journals.aps.org/pre/abstract/10.1103/PhysRevE.89.049902 for some explanations (default: true)
 
     Reference
-    ------------------------
-    TBD
+        TBD
     '''
     def __init__(self,name = "networkit-PLM"):
         

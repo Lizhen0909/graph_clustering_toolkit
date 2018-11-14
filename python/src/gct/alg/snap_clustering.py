@@ -15,12 +15,10 @@ class Clauset_Newman_Moore(Clustering):
     A wrapper of *CommunityCNM* algorithm from SNAP 
 
     Arguments
-    --------------------
-    None 
+        None 
     
     Reference
-    ------------------------
-    Clauset, Aaron, Mark EJ Newman, and Cristopher Moore. "Finding community structure in very large networks." Physical review E 70.6 (2004): 066111.
+        Clauset, Aaron, Mark EJ Newman, and Cristopher Moore. "Finding community structure in very large networks." Physical review E 70.6 (2004): 066111.
     '''   
     
     def __init__(self,name = "SNAP-Clauset_Newman_Moore"):
@@ -71,12 +69,10 @@ class Girvan_Newman(Clustering):
     A wrapper of *CommunityGirvanNewman* algorithm from SNAP 
 
     Arguments
-    --------------------
-    None 
+        None 
     
     Reference
-    ------------------------
-    Girvan, Michelle, and Mark EJ Newman. "Community structure in social and biological networks." Proceedings of the national academy of sciences 99.12 (2002): 7821-7826.
+        Girvan, Michelle, and Mark EJ Newman. "Community structure in social and biological networks." Proceedings of the national academy of sciences 99.12 (2002): 7821-7826.
     '''   
 
     def __init__(self,name = "SNAP-Girvan_Newman"):

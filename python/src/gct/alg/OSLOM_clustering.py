@@ -14,18 +14,15 @@ prefix = 'oslom'
 
 class Infomap(Clustering):
     '''
-    A wrapper of *infomap* collected from `OSLOM <http://www.oslom.org/index.html>`
+    A wrapper of *infomap* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
     Arguments
-    --------------------
-    seed : int
-        random seed
+        seed : int,         random seed
 
     Reference 
-    ------------------------ 
-    Rosvall, M. and Bergstrom, C. T. Maps of random
-    walks on complex networks reveal community structure. Proc. Natl. Acad. Sci.
-    USA 105, 11181123 (2008).
+        Rosvall, M. and Bergstrom, C. T. Maps of random
+        walks on complex networks reveal community structure. Proc. Natl. Acad. Sci.
+        USA 105, 11181123 (2008).
     '''        
 
     def __init__(self, name="oslom_infomap"):
@@ -86,18 +83,15 @@ class Infomap(Clustering):
 
 class Infohiermap(Clustering):
     '''
-    A wrapper of *Hierarchical Infomap* collected from `OSLOM <http://www.oslom.org/index.html>`
+    A wrapper of *Hierarchical Infomap* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
     Arguments
-    --------------------
-    seed : int
-        random seed
+        seed : int,         random seed
 
     Reference 
-    ------------------------
-    Martin Rosvall and Carl T. Bergstrom Multilevel compression of random walks on
-    networks reveals hierarchical organization in large integrated systems. PLoS ONE 6(4):
-    e18209 (2011).     
+        Martin Rosvall and Carl T. Bergstrom Multilevel compression of random walks on
+        networks reveals hierarchical organization in large integrated systems. PLoS ONE 6(4):
+        e18209 (2011).     
     '''        
 
     def __init__(self, name="oslom_infohiermap"):
@@ -151,17 +145,14 @@ class Infohiermap(Clustering):
     
 class lpm(Clustering):
     '''
-    A wrapper of *Label Propagation Method* collected from `OSLOM <http://www.oslom.org/index.html>`
+    A wrapper of *Label Propagation Method* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
     Arguments
-    --------------------
-    seed : int
-        random seed
+        seed : int,         random seed
 
     Reference 
-    ------------------------
-    Raghavan, U. N., Albert, R. and Kumara, S. Near linear time algorithm to detect
-    community structures in large-scale networks. Phys. Rev. E 76, 036106 (2007).    
+        Raghavan, U. N., Albert, R. and Kumara, S. Near linear time algorithm to detect
+        community structures in large-scale networks. Phys. Rev. E 76, 036106 (2007).    
     '''            
 
     def __init__(self, name="oslom_lpm"):
@@ -213,17 +204,14 @@ class lpm(Clustering):
 
 class louvain_method(Clustering):
     '''
-    A wrapper of *Louvain* algorithm collected from `OSLOM <http://www.oslom.org/index.html>`
+    A wrapper of *Louvain* algorithm collected from `OSLOM <http://www.oslom.org/index.html>`_
     
     Arguments
-    --------------------
-    seed : int
-        random seed
+        seed : int, random seed
 
     Reference 
-    ------------------------
-    V.D. Blondel, J.-L. Guillaume, R. Lambiotte and E. Lefebvre Fast unfolding of com-
-    munity hierarchies in large networks. J. Stat. Mech. 2008 (10): P10008  
+        V.D. Blondel, J.-L. Guillaume, R. Lambiotte and E. Lefebvre Fast unfolding of com-
+        munity hierarchies in large networks. J. Stat. Mech. 2008 (10): P10008  
     '''
 
     def __init__(self, name="oslom_louvain_method"):
@@ -275,29 +263,28 @@ class louvain_method(Clustering):
 
 class copra(Clustering):
     '''
-    A wrapper of *COPRA (Community Overlap PRopagation Algorithm)* collected from `OSLOM <http://www.oslom.org/index.html>`
+    A wrapper of *COPRA (Community Overlap PRopagation Algorithm)* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
     Arguments
-    --------------------
-    Usage: java COPRA <file> <options>
-    Options:
-      -bi            <file> is a bipartite network. "-w" not allowed.
-      -w             <file> is a weighted unipartite network. "-bi" not allowed.
-      -v <v>         <v> is maximum number of communities/vertex. Default: 1.
-      -vs <v1> <v2>  Repeats for -v <v> for all <v> between <v1>-<v2>.
-      -prop <p>      <p> is maximum number of propagations. Default: no limit.
-      -repeat <r>    Repeats <r> times, for each <v>, and computes average.
-      -mo            Compute the overlap modularity of each solution.
-      -nosplit       Don't split discontiguous communities.
-      -extrasimplify Simplify communities again after splitting.
-      -q             Don't show information when starting program.
-
+        Usage: java COPRA <file> <options>
+        
+        ============== ===============================================================
+        -bi            <file> is a bipartite network. "-w" not allowed.
+        -w             <file> is a weighted unipartite network. "-bi" not allowed.
+        -v <v>         <v> is maximum number of communities/vertex. Default: 1.
+        -vs <v1> <v2>  Repeats for -v <v> for all <v> between <v1>-<v2>.
+        -prop <p>      <p> is maximum number of propagations. Default: no limit.
+        -repeat <r>    Repeats <r> times, for each <v>, and computes average.
+        -mo            Compute the overlap modularity of each solution.
+        -nosplit       Don't split discontiguous communities.
+        -extrasimplify Simplify communities again after splitting.
+        -q             Don't show information when starting program.
+        ============== ===============================================================
 
     Reference 
-    ------------------------
-    Lancichinetti, Andrea, Santo Fortunato, and János Kertész. 
-    "Detecting the overlapping and hierarchical community structure in complex networks." 
-    New Journal of Physics 11.3 (2009): 033015.  
+        Lancichinetti, Andrea, Santo Fortunato, and János Kertész. 
+        "Detecting the overlapping and hierarchical community structure in complex networks." 
+        New Journal of Physics 11.3 (2009): 033015.  
     '''
     
     def __init__(self, name="oslom_copra"):
@@ -356,22 +343,24 @@ class copra(Clustering):
 
 class modopt(Clustering):
     '''
-    A wrapper of *Modularity Optimization (Simulated Annealing)* collected from `OSLOM <http://www.oslom.org/index.html>`
+    A wrapper of *Modularity Optimization (Simulated Annealing)* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
     Arguments
-    --------------------
-    ./modopt [netfile] [random_seed] [lambda] [trials] [temp_step] [initial_temp]
-    default random_seed = 1
-    default lambda= 1
-    default trials= 5
-    default temp_step= 0.999
-    default initial_temp= 1e-6
+        ./modopt [netfile] [random_seed] [lambda] [trials] [temp_step] [initial_temp]
+        
+        default random_seed = 1
+        
+        default lambda= 1
+        
+        default trials= 5
+        
+        default temp_step= 0.999
+        
+        default initial_temp= 1e-6
 
     Reference 
-    ------------------------
-    Sales-Pardo, M., Guimer, R., Moreira, A. A. and Amaral, L. A. N Extracting the
-    hierarchical organization of complex systems. Proc. Natl. Acad. Sci. USA 104, 1522415229
-    (2007).
+        Sales-Pardo, M., Guimer, R., Moreira, A. A. and Amaral, L. A. N Extracting the
+        hierarchical organization of complex systems. Proc. Natl. Acad. Sci. USA 104, 1522415229 (2007).
     '''
 
     def __init__(self, name="oslom_modopt"):
@@ -432,11 +421,9 @@ class modopt(Clustering):
 
 class OSLOM(Clustering):
     '''
-    A wrapper of *OSLOM (Order Statistics Local Optimization Method)* collected from `OSLOM <http://www.oslom.org/index.html>`
+    A wrapper of *OSLOM (Order Statistics Local Optimization Method)* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
     Arguments
-    --------------------
-    OPTIONS
     
       [-r R]:                       sets the number of runs for the first hierarchical level, bigger this value, more accurate the output (of course, it takes more). Default value is 10.
     
@@ -466,9 +453,8 @@ class OSLOM(Clustering):
 
 
     Reference 
-    ------------------------
-    A. Lancichinetti, F. Radicchi, J.J. Ramasco and S. Fortunato Finding statistically sig-
-    nificant communities in networks PloS One 6, e18961 (2011)
+        A. Lancichinetti, F. Radicchi, J.J. Ramasco and S. Fortunato Finding statistically sig-
+        nificant communities in networks PloS One 6, e18961 (2011)
     '''
 
     def __init__(self, name="oslom_oslom"):

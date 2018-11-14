@@ -11,14 +11,14 @@ prefix='mcl'
 
 class MCL(Clustering):
     '''
-    A wrapper of *MCL (Markov Cluster Algorithm)* from `https://micans.org/mcl/`
+    A wrapper of *MCL (Markov Cluster Algorithm)* from https://micans.org/mcl/
     
     Arguments
-    --------------------
-    Since there are a lot options for mcl. refer to https://micans.org/mcl/ for all of them.
-    However only specify algrithm options, don't specify file/folder/format related option.
-    ------------------------
-    Stijn van Dongen, Graph Clustering by Flow Simulation. PhD thesis, University of Utrecht, May 2000
+        Since there are a lot options for mcl. refer to https://micans.org/mcl/man/mcl.html for all of them.
+        However only specify algrithm options, don't specify file/folder/format related option.
+    
+    Reference
+        Stijn van Dongen, Graph Clustering by Flow Simulation. PhD thesis, University of Utrecht, May 2000
     '''
     def __init__(self, name="mcl"):
         

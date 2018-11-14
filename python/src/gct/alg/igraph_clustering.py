@@ -16,12 +16,10 @@ class community_fastgreedy(Clustering):
     A wrapper of *community_fastgreedy* algorithm from iGraph
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference 
-    ------------------------
-    A Clauset, MEJ Newman and C Moore: Finding community structure in very large networks. Phys Rev E 70, 066111 (2004).
+        A Clauset, MEJ Newman and C Moore: Finding community structure in very large networks. Phys Rev E 70, 066111 (2004).
     '''
     def __init__(self,name = "igraph-community_fastgreedy"):
         super(community_fastgreedy, self).__init__(name) 
@@ -61,13 +59,12 @@ class community_infomap(Clustering):
     A wrapper of *community_infomap* algorithm from iGraph
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference 
-    ------------------------
-    M. Rosvall and C. T. Bergstrom: Maps of information flow reveal community structure in complex networks, PNAS 105, 1118 (2008). http://dx.doi.org/10.1073/pnas.0706851105, http://arxiv.org/abs/0707.0609.
-    M. Rosvall, D. Axelsson, and C. T. Bergstrom: The map equation, Eur. Phys. J. Special Topics 178, 13 (2009). http://dx.doi.org/10.1140/epjst/e2010-01179-1, http://arxiv.org/abs/0906.1405.
+    M. Rosvall and C. T. Bergstrom: Maps of information flow reveal community structure in complex networks, PNAS 105, 1118 (2008). http://dx.doi.org/10.1073/pnas.0706851105, http://arxiv.org/abs/0707.0609
+    
+    M. Rosvall, D. Axelsson, and C. T. Bergstrom: The map equation, Eur. Phys. J. Special Topics 178, 13 (2009). http://dx.doi.org/10.1140/epjst/e2010-01179-1, http://arxiv.org/abs/0906.1405
     '''
     def __init__(self,name = "igraph-community_infomap"):
         super(community_infomap, self).__init__(name) 
@@ -107,12 +104,10 @@ class community_leading_eigenvector(Clustering):
     A wrapper of *community_leading_eigenvector* algorithm from iGraph
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference 
-    ------------------------
-    MEJ Newman: Finding community structure in networks using the eigenvectors of matrices, arXiv:physics/0605087
+        MEJ Newman: Finding community structure in networks using the eigenvectors of matrices, arXiv:physics/0605087
     '''
 
     def __init__(self,name = "igraph-community_leading_eigenvector"):
@@ -153,12 +148,10 @@ class community_label_propagation(Clustering):
     A wrapper of *community_label_propagation* algorithm from iGraph
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference 
-    ------------------------
-    Raghavan, U.N. and Albert, R. and Kumara, S. Near linear time algorithm to detect community structures in large-scale networks. Phys Rev E 76:036106, 2007. http://arxiv.org/abs/0709.2938.
+        Raghavan, U.N. and Albert, R. and Kumara, S. Near linear time algorithm to detect community structures in large-scale networks. Phys Rev E 76:036106, 2007. http://arxiv.org/abs/0709.2938.
     '''
 
     def __init__(self,name = "igraph-community_label_propagation"):
@@ -199,12 +192,10 @@ class community_multilevel(Clustering):
     A wrapper of *community_multilevel* algorithm from iGraph
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference 
-    ------------------------
-    VD Blondel, J-L Guillaume, R Lambiotte and E Lefebvre: Fast unfolding of community hierarchies in large networks, J Stat Mech P10008 (2008), http://arxiv.org/abs/0803.0476
+        VD Blondel, J-L Guillaume, R Lambiotte and E Lefebvre: Fast unfolding of community hierarchies in large networks, J Stat Mech P10008 (2008), http://arxiv.org/abs/0803.0476
     '''
     def __init__(self,name = "igraph-community_multilevel"):
         super(community_multilevel, self).__init__(name) 
@@ -244,12 +235,10 @@ class community_optimal_modularity(Clustering):
     A wrapper of *community_optimal_modularity* algorithm from iGraph
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference 
-    ------------------------
-    TBD
+        TBD
     '''
     def __init__(self,name = "igraph-community_optimal_modularity"):
         
@@ -290,12 +279,10 @@ class community_edge_betweenness(Clustering):
     A wrapper of *community_edge_betweenness* algorithm from iGraph
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference 
-    ------------------------
-     M Girvan and MEJ Newman: Community structure in social and biological networks, Proc. Nat. Acad. Sci. USA 99, 7821-7826 (2002)
+        M Girvan and MEJ Newman: Community structure in social and biological networks, Proc. Nat. Acad. Sci. USA 99, 7821-7826 (2002)
     '''
     def __init__(self,name = "igraph-community_edge_betweenness"):
         
@@ -333,15 +320,14 @@ class community_edge_betweenness(Clustering):
 class community_spinglass(Clustering):
     '''
     A wrapper of *community_spinglass* algorithm from iGraph
-    
+
     Arguments
-    --------------------
-    None
+        None
 
     Reference 
-    ------------------------
-    Reichardt J and Bornholdt S: Statistical mechanics of community detection. Phys Rev E 74:016110 (2006). http://arxiv.org/abs/cond-mat/0603718.
-    Traag VA and Bruggeman J: Community detection in networks with positive and negative links. Phys Rev E 80:036115 (2009). http://arxiv.org/abs/0811.2329.
+        Reichardt J and Bornholdt S: Statistical mechanics of community detection. Phys Rev E 74:016110 (2006). http://arxiv.org/abs/cond-mat/0603718.
+        
+        Traag VA and Bruggeman J: Community detection in networks with positive and negative links. Phys Rev E 80:036115 (2009). http://arxiv.org/abs/0811.2329.
     '''
     def __init__(self,name = "igraph-community_spinglass"):
         super(community_spinglass, self).__init__(name) 
@@ -380,12 +366,10 @@ class community_walktrap(Clustering):
     A wrapper of *community_walktrap* algorithm from iGraph
     
     Arguments
-    --------------------
-    None
+        None
 
     Reference 
-    ------------------------
-    Pascal Pons, Matthieu Latapy: Computing communities in large networks using random walks, http://arxiv.org/abs/physics/0512106
+        Pascal Pons, Matthieu Latapy: Computing communities in large networks using random walks, http://arxiv.org/abs/physics/0512106
     '''
 
     def __init__(self,name = "igraph-community_walktrap"):

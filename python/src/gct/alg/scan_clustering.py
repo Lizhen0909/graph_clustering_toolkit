@@ -17,16 +17,17 @@ class Scanpp(Clustering):
     A wrapper of *scan++* algorithm  
 
     Arguments
-    --------------------
-    option    arguments (Default)    description
-    -e    Real number between 0 and 1 (Default: 0)    Set the epsilon parameter for the clustering.
-    -m    Natural number (Default: 1)    Set the mu parameter for the clustering.
-    -v    No arguments are required.    Display statistics of the clustering.
-    -r    No arguments are required.    Display the clustering results.
+    
+    ===========   ========================================    ===============================================
+        option    arguments (Default)                         description
+        -e        Real number between 0 and 1 (Default: 0)    Set the epsilon parameter for the clustering.
+        -m        Natural number (Default: 1)                 Set the mu parameter for the clustering.
+        -v        No arguments are required.                    Display statistics of the clustering.
+        -r        No arguments are required.                    Display the clustering results.
+    ===========   ========================================    ===============================================
     
     Reference
-    ------------------------
-    Shiokawa H, Fujiwara Y, Onizuka M. SCAN++: efficient algorithm for finding clusters, hubs and outliers on large-scale graphs[J]. Proceedings of the VLDB Endowment, 2015, 8(11): 1178-1189.
+        Shiokawa H, Fujiwara Y, Onizuka M. SCAN++: efficient algorithm for finding clusters, hubs and outliers on large-scale graphs[J]. Proceedings of the VLDB Endowment, 2015, 8(11): 1178-1189.
     '''   
 
     def __init__(self, name="scanpp"):
@@ -84,38 +85,35 @@ class _AnyScan(Clustering):
     A wrapper of *anyscan* algorithm  
 
     Arguments
-    --------------------
-    Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
-            -c algorithm: algorithm used 
-            -i filename     : file containing input data to be clustered
-            -g gname        : file containing ground truth 
-            -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
-            -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
-            -o output       : clustering results, format, (each line, point id, clusterid)
-            -a alpha    : block size alpha 
-            -b beta     : block size beta 
-            -t threads      : number of threads to be employed
+        Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
+                -c algorithm: algorithm used 
+                -i filename     : file containing input data to be clustered
+                -g gname        : file containing ground truth 
+                -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
+                -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
+                -o output       : clustering results, format, (each line, point id, clusterid)
+                -a alpha    : block size alpha 
+                -b beta     : block size beta 
+                -t threads      : number of threads to be employed
     
-    Example:
+        Example:
+            ./anyscan -c 5 -i test04.adj -g label.gold -o out.txt -m 4 -e 0.5 -a 32768 -b 32768 -t 8
     
-    ./anyscan -c 5 -i test04.adj -g label.gold -o out.txt -m 4 -e 0.5 -a 32768 -b 32768 -t 8
+        Ground truth and output can be ignored.
     
-    Ground truth and output can be ignored.
-    
-    The algorithm 
-    
-    c = 1 : The orginal SCAN algorithm
-    c = 2 : The algorithm pSCAN
-    c = 3 : The anytime SCAN algorithm (anyscan)
-    c = 4 : AnySCAN in parallel
-    c = 5 : Ideal parallel SCAN
-    
-    AnySCAN uses ltcmalloc for aiding the memory allocation. 
+        The algorithm 
+        
+        c = 1 : The orginal SCAN algorithm
+        c = 2 : The algorithm pSCAN
+        c = 3 : The anytime SCAN algorithm (anyscan)
+        c = 4 : AnySCAN in parallel
+        c = 5 : Ideal parallel SCAN
+        
+        AnySCAN uses ltcmalloc for aiding the memory allocation. 
     
     
     Reference
-    ------------------------
-    Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
+        Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     '''   
 
     def __init__(self, name="anyScan"):
@@ -186,17 +184,15 @@ class AnyScan_ScanIdealPar(_AnyScan):
     A wrapper of *scanIdealParl@anyscan* algorithm  
 
     Arguments
-    --------------------
-    Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
-            -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
-            -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
-            -a alpha    : block size alpha 
-            -b beta     : block size beta 
-            -t threads      : number of threads to be employed
+        Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
+                -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
+                -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
+                -a alpha    : block size alpha 
+                -b beta     : block size beta 
+                -t threads      : number of threads to be employed
     
     Reference
-    ------------------------
-    Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
+        Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     '''   
 
     def __init__(self, name="anyScan_scan"):
@@ -216,17 +212,15 @@ class AnyScan_Scan(_AnyScan):
     A wrapper of *scan@anyscan* algorithm  
 
     Arguments
-    --------------------
-    Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
-            -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
-            -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
-            -a alpha    : block size alpha 
-            -b beta     : block size beta 
-            -t threads      : number of threads to be employed
+        Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
+                -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
+                -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
+                -a alpha    : block size alpha 
+                -b beta     : block size beta 
+                -t threads      : number of threads to be employed
     
     Reference
-    ------------------------
-    Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
+        Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     '''   
 
     def __init__(self, name="anyScan_scan"):
@@ -244,17 +238,15 @@ class AnyScan_pScan(_AnyScan):
     A wrapper of *pScan@anyscan* algorithm  
 
     Arguments
-    --------------------
-    Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
-            -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
-            -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
-            -a alpha    : block size alpha 
-            -b beta     : block size beta 
-            -t threads      : number of threads to be employed
+        Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
+                -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
+                -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
+                -a alpha    : block size alpha 
+                -b beta     : block size beta 
+                -t threads      : number of threads to be employed
     
     Reference
-    ------------------------
-    Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
+        Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     '''   
 
     def __init__(self, name="anyScan_pscan"):
@@ -272,17 +264,15 @@ class AnyScan_anyScan(_AnyScan):
     A wrapper of *anyscan* algorithm  
 
     Arguments
-    --------------------
-    Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
-            -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
-            -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
-            -a alpha    : block size alpha 
-            -b beta     : block size beta 
-            -t threads      : number of threads to be employed
+        Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
+                -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
+                -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
+                -a alpha    : block size alpha 
+                -b beta     : block size beta 
+                -t threads      : number of threads to be employed
     
     Reference
-    ------------------------
-    Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
+        Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     '''   
 
     def __init__(self, name="AnyScan_anyScan"):
@@ -300,17 +290,15 @@ class AnyScan_anyScanParl(_AnyScan):
     A wrapper of *anyscan parallel* algorithm  
 
     Arguments
-    --------------------
-    Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
-            -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
-            -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
-            -a alpha    : block size alpha 
-            -b beta     : block size beta 
-            -t threads      : number of threads to be employed
+        Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
+                -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
+                -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
+                -a alpha    : block size alpha 
+                -b beta     : block size beta 
+                -t threads      : number of threads to be employed
     
     Reference
-    ------------------------
-    Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
+        Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
     '''   
 
     def __init__(self, name="AnyScan_anyScanParl"):
@@ -328,15 +316,15 @@ class _pScanBase(Clustering):
     A wrapper of *pScan, ppScan, ppScanSSE* algorithm  
 
     Arguments
-    --------------------
-    prog:         one of pScan, ppScan, ppScanSSE
-    epsilon:     similarity-threshold 
-    mu:         density-threshold
     
+    =============  ======================================
+        prog:         one of pScan, ppScan, ppScanSSE
+        epsilon:     similarity-threshold 
+        mu:         density-threshold
+    =============  ======================================    
     Reference
-    ------------------------
-    Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
-    Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
+        Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
+        Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
     '''   
 
     def __init__(self, name="_pScanBase"):
@@ -408,14 +396,16 @@ class ppScan(_pScanBase):
     A wrapper of *ppScan* algorithm  
 
     Arguments
-    --------------------
-    epsilon:     similarity-threshold 
-    mu:         density-threshold
+    
+    =============  ======================================    
+        epsilon:     similarity-threshold 
+        mu:         density-threshold
+    =============  ======================================
     
     Reference
-    ------------------------
-    Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
-    Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
+        Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
+        
+        Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
     '''   
 
     def __init__(self, name="ppScan"):
@@ -434,14 +424,16 @@ class pScan(_pScanBase):
     A wrapper of *pScan* algorithm  
 
     Arguments
-    --------------------
-    epsilon:     similarity-threshold 
-    mu:         density-threshold
+    
+    =============  ======================================
+        epsilon:     similarity-threshold 
+        mu:         density-threshold
+    =============  ======================================
     
     Reference
-    ------------------------
-    Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
-    Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
+        Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
+        
+        Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
     '''   
 
     def __init__(self, name="pScan"):
@@ -460,14 +452,16 @@ class ppScanSSE(_pScanBase):
     A wrapper of *ppScanSSE* algorithm  
 
     Arguments
-    --------------------
-    epsilon:     similarity-threshold 
-    mu:         density-threshold
+    
+    =============  ======================================
+        epsilon:     similarity-threshold 
+        mu:         density-threshold
+    =============  ======================================
     
     Reference
-    ------------------------
-    Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
-    Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
+        Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
+
+        Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA    
     '''   
 
     def __init__(self, name="ppScanSSE"):
