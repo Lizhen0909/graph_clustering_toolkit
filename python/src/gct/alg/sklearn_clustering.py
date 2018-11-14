@@ -223,12 +223,14 @@ class DBSCAN(Clustering):
     '''
 
     def __init__(self, name="sklearn_DBSCAN"):
-        
         super(DBSCAN, self).__init__(name) 
-    
+
     def get_meta(self):
         return {'lib':"sklearn", "name": 'DBSCAN' }
 
+    def ignore_export(self):
+        pass 
+    
     def run(self, data, **kargs):
         
         if False and (data.is_directed()):
@@ -240,7 +242,7 @@ class DBSCAN(Clustering):
         params['n_jobs'] = utils.get_num_thread(None if "n_jobs" not in params else params['n_jobs'])
         params['metric'] = 'precomputed'
         A = convert.to_coo_adjacency_matrix(data, simalarity=False, distance_fun='exp_minus')
-        params['eps'] = float(np.median(A.data))
+        params['eps'] = 0.5 if not data.is_weighted() else float(np.mean(data.get_edges()['weight']))
 
         def fun():
             obj = sklearn.cluster.DBSCAN(**params)

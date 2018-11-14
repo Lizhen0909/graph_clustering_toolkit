@@ -201,13 +201,15 @@ class AnyScan_ScanIdealPar(_AnyScan):
 
     def __init__(self, name="anyScan_scan"):
         super(AnyScan_ScanIdealPar, self).__init__(name) 
-
+        
     def run(self, data, **kargs):
         params = dict(kargs)
         params['algorithm'] = 5
         params['data'] = data
         return super(AnyScan_ScanIdealPar, self).run(**params)
 
+    def ignore_export(self):
+        pass 
         
 class AnyScan_Scan(_AnyScan):
     '''
