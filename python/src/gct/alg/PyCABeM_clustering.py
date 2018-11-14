@@ -228,7 +228,7 @@ class GANXiSw(Clustering):
             data.to_edgelist()
         
         txt_params = " ".join(["-{} {}".format(k, v) for k, v in params.items()]) 
-        cmd = "java -jar {} -i {} {} ".format(config.GANXISW_PROG, "edges.txt", txt_params)
+        cmd = "{} -jar {} -i {} {} ".format(utils.get_java_command(), config.GANXISW_PROG, "edges.txt", txt_params)
         with utils.TempDir() as tmp_dir:
             utils.remove_if_file_exit(os.path.join(tmp_dir, "output"), True)
             utils.create_dir_if_not_exists(os.path.join(tmp_dir, "output"))

@@ -192,4 +192,11 @@ def get_num_thread(nthread=None):
     if nthread is None  or nthread < 1:
         nthread = max(1, multiprocessing.cpu_count() - 1)
     return nthread  
+
+    
+def get_java_command():
+    if 'GCT_JAVA_OPT' in os.environ:
+        return "java " + os.environ['GCT_JAVA_OPT']
+    else: 
+        return "java"
     

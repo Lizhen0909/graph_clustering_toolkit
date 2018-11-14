@@ -5,6 +5,7 @@ Created on Oct 23, 2018
 '''
 import unittest
 from gct.dataset import law_dataset as dataset 
+import os
 
 
 class Test(unittest.TestCase):
@@ -13,6 +14,7 @@ class Test(unittest.TestCase):
         # return #TBD
         for name in dataset.list_datasets():
             if name in ['cnr-2000']:
+                os.environ['GCT_JAVA_OPT']="-Xmx1g"
                 ds = dataset.load_law_dataset(name, overide=True)
                 print (ds)  
                 ds = dataset.load_law_dataset(name, overide=False)

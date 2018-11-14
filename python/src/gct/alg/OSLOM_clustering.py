@@ -319,7 +319,7 @@ class copra(Clustering):
             pajek = os.path.join(tmp_dir, 'edges.txt')
             utils.remove_if_file_exit(pajek)
             os.symlink(data.file_edges, pajek)
-            cmd = "java -cp {} COPRA {} -w -v {}".format(config.get_OSLOM_prog('copra', data.is_directed()), pajek, v)
+            cmd = "{} -cp {} COPRA {} -w -v {}".format(utils.get_java_command(), config.get_OSLOM_prog('copra', data.is_directed()), pajek, v)
             if (v1 is not  None and v2 is not None): cmd += "-vs {} {}".format(v1, v2)
             if prop is not None: cmd += ' -prop {}'.format(prop)
             if repeat is not None:cmd += ' -repeat {}'.format(repeat)

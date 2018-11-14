@@ -70,7 +70,7 @@ class LAWDatasetConfig(object):
         graph_file = config.get_download_file_path(self.name, self.name + '.graph')
         self.logger.info("reading {}".format(graph_file))
 
-        cmd = "java -server -cp {} it.unimi.dsi.webgraph.ArcListASCIIGraph {} {}".format(config.WEBGRAPH_JAR_PATH, self.name, self.name)
+        cmd = "{} -server -cp {} it.unimi.dsi.webgraph.ArcListASCIIGraph {} {}".format(utils.get_java_command(), config.WEBGRAPH_JAR_PATH, self.name, self.name)
                     
         self.logger.info("Running " + cmd) 
         

@@ -267,7 +267,8 @@ class clique_modularity(Clustering):
 
         with utils.TempDir() as tmp_dir:
             utils.link_file(data.file_edges, tmp_dir, "edges.txt")
-            cmd = "java -cp {} clique_modularity.CM {} -m {} -c {}".format(config.get_cdc_prog('conga-1.0-SNAPSHOT.jar', data.is_directed),
+            cmd = "{} -cp {} clique_modularity.CM {} -m {} -c {}".format(
+                utils.get_java_command(), config.get_cdc_prog('conga-1.0-SNAPSHOT.jar', data.is_directed),
                                                      "edges.txt",
                                                      'clique_modularity.algorithm.BK.BK' if method == "BK" else 'clique_modularity.algorithm.KJ.KJ',
                                                      nComm)
@@ -342,8 +343,10 @@ class CONGA(Clustering):
         clusters = {}
         with utils.TempDir() as tmp_dir:
             utils.link_file(data.file_edges, tmp_dir, "edges.txt")
-            cmd = ["java -cp {} conga.CONGA {}".format(config.get_cdc_prog('conga-1.0-SNAPSHOT.jar', data.is_directed),
-                                                     "edges.txt")]
+            cmd = ["{} -cp {} conga.CONGA {}".format(
+                utils.get_java_command(), 
+                config.get_cdc_prog('conga-1.0-SNAPSHOT.jar', data.is_directed),
+                 "edges.txt")]
             cmd.append("-e")
             if silent: cmd.append('-s')
             if recompute: cmd.append('-r')
@@ -551,7 +554,8 @@ class TopGC(Clustering):
         with utils.TempDir() as tmp_dir:
             utils.link_file(data.file_topgc, tmp_dir, "edges.topgc")
             
-            cmd = ["java -cp {} {}".format(config.get_cdc_prog('topgc-1.0-SNAPSHOT.jar', data.is_directed),
+            cmd = ["{} -cp {} {}".format(
+                utils.get_java_command(), config.get_cdc_prog('topgc-1.0-SNAPSHOT.jar', data.is_directed),
                                                      "TopGC")]
             cmd.append("-i {}".format("edges.topgc"))
             if data.is_directed(): cmd.append("-d")
