@@ -5,15 +5,19 @@ import pandas as pd
 import json 
 from . import dataset 
 import shutil
+from gct.dataset.dataset import local_exists, load_local, Dataset
+import os
+
     
 class LAWDatasetConfig(object):        
 
-    def __init__(self, name, with_ground_truth=False, directed=False, weighted=False):
+    def __init__(self, name, description="", with_ground_truth=False, directed=False, weighted=False):
+        self.logger = utils.get_logger("{}:{}".format(type(self).__name__, name))                
         self.with_ground_truth = with_ground_truth
         self.directed = directed
         self.weighted = weighted
-
- 
+        self.name = name 
+        self.description = description
             
     def has_ground_truth(self):
         return self.with_ground_truth
@@ -25,68 +29,63 @@ class LAWDatasetConfig(object):
         return self.weighted
     
     def get_remote_uris(self):
-        return ["{}-hc{}".format(self.name, u) for u in ['.properties', '.md5sums', '.graph']]
+        return ["{}{}".format(self.name, u) for u in ['.properties', '.md5sums', '.graph']]
     
-    def has_downloaded(self):
-        for fname in self.get_remote_uris():
-            if not utils.file_exists(config.get_data_file_path(self.name, fname)):
-                return False 
-        return True
+    def has_downloaded(self, fname=None):
+        if fname is None:
+            for fname in self.get_remote_uris():
+                if not utils.file_exists(config.get_download_file_path(self.name, fname)):
+                    return False 
+            return True
+        else:
+            return utils.file_exists(config.get_download_file_path(self.name, fname))
 
     def download(self):
         for fname in self.get_remote_uris():
-            rfile = 'http://law.di.unimi.it/webdata/' + fname 
-            lfile = config.get_data_file_path(self.name, fname)
-            if not utils.file_exists(lfile):
-                self.logger.info("Dowloading {} to {} ".format(rfile, lfile))
-                utils.urlretrieve (rfile, lfile)
+            if not self.has_downloaded(fname):
+                rfile = 'http://data.law.di.unimi.it/webdata/' + self.name + "/" + fname 
+                lfile = config.get_download_file_path(self.name, fname, create=True)
+                if not utils.file_exists(lfile):
+                    self.logger.info("Dowloading {} to {} ".format(rfile, lfile))
+                    utils.urlretrieve (rfile, lfile)
         
         assert self.has_downloaded()
         if not self.md5check():
-            shutil.rmtree(config.get_data_file_path(self.name))
+            self.logger.error("md5 check failed")
+            shutil.rmtree(config.get_download_file_path(self.name))
     
     def md5check(self):
-        cmd = 'md5sum -c {}-hc.md5sums'.format(self.name)
-        status = utils.shell_run_and_wait(cmd, config.get_data_file_path(self.name))
+        cmd = 'md5sum -c {}.md5sums'.format(self.name)
+        status = utils.shell_run_and_wait(cmd, config.get_download_file_path(self.name))
         return status == 0
 
+    @property
+    def download_dir(self):
+        return config.get_download_file_path(self.name)
+
     def get_edges(self):
-        fname = self.parq_edges
-        if utils.file_exists(fname):
-            return self.edges_from_parq()
-        else:
-            if not self.has_downloaded():
-                self.download()
-            graph_file = self.name+"-hc.graph"
-            self.logger.info("reading {}".format(graph_file))
-            edges = []
-            with gzip.open(self.graph_file, 'rt') as f:
-                for line in f:
-                    if not line.startswith("#"):
-                        a, b = line.split("\t")
-                        edges.append([int(a), int(b)])
-                    else:
-                        self.logger.info(line)  
-            edges = pd.DataFrame(edges, columns=['src', 'dest'])
-            self.logger.info("Loaded {} edges".format(len(edges)))
-            self.logger.info("The graph have {} nodes".format(len(set(edges.values.ravel()))))
-            self.logger.info("\n" + str(edges.head()))
-            return edges 
-                         
-    # return
-    def get_ground_truth(self):
-        if self.has_ground_truth():
-            fname = self.parq_ground_truth
-            if utils.file_exists(fname):
-                return self.ground_from_parq()
-            else:
-                if not self.has_downloaded():
-                    self.download()
+        if not self.has_downloaded():
+            self.download()
             
-                raise Exception("NA")
-                        
-        else:
-            raise Exception("graph has no ground truth")
+        graph_file = config.get_download_file_path(self.name, self.name + '.graph')
+        self.logger.info("reading {}".format(graph_file))
+
+        cmd = "java -server -cp {} it.unimi.dsi.webgraph.ArcListASCIIGraph {} {}".format(config.WEBGRAPH_JAR_PATH, self.name, self.name)
+                    
+        self.logger.info("Running " + cmd) 
+        
+        timecost, status = utils.timeit(lambda: utils.shell_run_and_wait(cmd, self.download_dir))
+        if status != 0:
+            raise Exception("Run command with error status code {}".format(status))
+
+        csvfile = os.path.join(self.download_dir, self.name)
+        edges = pd.read_csv(csvfile, header=None, sep='\t')
+        edges.columns = ['src', 'dest']
+        utils.remove_if_file_exit(csvfile)
+        return edges 
+                         
+    def get_ground_truth(self):
+        return None
         
 
 _DATASET_ = {
@@ -95,14 +94,24 @@ _DATASET_ = {
 _DATASET_['cnr-2000'] = LAWDatasetConfig('cnr-2000',
                                        with_ground_truth=False ,
                                        weighted=False,
-                                       directed=False)        
+                                       directed=True,
+                                       description="cnr-2000")        
 
 
 def list_datasets():
     return _DATASET_.keys()
 
 
-def get_dataset(name):
-    ds = _DATASET_[name]
-    return ds 
+def load_law_dataset(name, overide=False):
+    if not overide and local_exists(name):
+        return load_local(name)
+    
+    else:
+        conf = _DATASET_[name ]
+        edges = conf.get_edges()
+        gt = conf.get_ground_truth()
+        description = conf.description
+        weighted = conf.weighted
+        directed = conf.directed
+        return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, weighted=weighted, overide=overide)    
 

@@ -10,12 +10,13 @@ from gct.dataset import law_dataset as dataset
 class Test(unittest.TestCase):
 
     def testLoadDataset(self):
-        return #TBD
+        # return #TBD
         for name in dataset.list_datasets():
             if name in ['cnr-2000']:
-                ds = dataset.get_dataset(name)
+                ds = dataset.load_law_dataset(name, overide=True)
                 print (ds)  
-                ds.load()
+                ds = dataset.load_law_dataset(name, overide=False)
+                print (ds)  
 
 
 if __name__ == "__main__":
