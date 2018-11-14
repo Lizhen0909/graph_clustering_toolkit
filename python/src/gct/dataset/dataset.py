@@ -8,7 +8,6 @@ import os
 import sys
 import glob
 from gct.alg.clustering import Result
-import traceback
 from gct.utils import TempDir
 from fnmatch import fnmatch
 
@@ -146,7 +145,18 @@ class Cluster(object):
 
         
 class Dataset(object):
-
+    '''
+    A dataset represents a graph and optional one or more ground truth. 
+    The graph is either directed or undirected, weighted or unweighted. 
+    The ground truth is either disjointed or overlapped.
+    
+    Every dataset has a name. Once created it saved on local disk (under $GCT_DATA).  
+    
+    Instead of construct a dataset directly, mostly one creates a dataset use other methods, e.g. :py:meth:`gct.load_dataset`, 
+    :py:meth:`gct.from_snap`, :py:meth:`gct.from_igraph`, :py:meth:`gct.from_networkx`, :py:meth:`gct.from_networkit`
+    
+    There are also building graphs that can be loaded directly. Use :py:meth:`gct.list_dataset` to find them.
+    '''
     def __init__(self, name=None, description="", groundtruthObj=None, edgesObj=None, directed=False,
                  weighted=False, overide=False, additional_meta=None, is_edge_mirrored=False):
         assert edgesObj is not None 
@@ -657,8 +667,24 @@ def list_all_clustering(print_format=False):
     else:
         return ret 
     
+
     
 def list_dataset(pattern=None):
+    '''
+    list dataset matching the pattern. The pattern supports Unix shell-style wildcards. For example
+    
+    .. doctest::
+    
+        >>> import gct
+        >>> for v in gct.list_dataset('*snap*'):
+        ...     print (v)
+        ... 
+        ('snap', 'com-DBLP')
+        ('snap', 'com-LiveJournal')
+        
+    lists two datasets in the format of (category, name), which can be used to invoke :py:meth:`gct.load_dataset`
+    
+    '''
     ret = []
     cat = 'local'
     names = list_local()
@@ -682,6 +708,15 @@ def list_dataset(pattern=None):
 
     
 def load_dataset(name, cat=None):
+    '''
+    load a named dataset. If catetory is not specified, all available datasets will be searched.
+
+    :param name: name of the dataset
+    :param cat: category of the dataset 
+    :rtype: :py:class:`gct.Dataset` a dataset 
+    :raises: Exception
+ 
+    '''
     cats = ['local', 'snap', 'sample']
     assert cat is None or cat in cats, "category is not found"
     if cat is not None: cats = [cat]

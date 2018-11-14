@@ -1,12 +1,11 @@
-'''
-    Graph Clustering Toolkit
-'''
 from . import alg, dataset, utils
 from .config import get_data_file_path, get_download_file_path, get_result_file_path
 from .alg import *
 from .alg.function import __ALG_LIST__
 from .dataset import *
 from .metrics import *
+from .dataset.dataset import Dataset
+from .dataset.convert import *
 
 __all__ = __ALG_LIST__ + ['remove_results', 'remove_data', 'to_cluster', 'to_result']
 

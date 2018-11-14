@@ -11,6 +11,23 @@ from scipy.sparse.coo import coo_matrix
 
 
 def from_edgelist(name, edgelist , groundtruth=None, directed=False , description="", overide=True):
+    """
+    create a graph from edge list.
+    
+    :param name:         identifier of the dataset
+    :param edgelist:     a 2d list (list of list) or a 2d numpy ndaray in [[src node, target node, weight],...] format.
+                         Or a dataframe that has columns of "src","dest","weight". 
+                         Weight is optional, if missing it is an unweighted graph.
+    :param groundtruth:  None or a 2d list (list of list) or a 2d numpy ndaray in [[node, cluster],...] format.
+                         Or a dataframe that has columns of "node","cluster". 
+    
+    :param directed:     this is a directed graph
+    :param description:    discription
+    :param overide:        When true and the named dataset already exists, it will be deleted
+    
+    :rtype: :py:class:`gct.Dataset` 
+    
+    """
     assert len(edgelist) > 0, "Error, empty edgelist"
     if isinstance(edgelist, pd.DataFrame):
         firstrow = edgelist.iloc[0]
@@ -28,6 +45,12 @@ def from_edgelist(name, edgelist , groundtruth=None, directed=False , descriptio
     
 # turn a dataset into a networkx graph
 def to_networkx(data):
+    """
+    convert the dataset to a networkx graph.
+    
+    :param data: :py:class:`gct.Dataset`
+    :rtype: networkx graph
+    """
     import networkx as nx 
     fname = data.file_edges 
     if not utils.file_exists(fname):
@@ -42,6 +65,20 @@ def to_networkx(data):
 
 # turn  a networkx graph into a dataset 
 def from_networkx(name, graph, weighted=False, data='weight', default=1, description="", overide=True):
+    '''
+    create a datast from networkx graph
+    
+    :param name:         identifier of the dataset
+    :param graph:        a networkx graph 
+    :param weight:       is it a weighted graph?
+    
+    :param data:         the name of the edge data which is taken as weights.
+    :param default:        default weight if networkx edge data is missing.
+    :param description:    discription
+    :param overide:        When true and the named dataset already exists, it will be deleted
+    
+    :rtype: :py:class:`gct.Dataset`
+    '''    
     directed = graph.is_directed()
     lst = []
     if weighted:
@@ -56,6 +93,13 @@ def from_networkx(name, graph, weighted=False, data='weight', default=1, descrip
 
 # turn a dataset into a igraph graph
 def to_igraph(data):
+    """
+    convert the dataset to a igraph graph.
+    
+    :param data: :py:class:`gct.Dataset`
+    :rtype: igraph graph
+    
+    """    
     import igraph 
     edges = data.get_edges()
     g = igraph.Graph(edges=edges[['src', 'dest']].values.tolist(), directed=data.is_directed()) 
@@ -67,6 +111,18 @@ def to_igraph(data):
 
 # turn  a networkx graph into a dataset 
 def from_igraph(name, graph, data='weight', description="", overide=True):
+    '''
+    create a datast from iGraph graph
+    
+    :param name:         identifier of the dataset
+    :param graph:        a igraph graph 
+    :param data:         the name of the edge data which is taken as weights. Ignore for unweighted graph.
+    :param description:    discription
+    :param overide:        When true and the named dataset already exists, it will be deleted
+    
+    :rtype: :py:class:`gct.Dataset`
+    '''    
+        
     directed = graph.is_directed()
     weighted = graph.is_weighted()
     
@@ -83,6 +139,12 @@ def from_igraph(name, graph, data='weight', description="", overide=True):
 
 # turn a dataset into a snap graph
 def to_snap(data):
+    """
+    convert the dataset to a SNAP graph.
+    
+    :param data: :py:class:`gct.Dataset`
+    :rtype: SNAP graph
+    """    
     import snap
     if 1 and utils.file_exists(data.file_snap):
         FIn = snap.TFIn(data.file_snap)
@@ -106,6 +168,16 @@ def to_snap(data):
     
 # turn  a snap graph into a dataset 
 def from_snap(name, graph, description="", overide=False):
+    '''
+    create a datast from a SNAP graph
+    
+    :param name:         identifier of the dataset
+    :param graph:        a SNAP graph 
+    :param description:    discription
+    :param overide:        When true and the named dataset already exists, it will be deleted
+    
+    :rtype: :py:class:`gct.Dataset`
+    '''        
     import snap 
     if isinstance(graph, snap.PUNGraph):
         directed = False 
@@ -125,6 +197,12 @@ def from_snap(name, graph, description="", overide=False):
 
 # turn a dataset into a networkit graph
 def to_networkit(data):
+    """
+    convert the dataset to a networkit graph.
+    
+    :param data: :py:class:`gct.Dataset`
+    :rtype: networkit graph
+    """    
     import networkit
     fname = data.file_edges 
     if not utils.file_exists(fname):
@@ -133,6 +211,13 @@ def to_networkit(data):
 
 
 def to_coo_adjacency_matrix(data, simalarity=False, distance_fun=None):
+    '''
+    convert the dataset to a sparse coo adjacency matrix.
+    
+    :param data: :py:class:`gct.Dataset`
+    :rtype: scipy coo_matrix
+    '''
+     
     edges = data.get_edges()
     rows = edges['src'].values
     cols = edges['dest'].values
