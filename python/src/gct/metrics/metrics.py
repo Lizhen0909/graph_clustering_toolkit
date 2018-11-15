@@ -87,7 +87,7 @@ class GraphMetrics(object):
                
         '''
         
-        m, n = self.num_edges, self.num_vectices
+        m, n = self.num_edges, self.num_vertices
         assert n > 1
         return float(m) / n
         
@@ -97,7 +97,7 @@ class GraphMetrics(object):
         Return density of :math:`\\frac{|E|}{|all\ possible\ edges|}`.
         '''
         
-        m, n = self.num_edges, self.num_vectices
+        m, n = self.num_edges, self.num_vertices
         assert n > 1
         return float(m) * 2 / n / (n - 1)
     
@@ -371,7 +371,7 @@ class GraphClusterMetrics(object):
         """
         
         d = self.cluster_sizes
-        n = self.num_vectices
+        n = self.num_vertices
         return {u:v / float(n - d[u]) for u, v in self.cluster_expansions.items()}
     
     @property
@@ -429,7 +429,7 @@ class GraphClusterMetrics(object):
     def inter_unweighted_cluster_density(self):
         n_intra_edges = np.sum(list(self.cluster_edge_sizes.values()))
         n_edge = self.num_edges
-        n = self.num_vectices
+        n = self.num_vertices
         d = n * (n - 1) - np.sum([u * (u - 1) for u in self.cluster_sizes.values()])
         return float(n_edge - n_intra_edges) * 2 / d
 
@@ -729,7 +729,7 @@ class ClusterComparator(object):
             if isinstance(clusterobj, Clustering):
                 return  clusterobj
             elif isinstance(clusterobj, Result):
-                return  Clustering(clusterobj.clusters(as_dataframe=True))
+                return  Clustering(clusterobj.clustering(as_dataframe=True))
             elif isinstance(clusterobj, pd.DataFrame) or isinstance(clusterobj, list) \
                 or isinstance(clusterobj, np.ndarray) or isinstance(clusterobj, str) or isinstance(clusterobj, dict):
                 return Clustering(clusterobj)

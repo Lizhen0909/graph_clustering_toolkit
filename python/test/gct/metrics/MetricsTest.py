@@ -26,7 +26,7 @@ class Test(unittest.TestCase):
     def testGraphMetrics(self):
         p = GraphMetrics(self.graph_unweighted_undirect)
         print ('num_edges', p.num_edges)
-        print ('num_vectices', p.num_vectices)
+        print ('num_vertices', p.num_vertices)
         print ('density', p.density)
         print ('density1', p.density1)
         print ('weighted_degrees', p.weighted_degrees)
@@ -39,7 +39,7 @@ class Test(unittest.TestCase):
         self.assertEqual(p.num_edges * 2, p.sum_weight)
         self.assertEqual(np.sum(list(p.cluster_out_sum_weights.values())) + np.sum(list(p.cluster_sum_intra_weights.values())), p.sum_weight)
         print ('num_edges', p.num_edges)
-        print ('num_vectices', p.num_vectices)
+        print ('num_vertices', p.num_vertices)
         print ('num_clusters', p.num_clusters)
         print ('cluster_sizes', p.cluster_sizes)
         print ('cluster_indexes', p.cluster_indexes)
