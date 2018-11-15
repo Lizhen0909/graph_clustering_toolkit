@@ -146,34 +146,33 @@ def generate_ovp_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, 
     Refer https://github.com/eXascaleInfolab/LFR-Benchmark_UndirWeightOvp
 
     Parameter
-    ----------------
-   
-    To set the parameters, type:
-    -N        [number of nodes]
-    -k        [average degree]
-    -maxk        [maximum degree]
-    -mut        [mixing parameter for the topology]
-    -muw        [mixing parameter for the weights]
-    -beta        [exponent for the weight distribution]
-    -t1        [minus exponent for the degree sequence]
-    -t2        [minus exponent for the community size distribution]
-    -minc        [minimum for the community sizes]
-    -maxc        [maximum for the community sizes]
-    -on        [number of overlapping nodes]
-    -om        [number of memberships of the overlapping nodes]
-    -C        [Average clustering coefficient]
-    -cnl        [output communities as strings of nodes (input format for NMI evaluation)]
-    -name        [base name for the output files]. It is used for the network, communities and statistics; files extensions are added automatically:
-        .nsa  - network, represented by space/tab separated arcs
-        .nse  - network, represented by space/tab separated edges
-        {.cnl, .nmc}  - communities, represented by nodes lists '.cnl' if '-cnl' is used, otherwise as a nodes membership in communities '.nmc')
-        .nst  - network statistics
-    -seed        [file name of the random seed, default: seed.txt]
-    -a        [{0, 1} yield directed network (1 - arcs) rather than undirected (0 - edges), default: 0 - edges]
-    
+  
+      ==========  ===========================================================================
+        -N        [number of nodes]
+        -k        [average degree]
+        -maxk        [maximum degree]
+        -mut        [mixing parameter for the topology]
+        -muw        [mixing parameter for the weights]
+        -beta        [exponent for the weight distribution]
+        -t1        [minus exponent for the degree sequence]
+        -t2        [minus exponent for the community size distribution]
+        -minc        [minimum for the community sizes]
+        -maxc        [maximum for the community sizes]
+        -on        [number of overlapping nodes]
+        -om        [number of memberships of the overlapping nodes]
+        -C        [Average clustering coefficient]
+        -cnl        [output communities as strings of nodes (input format for NMI evaluation)]
+        -name        [base name for the output files]. It is used for the network, communities and statistics; files extensions are added automatically:
+                    .nsa  - network, represented by space/tab separated arcs
+                    .nse  - network, represented by space/tab separated edges
+                    {.cnl, .nmc}  - communities, represented by nodes lists '.cnl' if '-cnl' is used, otherwise as a nodes membership in communities '.nmc')
+                    .nst  - network statistics
+        -seed        [file name of the random seed, default: seed.txt]
+        -a        [{0, 1} yield directed network (1 - arcs) rather than undirected (0 - edges), default: 0 - edges]
+      ==========  ===========================================================================
+          
     Reference
-    -------------
-    Lancichinetti, Andrea, and Santo Fortunato. "Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities." Physical Review E 80.1 (2009): 016118.
+        Lancichinetti, Andrea, and Santo Fortunato. "Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities." Physical Review E 80.1 (2009): 016118.
     '''    
     if not overide and local_exists(name):
         return load_local(name)
@@ -192,50 +191,52 @@ def generate_ovp_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, 
                        directed=directed, weighted=weighted, overide=overide, additional_meta={'genopts': params})
 
 
-def generate_undirected_unweighted_random_graph_LFR(name, N, k=None, maxk=None, mu=None, t1=None, t2=None, minc=None, \
+def generate_undirected_unweighted_random_graph_LFR(name, N, k, maxk, mu, t1=None, t2=None, minc=None, \
                 maxc=None, on=None, om=None, C=None, seed=None, overide=False):
     '''
     Lancichinetti-Fortunato-Radicchi Benchmark geneartor. Original from https://sites.google.com/site/andrealancichinetti/files  
     
     Parameter:
-    ------------------
-    To set the parameters, type:
+        
+        ===========        ==========================================================
+            -N              [number of nodes]
+            -k              [average degree]
+            -maxk           [maximum degree]
+            -mu             [mixing parameter]
+            -t1             [minus exponent for the degree sequence]
+            -t2             [minus exponent for the community size distribution]
+            -minc           [minimum for the community sizes]
+            -maxc           [maximum for the community sizes]
+            -on             [number of overlapping nodes]
+            -om             [number of memberships of the overlapping nodes]
+            -C              [Average clustering coefficient]
+        ===========        ==========================================================    
     
-    -N              [number of nodes]
-    -k              [average degree]
-    -maxk           [maximum degree]
-    -mu             [mixing parameter]
-    -t1             [minus exponent for the degree sequence]
-    -t2             [minus exponent for the community size distribution]
-    -minc           [minimum for the community sizes]
-    -maxc           [maximum for the community sizes]
-    -on             [number of overlapping nodes]
-    -om             [number of memberships of the overlapping nodes]
-    -C              [Average clustering coefficient]
-    ----------------------
+        -N, -k, -maxk, -mu have to be specified. For the others, the program can use default values:
+            t1=2, t2=1, on=0, om=0, minc and maxc will be chosen close to the degree sequence extremes.
+            
+        If you don't specify -C the rewiring process for raising the average clustering coefficient will not be performed
+        
+        If you set a parameter twice, the latter one will be taken.
     
-    It is also possible to set the parameters writing flags and relative numbers in a file. To specify the file, use the option:
-    -f      [filename]
-    You can set the parameters both writing some of them in the file, and using flags from the command line for others.
-    
-    -N, -k, -maxk, -mu have to be specified. For the others, the program can use default values:
-    t1=2, t2=1, on=0, om=0, minc and maxc will be chosen close to the degree sequence extremes.
-    If you don't specify -C the rewiring process for raising the average clustering coefficient will not be performed
-    If you set a parameter twice, the latter one will be taken.
-    
-    -------------------- Other options ---------------------------
-    
-    To have a random network use:
-    -rand
-    Using this option will set mu=0, and minc=maxc=N, i.e. there will be one only community.
-    Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external degree/total degree is superiorly (inferiorly) bounded by the mixing parameter.
-    
-    -------------------- Examples ---------------------------
-    
-    Example1:
-    ./benchmark -N 1000 -k 15 -maxk 50 -mu 0.1 -minc 20 -maxc 50 -C 0.7
-    Example2:
-    ./benchmark -f flags.dat -t1 3
+        -------------------- Other options ---------------------------
+        
+        To have a random network use:    -rand
+        
+        Using this option will set mu=0, and minc=maxc=N, i.e. there will be one only community.
+        
+        Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external degree/total degree is superiorly (inferiorly) bounded by the mixing parameter.
+        
+        -------------------- Examples ---------------------------
+        
+        Example1:
+        ./benchmark -N 1000 -k 15 -maxk 50 -mu 0.1 -minc 20 -maxc 50 -C 0.7
+        
+        Example2:
+        ./benchmark -f flags.dat -t1 3
+        
+    Reference
+        Lancichinetti, Andrea, and Santo Fortunato. "Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities." Physical Review E 80.1 (2009): 016118.  
       
     '''
     if not overide and local_exists(name):
@@ -263,44 +264,43 @@ def generate_directed_unweighted_random_graph_LFR(name, N, k=None, maxk=None, mu
     Lancichinetti-Fortunato-Radicchi Benchmark geneartor. Original from https://sites.google.com/site/andrealancichinetti/files  
     
     Parameter:
-    ----------------------
     
-    To set the parameters, type:
+        ===========        ==========================================================
+            -N              [number of nodes]
+            -k              [average in-degree]
+            -maxk           [maximum in-degree]
+            -mu             [mixing parameter]
+            -t1             [minus exponent for the degree sequence]
+            -t2             [minus exponent for the community size distribution]
+            -minc           [minimum for the community sizes]
+            -maxc           [maximum for the community sizes]
+            -on             [number of overlapping nodes]
+            -om             [number of memberships of the overlapping nodes]
+        ===========        ==========================================================
     
-    -N              [number of nodes]
-    -k              [average in-degree]
-    -maxk           [maximum in-degree]
-    -mu             [mixing parameter]
-    -t1             [minus exponent for the degree sequence]
-    -t2             [minus exponent for the community size distribution]
-    -minc           [minimum for the community sizes]
-    -maxc           [maximum for the community sizes]
-    -on             [number of overlapping nodes]
-    -om             [number of memberships of the overlapping nodes]
-    ----------------------
-    
-    It is also possible to set the parameters writing flags and relative numbers in a file. To specify the file, use the option:
-    -f      [filename]
-    You can set the parameters both writing some of them in the file, and using flags from the command line for others.
-    
-    -N, -k, -maxk, -mu have to be specified. For the others, the program can use default values:
-    t1=2, t2=1, on=0, om=0, minc and maxc will be chosen close to the degree sequence extremes.
-    If you set a parameter twice, the latter one will be taken.
-    
-    -------------------- Other options ---------------------------
-    
-    To have a random network use:
-    -rand
-    Using this option will set mu=0, and minc=maxc=N, i.e. there will be one only community.
-    Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external in-degree/total in-degree is superiorly (inferiorly) bounded by the mixing parameter.
-    
-    -------------------- Examples ---------------------------
-    
-    Example1:
-    ./benchmark -N 1000 -k 15 -maxk 50 -mu 0.1 -minc 20 -maxc 50
-    Example2:
-    ./benchmark -f flags.dat -t1 3
+   
+        -N, -k, -maxk, -mu have to be specified. For the others, the program can use default values:
+        
+        t1=2, t2=1, on=0, om=0, minc and maxc will be chosen close to the degree sequence extremes.
+        
+        If you set a parameter twice, the latter one will be taken.
+        
+        -------------------- Other options ---------------------------
+        
+        To have a random network use:    -rand
+        
+        Using this option will set mu=0, and minc=maxc=N, i.e. there will be one only community.
+        
+        Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external in-degree/total in-degree is superiorly (inferiorly) bounded by the mixing parameter.
+        
+        -------------------- Examples ---------------------------
+        
+        Example1:    ./benchmark -N 1000 -k 15 -maxk 50 -mu 0.1 -minc 20 -maxc 50
+        
+        Example2:    ./benchmark -f flags.dat -t1 3
 
+    Reference
+        Lancichinetti, Andrea, and Santo Fortunato. "Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities." Physical Review E 80.1 (2009): 016118.  
       
     '''
     if not overide and local_exists(name):
@@ -328,55 +328,47 @@ def generate_undirected_weighted_random_graph_LFR(name, N, k=None, maxk=None, mu
     Lancichinetti-Fortunato-Radicchi Benchmark geneartor. Original from https://sites.google.com/site/andrealancichinetti/files  
     
     Parameter:
-    ------------------
-    To run the program type 
-    ./benchmark [FLAG] [P]
     
-    ----------------------
+        ===========        ==========================================================
+            -N              [number of nodes]
+            -k              [average degree]
+            -maxk           [maximum degree]
+            -mut            [mixing parameter for the topology]
+            -muw            [mixing parameter for the weights]
+            -beta           [exponent for the weight distribution]
+            -t1             [minus exponent for the degree sequence]
+            -t2             [minus exponent for the community size distribution]
+            -minc           [minimum for the community sizes]
+            -maxc           [maximum for the community sizes]
+            -on             [number of overlapping nodes]
+            -om             [number of memberships of the overlapping nodes]
+            -C              [Average clustering coefficient]
+        ===========        ==========================================================
     
-    To set the parameters, type:
+        -N, -k, -maxk, -muw have to be specified. For the others, the program can use default values:
+        
+        t1=2, t2=1, on=0, om=0, beta=1.5, mut=muw, minc and maxc will be chosen close to the degree sequence extremes.
+        
+        If you don't specify -C the rewiring process for raising the average clustering coefficient will not be performed
+        
+        If you set a parameter twice, the latter one will be taken.
+        
+        -------------------- Other options ---------------------------
+        
+        To have a random network use:    -rand
+        
+        Using this option will set muw=0, mut=0, and minc=maxc=N, i.e. there will be one only community.
+        
+        Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external degree/total degree is superiorly (inferiorly) bounded by the mixing parameter.
+        
+        -------------------- Examples ---------------------------
+        
+        Example1:    ./benchmark -N 1000 -k 15 -maxk 50 -muw 0.1 -minc 20 -maxc 50
+        
+        Example2:    ./benchmark -f flags.dat -t1 3
     
-    -N              [number of nodes]
-    -k              [average degree]
-    -maxk           [maximum degree]
-    -mut            [mixing parameter for the topology]
-    -muw            [mixing parameter for the weights]
-    -beta           [exponent for the weight distribution]
-    -t1             [minus exponent for the degree sequence]
-    -t2             [minus exponent for the community size distribution]
-    -minc           [minimum for the community sizes]
-    -maxc           [maximum for the community sizes]
-    -on             [number of overlapping nodes]
-    -om             [number of memberships of the overlapping nodes]
-    -C              [Average clustering coefficient]
-    ----------------------
-    
-    It is also possible to set the parameters writing flags and relative numbers in a file. To specify the file, use the option:
-    -f      [filename]
-    You can set the parameters both writing some of them in the file, and using flags from the command line for others.
-    
-    -N, -k, -maxk, -muw have to be specified. For the others, the program can use default values:
-    t1=2, t2=1, on=0, om=0, beta=1.5, mut=muw, minc and maxc will be chosen close to the degree sequence extremes.
-    If you don't specify -C the rewiring process for raising the average clustering coefficient will not be performed
-    If you set a parameter twice, the latter one will be taken.
-    
-    -------------------- Other options ---------------------------
-    
-    To have a random network use:
-    -rand
-    Using this option will set muw=0, mut=0, and minc=maxc=N, i.e. there will be one only community.
-    Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external degree/total degree is superiorly (inferiorly) bounded by the mixing parameter.
-    
-    -------------------- Examples ---------------------------
-    
-    Example1:
-    ./benchmark -N 1000 -k 15 -maxk 50 -muw 0.1 -minc 20 -maxc 50
-    Example2:
-    ./benchmark -f flags.dat -t1 3
-    
-    -------------------- Other info ---------------------------
-    
-    Read file ReadMe.txt for more info.
+    Reference
+        Lancichinetti, Andrea, and Santo Fortunato. "Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities." Physical Review E 80.1 (2009): 016118.  
 
       
     '''
@@ -405,50 +397,44 @@ def generate_directed_weighted_random_graph_LFR(name, N, k=None, maxk=None, mut=
     Lancichinetti-Fortunato-Radicchi Benchmark geneartor. Original from https://sites.google.com/site/andrealancichinetti/files  
     
     Parameter:
-    ----------------------
     
-    To set the parameters, type:
+        ===========        ==========================================================
+            -N              [number of nodes]
+            -k              [average in-degree]
+            -maxk           [maximum in-degree]
+            -mut            [mixing parameter for the topology]
+            -muw            [mixing parameter for the weights]
+            -beta           [exponent for the weight distribution]
+            -t1             [minus exponent for the degree sequence]
+            -t2             [minus exponent for the community size distribution]
+            -minc           [minimum for the community sizes]
+            -maxc           [maximum for the community sizes]
+            -on             [number of overlapping nodes]
+            -om             [number of memberships of the overlapping nodes]
+        ===========        ==========================================================
     
-    -N              [number of nodes]
-    -k              [average in-degree]
-    -maxk           [maximum in-degree]
-    -mut            [mixing parameter for the topology]
-    -muw            [mixing parameter for the weights]
-    -beta           [exponent for the weight distribution]
-    -t1             [minus exponent for the degree sequence]
-    -t2             [minus exponent for the community size distribution]
-    -minc           [minimum for the community sizes]
-    -maxc           [maximum for the community sizes]
-    -on             [number of overlapping nodes]
-    -om             [number of memberships of the overlapping nodes]
-    ----------------------
+        -N, -k, -maxk, -muw have to be specified. For the others, the program can use default values:
+        
+        t1=2, t2=1, on=0, om=0, beta=1.5, mut=muw, minc and maxc will be chosen close to the degree sequence extremes.
+        
+        If you set a parameter twice, the latter one will be taken.
+        
+        -------------------- Other options ---------------------------
+        
+        To have a random network use:    -rand
+        
+        Using this option will set muw=0, mut=0, and minc=maxc=N, i.e. there will be one only community.
+        
+        Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external in-degree/total in-degree is superiorly (inferiorly) bounded by the mixing parameter.
+        
+        -------------------- Examples ---------------------------
+        
+        Example1:    ./benchmark -N 1000 -k 15 -maxk 50 -muw 0.1 -minc 20 -maxc 50
+        Example2:    ./benchmark -f flags.dat -t1 3
     
-    It is also possible to set the parameters writing flags and relative numbers in a file. To specify the file, use the option:
-    -f      [filename]
-    You can set the parameters both writing some of them in the file, and using flags from the command line for others.
-    
-    -N, -k, -maxk, -muw have to be specified. For the others, the program can use default values:
-    t1=2, t2=1, on=0, om=0, beta=1.5, mut=muw, minc and maxc will be chosen close to the degree sequence extremes.
-    If you set a parameter twice, the latter one will be taken.
-    
-    -------------------- Other options ---------------------------
-    
-    To have a random network use:
-    -rand
-    Using this option will set muw=0, mut=0, and minc=maxc=N, i.e. there will be one only community.
-    Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external in-degree/total in-degree is superiorly (inferiorly) bounded by the mixing parameter.
-    
-    -------------------- Examples ---------------------------
-    
-    Example1:
-    ./benchmark -N 1000 -k 15 -maxk 50 -muw 0.1 -minc 20 -maxc 50
-    Example2:
-    ./benchmark -f flags.dat -t1 3
-    
-    -------------------- Other info ---------------------------
-    
-    Read file ReadMe.txt for more info.
 
+    Reference
+        Lancichinetti, Andrea, and Santo Fortunato. "Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities." Physical Review E 80.1 (2009): 016118.  
       
     '''
     if not overide and local_exists(name):
@@ -474,39 +460,34 @@ def generate_undirected_unweighted_hier_random_graph_LFR(name, N, k=None, maxk=N
     '''
     Lancichinetti-Fortunato-Radicchi Benchmark geneartor. Original from https://sites.google.com/site/andrealancichinetti/files  
     
-    Parameter:
-    ----------------------
-    
-    To set the parameters, type:
-    
-    -N              [number of nodes]
-    -k              [average degree]
-    -maxk           [maximum degree]
-    -t1             [minus exponent for the degree sequence]
-    -t2             [minus exponent for the community size distribution]
-    -minc           [minimum for the micro community sizes]
-    -maxc           [maximum for the micro community sizes]
-    -on             [number of overlapping nodes]
-    -om             [number of memberships of the overlapping nodes]
-    -minC           [minimum for the macro community size]
-    -maxC           [maximum for the macro community size]
-    -mu1            [mixing parameter for the macro communities (see Readme file)]
-    -mu2            [mixing parameter for the micro communities (see Readme file)]
-    ----------------------
-    
-    It is also possible to set the parameters writing flags and relative numbers in a file. To specify the file, use the option:
-    -f      [filename]
-    
-    -------------------- Examples ---------------------------
-    
-    Example2:
-    ./hbenchmark -f flags.dat
-    ./hbenchmark -N 10000 -k 20 -maxk 50 -mu2 0.3 -minc 20 -maxc 50 -minC 100 -maxC 1000 -mu1 0.1
-    
-    -------------------- Other info ---------------------------
-    
-    Read file ReadMe.txt for more info.
+    Parameter
 
+        ===========        ==========================================================
+            -N              [number of nodes]
+            -k              [average degree]
+            -maxk           [maximum degree]
+            -t1             [minus exponent for the degree sequence]
+            -t2             [minus exponent for the community size distribution]
+            -minc           [minimum for the micro community sizes]
+            -maxc           [maximum for the micro community sizes]
+            -on             [number of overlapping nodes]
+            -om             [number of memberships of the overlapping nodes]
+            -minC           [minimum for the macro community size]
+            -maxC           [maximum for the macro community size]
+            -mu1            [mixing parameter for the macro communities (see Readme file)]
+            -mu2            [mixing parameter for the micro communities (see Readme file)]
+        ===========        ==========================================================
+    
+        -------------------- Examples ---------------------------
+        
+        Example2:
+        ./hbenchmark -f flags.dat
+        
+        ./hbenchmark -N 10000 -k 20 -maxk 50 -mu2 0.3 -minc 20 -maxc 50 -minC 100 -maxC 1000 -mu1 0.1
+        
+
+    Reference
+        Lancichinetti, Andrea, and Santo Fortunato. "Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities." Physical Review E 80.1 (2009): 016118.  
       
     '''
     if not overide and local_exists(name):

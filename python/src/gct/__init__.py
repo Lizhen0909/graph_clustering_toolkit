@@ -8,10 +8,14 @@ from .alg.clustering import Result
 from .metrics import *
 from .dataset.convert import *
 
-__all__ = __ALG_LIST__ + ['remove_results', 'remove_data', 'to_cluster', 'to_result']
+__all__ = __ALG_LIST__  
+
 
 
 def remove_results(data_pattern='*', run_pattern='*', dry_run=True):
+    '''
+    remove data and algorithm run results by patterns.  
+    '''
     from fnmatch import fnmatch
     for dataname, lst in gct.list_all_clustering_results().items():
         for runname in lst:
@@ -25,6 +29,10 @@ def remove_results(data_pattern='*', run_pattern='*', dry_run=True):
 
 
 def remove_data(data_pattern='*', with_results=True, dry_run=True):
+    '''
+    remove data (and algorithm run results) by data name pattern.  
+    '''
+        
     from fnmatch import fnmatch
     for dataname in gct.list_local_graph():
         if fnmatch(dataname, data_pattern):
@@ -43,8 +51,8 @@ def remove_data(data_pattern='*', with_results=True, dry_run=True):
 
 
 def to_cluster(obj):
-    from gct.dataset.dataset import Cluster
-    return Cluster(obj)
+    from gct.dataset.dataset import Clustering
+    return Clustering(obj)
 
 
 def to_result(obj):
