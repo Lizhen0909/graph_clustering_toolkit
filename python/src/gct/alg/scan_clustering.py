@@ -198,8 +198,8 @@ class AnyScan_ScanIdealPar(_AnyScan):
     def __init__(self, name="anyScan_scan"):
         super(AnyScan_ScanIdealPar, self).__init__(name) 
         
-    def run(self, data, **kargs):
-        params = dict(kargs)
+    def run(self, data, **kwargs):
+        params = dict(kwargs)
         params['algorithm'] = 5
         params['data'] = data
         return super(AnyScan_ScanIdealPar, self).run(**params)
@@ -226,8 +226,8 @@ class AnyScan_Scan(_AnyScan):
     def __init__(self, name="anyScan_scan"):
         super(AnyScan_Scan, self).__init__(name) 
 
-    def run(self, data, **kargs):
-        params = dict(kargs)
+    def run(self, data, **kwargs):
+        params = dict(kwargs)
         params['algorithm'] = 1
         params['data'] = data
         return super(AnyScan_Scan, self).run(**params)
@@ -252,8 +252,8 @@ class AnyScan_pScan(_AnyScan):
     def __init__(self, name="anyScan_pscan"):
         super(AnyScan_pScan, self).__init__(name) 
 
-    def run(self, data, **kargs):
-        params = dict(kargs)
+    def run(self, data, **kwargs):
+        params = dict(kwargs)
         params['algorithm'] = 2
         params['data'] = data
         return super(AnyScan_pScan, self).run(**params)
@@ -278,8 +278,8 @@ class AnyScan_anyScan(_AnyScan):
     def __init__(self, name="AnyScan_anyScan"):
         super(AnyScan_anyScan, self).__init__(name) 
 
-    def run(self, data, **kargs):
-        params = dict(kargs)
+    def run(self, data, **kwargs):
+        params = dict(kwargs)
         params['algorithm'] = 3
         params['data'] = data
         return super(AnyScan_anyScan, self).run(**params)
@@ -304,8 +304,8 @@ class AnyScan_anyScanParl(_AnyScan):
     def __init__(self, name="AnyScan_anyScanParl"):
         super(AnyScan_anyScanParl, self).__init__(name) 
 
-    def run(self, data, **kargs):
-        params = dict(kargs)
+    def run(self, data, **kwargs):
+        params = dict(kwargs)
         params['algorithm'] = 4
         params['data'] = data
         return super(AnyScan_anyScanParl, self).run(**params)

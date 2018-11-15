@@ -1713,7 +1713,7 @@ def alg_pg_label_propagation(name, graph, execution='async', ncpus=None, schedul
         return None
 
 
-def scan_AnyScan_Scan(name, graph, **kargs):
+def scan_AnyScan_Scan(name, graph, **kwargs):
     '''
 
     A wrapper of *scan@anyscan* algorithm  
@@ -1732,7 +1732,7 @@ def scan_AnyScan_Scan(name, graph, **kargs):
     '''
     try:
         obj = gct.alg.scan_clustering.AnyScan_Scan(name)
-        obj.run(graph, kargs=kargs)
+        obj.run(graph, **kwargs)
         result=Result(obj.result)
         return result
     except UnsupportedException as err:
@@ -1740,7 +1740,7 @@ def scan_AnyScan_Scan(name, graph, **kargs):
         return None
 
 
-def scan_AnyScan_anyScan(name, graph, **kargs):
+def scan_AnyScan_anyScan(name, graph, **kwargs):
     '''
 
     A wrapper of *anyscan* algorithm  
@@ -1759,7 +1759,7 @@ def scan_AnyScan_anyScan(name, graph, **kargs):
     '''
     try:
         obj = gct.alg.scan_clustering.AnyScan_anyScan(name)
-        obj.run(graph, kargs=kargs)
+        obj.run(graph, **kwargs)
         result=Result(obj.result)
         return result
     except UnsupportedException as err:
@@ -1767,7 +1767,7 @@ def scan_AnyScan_anyScan(name, graph, **kargs):
         return None
 
 
-def scan_AnyScan_anyScanParl(name, graph, **kargs):
+def scan_AnyScan_anyScanParl(name, graph, **kwargs):
     '''
 
     A wrapper of *anyscan parallel* algorithm  
@@ -1786,7 +1786,7 @@ def scan_AnyScan_anyScanParl(name, graph, **kargs):
     '''
     try:
         obj = gct.alg.scan_clustering.AnyScan_anyScanParl(name)
-        obj.run(graph, kargs=kargs)
+        obj.run(graph, **kwargs)
         result=Result(obj.result)
         return result
     except UnsupportedException as err:
@@ -1794,7 +1794,7 @@ def scan_AnyScan_anyScanParl(name, graph, **kargs):
         return None
 
 
-def scan_AnyScan_pScan(name, graph, **kargs):
+def scan_AnyScan_pScan(name, graph, **kwargs):
     '''
 
     A wrapper of *pScan@anyscan* algorithm  
@@ -1813,7 +1813,7 @@ def scan_AnyScan_pScan(name, graph, **kargs):
     '''
     try:
         obj = gct.alg.scan_clustering.AnyScan_pScan(name)
-        obj.run(graph, kargs=kargs)
+        obj.run(graph, **kwargs)
         result=Result(obj.result)
         return result
     except UnsupportedException as err:
