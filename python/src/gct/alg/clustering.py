@@ -109,8 +109,8 @@ class Result(collections.MutableMapping):
                     lst.append([v, k])
             return pd.DataFrame(lst, columns=['node', 'cluster'])
         else:
-            from gct.dataset.dataset import Cluster
-            return Cluster(d)
+            from gct.dataset.dataset import Clustering
+            return Clustering(d)
 
     @property
     def clustering_keys(self):

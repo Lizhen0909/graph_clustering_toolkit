@@ -47,8 +47,8 @@ class Test(unittest.TestCase):
         print (result.meta)
         print (result.params) 
         print (result.timecost)
-        print (result.clusters())
-        print (result.clusters(as_dataframe=True))
+        print (result.clustering())
+        print (result.clustering(as_dataframe=True))
         
         result=load_result(data.name,result.runname)
         print (result.runname)
@@ -56,8 +56,8 @@ class Test(unittest.TestCase):
         print (result.meta)
         print (result.params) 
         print (result.timecost)
-        print (result.clusters())
-        print (result.clusters(as_dataframe=True))
+        print (result.clustering())
+        print (result.clustering(as_dataframe=True))
         
     def testResult_multilevel(self):
         data=self.graph_unweighted_undirect
@@ -68,8 +68,8 @@ class Test(unittest.TestCase):
         print (result.meta)
         print (result.params) 
         print (result.timecost)
-        print (result.clusters())
-        print (result.clusters(as_dataframe=True))
+        print (result.clustering())
+        print (result.clustering(as_dataframe=True))
         
         result=load_result(data.name,result.runname)
         print (result.runname)
@@ -77,8 +77,8 @@ class Test(unittest.TestCase):
         print (result.meta)
         print (result.params) 
         print (result.timecost)
-        print (result.clusters())
-        print (result.clusters(as_dataframe=True))
+        print (result.clustering())
+        print (result.clustering(as_dataframe=True))
         
     def testResult_multiclusters(self):
         data=self.graph_unweighted_undirect
@@ -89,8 +89,8 @@ class Test(unittest.TestCase):
         print (result.meta)
         print (result.params) 
         print (result.timecost)
-        print (result.clusters())
-        print (result.clusters(as_dataframe=True))
+        print (result.clustering())
+        print (result.clustering(as_dataframe=True))
         
         result=load_result(data.name,result.runname)
         print (result.runname)
@@ -98,8 +98,8 @@ class Test(unittest.TestCase):
         print (result.meta)
         print (result.params) 
         print (result.timecost)
-        print (result.clusters())
-        print (result.clusters(as_dataframe=True))
+        print (result.clustering())
+        print (result.clustering(as_dataframe=True))
         
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']

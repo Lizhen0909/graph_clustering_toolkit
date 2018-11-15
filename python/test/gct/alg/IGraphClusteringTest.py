@@ -17,19 +17,19 @@ from gct.exception import UnsupportedException
 class Test(unittest.TestCase):
 
     def setUp(self):
-        self.graph_unweighted_undirect = random_dataset.generate_ovp_LFR("test_LFR_unw_und_small", N=16, k=4, maxk=8, muw=0.1, minc=4, beta=1, a=0)
+        self.graph_unweighted_undirect = random_dataset.generate_ovp_LFR("test_LFR_unw_und_small", N=32, k=4, maxk=4, muw=0.1, minc=4, beta=1, a=0)
         assert not self.graph_unweighted_undirect.is_directed()
         assert not self.graph_unweighted_undirect.is_weighted()
         
-        self.graph_weighted_undirect = random_dataset.generate_ovp_LFR("test_LFR_w_und_small", N=16, k=4, maxk=8, muw=0.1, minc=4, beta=1, weighted=True, a=0)
+        self.graph_weighted_undirect = random_dataset.generate_ovp_LFR("test_LFR_w_und_small", N=32, k=4, maxk=4, muw=0.1, minc=4, beta=1, weighted=True, a=0)
         assert not self.graph_weighted_undirect.is_directed()
         assert self.graph_weighted_undirect.is_weighted()
         
-        self.graph_weighted_direct = random_dataset.generate_ovp_LFR("test_LFR_w_dir_small", N=16, k=4, maxk=8, muw=0.1, minc=4, beta=1, weighted=True, a=1)
+        self.graph_weighted_direct = random_dataset.generate_ovp_LFR("test_LFR_w_dir_small", N=32, k=4, maxk=4, muw=0.1, minc=4, beta=1, weighted=True, a=1)
         assert  self.graph_weighted_direct.is_directed()
         assert self.graph_weighted_direct.is_weighted()
         
-        self.graph_unweighted_direct = random_dataset.generate_ovp_LFR("test_LFR_unw_dir_small", N=16, k=4, maxk=8, muw=0.1, minc=4, beta=1, weighted=False, a=1)
+        self.graph_unweighted_direct = random_dataset.generate_ovp_LFR("test_LFR_unw_dir_small", N=32, k=4, maxk=4, muw=0.1, minc=4, beta=1, weighted=False, a=1)
         assert  self.graph_unweighted_direct.is_directed()
         assert not self.graph_unweighted_direct.is_weighted()
         

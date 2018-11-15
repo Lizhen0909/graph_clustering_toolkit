@@ -27,8 +27,11 @@ class Clustering(object):
         elif isinstance(clusteringobj, dict):
             if 'clusters' in clusteringobj: # a dict result
                 self.cluster = Result(clusteringobj).clustering(as_dataframe=True)
-            else:
-                raise Exception("unknown obj")                            
+            else: # assume it is a dict(cluster_id, list[node])
+                arr = np.array([[u,v] for u,vv in clusteringobj.items() for v in vv ])
+                if len(arr.shape) != 2 or arr.shape[1] != 2:
+                    raise ValueError("arg is not right")
+                self.cluster = pd.DataFrame(arr, columns=['node', 'cluster'])
         elif isinstance(clusteringobj, pd.DataFrame):
             if not 'cluster' in clusteringobj.columns or not 'node' in clusteringobj.columns:
                 raise ValueError("arg is not right")
