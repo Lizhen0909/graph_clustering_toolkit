@@ -3,10 +3,14 @@
 # conda create --name python3 python=3.6 pandas seaborn scikit-learn cython matplotlib networkx python-igraph tabulate fastparquet python-snappy dask pyamg
 # python3 -m pip install --user --upgrade pip==9.0.3
 # http://snap.stanford.edu/snappy/release/beta/snap-5.0.9-64-3.0-centos6.5-x64-py3.6.tar.gz
+##install graph-tool
+#install https://github.com/sparsehash/sparsehash/archive/sparsehash-2.0.3.tar.gz
+# conda install -c pkgw/label/superseded gtk3
 
 
 
-all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap powergraph genconvnmi ovpnmi xmeasures hirecs GANXiS lso-cluster CDC #webgraph
+
+all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap powergraph genconvnmi ovpnmi xmeasures hirecs GANXiS lso-cluster CDC webgraph
 
 clean: 
 	cd OSLOM2 && make clean
@@ -103,10 +107,11 @@ mcl:
 	fi
 
 
-webgraph:
-	if [ ! -d webgraph-3.6.1 ]; then rm -fr webgraph-3.6.1.tar.gz && wget http://webgraph.di.unimi.it/webgraph-3.6.1-bin.tar.gz && tar xf webgraph-3.6.1-bin.tar.gz; fi
 
-	if [ ! -f webgraph-3.6.1/sux4j-4.2.0.jar ]; then cd webgraph-3.6.1 &&  wget http://webgraph.di.unimi.it/webgraph-deps.tar.gz && tar xf webgraph-deps.tar.gz; fi
+webgraph: net.gct.webgraph/webgraph.jar
+net.gct.webgraph/webgraph.jar:
+	cd net.gct.webgraph && mvn package &&  cp target/net.gct.webgraph*-jar-with-dependencies.jar webgraph.jar
+
 
 
 genconvnmi_bk:
