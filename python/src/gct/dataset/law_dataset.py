@@ -28,12 +28,12 @@ class LAWDatasetConfig(object):
     def is_weighted(self):
         return self.weighted
     
-    def get_remote_uris(self):
-        return ["{}{}".format(self.name, u) for u in ['.properties', '.md5sums', '.graph']]
+    def get_remote_names(self):
+        return ["{}{}".format(self.name, u) for u in ['-hc-t.properties', '.md5sums', '-hc-t.graph']]
     
     def has_downloaded(self, fname=None):
         if fname is None:
-            for fname in self.get_remote_uris():
+            for fname in self.get_remote_names():
                 if not utils.file_exists(config.get_download_file_path(self.name, fname)):
                     return False 
             return True
@@ -41,7 +41,7 @@ class LAWDatasetConfig(object):
             return utils.file_exists(config.get_download_file_path(self.name, fname))
 
     def download(self):
-        for fname in self.get_remote_uris():
+        for fname in self.get_remote_names():
             if not self.has_downloaded(fname):
                 rfile = 'http://data.law.di.unimi.it/webdata/' + self.name + "/" + fname 
                 lfile = config.get_download_file_path(self.name, fname, create=True)
@@ -53,9 +53,10 @@ class LAWDatasetConfig(object):
         if not self.md5check():
             self.logger.error("md5 check failed")
             shutil.rmtree(config.get_download_file_path(self.name))
+            raise Exception("md5 check failed")
     
     def md5check(self):
-        cmd = 'md5sum -c {}.md5sums'.format(self.name)
+        cmd = 'md5sum --ignore-missing -c {}.md5sums'.format(self.name)
         status = utils.shell_run_and_wait(cmd, config.get_download_file_path(self.name))
         return status == 0
 
@@ -70,7 +71,8 @@ class LAWDatasetConfig(object):
         graph_file = config.get_download_file_path(self.name, self.name + '.graph')
         self.logger.info("reading {}".format(graph_file))
 
-        cmd = "{} -server -cp {} it.unimi.dsi.webgraph.ArcListASCIIGraph {} {}".format(utils.get_java_command(), config.WEBGRAPH_JAR_PATH, self.name, self.name)
+        cmd = "{} -server -cp {} it.unimi.dsi.webgraph.ArcListASCIIGraph {} {}".format(
+            utils.get_java_command(), config.WEBGRAPH_JAR_PATH, self.name+'-hc-t', self.name)
                     
         self.logger.info("Running " + cmd) 
         
