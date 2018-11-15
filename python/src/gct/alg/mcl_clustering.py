@@ -3,13 +3,13 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import os
 
 prefix='mcl'
 
-class MCL(Clustering):
+class MCL(ClusteringAlg):
     '''
     A wrapper of *MCL (Markov Cluster Algorithm)* from https://micans.org/mcl/
     

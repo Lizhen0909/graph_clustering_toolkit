@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np  
 import snap 
 import os
-from gct.dataset.dataset import Dataset, local_exists, load_local
+from gct.dataset.dataset import local_exists, load_local
  
     
 class RandomGenerator():        
@@ -131,7 +131,8 @@ def generate_Erdos_Renyi(name, n_node, n_edge, directed=False, seed=None, overid
         description = "Erdos_Renyi random graph"
         weighted = False 
         gen = RandomGenerator(params=params)
-        edges, gt = gen.generate(seed)    
+        edges, gt = gen.generate(seed)   
+        from .dataset import Dataset 
         return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, \
                        directed=directed, weighted=weighted, overide=overide, additional_meta={'genopts': params})
 
@@ -250,6 +251,7 @@ def generate_undirected_unweighted_random_graph_LFR(name, N, k=None, maxk=None, 
         params['name'] = 'LFR'
         gen = RandomGenerator(params=params)
         edges, gt = gen.generate(seed)    
+        from .dataset import Dataset
         return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges,\
                         directed=directed, weighted=weighted, overide=overide, additional_meta={'genopts': params})
 
@@ -313,7 +315,8 @@ def generate_directed_unweighted_random_graph_LFR(name, N, k=None, maxk=None, mu
         params['weighted'] = weighted
         params['name'] = 'LFR'
         gen = RandomGenerator(params=params)
-        edges, gt = gen.generate(seed)    
+        edges, gt = gen.generate(seed)
+        from .dataset import Dataset    
         return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, \
                        directed=directed, weighted=weighted, overide=overide, additional_meta={'genopts': params})
 
@@ -389,7 +392,8 @@ def generate_undirected_weighted_random_graph_LFR(name, N, k=None, maxk=None, mu
         params['weighted'] = weighted
         params['name'] = 'LFR'
         gen = RandomGenerator(params=params)
-        edges, gt = gen.generate(seed)    
+        edges, gt = gen.generate(seed)
+        from .dataset import Dataset    
         return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, \
                        weighted=weighted, overide=overide, additional_meta={'genopts': params})
 
@@ -459,7 +463,8 @@ def generate_directed_weighted_random_graph_LFR(name, N, k=None, maxk=None, mut=
         params['weighted'] = weighted
         params['name'] = 'LFR'
         gen = RandomGenerator(params=params)
-        edges, gt = gen.generate(seed)    
+        edges, gt = gen.generate(seed)
+        from .dataset import Dataset    
         return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, weighted=weighted, overide=overide)
 
 
@@ -517,6 +522,7 @@ def generate_undirected_unweighted_hier_random_graph_LFR(name, N, k=None, maxk=N
         params['weighted'] = weighted
         params['name'] = 'LFR'
         gen = RandomGenerator(params=params)
-        edges, gt = gen.generate(seed)    
+        edges, gt = gen.generate(seed)
+        from .dataset import Dataset    
         return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, directed=directed, 
                        weighted=weighted, overide=overide, additional_meta={'genopts': params})

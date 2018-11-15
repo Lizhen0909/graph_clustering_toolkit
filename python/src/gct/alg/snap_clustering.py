@@ -5,12 +5,12 @@ Created on Oct 27, 2018
 '''
 from gct.dataset import convert
 import snap    
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils
 
 prefix='snap'
 
-class Clauset_Newman_Moore(Clustering):
+class Clauset_Newman_Moore(ClusteringAlg):
     '''
     A wrapper of *CommunityCNM* algorithm from SNAP 
 
@@ -64,7 +64,7 @@ class Clauset_Newman_Moore(Clustering):
             raise Exception("No result found. probably no run has been done")
 
     
-class Girvan_Newman(Clustering):
+class Girvan_Newman(ClusteringAlg):
     '''
     A wrapper of *CommunityGirvanNewman* algorithm from SNAP 
 

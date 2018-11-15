@@ -3,7 +3,7 @@ Created on Oct 27, 2018
 include a few algorithms mentioned at https://github.com/eXascaleInfolab/PyCABeM
 @author: lizhen
 '''
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import os
 import json
@@ -16,7 +16,7 @@ from typing import DefaultDict
 prefix = 'sklearn'
 
 
-class AffinityPropagation(Clustering):
+class AffinityPropagation(ClusteringAlg):
     '''
     A wrapper of *AffinityPropagation* algorithm from http://scikit-learn.org. 
 
@@ -84,7 +84,7 @@ class AffinityPropagation(Clustering):
         return self 
 
 
-class SpectralClustering(Clustering):
+class SpectralClustering(ClusteringAlg):
     '''
     A wrapper of *SpectralClustering* algorithm from http://scikit-learn.org. 
 
@@ -187,7 +187,7 @@ class SpectralClustering(Clustering):
         return self 
 
 
-class DBSCAN(Clustering):
+class DBSCAN(ClusteringAlg):
     '''
     A wrapper of *DBSCAN* algorithm from http://scikit-learn.org. 
 

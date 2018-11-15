@@ -5,13 +5,13 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import os
 import numpy as np 
 prefix = 'cgcc'
 
-class CGGC(Clustering):
+class CGGC(ClusteringAlg):
     '''
     A wrapper of *CGGC* (Core Groups Graph ensemble Clustering) method* from `https://github.com/eXascaleInfolab/CGGC`
     

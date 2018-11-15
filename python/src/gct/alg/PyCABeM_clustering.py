@@ -3,7 +3,7 @@ Created on Oct 27, 2018
 include a few algorithms mentioned at https://github.com/eXascaleInfolab/PyCABeM
 @author: lizhen
 '''
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import os
 import json
@@ -11,7 +11,7 @@ import glob
 
 prefix='pycabem'
 
-class HiReCS(Clustering):
+class HiReCS(ClusteringAlg):
     '''
     A wrapper of *hirecs* algorithm from http://www.lumais.com/hirecs. 
 
@@ -95,7 +95,7 @@ class HiReCS(Clustering):
         return self 
 
     
-class LabelRank(Clustering):
+class LabelRank(ClusteringAlg):
     '''
     A wrapper of *LabelRank* algorithm from https://sites.google.com/site/communitydetectionslpa/. 
 
@@ -152,7 +152,7 @@ class LabelRank(Clustering):
         self.result = result 
         return self 
 
-class GANXiSw(Clustering):
+class GANXiSw(ClusteringAlg):
     '''
     
     A wrapper of *GANXiSw* algorithm from https://sites.google.com/site/communitydetectionslpa/. 

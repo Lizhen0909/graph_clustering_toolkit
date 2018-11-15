@@ -5,13 +5,13 @@ Created on Oct 27, 2018
 '''
 from gct.dataset import convert
 import igraph    
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils
 import networkit
 
 prefix='networkit'
 
-class LPDegreeOrdered(Clustering):
+class LPDegreeOrdered(ClusteringAlg):
     '''
     A wrapper of *LPDegreeOrdered* algorithm from NetworKit. 
     Label propagation-based community detection algorithm which processes nodes in increasing order of node degree.
@@ -53,7 +53,7 @@ class LPDegreeOrdered(Clustering):
         return self 
 
  
-class CutClustering(Clustering):
+class CutClustering(ClusteringAlg):
     '''
     A wrapper of *CutClustering* algorithm from NetworKit. 
     
@@ -97,7 +97,7 @@ class CutClustering(Clustering):
         return self 
 
 
-class PLP(Clustering):
+class PLP(ClusteringAlg):
     '''
     A wrapper of *PLP (Parallel Label Propagation)* algorithm from NetworKit. 
     Parallel label propagation for community detection: Moderate solution quality, very short time to solution.
@@ -151,7 +151,7 @@ class PLP(Clustering):
         return self 
 
 
-class PLM(Clustering):
+class PLM(ClusteringAlg):
     '''
     A wrapper of *PLM (Parallel Louvain Method)* algorithm from NetworKit. 
     Parallel Louvain Method - the Louvain method, optionally extended to a full multi-level algorithm with refinement

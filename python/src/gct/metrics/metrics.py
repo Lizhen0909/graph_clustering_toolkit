@@ -9,7 +9,7 @@ import pandas as pd
 from gct.alg.clustering import Result
 import sys
 from gct.dataset import convert
-from gct.dataset.dataset import Cluster
+from gct.dataset.dataset import Clustering
 from gct import utils, config
 import os
 
@@ -17,9 +17,15 @@ import os
 class GraphMetrics(object):
     '''
     metrics for a graph. e.g. density, diameter etc.
+    
+    The class is here just for convenience. It is not powerful and efficient.    
+    One may analyze the graph use other graph libraries (e.g. SNAP, igraph, networkit, etc) using converting functions.
     '''
 
     def __init__(self, data):
+        '''
+        :param data: a :class:`gct.Dataset` object 
+        '''
         if data.is_directed() or data.is_weighted():
             print ("Warning! Graph will be taken as undirected.")
         self.data = data 
@@ -35,6 +41,9 @@ class GraphMetrics(object):
         
     @property    
     def directed(self):
+        '''
+        Return True if the graph is directed
+        '''
         return self.data.directed
     
     @property
@@ -50,34 +59,60 @@ class GraphMetrics(object):
     
     @property
     def weighted(self):
+        '''
+        Return True if the graph is weighted
+        '''
+
         return self.data.weighted    
     
     @property 
     def num_edges(self):
+        '''
+        Return number of edges
+        '''
+        
         return self.edges.shape[0]
     
     @property 
-    def num_vectices(self):
+    def num_vertices(self):
+        '''
+        Return number of vertices (nodes)
+        '''
         return self.set_if_not_exists("_num_vetices", lambda: len(set(np.unique(self.edges[['src', 'dest']].values))))
 
     @property
     def density1(self):
+        '''
+        Return density of :math:`\\frac{|E|}{|V|}`
+               
+        '''
+        
         m, n = self.num_edges, self.num_vectices
         assert n > 1
         return float(m) / n
         
     @property
     def density(self):
+        '''
+        Return density of :math:`\\frac{|E|}{|all\ possible\ edges|}`.
+        '''
+        
         m, n = self.num_edges, self.num_vectices
         assert n > 1
         return float(m) * 2 / n / (n - 1)
     
     @property
     def degrees(self):
+        '''
+        return weighted node degrees
+        '''
         return self.weighted_degrees()
     
     @property
     def unweighted_degrees(self):
+        '''
+        return unweighted node degrees (e.g. number of out edges)
+        '''
 
         def f():
             arr = self.edges[['src', 'dest']].values.ravel() 
@@ -89,7 +124,6 @@ class GraphMetrics(object):
 
     @property
     def weighted_degrees(self):
-
         def f():
             df1 = self.edges[['src', 'weight']]
             df2 = self.edges[['dest', 'weight']]
@@ -104,18 +138,23 @@ class GraphMetrics(object):
 class GraphClusterMetrics(object):
     '''
     metrics for a clustering of a graph. e.g. modularity.
+    
     '''
 
     def __init__(self, data, clusterobj):
+        '''
+        :param data:             a :class:`gct.Dataset` object 
+        :param clusterobj:         a :class:`gct.Clustering` object or refer to the *groundtruth* parameter of  :meth:`gct.from_edgelist`
+        '''
         if data.is_directed() or data.is_weighted():
             print ("Warning! Graph will be taken as undirected and unweighted.")
-        if isinstance(clusterobj, Cluster):
+        if isinstance(clusterobj, Clustering):
             self.clusterobj = clusterobj
         elif isinstance(clusterobj, Result):
-            self.clusterobj = Cluster(clusterobj.clusters(as_dataframe=True))
+            self.clusterobj = Clustering(clusterobj.clusters(as_dataframe=True))
         elif isinstance(clusterobj, pd.DataFrame) or isinstance(clusterobj, list) \
             or isinstance(clusterobj, np.ndarray) or isinstance(clusterobj, str) or isinstance(clusterobj, dict):
-            self.clusterobj = Cluster(clusterobj)
+            self.clusterobj = Clustering(clusterobj)
         else:
             raise Exception("Unsupported " + str(type(clusterobj)))
         self.data = data 
@@ -144,27 +183,33 @@ class GraphClusterMetrics(object):
     
     @property 
     def num_edges(self):
+        '''
+        number of edges of the graph
+        '''
         return self.edges.shape[0]
     
     @property 
-    def num_vectices(self):
+    def num_vertices(self):
+        '''
+        number of vertices (nodes) of the graph
+        '''
         prop_name = "_" + sys._getframe().f_code.co_name        
         return self.set_if_not_exists(prop_name, lambda: len(set(np.unique(self.edges[['src', 'dest']].values))))
 
-    '''
-    degree for each node
-    '''    
 
     @property
     def node_degrees(self):
+        '''
+        degrees for all the nodes
+        '''    
         return self.unweighted_degrees
 
-    '''
-    sum weight for each node
-    '''
 
     @property
     def node_weights(self):
+        '''
+        weight sum for each node
+        '''
         return self.weighted_degrees
 
     @property
@@ -173,7 +218,9 @@ class GraphClusterMetrics(object):
         
     @property
     def unweighted_degrees(self):
-
+        '''
+        unweighted degrees of nodes
+        '''
         def f():
             arr = self.edges[['src', 'dest']].values.ravel() 
             unique, counts = np.unique(arr, return_counts=True)
@@ -184,7 +231,9 @@ class GraphClusterMetrics(object):
 
     @property
     def weighted_degrees(self):
-
+        '''
+        weighted degrees of nodes
+        '''
         def f():
             df1 = self.edges[['src', 'weight']]
             df2 = self.edges[['dest', 'weight']]
@@ -197,14 +246,23 @@ class GraphClusterMetrics(object):
 
     @property 
     def num_clusters(self):
+        '''
+        number of partitions
+        '''
         return len(self.cluster_indexes)
     
     @property 
     def cluster_indexes(self):
+        '''
+        cluster identifiers
+        '''
         return self.cluster_sizes.keys()    
     
     @property 
     def cluster_sizes(self):
+        """
+        return cluster size for each cluster
+        """
         prop_name = "_" + sys._getframe().f_code.co_name        
         return self.set_if_not_exists(prop_name, lambda: self.clusters[['node', 'cluster']].groupby('cluster')['node'].count().to_dict())
     
@@ -277,6 +335,16 @@ class GraphClusterMetrics(object):
         
     @property
     def cluster_expansions(self):
+        """
+        return expansions for each cluster where expansions is 
+        
+        .. math::
+            \\frac{c_s}{n_s}
+            
+        where :math:`c_s` is the cluster size of cluster :math:`s` and :math:`n_s` is the number of vertices for the cluster.
+            
+        """
+        
         if self.data.is_weighted():
             raise Exception("only support unweighted graph")
 
@@ -291,19 +359,38 @@ class GraphClusterMetrics(object):
 
     @property
     def cluster_cut_ratios(self):
+        """
+        return cut ratio for each cluster which is  
+        
+        .. math::
+            \\frac{c_s}{n_s(n-n_s)}
+            
+        where :math:`c_s` is the cluster size of cluster :math:`s`,  n is the number of node of graph and :math:`n_s` is the number of vertices for the cluster.
+            
+        """
+        
         d = self.cluster_sizes
         n = self.num_vectices
         return {u:v / float(n - d[u]) for u, v in self.cluster_expansions.items()}
     
     @property
     def intra_cluster_densities(self):
+        '''
+        return internal cluster density for each cluster which is  
+        
+        .. math::
+            \\frac{m_s}{n_s(n-n_s)/2}
+            
+        where :math:`m_s` is number of edges of cluster :math:`s`,  n is the number of node of graph and :math:`n_s` is the number of vertices for the cluster.
+        
+        '''
         if self.data.is_weighted():
             raise Exception("only support unweighted graph")
         return self.unweighted_intra_cluster_densities
     
     @property
     def unweighted_intra_cluster_densities(self):
-
+        
         def f():
             r = {}
             d = self.cluster_edge_sizes
@@ -323,6 +410,16 @@ class GraphClusterMetrics(object):
 
     @property
     def inter_cluster_density(self):
+        '''
+        return internal cluster density for the clustring which is   
+
+        .. math::
+            \\frac{|\{ (u,v) | u \in C_i, v \in C_j, i \\neq j \}|}{n(n-1)/2 + \sum_{s=1}^{k}  n_s(n-n_s)/2}
+
+            
+        where :math:`m_s` is number of edges of cluster :math:`s`,  n is the number of node of graph, :math:`n_s` is the number of vertices for the cluster, :math:`C_i` is the set of nodes in i-th cluster
+        
+        '''        
         if self.data.is_weighted():
             raise Exception("only support unweighted graph")        
         return self.inter_unweighted_cluster_density
@@ -337,6 +434,14 @@ class GraphClusterMetrics(object):
 
     @property
     def relative_cluster_densities(self):
+        '''
+        return relative cluster density for each cluster which is  
+
+        .. math::
+            \\frac{deg_{intra}}{deg_{intra}+deg_{out}}
+
+        where the degree is weighted degree.
+        '''
 
         def f():
             df = self.edges[['src', 'dest', 'weight']]
@@ -382,6 +487,14 @@ class GraphClusterMetrics(object):
 
     @property
     def modularity(self):
+        '''
+        return modularity of the clustering for weighted or unweighted graph.  For unweighted graph it is     
+
+        .. math::
+             Q=1/(2m)  \sum_{i,j} (A_{ij}- \\frac{k_i k_j}{2m}) 1_{(i=j)}
+
+        where m is the number of edges, A is the adjacency matrix, 1 is indicator function, :math:`k_i k_j` is the expected number of random edges between the two nodes.  
+        '''        
         return self.modularity2
 
     @property
@@ -400,7 +513,14 @@ class GraphClusterMetrics(object):
            
     @property
     def conductance(self):  # another formula
+        '''
+        return conductance of a cluster S,  for unweighted graph which is     
 
+        .. math::
+             \\frac{Cut_S}{\\min (deg_S, deg_{(V \setminus S}))}
+
+        where S is a cluster  
+        '''        
         def f():
             a = self.cluster_out_sum_weights
             d = self.cluster_sum_intra_weights
@@ -412,7 +532,9 @@ class GraphClusterMetrics(object):
         
     @property
     def normalized_cut(self):  # another formula
-
+        '''
+        normalized cut
+        '''
         def f():
             m = self.sum_weight
             a = self.cluster_out_sum_weights
@@ -425,14 +547,23 @@ class GraphClusterMetrics(object):
     
     @property
     def cluster_max_out_degree_fraction(self):
+        '''
+        max out degree fraction
+        '''
         return self.cluster_out_degree_fraction[0]
 
     @property
     def cluster_avg_out_degree_fraction(self):
+        '''
+        average out degree fraction
+        '''
         return self.cluster_out_degree_fraction[1]
 
     @property
     def cluster_flake_out_degree_fraction(self):
+        '''
+        Flake out degree fraction
+        '''
         return self.cluster_out_degree_fraction[2]    
         
     @property
@@ -473,13 +604,19 @@ class GraphClusterMetrics(object):
         
     @property
     def separability(self):
+        '''
+        separability :math:`m_s/c_s`
+        '''
+        
         a = self.cluster_out_sum_weights
         b = self.cluster_sum_intra_weights
         return {u:b[u] / float(v) for u, v in a.items() }
         
     @property
     def cluster_clustering_coefficient(self):
-
+        '''
+        (global) clustering coefficient
+        '''
         def f1(edges):
             import igraph 
             g = igraph.Graph(edges=edges[['src', 'dest']].values.tolist(), directed=False) 
@@ -504,6 +641,9 @@ class GraphClusterMetrics(object):
 
     @property
     def cluster_local_clustering_coefficient(self):
+        '''
+        local clustering coefficient
+        '''
 
         def f1(edges):
             import igraph 
@@ -538,13 +678,13 @@ class ClusterComparator(object):
         self.logger = utils.get_logger("{}".format(type(self).__name__))
 
         def to_obj(clusterobj):
-            if isinstance(clusterobj, Cluster):
+            if isinstance(clusterobj, Clustering):
                 return  clusterobj
             elif isinstance(clusterobj, Result):
-                return  Cluster(clusterobj.clusters(as_dataframe=True))
+                return  Clustering(clusterobj.clusters(as_dataframe=True))
             elif isinstance(clusterobj, pd.DataFrame) or isinstance(clusterobj, list) \
                 or isinstance(clusterobj, np.ndarray) or isinstance(clusterobj, str) or isinstance(clusterobj, dict):
-                return Cluster(clusterobj)
+                return Clustering(clusterobj)
             else:
                 raise Exception("Unsupported " + str(type(clusterobj)))
         
@@ -925,8 +1065,8 @@ class ClusterComparator(object):
             cmd.append("--sync")
 
         with utils.TempDir() as tmp_dir:
-            cnl1 = Cluster(self.clean_ground_truth.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster1.cnl'))
-            cnl2 = Cluster(self.clean_prediction.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster2.cnl'))
+            cnl1 = Clustering(self.clean_ground_truth.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster1.cnl'))
+            cnl2 = Clustering(self.clean_prediction.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster2.cnl'))
             cmd.append(cnl1)
             cmd.append(cnl2)
             cmd.append("> xmeasurenmioutput")
@@ -966,8 +1106,8 @@ class ClusterComparator(object):
             cmd.append("--sync")
 
         with utils.TempDir() as tmp_dir:
-            cnl1 = Cluster(self.clean_ground_truth.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster1.cnl'))
-            cnl2 = Cluster(self.clean_prediction.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster2.cnl'))
+            cnl1 = Clustering(self.clean_ground_truth.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster1.cnl'))
+            cnl2 = Clustering(self.clean_prediction.reset_index()).make_cnl_file(filepath=os.path.join(tmp_dir, 'cluster2.cnl'))
             cmd.append(cnl1)
             cmd.append(cnl2)
             cmd.append("> xmeasureoutput")

@@ -1,5 +1,4 @@
 from gct import utils, config
-from gct.dataset import edgelist2pajek
 import fastparquet
 import json 
 import numpy as np
@@ -7,32 +6,35 @@ import pandas as pd
 import os
 import sys
 import glob
-from gct.alg.clustering import Result
 from gct.utils import TempDir
 from fnmatch import fnmatch
 
 
-class Cluster(object):
+class Clustering(object):
+    '''
+    A clustering (or partition) of a graph. May be disjointed or overlapped. The partitions in the clustering are also called clusters.  
+    '''
 
-    def __init__(self, cluster):
+    def __init__(self, clusteringobj):
         self.logger = utils.get_logger("{}".format(type(self).__name__))
         self.cluster = None 
         self.path = None 
-        if isinstance(cluster, str):
-            self.path = utils.abspath(cluster)
-        elif isinstance(cluster, Result):
-            self.cluster = cluster.clusters(as_dataframe=True)
-        elif isinstance(cluster, dict):
-            self.cluster = cluster.clusters(Result(cluster).clusters(as_dataframe=True))            
-        elif isinstance(cluster, pd.DataFrame):
-            if not 'cluster' in cluster.columns or not 'node' in cluster.columns:
+        from gct.alg.clustering import Result
+        if isinstance(clusteringobj, str):
+            self.path = utils.abspath(clusteringobj)
+        elif isinstance(clusteringobj, Result):
+            self.cluster = clusteringobj.clusters(as_dataframe=True)
+        elif isinstance(clusteringobj, dict):
+            self.cluster = clusteringobj.clusters(Result(clusteringobj).clusters(as_dataframe=True))            
+        elif isinstance(clusteringobj, pd.DataFrame):
+            if not 'cluster' in clusteringobj.columns or not 'node' in clusteringobj.columns:
                 raise ValueError("arg is not right")
-            self.cluster = cluster[['node', 'cluster']]
+            self.cluster = clusteringobj[['node', 'cluster']]
         else:  
-            if isinstance(cluster, list):
-                arr = np.array(cluster)
-            elif isinstance(cluster, np.ndarray):
-                arr = cluster  
+            if isinstance(clusteringobj, list):
+                arr = np.array(clusteringobj)
+            elif isinstance(clusteringobj, np.ndarray):
+                arr = clusteringobj  
             else:
                 raise ValueError("arg is not right")
             if len(arr.shape) != 2 or arr.shape[1] != 2:
@@ -52,6 +54,11 @@ class Cluster(object):
     
     # filepath will be overwritten
     def save_to_cnl_file(self, filepath):
+        '''
+        save the clustering to a cnl format file.
+        
+        :param filepath: where to save
+        '''
         df = self.value()
         with open(filepath, 'wt') as f :
             for lst in df.groupby('cluster')['node'].apply(lambda u: list(u)):
@@ -73,6 +80,9 @@ class Cluster(object):
 
     @property 
     def index(self):
+        """
+        :rtype: cluster ids
+        """
         prop_name = "_" + sys._getframe().f_code.co_name 
 
         def f():
@@ -83,10 +93,16 @@ class Cluster(object):
 
     @property 
     def num_cluster(self):
+        '''
+        number of clusters
+        '''
         return len(self.index)
     
     @property 
     def is_overlap(self):
+        """
+        :rtype: True if the clusters are overlapped
+        """
         prop_name = "_" + sys._getframe().f_code.co_name 
 
         def f():
@@ -96,6 +112,9 @@ class Cluster(object):
     
     @property 
     def node_overlaps(self):
+        '''
+        :rtype: overlapping count of each node.
+        '''
         prop_name = "_" + sys._getframe().f_code.co_name 
 
         def f():
@@ -123,6 +142,13 @@ class Cluster(object):
                         raise Exception("already persistent")
              
     def save(self, filepath, format="parq"):
+        '''
+        save the cluster to a file
+        
+        :param filepath: where to save.
+        :param format: 'parq' or 'csv'
+        
+        '''
         assert filepath 
         self.logger.info("Writing " + filepath)
         if format == "parq":
@@ -133,6 +159,9 @@ class Cluster(object):
             raise ValueError("Error: " + format) 
         
     def value(self):
+        '''
+        :rtype: Pandas dataframe of clustering
+        '''
         if self.cluster is not None: 
             return self.cluster
         else:
@@ -157,6 +186,7 @@ class Dataset(object):
     
     There are also building graphs that can be loaded directly. Use :py:meth:`gct.list_dataset` to find them.
     '''
+
     def __init__(self, name=None, description="", groundtruthObj=None, edgesObj=None, directed=False,
                  weighted=False, overide=False, additional_meta=None, is_edge_mirrored=False):
         assert edgesObj is not None 
@@ -285,18 +315,18 @@ class Dataset(object):
     def set_ground_truth(self, obj):
         if obj is None: return 
 
-        def to_cluster(v):
-            if isinstance(v, Cluster):
+        def to_clustering(v):
+            if isinstance(v, Clustering):
                 return v 
             else:
-                return Cluster(v)
+                return Clustering(v)
         
         if isinstance(obj, dict):
-            self.ground_truth = {u:to_cluster(v) for u, v in obj.items()}
+            self.ground_truth = {u:isinstance(v) for u, v in obj.items()}
         elif isinstance(obj, tuple):
-            self.ground_truth = {"cluster" + str(u):to_cluster(v) for u, v in enumerate(obj)}
+            self.ground_truth = {"cluster" + str(u):isinstance(v) for u, v in enumerate(obj)}
         else:
-            self.ground_truth = {"default":to_cluster(obj)}
+            self.ground_truth = {"default":isinstance(obj)}
 
     @property 
     def num_node_edge(self):
@@ -440,6 +470,7 @@ class Dataset(object):
             if utils.file_exists(filepath):
                 return filepath             
         if not utils.file_exists(self.file_edges): self.to_edgelist()
+        from gct.dataset import edgelist2pajek
         edgelist2pajek.edgelist_to_pajek(self.file_edges, self.file_pajek , self.is_directed(), self.is_weighted())
         return filepath 
 
@@ -602,11 +633,11 @@ class Dataset(object):
         
     def as_unweight(self, newname, description="", overide=False):
         from gct.dataset import convert
-        return convert.as_unweight(self, newname=newname, description=description, overide=overide)
+        return convert.as_unweighted(self, newname=newname, description=description, overide=overide)
     
     def as_unweight_undirected(self, newname, description="", overide=False):
         from gct.dataset import convert
-        return convert.as_unweight_undirected(self, newname=newname, description=description, overide=overide)
+        return convert.as_unweighted_undirected(self, newname=newname, description=description, overide=overide)
 
     def as_mirror_edges(self, newname, description="", overide=False):
         from gct.dataset import convert
@@ -614,16 +645,32 @@ class Dataset(object):
 
 
 def local_exists(name):
+    '''
+    check if dataset 'name' exists locally.
+    
+    :param name: name of a dataset
+    :rtype: bool
+    '''
     path = config.get_data_file_path(name)
     return  utils.file_exists(path)
 
 
 def list_local():
+    '''
+    list all local datasets
+    '''
     path = config.DATA_PATH
     return [os.path.basename(u[:-1])  for u in glob.glob(path + "/*/")]
 
 
 def remove_local(name, rm_graph_data=True, rm_clustering_result=True):
+    '''
+    remove a local dataset 
+
+    :param name: name of a dataset
+    :param rm_clustering_result: remove local graph data
+    :param rm_clustering_result: remove clustering results associated with the graph.
+    '''
     if rm_graph_data:
         path = config.get_data_file_path(name)
         utils.remove_if_file_exit(path, is_dir=True)
@@ -638,6 +685,11 @@ def create_dataset(name, edgesObj, groundtruthObj=None, directed=False, weighted
 
     
 def load_local(name):
+    '''
+    load a local dataset
+    
+    :param name: name of a dataset 
+    '''
     path = config.get_data_file_path(name, create=False)
     if not utils.file_exists(path):
         raise Exception("path not exists: " + path)
@@ -646,19 +698,29 @@ def load_local(name):
     edges = meta['parq_edges']
     gt = None 
     if meta["has_ground_truth"]:
-        gt = {k:Cluster(v) for k, v in meta['parq_ground_truth'].items()}
+        gt = {k:Clustering(v) for k, v in meta['parq_ground_truth'].items()}
     additional_meta = None if not "additional" in meta else meta['additional'] 
     is_edge_mirrored = meta['is_edge_mirrored']
     return Dataset(name=meta['name'], description=meta['description'], groundtruthObj=gt, edgesObj=edges, directed=meta['directed'],
                     weighted=meta['weighted'], overide=False, additional_meta=additional_meta, is_edge_mirrored=is_edge_mirrored)
 
     
-def list_clustering(dsname):
-    path = config.get_result_file_path(dsname)
+def list_clustering(dataset_name):
+    '''
+    list clustering results associated with the dataset
+    
+    :param dataset_name: name of a dataset 
+    '''
+    path = config.get_result_file_path(dataset_name)
     return [os.path.basename(u[:-1])  for u in glob.glob(path + "/*/")]
 
 
 def list_all_clustering(print_format=False):
+    '''
+    list clustering results associated with all available datasets
+    
+    '''
+        
     ret = {}
     for dsname in list_local():
         ret[dsname] = list_clustering(dsname)
@@ -666,7 +728,6 @@ def list_all_clustering(print_format=False):
         return ["{}/{}".format(u, v) for u, vv in ret.items() for v in vv ]
     else:
         return ret 
-    
 
     
 def list_dataset(pattern=None):
@@ -732,5 +793,4 @@ def load_dataset(name, cat=None):
             if name in sample_dataset.list_datasets():
                 return sample_dataset.load_sample_dataset(name)
     raise Exception("data '{}' not found".format(name))
-    
     

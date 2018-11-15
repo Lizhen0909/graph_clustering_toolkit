@@ -3,7 +3,7 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import os
 import glob
@@ -13,7 +13,7 @@ import numpy as np
 prefix = 'alg'
 
 
-class pg_label_propagation(Clustering):
+class pg_label_propagation(ClusteringAlg):
     '''
     A wrapper of *LPA* algorithm from PowerGraph. 
 
@@ -99,7 +99,7 @@ class pg_label_propagation(Clustering):
         return self 
 
 
-class GossipMap(Clustering):
+class GossipMap(ClusteringAlg):
     '''
     A wrapper of *GossipMap* algorithm from https://github.com/uwescience/GossipMap. 
 
@@ -203,7 +203,7 @@ class GossipMap(Clustering):
         return self 
 
 
-class RelaxMap(Clustering):
+class RelaxMap(ClusteringAlg):
     '''
     A wrapper of *RelaxMap* algorithm from https://github.com/uwescience/RelaxMap. 
 

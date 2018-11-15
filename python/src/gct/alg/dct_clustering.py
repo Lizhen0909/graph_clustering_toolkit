@@ -3,14 +3,14 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import glob
 import numpy as np 
 
 prefix='dct'
 
-class seq_louvain(Clustering):
+class seq_louvain(ClusteringAlg):
     '''
     A wrapper of *Louvain* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
     
@@ -70,7 +70,7 @@ class seq_louvain(Clustering):
         return self 
 
     
-class infomap(Clustering):
+class infomap(ClusteringAlg):
     '''
     A wrapper of *infomap* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
     
@@ -129,7 +129,7 @@ class infomap(Clustering):
         return self 
 
 
-class _dct(Clustering):
+class _dct(ClusteringAlg):
     '''
     A wrapper of *dct (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
     

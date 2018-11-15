@@ -3,7 +3,7 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import os
 import glob
@@ -12,7 +12,7 @@ import numpy as np
 prefix = 'oslom'
 
 
-class Infomap(Clustering):
+class Infomap(ClusteringAlg):
     '''
     A wrapper of *infomap* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
@@ -81,7 +81,7 @@ class Infomap(Clustering):
         return self 
     
 
-class Infohiermap(Clustering):
+class Infohiermap(ClusteringAlg):
     '''
     A wrapper of *Hierarchical Infomap* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
@@ -143,7 +143,7 @@ class Infohiermap(Clustering):
         return self 
     
     
-class lpm(Clustering):
+class lpm(ClusteringAlg):
     '''
     A wrapper of *Label Propagation Method* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
@@ -202,7 +202,7 @@ class lpm(Clustering):
         return self 
     
 
-class louvain_method(Clustering):
+class louvain_method(ClusteringAlg):
     '''
     A wrapper of *Louvain* algorithm collected from `OSLOM <http://www.oslom.org/index.html>`_
     
@@ -261,7 +261,7 @@ class louvain_method(Clustering):
         return self 
 
 
-class copra(Clustering):
+class copra(ClusteringAlg):
     '''
     A wrapper of *COPRA (Community Overlap PRopagation Algorithm)* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
@@ -341,7 +341,7 @@ class copra(Clustering):
         return self 
 
 
-class modopt(Clustering):
+class modopt(ClusteringAlg):
     '''
     A wrapper of *Modularity Optimization (Simulated Annealing)* collected from `OSLOM <http://www.oslom.org/index.html>`_
     
@@ -419,7 +419,7 @@ class modopt(Clustering):
         return self 
 
 
-class OSLOM(Clustering):
+class OSLOM(ClusteringAlg):
     '''
     A wrapper of *OSLOM (Order Statistics Local Optimization Method)* collected from `OSLOM <http://www.oslom.org/index.html>`_
     

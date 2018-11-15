@@ -5,13 +5,13 @@ Created on Oct 27, 2018
 '''
 from gct.dataset import convert
 import igraph    
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils
 from gct.exception import UnsupportedException
 
 prefix='igraph'
 
-class community_fastgreedy(Clustering):
+class community_fastgreedy(ClusteringAlg):
     '''
     A wrapper of *community_fastgreedy* algorithm from iGraph
     
@@ -54,7 +54,7 @@ class community_fastgreedy(Clustering):
         return self 
 
  
-class community_infomap(Clustering):
+class community_infomap(ClusteringAlg):
     '''
     A wrapper of *community_infomap* algorithm from iGraph
     
@@ -99,7 +99,7 @@ class community_infomap(Clustering):
         return self 
     
     
-class community_leading_eigenvector(Clustering):
+class community_leading_eigenvector(ClusteringAlg):
     '''
     A wrapper of *community_leading_eigenvector* algorithm from iGraph
     
@@ -143,7 +143,7 @@ class community_leading_eigenvector(Clustering):
         return self     
  
 
-class community_label_propagation(Clustering):
+class community_label_propagation(ClusteringAlg):
     '''
     A wrapper of *community_label_propagation* algorithm from iGraph
     
@@ -187,7 +187,7 @@ class community_label_propagation(Clustering):
         return self     
 
     
-class community_multilevel(Clustering):
+class community_multilevel(ClusteringAlg):
     '''
     A wrapper of *community_multilevel* algorithm from iGraph
     
@@ -230,7 +230,7 @@ class community_multilevel(Clustering):
         return self     
     
  
-class community_optimal_modularity(Clustering):
+class community_optimal_modularity(ClusteringAlg):
     '''
     A wrapper of *community_optimal_modularity* algorithm from iGraph
     
@@ -274,7 +274,7 @@ class community_optimal_modularity(Clustering):
         return self  
 
     
-class community_edge_betweenness(Clustering):
+class community_edge_betweenness(ClusteringAlg):
     '''
     A wrapper of *community_edge_betweenness* algorithm from iGraph
     
@@ -317,7 +317,7 @@ class community_edge_betweenness(Clustering):
         self.result = result 
         return self 
     
-class community_spinglass(Clustering):
+class community_spinglass(ClusteringAlg):
     '''
     A wrapper of *community_spinglass* algorithm from iGraph
 
@@ -361,7 +361,7 @@ class community_spinglass(Clustering):
         self.result = result 
         return self      
 
-class community_walktrap(Clustering):
+class community_walktrap(ClusteringAlg):
     '''
     A wrapper of *community_walktrap* algorithm from iGraph
     

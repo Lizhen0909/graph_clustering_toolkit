@@ -3,8 +3,9 @@ from .config import get_data_file_path, get_download_file_path, get_result_file_
 from .alg import *
 from .alg.function import __ALG_LIST__
 from .dataset import *
+from .dataset.dataset import Dataset, Clustering
+from .alg.clustering import Result
 from .metrics import *
-from .dataset.dataset import Dataset, Result
 from .dataset.convert import *
 
 __all__ = __ALG_LIST__ + ['remove_results', 'remove_data', 'to_cluster', 'to_result']

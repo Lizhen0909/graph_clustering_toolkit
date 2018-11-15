@@ -3,7 +3,7 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import os
 import glob
@@ -12,7 +12,7 @@ import multiprocessing
 prefix = 'scan'
 
 
-class Scanpp(Clustering):
+class Scanpp(ClusteringAlg):
     '''
     A wrapper of *scan++* algorithm  
 
@@ -80,7 +80,7 @@ class Scanpp(Clustering):
             raise Exception("No result found. probably no run has been done")
 
 
-class _AnyScan(Clustering):
+class _AnyScan(ClusteringAlg):
     '''
     A wrapper of *anyscan* algorithm  
 
@@ -311,7 +311,7 @@ class AnyScan_anyScanParl(_AnyScan):
         return super(AnyScan_anyScanParl, self).run(**params)
 
                                 
-class _pScanBase(Clustering):
+class _pScanBase(ClusteringAlg):
     '''
     A wrapper of *pScan, ppScan, ppScanSSE* algorithm  
 

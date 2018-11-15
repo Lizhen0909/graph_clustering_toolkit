@@ -3,7 +3,7 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import os
 import numpy as np
@@ -17,7 +17,7 @@ from gct.exception import UnsupportedException
 prefix = 'cdc'
 
 
-class CliquePercolation(Clustering):
+class CliquePercolation(ClusteringAlg):
     '''
     The sequential clique percolation algorithm is method for detecting clique percolation communities. 
     It is an alternative to CFinder: instead of finding maximal cliques in a graph and producing communities 
@@ -95,7 +95,7 @@ class CliquePercolation(Clustering):
         return self 
 
 
-class Connected_Iterative_Scan(Clustering):
+class Connected_Iterative_Scan(ClusteringAlg):
     '''
     Connected Iterative Scan Connected Iterative Scan is also known at times as Locally Optimal Sets.
     
@@ -159,7 +159,7 @@ class Connected_Iterative_Scan(Clustering):
         return self 
     
     
-class EAGLE(Clustering):
+class EAGLE(ClusteringAlg):
     '''
     EAGLE (agglomerativE hierarchicAl clusterinG based on maximaL cliquE)
     
@@ -228,7 +228,7 @@ class EAGLE(Clustering):
         return self 
 
 
-class clique_modularity(Clustering):
+class clique_modularity(ClusteringAlg):
     '''
     Detecting Communities in Networks by Merging Cliques
         
@@ -294,7 +294,7 @@ class clique_modularity(Clustering):
         return self 
         
     
-class CONGA(Clustering):
+class CONGA(ClusteringAlg):
     '''
     Cluster-Overlap Newman Girvan Algorithm
         
@@ -392,7 +392,7 @@ class CONGA(Clustering):
         return self 
 
     
-class LinkCommunities(Clustering):
+class LinkCommunities(ClusteringAlg):
     '''
     Link communities algorithm
         
@@ -469,7 +469,7 @@ class LinkCommunities(Clustering):
         return self 
     
 
-class TopGC(Clustering):
+class TopGC(ClusteringAlg):
     '''
      Top Graph Clusters (TopGC)
         
@@ -581,7 +581,7 @@ class TopGC(Clustering):
         return self 
     
     
-class GCE(Clustering):
+class GCE(ClusteringAlg):
     '''
     Greedy Clique Expansion Community Finder
     Community finder. Requires edge list of nodes. Processes graph in undirected, unweighted form. 
@@ -669,7 +669,7 @@ class GCE(Clustering):
         return self 
 
 
-class MOSES(Clustering):
+class MOSES(ClusteringAlg):
     '''
      Model-based Overlapping Seed Expansion
         
@@ -736,7 +736,7 @@ class MOSES(Clustering):
         return self 
 
 
-class ParCPM(Clustering):
+class ParCPM(ClusteringAlg):
     '''
      Model-based Overlapping Seed Expansion
         
@@ -839,7 +839,7 @@ class ParCPM(Clustering):
         return self 
 
 
-class DEMON(Clustering):
+class DEMON(ClusteringAlg):
     '''
      DEMON
         
@@ -911,7 +911,7 @@ class DEMON(Clustering):
         return self 
 
 
-class HDEMON(Clustering):
+class HDEMON(ClusteringAlg):
     '''
      Hierarchical Demon
         
@@ -992,7 +992,7 @@ class HDEMON(Clustering):
         return self 
 
 
-class FastCpm(Clustering):
+class FastCpm(ClusteringAlg):
     '''
      Find maximal cliques, via the Bron Kerbosch algorithm, http://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm. Then perform k-clique percolation on these cliques, for a given value of k.
         
@@ -1061,7 +1061,7 @@ class FastCpm(Clustering):
         return self 
 
 
-class _MSCDBase(Clustering):
+class _MSCDBase(ClusteringAlg):
     '''
      Fast Multi-Scale Community Detection Tools
         
@@ -1346,7 +1346,7 @@ class MSCD_SOM(_MSCDBase):
         super(MSCD_SOM, self).__init__(name, prog="SOM")    
         
         
-class SVINET(Clustering):
+class SVINET(ClusteringAlg):
     '''
      SVINET implements sampling based algorithms that derive from stochastic variational inference under the (assortative) mixed-membership stochastic blockmodel.
         

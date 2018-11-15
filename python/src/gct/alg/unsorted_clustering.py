@@ -3,7 +3,7 @@ Created on Oct 27, 2018
 
 @author: lizhen
 '''
-from gct.alg.clustering import Clustering, save_result
+from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import os
 import glob
@@ -12,7 +12,7 @@ from gct.dataset import convert
 prefix = 'alg'
 
 
-class streamcom(Clustering):
+class streamcom(ClusteringAlg):
     '''
     A wrapper of *streamcom* algorithm from https://github.com/ahollocou/graph-streaming 
 
@@ -88,7 +88,7 @@ class streamcom(Clustering):
         return self 
 
     
-class Paris(Clustering):
+class Paris(ClusteringAlg):
     '''
     A wrapper of *paris* algorithm from https://github.com/tbonald/paris 
 
@@ -139,7 +139,7 @@ class Paris(Clustering):
         return self 
 
 
-class lso_cluster(Clustering):
+class lso_cluster(ClusteringAlg):
     '''
     A wrapper of *lso-cluster* algorithm from https://github.com/twanvl/graph-cluster 
     

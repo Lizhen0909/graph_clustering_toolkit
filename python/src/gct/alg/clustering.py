@@ -37,7 +37,7 @@ def save_result(result):
         
 class Result(collections.MutableMapping):
     """
-    The result after running a clustering algorithm. An algorithm may result one or multiple clusters. 
+    The result after running a clustering algorithm. An algorithm may result one or multiple clusterings. 
     """
 
     def __init__(self, result):
@@ -80,12 +80,12 @@ class Result(collections.MutableMapping):
     def result(self): 
         return self.store
 
-    def clusters(self, as_dataframe=False, key=None):
+    def clustering(self, as_dataframe=False, key=None):
         '''
-        Get a cluster. 
+        Get a clustering. 
         
         :param as_dataframe: return a Pandas dataframe instread of dict
-        :param key:     if multiple clusters exists, the one with the key is returned.
+        :param key:     if multiple clusterings exists, the one with the key is returned.
         
         :rtype: A Pandas dataframe or a :meth:`gct.Clustering` 
         '''
@@ -109,12 +109,13 @@ class Result(collections.MutableMapping):
                     lst.append([v, k])
             return pd.DataFrame(lst, columns=['node', 'cluster'])
         else:
-            return Clustering(d)
+            from gct.dataset.dataset import Cluster
+            return Cluster(d)
 
     @property
-    def cluster_keys(self):
+    def clustering_keys(self):
         '''
-        keys for multiclusters. 
+        keys for a multiclustering. 
         '''
         if self.is_multiclusters:
             return self.get('clusters').keys()
@@ -123,14 +124,14 @@ class Result(collections.MutableMapping):
     @property     
     def is_multilevel(self):
         """
-        True when the algorithm returns hierarchical clustering. A multiclusters result may not be hierarchical. 
+        True when the algorithm returns hierarchical clustering. A multiclustering result may not be hierarchical. 
         """
         return "multilevel" in self
     
     @property     
     def is_multiclusters(self):
         """
-        True when the algorithm returns multiple clustering. 
+        True when the algorithm returns multiple clusterings. 
         """
         
         return "multiclusters" in self  or self.is_multilevel
@@ -171,8 +172,7 @@ class Result(collections.MutableMapping):
         return self.get("timecost")        
 
 
-class Clustering(object):
-
+class ClusteringAlg(object):
     def __init__(self, name):
         self.name = name 
         self.logger = utils.get_logger(self.name)
