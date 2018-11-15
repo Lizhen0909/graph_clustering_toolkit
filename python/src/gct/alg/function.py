@@ -1,6 +1,7 @@
 import gct.alg
 from gct.exception import UnsupportedException
 import sys
+from gct.alg.clustering import Result
 __ALG_LIST__=[]
 
 #### begin generated algorithm methods
@@ -20,7 +21,9 @@ def oslom_Infohiermap(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.OSLOM_clustering.Infohiermap(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -42,7 +45,9 @@ def oslom_Infomap(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.OSLOM_clustering.Infomap(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -89,7 +94,9 @@ def oslom_OSLOM(name, graph, seed=None, r=10, hr=50, t=0.1, cp=0.5, fast=False, 
     '''
     try:
         obj = gct.alg.OSLOM_clustering.OSLOM(name)
-        return obj.run(graph, seed=seed, r=r, hr=hr, t=t, cp=cp, fast=fast, singlet=singlet, infomap=infomap, copra=copra, louvain=louvain, runs=runs)
+        obj.run(graph, seed=seed, r=r, hr=hr, t=t, cp=cp, fast=fast, singlet=singlet, infomap=infomap, copra=copra, louvain=louvain, runs=runs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -124,7 +131,9 @@ def oslom_copra(name, graph, v=5, v1=None, v2=None, prop=None, repeat=None, mo=N
     '''
     try:
         obj = gct.alg.OSLOM_clustering.copra(name)
-        return obj.run(graph, v=v, v1=v1, v2=v2, prop=prop, repeat=repeat, mo=mo, nosplit=nosplit, extrasimplify=extrasimplify, q=q, seed=seed)
+        obj.run(graph, v=v, v1=v1, v2=v2, prop=prop, repeat=repeat, mo=mo, nosplit=nosplit, extrasimplify=extrasimplify, q=q, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -145,7 +154,9 @@ def oslom_louvain_method(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.OSLOM_clustering.louvain_method(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -166,7 +177,9 @@ def oslom_lpm(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.OSLOM_clustering.lpm(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -197,7 +210,9 @@ def oslom_modopt(name, graph, seed=None, lamb=1, trials=5, temp_step=0.999, init
     '''
     try:
         obj = gct.alg.OSLOM_clustering.modopt(name)
-        return obj.run(graph, seed=seed, lamb=lamb, trials=trials, temp_step=temp_step, initial_temp=initial_temp)
+        obj.run(graph, seed=seed, lamb=lamb, trials=trials, temp_step=temp_step, initial_temp=initial_temp)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -255,7 +270,9 @@ def pycabem_GANXiSw(name, graph, **kwargs):
     '''
     try:
         obj = gct.alg.PyCABeM_clustering.GANXiSw(name)
-        return obj.run(graph, kwargs=kwargs)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -283,7 +300,9 @@ def pycabem_HiReCS(name, graph, f=False, m=None, seed=None):
     '''
     try:
         obj = gct.alg.PyCABeM_clustering.HiReCS(name)
-        return obj.run(graph, f=f, m=m, seed=seed)
+        obj.run(graph, f=f, m=m, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -304,7 +323,9 @@ def pycabem_LabelRank(name, graph, cutoff_r=0.01, inflation_in=2, NBDisimilarity
     '''
     try:
         obj = gct.alg.PyCABeM_clustering.LabelRank(name)
-        return obj.run(graph, cutoff_r=cutoff_r, inflation_in=inflation_in, NBDisimilarity_q=NBDisimilarity_q, seed=seed)
+        obj.run(graph, cutoff_r=cutoff_r, inflation_in=inflation_in, NBDisimilarity_q=NBDisimilarity_q, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -334,7 +355,9 @@ def cdc_CONGA(name, graph, silent=True, recompute=False, horizon=None, nComm=[5]
     '''
     try:
         obj = gct.alg.cdc_clustering.CONGA(name)
-        return obj.run(graph, silent=silent, recompute=recompute, horizon=horizon, nComm=nComm, weight=weight, seed=seed)
+        obj.run(graph, silent=silent, recompute=recompute, horizon=horizon, nComm=nComm, weight=weight, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -365,7 +388,9 @@ def cdc_CliquePercolation(name, graph, k=None, verbose=False, seed=None):
     '''
     try:
         obj = gct.alg.cdc_clustering.CliquePercolation(name)
-        return obj.run(graph, k=k, verbose=verbose, seed=seed)
+        obj.run(graph, k=k, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -385,7 +410,9 @@ def cdc_Connected_Iterative_Scan(name, graph, l=None, seed=None):
     '''
     try:
         obj = gct.alg.cdc_clustering.Connected_Iterative_Scan(name)
-        return obj.run(graph, l=l, seed=seed)
+        obj.run(graph, l=l, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -409,7 +436,9 @@ def cdc_DEMON(name, graph, epsilon=0.25, min_community_size=3, seed=None):
     '''
     try:
         obj = gct.alg.cdc_clustering.DEMON(name)
-        return obj.run(graph, epsilon=epsilon, min_community_size=min_community_size, seed=seed)
+        obj.run(graph, epsilon=epsilon, min_community_size=min_community_size, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -430,7 +459,9 @@ def cdc_EAGLE(name, graph, nThread=None, seed=None):
     '''
     try:
         obj = gct.alg.cdc_clustering.EAGLE(name)
-        return obj.run(graph, nThread=nThread, seed=seed)
+        obj.run(graph, nThread=nThread, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -453,7 +484,9 @@ def cdc_FastCpm(name, graph, k=4, seed=None):
     '''
     try:
         obj = gct.alg.cdc_clustering.FastCpm(name)
-        return obj.run(graph, k=k, seed=seed)
+        obj.run(graph, k=k, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -493,7 +526,9 @@ def cdc_GCE(name, graph, minimumCliqueSizeK=4, overlapToDiscardEta=0.6, fitnessE
     '''
     try:
         obj = gct.alg.cdc_clustering.GCE(name)
-        return obj.run(graph, minimumCliqueSizeK=minimumCliqueSizeK, overlapToDiscardEta=overlapToDiscardEta, fitnessExponentAlpha=fitnessExponentAlpha, CCHthresholdPhi=CCHthresholdPhi, seed=seed)
+        obj.run(graph, minimumCliqueSizeK=minimumCliqueSizeK, overlapToDiscardEta=overlapToDiscardEta, fitnessExponentAlpha=fitnessExponentAlpha, CCHthresholdPhi=CCHthresholdPhi, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -516,7 +551,9 @@ def cdc_HDEMON(name, graph, epsilon=0.25, min_community_size=5, seed=None):
     '''
     try:
         obj = gct.alg.cdc_clustering.HDEMON(name)
-        return obj.run(graph, epsilon=epsilon, min_community_size=min_community_size, seed=seed)
+        obj.run(graph, epsilon=epsilon, min_community_size=min_community_size, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -538,7 +575,9 @@ def cdc_LinkCommunities(name, graph, threshold=[0.01], seed=None):
     '''
     try:
         obj = gct.alg.cdc_clustering.LinkCommunities(name)
-        return obj.run(graph, threshold=threshold, seed=seed)
+        obj.run(graph, threshold=threshold, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -559,7 +598,9 @@ def cdc_MOSES(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.cdc_clustering.MOSES(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -585,7 +626,9 @@ def cdc_MSCD_AFG(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0
     '''
     try:
         obj = gct.alg.cdc_clustering.MSCD_AFG(name)
-        return obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -614,7 +657,9 @@ def cdc_MSCD_HSLSW(name, graph, scale_param='[1.0,2]', extra_param=None, verbose
     '''
     try:
         obj = gct.alg.cdc_clustering.MSCD_HSLSW(name)
-        return obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -649,7 +694,9 @@ def cdc_MSCD_LFK(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0
     '''
     try:
         obj = gct.alg.cdc_clustering.MSCD_LFK(name)
-        return obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -681,7 +728,9 @@ def cdc_MSCD_LFK2(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=
     '''
     try:
         obj = gct.alg.cdc_clustering.MSCD_LFK2(name)
-        return obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -707,7 +756,9 @@ def cdc_MSCD_RB(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0,
     '''
     try:
         obj = gct.alg.cdc_clustering.MSCD_RB(name)
-        return obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -733,7 +784,9 @@ def cdc_MSCD_RN(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0,
     '''
     try:
         obj = gct.alg.cdc_clustering.MSCD_RN(name)
-        return obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -766,7 +819,9 @@ def cdc_MSCD_SO(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0,
     '''
     try:
         obj = gct.alg.cdc_clustering.MSCD_SO(name)
-        return obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -798,7 +853,9 @@ def cdc_MSCD_SOM(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0
     '''
     try:
         obj = gct.alg.cdc_clustering.MSCD_SOM(name)
-        return obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -827,7 +884,9 @@ def cdc_ParCPM(name, graph, n_thread=None, W=30, poc=False, seed=None):
     '''
     try:
         obj = gct.alg.cdc_clustering.ParCPM(name)
-        return obj.run(graph, n_thread=n_thread, W=W, poc=poc, seed=seed)
+        obj.run(graph, n_thread=n_thread, W=W, poc=poc, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -865,7 +924,9 @@ def cdc_SVINET(name, graph, num_cluster=None, inference='link-sampling', stratif
     '''
     try:
         obj = gct.alg.cdc_clustering.SVINET(name)
-        return obj.run(graph, num_cluster=num_cluster, inference=inference, stratified=stratified, rfreq=rfreq, max_iterations=max_iterations, no_stop=no_stop, seed=seed)
+        obj.run(graph, num_cluster=num_cluster, inference=inference, stratified=stratified, rfreq=rfreq, max_iterations=max_iterations, no_stop=no_stop, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -928,7 +989,9 @@ def cdc_TopGC(name, graph, seed=None, **kwargs):
     '''
     try:
         obj = gct.alg.cdc_clustering.TopGC(name)
-        return obj.run(graph, seed=seed, kwargs=kwargs)
+        obj.run(graph, seed=seed, **kwargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -949,7 +1012,9 @@ def cdc_clique_modularity(name, graph, method='BK', nComm=10, seed=None):
     '''
     try:
         obj = gct.alg.cdc_clustering.clique_modularity(name)
-        return obj.run(graph, method=method, nComm=nComm, seed=seed)
+        obj.run(graph, method=method, nComm=nComm, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1003,7 +1068,9 @@ def cgcc_CGGC(name, graph, startk=None, finalk=None, runs=None, ensemblesize=Non
     '''
     try:
         obj = gct.alg.cggc_clustering.CGGC(name)
-        return obj.run(graph, startk=startk, finalk=finalk, runs=runs, ensemblesize=ensemblesize, algorithm=algorithm, seed=seed)
+        obj.run(graph, startk=startk, finalk=finalk, runs=runs, ensemblesize=ensemblesize, algorithm=algorithm, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1024,7 +1091,9 @@ def dct_dlplm(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.dct_clustering.dlplm(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1045,7 +1114,9 @@ def dct_dlslm(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.dct_clustering.dlslm(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1066,7 +1137,9 @@ def dct_dlslm_map_eq(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.dct_clustering.dlslm_map_eq(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1087,7 +1160,9 @@ def dct_dlslm_no_contraction(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.dct_clustering.dlslm_no_contraction(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1108,7 +1183,9 @@ def dct_dlslm_with_seq(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.dct_clustering.dlslm_with_seq(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1129,7 +1206,9 @@ def dct_infomap(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.dct_clustering.infomap(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1151,7 +1230,9 @@ def dct_seq_louvain(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.dct_clustering.seq_louvain(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1171,7 +1252,9 @@ def igraph_community_edge_betweenness(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.igraph_clustering.community_edge_betweenness(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1191,7 +1274,9 @@ def igraph_community_fastgreedy(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.igraph_clustering.community_fastgreedy(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1213,7 +1298,9 @@ def igraph_community_infomap(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.igraph_clustering.community_infomap(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1233,7 +1320,9 @@ def igraph_community_label_propagation(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.igraph_clustering.community_label_propagation(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1253,7 +1342,9 @@ def igraph_community_leading_eigenvector(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.igraph_clustering.community_leading_eigenvector(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1273,7 +1364,9 @@ def igraph_community_multilevel(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.igraph_clustering.community_multilevel(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1293,7 +1386,9 @@ def igraph_community_optimal_modularity(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.igraph_clustering.community_optimal_modularity(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1315,7 +1410,9 @@ def igraph_community_spinglass(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.igraph_clustering.community_spinglass(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1335,7 +1432,9 @@ def igraph_community_walktrap(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.igraph_clustering.community_walktrap(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1356,7 +1455,9 @@ def mcl_MCL(name, graph, **kwargs):
     '''
     try:
         obj = gct.alg.mcl_clustering.MCL(name)
-        return obj.run(graph, kwargs=kwargs)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1376,7 +1477,9 @@ def networkit_CutClustering(name, graph, alpha=0.1, seed=None):
     '''
     try:
         obj = gct.alg.networkit_clustering.CutClustering(name)
-        return obj.run(graph, alpha=alpha, seed=seed)
+        obj.run(graph, alpha=alpha, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1397,7 +1500,9 @@ def networkit_LPDegreeOrdered(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.networkit_clustering.LPDegreeOrdered(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1428,7 +1533,9 @@ def networkit_PLM(name, graph, refine=False, gamma=1.0, par='balanced', maxIter=
     '''
     try:
         obj = gct.alg.networkit_clustering.PLM(name)
-        return obj.run(graph, refine=refine, gamma=gamma, par=par, maxIter=maxIter, turbo=turbo, recurse=recurse, seed=seed)
+        obj.run(graph, refine=refine, gamma=gamma, par=par, maxIter=maxIter, turbo=turbo, recurse=recurse, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1456,7 +1563,9 @@ def networkit_PLP(name, graph, updateThreshold=None, maxIterations=None, seed=No
     '''
     try:
         obj = gct.alg.networkit_clustering.PLP(name)
-        return obj.run(graph, updateThreshold=updateThreshold, maxIterations=maxIterations, seed=seed)
+        obj.run(graph, updateThreshold=updateThreshold, maxIterations=maxIterations, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1515,7 +1624,9 @@ def alg_GossipMap(name, graph, thresh=None, tol=None, maxiter=None, maxspiter=No
     '''
     try:
         obj = gct.alg.powergraph_clustering.GossipMap(name)
-        return obj.run(graph, thresh=thresh, tol=tol, maxiter=maxiter, maxspiter=maxspiter, trials=trials, interval=interval, outmode=outmode, ncpus=ncpus, scheduler=scheduler, engine_opts=engine_opts, graph_opts=graph_opts, scheduler_opts=scheduler_opts, seed=seed)
+        obj.run(graph, thresh=thresh, tol=tol, maxiter=maxiter, maxspiter=maxspiter, trials=trials, interval=interval, outmode=outmode, ncpus=ncpus, scheduler=scheduler, engine_opts=engine_opts, graph_opts=graph_opts, scheduler_opts=scheduler_opts, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1551,7 +1662,9 @@ def alg_RelaxMap(name, graph, seed=None, thread=None, threshold=0.001, vThresh=0
     '''
     try:
         obj = gct.alg.powergraph_clustering.RelaxMap(name)
-        return obj.run(graph, seed=seed, thread=thread, threshold=threshold, vThresh=vThresh, maxIter=maxIter, prior=prior)
+        obj.run(graph, seed=seed, thread=thread, threshold=threshold, vThresh=vThresh, maxIter=maxIter, prior=prior)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1592,7 +1705,9 @@ def alg_pg_label_propagation(name, graph, execution='async', ncpus=None, schedul
     '''
     try:
         obj = gct.alg.powergraph_clustering.pg_label_propagation(name)
-        return obj.run(graph, execution=execution, ncpus=ncpus, scheduler=scheduler, engine_opts=engine_opts, graph_opts=graph_opts, scheduler_opts=scheduler_opts, seed=seed)
+        obj.run(graph, execution=execution, ncpus=ncpus, scheduler=scheduler, engine_opts=engine_opts, graph_opts=graph_opts, scheduler_opts=scheduler_opts, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1617,7 +1732,9 @@ def scan_AnyScan_Scan(name, graph, **kargs):
     '''
     try:
         obj = gct.alg.scan_clustering.AnyScan_Scan(name)
-        return obj.run(graph, kargs=kargs)
+        obj.run(graph, kargs=kargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1642,7 +1759,9 @@ def scan_AnyScan_anyScan(name, graph, **kargs):
     '''
     try:
         obj = gct.alg.scan_clustering.AnyScan_anyScan(name)
-        return obj.run(graph, kargs=kargs)
+        obj.run(graph, kargs=kargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1667,7 +1786,9 @@ def scan_AnyScan_anyScanParl(name, graph, **kargs):
     '''
     try:
         obj = gct.alg.scan_clustering.AnyScan_anyScanParl(name)
-        return obj.run(graph, kargs=kargs)
+        obj.run(graph, kargs=kargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1692,7 +1813,9 @@ def scan_AnyScan_pScan(name, graph, **kargs):
     '''
     try:
         obj = gct.alg.scan_clustering.AnyScan_pScan(name)
-        return obj.run(graph, kargs=kargs)
+        obj.run(graph, kargs=kargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1719,7 +1842,9 @@ def scan_Scanpp(name, graph, mu=1, epsilon=0, seed=None):
     '''
     try:
         obj = gct.alg.scan_clustering.Scanpp(name)
-        return obj.run(graph, mu=mu, epsilon=epsilon, seed=seed)
+        obj.run(graph, mu=mu, epsilon=epsilon, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1745,7 +1870,9 @@ def scan_pScan(name, graph, **kwargs):
     '''
     try:
         obj = gct.alg.scan_clustering.pScan(name)
-        return obj.run(graph, kwargs=kwargs)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1771,7 +1898,9 @@ def scan_ppScan(name, graph, **kwargs):
     '''
     try:
         obj = gct.alg.scan_clustering.ppScan(name)
-        return obj.run(graph, kwargs=kwargs)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1797,7 +1926,9 @@ def scan_ppScanSSE(name, graph, **kwargs):
     '''
     try:
         obj = gct.alg.scan_clustering.ppScanSSE(name)
-        return obj.run(graph, kwargs=kwargs)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1831,7 +1962,9 @@ def sklearn_AffinityPropagation(name, graph, damping=None, max_iter=None, conver
     '''
     try:
         obj = gct.alg.sklearn_clustering.AffinityPropagation(name)
-        return obj.run(graph, damping=damping, max_iter=max_iter, convergence=convergence, verbose=verbose, seed=seed)
+        obj.run(graph, damping=damping, max_iter=max_iter, convergence=convergence, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1852,7 +1985,7 @@ def sklearn_SpectralClustering(name, graph, **kargs):
             lobpcg eigen vectors decomposition when eigen_solver == 'amg' and by
             the K-Means initialization. Use an int to make the randomness
             deterministic.
-            See :term:`Glossary <random_state>`.
+
         n_init : int, optional, default: 10
             Number of time the k-means algorithm will be run with different
             centroid seeds. The final results will be the best output of
@@ -1883,8 +2016,7 @@ def sklearn_SpectralClustering(name, graph, **kargs):
         n_jobs : int or None, optional (default=None)
             The number of parallel jobs to run.
             ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
-            ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
-            for more details.
+            ``-1`` means using all processors.
         
     Reference
         Normalized cuts and image segmentation, 2000 Jianbo Shi, Jitendra Malik http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.160.2324
@@ -1896,7 +2028,9 @@ def sklearn_SpectralClustering(name, graph, **kargs):
     '''
     try:
         obj = gct.alg.sklearn_clustering.SpectralClustering(name)
-        return obj.run(graph, kargs=kargs)
+        obj.run(graph, kargs=kargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1916,7 +2050,9 @@ def snap_Clauset_Newman_Moore(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.snap_clustering.Clauset_Newman_Moore(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1936,7 +2072,9 @@ def snap_Girvan_Newman(name, graph, seed=None):
     '''
     try:
         obj = gct.alg.snap_clustering.Girvan_Newman(name)
-        return obj.run(graph, seed=seed)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -1956,7 +2094,9 @@ def alg_Paris(name, graph, vmax_start=None, vmax_end=None, c=None, niter=None, s
     '''
     try:
         obj = gct.alg.unsorted_clustering.Paris(name)
-        return obj.run(graph, vmax_start=vmax_start, vmax_end=vmax_end, c=c, niter=niter, seed=seed)
+        obj.run(graph, vmax_start=vmax_start, vmax_end=vmax_end, c=c, niter=niter, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -2046,7 +2186,9 @@ def alg_lso_cluster(name, graph, **kwargs):
     '''
     try:
         obj = gct.alg.unsorted_clustering.lso_cluster(name)
-        return obj.run(graph, kwargs=kwargs)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
@@ -2077,7 +2219,9 @@ def alg_streamcom(name, graph, vmax_start=None, vmax_end=None, c=None, niter=Non
     '''
     try:
         obj = gct.alg.unsorted_clustering.streamcom(name)
-        return obj.run(graph, vmax_start=vmax_start, vmax_end=vmax_end, c=c, niter=niter, seed=seed)
+        obj.run(graph, vmax_start=vmax_start, vmax_end=vmax_end, c=c, niter=niter, seed=seed)
+        result=Result(obj.result)
+        return result
     except UnsupportedException as err:
         print("Error: " + str(err), file=sys.stderr)
         return None
