@@ -4,13 +4,16 @@
 # python3 -m pip install --user --upgrade pip==9.0.3
 # http://snap.stanford.edu/snappy/release/beta/snap-5.0.9-64-3.0-centos6.5-x64-py3.6.tar.gz
 ##install graph-tool
+  #107  apt-get install libexpat1-dev
+  #110  apt-get install libboost-python-dev
+
 #install https://github.com/sparsehash/sparsehash/archive/sparsehash-2.0.3.tar.gz
 # conda install -c pkgw/label/superseded gtk3
 
 
 
 
-all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap powergraph genconvnmi ovpnmi xmeasures hirecs GANXiS lso-cluster CDC webgraph
+all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap powergraph genconvnmi ovpnmi xmeasures hirecs GANXiS lso-cluster CDC webgraph graphtool
 
 clean: 
 	cd OSLOM2 && make clean
@@ -153,3 +156,9 @@ graph-cluster/lso-cluster:
 
 CDC: 
 	cd CommunityDetectionCodes && make
+
+graphtool:
+	if [ ! -d graph-tool-2.27  ]; then \
+	   wget https://downloads.skewed.de/graph-tool/graph-tool-2.27.tar.bz2 && tar xf graph-tool-2.27.tar.bz2;\
+	fi; \
+	cd graph-tool-2.27 && CPPFLAGS=-I$(CONDA_PREFIX)/include ./configure --prefix $(pwd)/../local  && make && make install
