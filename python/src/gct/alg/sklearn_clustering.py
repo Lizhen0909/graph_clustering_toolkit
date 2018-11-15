@@ -98,7 +98,7 @@ class SpectralClustering(ClusteringAlg):
             lobpcg eigen vectors decomposition when eigen_solver == 'amg' and by
             the K-Means initialization. Use an int to make the randomness
             deterministic.
-            See :term:`Glossary <random_state>`.
+
         n_init : int, optional, default: 10
             Number of time the k-means algorithm will be run with different
             centroid seeds. The final results will be the best output of
@@ -129,8 +129,7 @@ class SpectralClustering(ClusteringAlg):
         n_jobs : int or None, optional (default=None)
             The number of parallel jobs to run.
             ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
-            ``-1`` means using all processors. See :term:`Glossary <n_jobs>`
-            for more details.
+            ``-1`` means using all processors.
         
     Reference
         Normalized cuts and image segmentation, 2000 Jianbo Shi, Jitendra Malik http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.160.2324

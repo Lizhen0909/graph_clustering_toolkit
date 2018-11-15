@@ -141,22 +141,22 @@ class GraphClusterMetrics(object):
     
     '''
 
-    def __init__(self, data, clusterobj):
+    def __init__(self, data, clusteringobj):
         '''
         :param data:             a :class:`gct.Dataset` object 
-        :param clusterobj:         a :class:`gct.Clustering` object or refer to the *groundtruth* parameter of  :meth:`gct.from_edgelist`
+        :param clusteringobj:         a :class:`gct.Clustering` object or refer to the *groundtruth* parameter of  :meth:`gct.from_edgelist`
         '''
         if data.is_directed() or data.is_weighted():
             print ("Warning! Graph will be taken as undirected and unweighted.")
-        if isinstance(clusterobj, Clustering):
-            self.clusterobj = clusterobj
-        elif isinstance(clusterobj, Result):
-            self.clusterobj = Clustering(clusterobj.clusters(as_dataframe=True))
-        elif isinstance(clusterobj, pd.DataFrame) or isinstance(clusterobj, list) \
-            or isinstance(clusterobj, np.ndarray) or isinstance(clusterobj, str) or isinstance(clusterobj, dict):
-            self.clusterobj = Clustering(clusterobj)
+        if isinstance(clusteringobj, Clustering):
+            self.clusterobj = clusteringobj
+        elif isinstance(clusteringobj, Result):
+            self.clusterobj = Clustering(clusteringobj.clusters(as_dataframe=True))
+        elif isinstance(clusteringobj, pd.DataFrame) or isinstance(clusteringobj, list) \
+            or isinstance(clusteringobj, np.ndarray) or isinstance(clusteringobj, str) or isinstance(clusteringobj, dict):
+            self.clusterobj = Clustering(clusteringobj)
         else:
-            raise Exception("Unsupported " + str(type(clusterobj)))
+            raise Exception("Unsupported " + str(type(clusteringobj)))
         self.data = data 
         self.clusters = self.clusterobj.value()
 
@@ -671,10 +671,19 @@ class GraphClusterMetrics(object):
 class ClusterComparator(object):
     '''
     metrics for two clustering. e.g. nmi, overlap nmi etc.
-    In case that some metrics requires ground truth, take ground truth as the first parameter.
+    In case that some metrics requires ground truth, make ground truth as the first parameter.
+    
+    When calculating a metric that does not support overlapping, the overlapped nodes are removed or retrun None
     '''
 
-    def __init__(self, clusterobj1, clusterobj2):
+    def __init__(self, clusteringobj1, clusteringobj2):
+        '''
+        clusteringobj1 will be taken as ground truth if necessary.
+        
+        :param clusteringobj1:         a :class:`gct.Clustering` object or refer to the *groundtruth* parameter of  :meth:`gct.from_edgelist`
+        :param clusteringobj2:         a :class:`gct.Clustering` object or refer to the *groundtruth* parameter of  :meth:`gct.from_edgelist`        
+        '''
+        
         self.logger = utils.get_logger("{}".format(type(self).__name__))
 
         def to_obj(clusterobj):
@@ -688,8 +697,8 @@ class ClusterComparator(object):
             else:
                 raise Exception("Unsupported " + str(type(clusterobj)))
         
-        self.clusterobj1 = to_obj(clusterobj1) 
-        self.clusterobj2 = to_obj(clusterobj2)
+        self.clusterobj1 = to_obj(clusteringobj1) 
+        self.clusterobj2 = to_obj(clusteringobj2)
         
         if self.clusterobj1.is_overlap or  self.clusterobj2.is_overlap: 
             self.overlap = True 
@@ -711,6 +720,9 @@ class ClusterComparator(object):
     
     @property 
     def ground_truth(self):  # assume the first one is ground truth
+        '''
+        Alias for for the first Clustering of constructor
+        '''
         return self.clusterobj1
     
     @property 
@@ -718,15 +730,20 @@ class ClusterComparator(object):
         return self.clean_clusterobj1
 
     @property 
-    def predition(self): 
+    def predition(self):
+        '''
+        Alias for for the second Clustering of constructor
+        ''' 
         return self.clusterobj2
 
     @property 
     def clean_prediction(self): 
         return self.clean_clusterobj2
     
-    @property
     def sklean_nmi(self):
+        '''
+        sklearn `normalized_mutual_info_score <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.normalized_mutual_info_score.html>`_
+        '''
         if self.overlap:
             return None 
         else:
@@ -738,8 +755,10 @@ class ClusterComparator(object):
 
             return utils.set_if_not_exists(self, prop_name, f)
     
-    @property
     def sklean_ami(self):
+        '''
+        sklearn `adjusted_mutual_info_score <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_mutual_info_score.html>`_
+        '''
         if self.overlap:
             return None 
         else:
@@ -751,8 +770,10 @@ class ClusterComparator(object):
 
             return utils.set_if_not_exists(self, prop_name, f)
 
-    @property
     def sklean_ars(self):
+        '''
+        sklearn `adjusted_rand_score <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_rand_score.html>`_
+        '''
         if self.overlap:
             return None 
         else:
@@ -764,8 +785,10 @@ class ClusterComparator(object):
 
             return utils.set_if_not_exists(self, prop_name, f)
 
-    @property
     def sklean_completeness(self):
+        '''
+        sklearn `completeness_score <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html#sklearn.metrics.completeness_score>`_
+        '''        
         if self.overlap:
             return None 
         else:
@@ -777,36 +800,46 @@ class ClusterComparator(object):
 
             return utils.set_if_not_exists(self, prop_name, f)
     
-    '''
-    wrapper for https://github.com/eXascaleInfolab/GenConvNMI
-    
-    Usage:  ./gecmi [options] <clusters1> <clusters2>
-    clusters  - clusters file in the CNL format (https://github.com/eXascaleInfolab/PyCABeM/blob/master/formats/format.cnl), where each line lists space separated ids of the cluster members
-    
-    Options:
-      -h [ --help ]                produce help message
-      --input arg                  name of the input files
-      -s [ --sync ]                synchronize the node base omitting the 
-                                   non-matching nodes for the fair evaluation. The 
-                                   node base is selected automatically as a 
-                                   clustering having the least number of nodes.
-      -i [ --id-remap ]            remap ids allowing arbitrary input ids 
-                                   (non-contiguous ranges), otherwise ids should 
-                                   form a solid range and start from 0 or 1
-      -n [ --nmis ]                output both NMI [max] and NMI_sqrt
-      -f [ --fnmi ]                evaluate also FNMI, includes '-n'
-      -r [ --risk ] arg (=0.01)    probability of value being outside
-      -e [ --error ] arg (=0.01)   admissible error
-      -a [ --fast ]                apply fast approximate evaluations that are less
-                                   accurate, but much faster on large networks
-      -m [ --membership ] arg (=1) average expected membership of nodes in the 
-                                   clusters, > 0, typically >= 1
-      -d [ --retain-dups ]         retain duplicated clusters if any instead of 
-                                   filtering them out (not recommended)
-    
-    '''
 
     def GenConvNMI(self, sync=None, id_remap=None, nmis=None, fnmi=True, risk=None, error=None, fast=None, membership=None, retain_dups=None):
+        '''
+        A wrapper for https://github.com/eXascaleInfolab/GenConvNMI
+        
+        Arguments
+
+            Usage:  ./gecmi [options] <clusters1> <clusters2>
+            clusters  - clusters file in the `CNL format <https://github.com/eXascaleInfolab/PyCABeM/blob/master/formats/format.cnl>`_, where each line lists space separated ids of the cluster members
+
+            =============================  ========================================================
+              -h [ --help ]                produce help message
+              --input arg                  name of the input files
+              -s [ --sync ]                synchronize the node base omitting the 
+                                           non-matching nodes for the fair evaluation. The 
+                                           node base is selected automatically as a 
+                                           clustering having the least number of nodes.
+              -i [ --id-remap ]            remap ids allowing arbitrary input ids 
+                                           (non-contiguous ranges), otherwise ids should 
+                                           form a solid range and start from 0 or 1
+              -n [ --nmis ]                output both NMI [max] and NMI_sqrt
+              -f [ --fnmi ]                evaluate also FNMI, includes '-n'
+              -r [ --risk ] arg (=0.01)    probability of value being outside
+              -e [ --error ] arg (=0.01)   admissible error
+              -a [ --fast ]                apply fast approximate evaluations that are less
+                                           accurate, but much faster on large networks
+              -m [--membership] arg (=1)   average expected membership of nodes in the 
+                                           clusters, > 0, typically >= 1
+              -d [ --retain-dups ]         retain duplicated clusters if any instead of filtering them out (not recommended)
+            =============================  ========================================================
+                    
+        Reference
+        
+        ===============  =============================================================================================================================================================================================================================================================================================
+         overlap nmi       Esquivel, Alcides Viamontes, and Martin Rosvall. "Comparing network covers using mutual information." arXiv preprint arXiv:1202.0425 (2012).
+         fair nmi         Amelio, Alessia, and Clara Pizzuti. "Is normalized mutual information a fair measure for comparing community detection methods?." Proceedings of the 2015 IEEE/ACM International Conference on Advances in Social Networks Analysis and Mining 2015. ACM, 2015.
+        ===============  =============================================================================================================================================================================================================================================================================================
+         
+        '''
+        
         params = locals(); del params['self'];del params['sync']
         params = {u.replace('_', '-'):v for u, v in params.items() if v}
         nonbools = ['risk', 'error', 'membership']
@@ -843,31 +876,34 @@ class ClusterComparator(object):
                     res = dict([ (k.strip(), float(v.strip())) for k, v in lst])
             return res 
 
-    '''
-    Compare sets of clusters by their members (nodes) using various measures (NMI,
-    Omega) and considering overlaps
-    
-    Usage: onmi [OPTIONS] clsfile1 clsfile2
-    
-      -h, --help              Print help and exit
-      -V, --version           Print version and exit
-      -s, --sync=filename     synchronize the node base omitting the non-matching
-                                nodes.
-                                NOTE: The node base is either the first input file
-                                or '-' (automatic selection of the input file
-                                having the least number of nodes).
-      -a, --allnmis           output all NMIs (sqrt and sum-denominators, LFK
-                                besides the max-denominator)  (default=off)
-      -m, --membership=FLOAT  average expected membership of nodes in the clusters,
-                                > 0, typically >= 1  (default=`1')
-      -o, --omega             print the Omega measure (can be slow)  (default=off)
-      -t, --textid            use text ids of nodes instead of .cnl format
-                                (default=off)
-      -v, --verbose           detailed debugging  (default=off)
-    
-    '''        
 
     def OvpNMI(self, sync=None, allnmi=None, omega=None, membership=None, verbose=None):
+        '''
+        A wrapper for https://github.com/eXascaleInfolab/OvpNMI
+
+        Compare sets of clusters by their members (nodes) using various measures (NMI,
+        Omega) and considering overlaps
+        
+        Arguments
+            
+            Usage: onmi [OPTIONS] clsfile1 clsfile2
+            
+            =========================   =========================================================
+              -a, --allnmis               output all NMIs (sqrt and sum-denominators, LFK besides the max-denominator)  (default=off)
+              -m, --membership=FLOAT      average expected membership of nodes in the clusters, > 0, typically >= 1  (default=`1')
+              -o, --omega                 print the Omega measure (can be slow)  (default=off)
+              -v, --verbose               detailed debugging  (default=off)
+            =========================   =========================================================
+                    
+        Reference
+        
+            ===============  =============================================================================================================================================================================================================================================================================================
+             overlap nmi       McDaid, Aaron F., Derek Greene, and Neil Hurley. "Normalized mutual information to evaluate overlapping community finding algorithms." arXiv preprint arXiv:1110.2515 (2011).
+             overlap nmi        Lancichinetti, Andrea, Santo Fortunato, and János Kertész. "Detecting the overlapping and hierarchical community structure in complex networks." New Journal of Physics 11.3 (2009): 033015.
+             Omega             Collins, Linda M., and Clyde W. Dent. "Omega: A general formulation of the rand index of cluster recovery suitable for non-disjoint solutions." Multivariate Behavioral Research 23.2 (1988): 231-242.
+            ===============  =============================================================================================================================================================================================================================================================================================
+         
+        '''        
         if self.clusterobj1.num_cluster < 2 or self.clusterobj2.num_cluster < 2:
             return {"NMImax":None}
         params = locals(); del params['self'];del params['sync']
@@ -910,145 +946,43 @@ class ClusterComparator(object):
                     res = dict([ (k.strip(), float(v.strip())) for k, v in lst])
             return res 
         
-    '''
-    Evaluating measures are:
-      - OI  - Omega Index (a fuzzy version of the Adjusted Rand Index, identical to
-    the Fuzzy Rand Index), which yields the same value as Adjusted Rand Index when
-    applied to the non-overlapping clusterings.
-      - [M]F1  - various [mean] F1 measures of the Greatest (Max) Match including
-    the Average F1-Score (suggested by J. Leskovec) with optional weighting.
-    NOTE: There are 3 matching policies available for each kind of F1. The most
-    representative evaluation is performed by the F1p with combined matching
-    policy (considers both micro and macro weighting).
-      - NMI  - Normalized Mutual Information, normalized by either max or also
-    sqrt, avg and min information content denominators.
-    ATTENTION: This is a standard NMI, which should be used ONLY for the HARD
-    partitioning evaluation (non-overlapping clustering on a single resolution).
-    It penalizes overlapping and multi-resolution structures.
-    
-    
-      -h, --help                    Print help and exit
-      -V, --version                 Print version and exit
-      -O, --ovp                     evaluate overlapping instead of the
-                                      multi-resolution clusters, where max matching
-                                      for any shared member between R overlapping
-                                      clusters is 1/R (the member is shared)
-                                      instead of 1 (the member fully belongs to
-                                      each [hierarchical  sub]group) for the member
-                                      belonging to R distinct clusters on R
-                                      resolutions.
-                                      NOTE: It has no effect for the Omega Index
-                                      evaluation.  (default=off)
-      -q, --unique                  ensure on loading that all cluster members are
-                                      unique by removing all duplicates.
-                                      (default=off)
-      -s, --sync=filename           synchronize with the specified node base
-                                      omitting the non-matching nodes.
-                                      NOTE: The node base can be either a separate,
-                                      or an evaluating CNL file, in the latter case
-                                      this option should precede the evaluating
-                                      filename not repeating it
-      -m, --membership=FLOAT        average expected membership of the nodes in the
-                                      clusters, > 0, typically >= 1. Used only to
-                                      facilitate estimation of the nodes number on
-                                      the containers preallocation if this number
-                                      is not specified in the file header.
-                                      (default=`1')
-      -d, --detailed                detailed (verbose) results output
-                                      (default=off)
-    
-    Omega Index:
-      -o, --omega                   evaluate Omega Index (a fuzzy version of the
-                                      Adjusted Rand Index, identical to the Fuzzy
-                                      Rand Index and on the non-overlapping
-                                      clusterings equals to ARI).  (default=off)
-      -x, --extended                evaluate extended (Soft) Omega Index, which
-                                      does not excessively penalize distinctly
-                                      shared nodes.  (default=off)
-    
-    Mean F1:
-      -f, --f1[=ENUM]               evaluate mean F1 of the [weighted] average of
-                                      the greatest (maximal) match by F1 or partial
-                                      probability.
-                                      NOTE: F1p <= F1h <= F1a, where:
-                                       - p (F1p or Ph)  - Harmonic mean (F1) of two
-                                      [weighted] averages of the Partial
-                                      Probabilities, the most indicative as
-                                      satisfies the largest number of the Formal
-                                      Constraints (homogeneity, completeness and
-                                      size/quantity except the rag bag in some
-                                      cases);
-                                       - h (F1h)  - Harmonic mean (F1) of two
-                                      [weighted] averages of all local F1 (harmonic
-                                      means of the Precision and Recall of the best
-                                      matches of the clusters);
-                                       - a (F1a)  - Arithmetic mean (average) of
-                                      two [weighted] averages of all local F1, the
-                                      least discriminative and satisfies the lowest
-                                      number of the Formal Constraints.
-                                        (possible values="partprob",
-                                      "harmonic", "average" default=`partprob')
-      -k, --kind[=ENUM]             kind of the matching policy:
-                                       - w  - Weighted by the number of nodes in
-                                      each cluster
-                                       - u  - Unweighed, where each cluster is
-                                      treated equally
-                                       - c  - Combined(w, u) using geometric mean
-                                      (drops the value not so much as harmonic
-                                      mean)
-                                        (possible values="weighted",
-                                      "unweighed", "combined"
-                                      default=`weighted')
-    
-    Clusters Labeling & F1 evaluation with Precision and Recall:
-      -l, --label=gt_filename       label evaluating clusters with the specified
-                                      ground-truth (gt) cluster indices and
-                                      evaluate F1 (including Precision and Recall)
-                                      of the (best) MATCHED labeled clusters only
-                                      (without the probable subclusters).
-                                      NOTE: If 'sync' option is specified then the
-                                      file name  of the clusters labels should be
-                                      the same as the node base (if specified) and
-                                      should be in the .cnl format. The file name
-                                      can be either a separate or an evaluating CNL
-                                      file, in the latter case this option should
-                                      precede the evaluating filename not repeating
-                                      it.
-      -p, --policy[=ENUM]           Labels matching policy:
-                                       - p  - Partial Probabilities (maximizes
-                                      gain)
-                                       - h  - Harmonic Mean (minimizes loss,
-                                      maximizes F1)
-                                        (possible values="partprob", "harmonic"
-                                      default=`harmonic')
-      -u, --unweighted              Labels weighting policy on F1 evaluation:
-                                      weighted by the number of instances in each
-                                      label or unweighed, where each label is
-                                      treated equally  (default=off)
-      -i, --identifiers=labels_filename
-                                    output labels (identifiers) of the evaluating
-                                      clusters as lines of space-separated indices
-                                      of the ground-truth clusters (.cll - clusters
-                                      labels list)
-                                      NOTE: If 'sync' option is specified then the
-                                      reduced collection is outputted to the
-                                      <labels_filename>.cnl besides the
-                                      <labels_filename>
-    
-    
-    NMI:
-      -n, --nmi                     evaluate NMI (Normalized Mutual Information),
-                                      applicable only to the non-overlapping
-                                      clusters  (default=off)
-      -a, --all                     evaluate all NMIs using sqrt, avg and min
-                                      denominators besides the max one
-                                      (default=off)
-      -e, --ln                      use ln (exp base) instead of log2 (Shannon
-                                      entropy, bits) for the information measuring
-                                      (default=off)
-    '''        
 
     def xmeasure_nmi(self, sync=None, all=False, membership=None, detailed=None):
+        '''
+        A wrapper for https://github.com/eXascaleInfolab/xmeasures.
+        
+        Normalized Mutual Information, normalized by either max or also
+        sqrt, avg and min information content denominators.
+        
+        ATTENTION: This is a standard NMI, which should be used ONLY for the HARD
+        partitioning evaluation (non-overlapping clustering on a single resolution).
+        It penalizes overlapping and multi-resolution structures.
+                
+        Arguments
+
+            Usage: onmi [OPTIONS] clsfile1 clsfile2
+            
+            =========================   =========================================================
+              -m, --membership=FLOAT        average expected membership of the nodes in the
+                                              clusters, > 0, typically >= 1. Used only to
+                                              facilitate estimation of the nodes number on
+                                              the containers preallocation if this number
+                                              is not specified in the file header.
+                                              (default=`1')
+
+              -n, --nmi                     evaluate NMI (Normalized Mutual Information),
+                                              applicable only to the non-overlapping
+                                              clusters  (default=off)
+              -a, --all                     evaluate all NMIs using sqrt, avg and min
+                                              denominators besides the max one
+                                              (default=off)
+              -d, --detailed                detailed (verbose) results output
+                                              (default=off)
+            =========================   =========================================================
+                    
+         
+        '''        
+        
         params = locals(); del params['self'];del params['sync']
         params = {u.replace('_', '-'):v for u, v in params.items() if v}
         nonbools = [ 'membership']
@@ -1089,6 +1023,86 @@ class ClusterComparator(object):
             return res 
 
     def xmeasure(self, sync=None, ovp=None, unique=None, omega=None, extended=None, f1=None, kind=False, membership=None, detailed=None):
+        '''
+        Evaluating measures are:
+        
+        - OI:        Omega Index (a fuzzy version of the Adjusted Rand Index, identical to the Fuzzy Rand Index), which yields the same value as Adjusted Rand Index when applied to the non-overlapping clusterings.
+        - [M]F1:     various [mean] F1 measures of the Greatest (Max) Match including the Average F1-Score (suggested by J. Leskovec) with optional weighting.  NOTE: There are 3 matching policies available for each kind of F1. The most representative evaluation is performed by the F1p with combined matching policy (considers both micro and macro weighting).
+        
+        
+        Arguments
+            
+            ==========================   ==========================================================
+              -O, --ovp                     evaluate overlapping instead of the
+                                              multi-resolution clusters, where max matching
+                                              for any shared member between R overlapping
+                                              clusters is 1/R (the member is shared)
+                                              instead of 1 (the member fully belongs to
+                                              each [hierarchical  sub]group) for the member
+                                              belonging to R distinct clusters on R
+                                              resolutions.
+                                              NOTE: It has no effect for the Omega Index
+                                              evaluation.  (default=off)
+              -q, --unique                  ensure on loading that all cluster members are
+                                              unique by removing all duplicates.
+                                              (default=off)
+              -m, --membership=FLOAT        average expected membership of the nodes in the
+                                              clusters, > 0, typically >= 1. Used only to
+                                              facilitate estimation of the nodes number on
+                                              the containers preallocation if this number
+                                              is not specified in the file header.
+                                              (default=`1')
+              -d, --detailed                detailed (verbose) results output
+                                              (default=off)
+            
+            ==========================   ==========================================================        
+    
+            Omega Index options :
+    
+            ==========================   ==========================================================        
+              -o, --omega                   evaluate Omega Index (a fuzzy version of the
+                                              Adjusted Rand Index, identical to the Fuzzy
+                                              Rand Index and on the non-overlapping
+                                              clusterings equals to ARI).  (default=off)
+              -x, --extended                evaluate extended (Soft) Omega Index, which
+                                              does not excessively penalize distinctly
+                                              shared nodes.  (default=off)
+    
+            ==========================   ========================================================== 
+                   
+            Mean F1 options:
+    
+            ==========================   ==========================================================        
+              -f, --f1[=ENUM]               evaluate mean F1 of the [weighted] average of
+                                              the greatest (maximal) match by F1 or partial
+                                              probability.
+                                              NOTE: F1p <= F1h <= F1a, where:
+                                              
+                                               - p (F1p or Ph): Harmonic mean (F1) of two [weighted] averages of the Partial Probabilities, the most indicative as satisfies the largest number of the Formal Constraints (homogeneity, completeness and size/quantity except the rag bag in some cases);
+                                               - h (F1h):  Harmonic mean (F1) of two [weighted] averages of all local F1 (harmonic means of the Precision and Recall of the best matches of the clusters);
+                                               - a (F1a):  Arithmetic mean (average) of two [weighted] averages of all local F1, the least discriminative and satisfies the lowest number of the Formal Constraints.
+                                                
+                                            (possible values="partprob","harmonic", "average" default=`partprob')
+                                              
+              -k, --kind[=ENUM]             kind of the matching policy:
+              
+                                               - w  - Weighted by the number of nodes in each cluster
+                                               - u  - Unweighed, where each cluster is treated equally
+                                               - c  - Combined(w, u) using geometric mean (drops the value not so much as harmonic mean)
+                                                
+                                            (possible values="weighted", "unweighed", "combined" default=`weighted')
+            ==========================   ==========================================================
+
+        Reference
+            
+            =======================          =============================================================================================================================================================================================================================================================================================
+             F1a (Average F1-Score)            Yang, Jaewon, and Jure Leskovec. "Overlapping community detection at scale: a nonnegative matrix factorization approach." Proceedings of the sixth ACM international conference on Web search and data mining. ACM, 2013.
+             Omega                             Collins, Linda M., and Clyde W. Dent. "Omega: A general formulation of the rand index of cluster recovery suitable for non-disjoint solutions." Multivariate Behavioral Research 23.2 (1988): 231-242.
+            =======================          =============================================================================================================================================================================================================================================================================================
+
+                                                  
+        '''        
+        
         assert not(omega is None and f1 is None)
         params = locals(); del params['self'];del params['sync']
         params = {u.replace('_', '-'):v for u, v in params.items() if v}
