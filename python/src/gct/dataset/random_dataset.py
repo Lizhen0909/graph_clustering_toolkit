@@ -186,7 +186,8 @@ def generate_ovp_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, 
         directed = (a > 0)
         params['directed'] = directed
         gen = RandomGenerator(params=params)
-        edges, gt = gen.generate(seed)    
+        edges, gt = gen.generate(seed)   
+        from .dataset import Dataset 
         return Dataset(name, description=description, groundtruthObj=gt, edgesObj=edges, \
                        directed=directed, weighted=weighted, overide=overide, additional_meta={'genopts': params})
 

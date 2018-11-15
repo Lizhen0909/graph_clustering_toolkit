@@ -23,9 +23,12 @@ class Clustering(object):
         if isinstance(clusteringobj, str):
             self.path = utils.abspath(clusteringobj)
         elif isinstance(clusteringobj, Result):
-            self.cluster = clusteringobj.clusters(as_dataframe=True)
+            self.cluster = clusteringobj.clustering(as_dataframe=True)
         elif isinstance(clusteringobj, dict):
-            self.cluster = clusteringobj.clusters(Result(clusteringobj).clusters(as_dataframe=True))            
+            if 'clusters' in clusteringobj: # a dict result
+                self.cluster = Result(clusteringobj).clustering(as_dataframe=True)
+            else:
+                raise Exception("unknown obj")                            
         elif isinstance(clusteringobj, pd.DataFrame):
             if not 'cluster' in clusteringobj.columns or not 'node' in clusteringobj.columns:
                 raise ValueError("arg is not right")
@@ -322,11 +325,11 @@ class Dataset(object):
                 return Clustering(v)
         
         if isinstance(obj, dict):
-            self.ground_truth = {u:isinstance(v) for u, v in obj.items()}
+            self.ground_truth = {u:to_clustering(v) for u, v in obj.items()}
         elif isinstance(obj, tuple):
-            self.ground_truth = {"cluster" + str(u):isinstance(v) for u, v in enumerate(obj)}
+            self.ground_truth = {"cluster" + str(u):to_clustering(v) for u, v in enumerate(obj)}
         else:
-            self.ground_truth = {"default":isinstance(obj)}
+            self.ground_truth = {"default":to_clustering(obj)}
 
     @property 
     def num_node_edge(self):
@@ -622,7 +625,10 @@ class Dataset(object):
     def to_graph_snap(self):
         from gct.dataset import convert 
         return convert.to_snap(self)
-    
+    def to_graph_tool_graph(self):
+        from gct.dataset import convert 
+        return convert.to_graph_tool(self)
+        
     def to_coo_adjacency_matrix(self):
         from gct.dataset import convert 
         return convert.to_coo_adjacency_matrix(self)            

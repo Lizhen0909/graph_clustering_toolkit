@@ -124,6 +124,7 @@ class GraphMetrics(object):
 
     @property
     def weighted_degrees(self):
+
         def f():
             df1 = self.edges[['src', 'weight']]
             df2 = self.edges[['dest', 'weight']]
@@ -196,14 +197,12 @@ class GraphClusterMetrics(object):
         prop_name = "_" + sys._getframe().f_code.co_name        
         return self.set_if_not_exists(prop_name, lambda: len(set(np.unique(self.edges[['src', 'dest']].values))))
 
-
     @property
     def node_degrees(self):
         '''
         degrees for all the nodes
         '''    
         return self.unweighted_degrees
-
 
     @property
     def node_weights(self):
@@ -221,6 +220,7 @@ class GraphClusterMetrics(object):
         '''
         unweighted degrees of nodes
         '''
+
         def f():
             arr = self.edges[['src', 'dest']].values.ravel() 
             unique, counts = np.unique(arr, return_counts=True)
@@ -234,6 +234,7 @@ class GraphClusterMetrics(object):
         '''
         weighted degrees of nodes
         '''
+
         def f():
             df1 = self.edges[['src', 'weight']]
             df2 = self.edges[['dest', 'weight']]
@@ -521,6 +522,7 @@ class GraphClusterMetrics(object):
 
         where S is a cluster  
         '''        
+
         def f():
             a = self.cluster_out_sum_weights
             d = self.cluster_sum_intra_weights
@@ -535,6 +537,7 @@ class GraphClusterMetrics(object):
         '''
         normalized cut
         '''
+
         def f():
             m = self.sum_weight
             a = self.cluster_out_sum_weights
@@ -617,6 +620,7 @@ class GraphClusterMetrics(object):
         '''
         (global) clustering coefficient
         '''
+
         def f1(edges):
             import igraph 
             g = igraph.Graph(edges=edges[['src', 'dest']].values.tolist(), directed=False) 
@@ -666,6 +670,41 @@ class GraphClusterMetrics(object):
         prop_name = "_" + sys._getframe().f_code.co_name
         
         return self.set_if_not_exists(prop_name, f2)
+
+
+    def graph_tool_draw(self, node_size=6, output_size=(1000, 500), edge_pen_width=1,
+                   edge_color=[0.0, 0, 0, 0.05], cmap='nipy_spectral', vertex_shape='circle', layout=None):
+        layouts = 'sfdp_layout fruchterman_reingold_layout arf_layout planar_layout random_layout'.split(" ")
+        assert layout is None or layout in layouts
+        
+        import graph_tool.stats
+        import graph_tool.draw  
+        import matplotlib.pyplot as plt 
+        g_gtool = self.data.to_graph_tool_graph()
+        graph_tool.stats.remove_self_loops(g_gtool)
+        
+        node_size = g_gtool.new_vertex_property("double", np.zeros(g_gtool.num_vertices()) + node_size)
+        c_map = plt.get_cmap(cmap)
+        n_cluster = self.clusterobj.num_cluster
+        d = self.clusterobj.value().set_index('node')['cluster'].to_dict()
+        if layout is None: layout = 'sfdp_layout'
+        
+        # pos = gall.draw.sfdp_layout(g_gtool)
+        pos = getattr(graph_tool.draw, layout)(g_gtool)
+        cluster_colors = np.zeros((g_gtool.num_vertices()))
+        v = 255.0 / (1 + n_cluster)
+        for i in range(len(cluster_colors)):
+            cluster_colors[i] = d[i] * v if i in d else (n_cluster + 1) * v
+    
+        node_colours = g_gtool.new_vertex_property("double", cluster_colors)
+        graph_tool.draw.graph_draw(g_gtool, pos, output_size=output_size,
+                   vertex_size=node_size,
+                   vertex_fill_color=node_colours,
+                   vorder=node_size,
+                   edge_pen_width=edge_pen_width,
+                   edge_color=edge_color,
+                    vprops={"shape":vertex_shape},
+                   vcmap=c_map)
 
 
 class ClusterComparator(object):
@@ -799,7 +838,6 @@ class ClusterComparator(object):
                 return completeness_score(self.clean_ground_truth['cluster'].values, self.clean_prediction['cluster'].values)
 
             return utils.set_if_not_exists(self, prop_name, f)
-    
 
     def GenConvNMI(self, sync=None, id_remap=None, nmis=None, fnmi=True, risk=None, error=None, fast=None, membership=None, retain_dups=None):
         '''
@@ -876,7 +914,6 @@ class ClusterComparator(object):
                     res = dict([ (k.strip(), float(v.strip())) for k, v in lst])
             return res 
 
-
     def OvpNMI(self, sync=None, allnmi=None, omega=None, membership=None, verbose=None):
         '''
         A wrapper for https://github.com/eXascaleInfolab/OvpNMI
@@ -945,7 +982,6 @@ class ClusterComparator(object):
                     lst = [ (k.strip(), v.strip().split(" ")[0]) for k, v in lst]
                     res = dict([ (k.strip(), float(v.strip())) for k, v in lst])
             return res 
-        
 
     def xmeasure_nmi(self, sync=None, all=False, membership=None, detailed=None):
         '''
