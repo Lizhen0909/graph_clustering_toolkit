@@ -1970,7 +1970,7 @@ def sklearn_AffinityPropagation(name, graph, damping=None, max_iter=None, conver
         return None
 
 
-def sklearn_SpectralClustering(name, graph, **kargs):
+def sklearn_SpectralClustering(name, graph, **kwargs):
     '''
 
     A wrapper of *SpectralClustering* algorithm from http://scikit-learn.org. 
@@ -2028,7 +2028,7 @@ def sklearn_SpectralClustering(name, graph, **kargs):
     '''
     try:
         obj = gct.alg.sklearn_clustering.SpectralClustering(name)
-        obj.run(graph, kargs=kargs)
+        obj.run(graph, **kwargs)
         result=Result(obj.result)
         return result
     except UnsupportedException as err:

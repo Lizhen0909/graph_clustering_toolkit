@@ -146,11 +146,11 @@ class SpectralClustering(ClusteringAlg):
     def get_meta(self):
         return {'lib':"sklearn", "name": 'SpectralClustering' }
 
-    def run(self, data, **kargs):
+    def run(self, data, **kwargs):
         
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
-        params = dict(kargs)
+        params = dict(kwargs)
         if "seed" in params:
             if  params['seed'] is not None:self.logger.info("seed ignored")
             del params['seed']
@@ -227,11 +227,11 @@ class DBSCAN(ClusteringAlg):
     def ignore_export(self):
         pass 
     
-    def run(self, data, **kargs):
+    def run(self, data, **kwargs):
         
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")
-        params = dict(kargs)
+        params = dict(kwargs)
         if 'seed' in params:
             if params['seed'] is not None:  self.logger.info("seed ignored")
             del params['seed']
