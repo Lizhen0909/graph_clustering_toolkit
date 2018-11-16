@@ -685,7 +685,7 @@ class GraphClusterMetrics(object):
         node_size = g_gtool.new_vertex_property("double", np.zeros(g_gtool.num_vertices()) + node_size)
         c_map = plt.get_cmap(cmap)
         n_cluster = self.clusterobj.num_cluster
-        d = self.clusterobj.value(erase_overlap=True).set_index('node')['cluster'].to_dict()
+        d = self.clusterobj.value(erase_overlap=self.clusterobj.is_overlap).set_index('node')['cluster'].to_dict()
         if layout is None: layout = 'sfdp_layout'
         
         # pos = gall.draw.sfdp_layout(g_gtool)
@@ -744,8 +744,8 @@ class ClusterComparator(object):
             self.overlap = False  
         
         def clean():
-            df1 = self.clusterobj1.value()
-            df2 = self.clusterobj2.value()
+            df1 = self.clusterobj1.value(self.clusterobj1.is_overlap)
+            df2 = self.clusterobj2.value(self.clusterobj2.is_overlap)
             nodes = set(df1['node']).intersection(set(df2['node']))
             self.logger.info ("resulting {} nodes out of {},{}".format(len(nodes), len(df1), len(df2)))
             df1 = df1[df1['node'].isin(nodes)].set_index('node')
