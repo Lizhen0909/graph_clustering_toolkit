@@ -14,37 +14,14 @@ class Test(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         print("Prepare data")
-        a = [
-            [0, 1, 1],
-            [0, 2, 1],
-            [1, 2, 1],
-            
-            [3, 4, 1],
-            [3, 5, 1],
-            [4, 5, 1],
-            
-            [6, 7, 1],
-            [7, 8, 1],
-            [6, 8, 1],
-        ]
-        
-        if 0:
-            a += [            [1, 3, 0.000001],
-            [2, 4, 0.000001], ]
-        else:
-            for i in [0, 1, 2]:
-                for j in [3, 4, 5]:
-                    a.append([i, j, 0.000001])        
-            a.append([6, 4, 0.000001])        
-        
-        gt = {0:[0, 1, 2], 1:[3, 4, 5], 2:[6, 7, 8]}
-        gt = [[v, u] for u, vv in gt.items() for v in vv]
         prefix = Test.__module__
-        gct.remove_data(prefix + '_*', dry_run=False)
 
-        data_w = gct.create_dataset(name=prefix + "_w1", edgesObj=a, groundtruthObj=gt, directed=False, weighted=True, overide=True)
-        data_uw = data_w.as_unweight(newname=prefix + "_uw1", overide=True)
-            
+        gct.remove_data(prefix + '_*', dry_run=False)
+        graph_weighted_undirect = gct.random_dataset.generate_undirected_weighted_random_graph_LFR(name=prefix + "_w1", \
+                                       N=128, k=16, maxk=32, mut=0.2, muw=0.2, minc=32,overide=True)
+        data1 = graph_weighted_undirect
+        data2 = data1.as_unweight(newname=prefix + "_uw1", overide=True)
+
     def setUp(self):
         self.prefix = Test.__module__
         pass 
@@ -58,8 +35,7 @@ class Test(unittest.TestCase):
 
     def test_1(self):
         bad_algs = [
-	#'cdc_SVINET', #has bug
-	'scan_AnyScan_ScanIdealPar', #never finish
+        'igraph_community_optimal_modularity', #too slow
 	'scan_Scanpp', #never finish
 	]  # these alg failed for this test
         runned_algs = []

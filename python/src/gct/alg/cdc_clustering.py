@@ -1085,7 +1085,7 @@ class _MSCDBase(ClusteringAlg):
     def get_meta(self):
         return {'lib':"cdc", "name": 'MSCD-' + self.prog }
 
-    def run(self, data, scale_param="[1.0,2]", extra_param=None, verbose=0, seed=None):
+    def run(self, data, scale_param="[1.2,2]", extra_param=None, verbose=0, seed=None):
         
         if False and (data.is_directed()):
             raise Exception("only undirected is supported")

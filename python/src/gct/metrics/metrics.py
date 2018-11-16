@@ -753,8 +753,7 @@ class ClusterComparator(object):
             df2.index.name = 'node'
             return df1, df2 
 
-        if False and not self.overlap:
-            self.clean_clusterobj1, self.clean_clusterobj2 = clean()
+        self.clean_clusterobj1, self.clean_clusterobj2 = clean()
     
     @property 
     def ground_truth(self):  # assume the first one is ground truth
