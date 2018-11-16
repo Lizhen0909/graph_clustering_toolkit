@@ -7,6 +7,8 @@ import unittest
 from gct.dataset import random_dataset
 from gct.alg.snap_clustering import Clauset_Newman_Moore, Girvan_Newman
 from gct.alg import clustering
+from gct.exception import UnsupportedException
+import sys
 
 
 class Test(unittest.TestCase):
@@ -35,16 +37,27 @@ class Test(unittest.TestCase):
         pass
 
     def testClauset_Newman_Moore(self):
-        alg = Clauset_Newman_Moore()
-        print ("testClauset_Newman_Moore")
-        print (alg.run(self.graph_unweighted_undirect).get_result())
-        print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
-
+        for data in  self.graphs: 
+            alg = Clauset_Newman_Moore()
+            print(sys._getframe().f_code.co_name, data.name)
+            if data.is_directed():
+                with self.assertRaises(UnsupportedException) as context:
+                    print (alg.run(data).get_result())
+            else:
+                print (alg.run(data).get_result())
+                print (clustering.load_result(data.name, alg.name))
+ 
     def testGirvan_Newman(self):
-        alg = Girvan_Newman()
-        print ("testGirvan_Newman")
-        print (alg.run(self.graph_unweighted_undirect).get_result())
-        print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
+        for data in  self.graphs: 
+            alg = Girvan_Newman()
+            print(sys._getframe().f_code.co_name, data.name)
+            if data.is_directed():
+                with self.assertRaises(UnsupportedException) as context:
+                    print (alg.run(data).get_result())
+            else:
+                print (alg.run(data).get_result())
+                print (clustering.load_result(data.name, alg.name))
+
 
 if __name__ == "__main__":
     # import sys;sys.argv = ['', 'Test.testClauset_Newman_Moore']

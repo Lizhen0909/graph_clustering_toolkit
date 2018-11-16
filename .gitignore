@@ -8,3 +8,4 @@ nohup.out.*
 nohup.out
 pacbio
 *.pyc
+.settings

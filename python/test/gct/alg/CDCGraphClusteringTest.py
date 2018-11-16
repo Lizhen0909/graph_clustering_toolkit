@@ -12,6 +12,7 @@ from gct.alg.cdc_clustering import CliquePercolation, Connected_Iterative_Scan, 
     DEMON, HDEMON, FastCpm, MSCD_RB, MSCD_AFG, MSCD_HSLSW, MSCD_LFK, MSCD_LFK2,\
     MSCD_RN, MSCD_SO, MSCD_SOM, SVINET
 from gct.dataset.dataset import create_dataset
+from gct.exception import UnsupportedException
 
 
 class Test(unittest.TestCase):
@@ -44,7 +45,7 @@ class Test(unittest.TestCase):
             alg = CliquePercolation()
             print(sys._getframe().f_code.co_name)
             if data.is_directed():
-                with self.assertRaises(Exception) as context:
+                with self.assertRaises(UnsupportedException) as context:
                     print (alg.run(data, k=3).get_result())
             else:
                 print (alg.run(data, k=3).get_result())

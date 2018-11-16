@@ -7,6 +7,7 @@ from gct.dataset import convert
 import snap    
 from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils
+from gct.exception import UnsupportedException
 
 prefix='snap'
 
@@ -29,8 +30,8 @@ class Clauset_Newman_Moore(ClusteringAlg):
         return {'lib':"snap", "name": 'Clauset_Newman_Moore' }
     
     def run(self, data,seed =None):
-        if False and (data.is_directed() or data.is_weighted()):
-            raise Exception("only undirected and unweighted graph is supported")
+        if data.is_directed():
+            raise UnsupportedException("only undirected graph is supported")
         if seed is not None:self.logger.info("seed ignored")        
         UGraph = convert.to_snap(data)
         CmtyV = snap.TCnComV()
@@ -83,8 +84,8 @@ class Girvan_Newman(ClusteringAlg):
         return {'lib':"snap", "name": 'Girvan_Newman' }
     
     def run(self, data, seed=None):
-        if False and (data.is_directed() or data.is_weighted()):
-            raise Exception("only undirected and unweighted graph is supported")
+        if data.is_directed():
+            raise UnsupportedException("only undirected graph is supported")
         if seed is not None:self.logger.info("seed ignored")
         UGraph = convert.to_snap(data)
         CmtyV = snap.TCnComV()

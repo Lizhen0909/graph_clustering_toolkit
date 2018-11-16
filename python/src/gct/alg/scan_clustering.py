@@ -39,7 +39,7 @@ class Scanpp(ClusteringAlg):
     def run(self, data, mu=1, epsilon=0, seed=None):
         params = {'mu':mu, 'epsilon':epsilon}
         if seed is not None:self.logger.info("seed ignored")        
-        if False and (data.is_directed() or data.is_weighted()):
+        if data.is_weighted():
             raise Exception("only undirected and unweighted graph is supported")
         if not utils.file_exists(data.file_edges):
             data.to_edgelist()

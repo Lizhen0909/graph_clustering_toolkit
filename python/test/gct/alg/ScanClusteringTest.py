@@ -36,10 +36,16 @@ class Test(unittest.TestCase):
         pass
 
     def testScanpp(self):
-        alg = Scanpp()
-        print(sys._getframe().f_code.co_name) 
-        print (alg.run(self.graph_unweighted_undirect, mu=3, epsilon=0.5).get_result())
-        print (clustering.load_result(self.graph_unweighted_undirect.name, alg.name))
+        for data in  self.graphs: 
+            alg = Scanpp()
+            print(sys._getframe().f_code.co_name)
+            if data.is_weighted():
+                with self.assertRaises(Exception) as context:
+                    print (alg.run(data).get_result())
+            else:
+                print (alg.run(data).get_result())
+                print (clustering.load_result(data.name, alg.name))
+                        
 
     def testPScan(self):
         for data in  self.graphs: 
