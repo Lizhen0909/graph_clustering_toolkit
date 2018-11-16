@@ -13,7 +13,7 @@
 
 
 
-all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap powergraph genconvnmi ovpnmi xmeasures hirecs GANXiS lso-cluster CDC webgraph graphtool
+all: oslom2 oslom  SCAN LFR STREAM cggc dct mcl relaxmap powergraph genconvnmi ovpnmi xmeasures hirecs GANXiS lso-cluster CDC webgraph 
 
 clean: 
 	cd OSLOM2 && make clean

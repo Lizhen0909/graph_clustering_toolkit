@@ -5,12 +5,19 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 ENV PATH /opt/conda/bin:$PATH
 
 RUN apt-get update --fix-missing && \ 
-    apt-get install -y software-properties-common vim build-essential google-perftools libbz2-dev libxml2-dev libjemalloc-dev openssl libcurl4-openssl-dev libssl-dev libtbb-dev libarmadillo-dev libgsl-dev git maven openjdk-8-jdk libboost-program-options-dev bzip2 ca-certificates curl wget zip unzip && \
+    apt-get install -y software-properties-common vim build-essential google-perftools libbz2-dev libxml2-dev libjemalloc-dev openssl \
+	libcurl4-openssl-dev libssl-dev libtbb-dev libarmadillo-dev libgsl-dev git maven openjdk-8-jdk libboost-program-options-dev \
+	bzip2 ca-certificates curl wget zip unzip \
+	libboost-python-dev libboost-context-dev libboost-coroutine-dev libboost-iostreams-dev libboost-graph-dev libboost-regex-dev libboost-thread-dev \
+	libexpat1-dev libcairomm-1.0-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 #install cmake
 RUN mkdir -p /tmp/cmake_build && cd /tmp/cmake_build && wget https://cmake.org/files/v3.12/cmake-3.12.4.tar.gz && tar xf cmake*.tar.gz && cd cmake* && ./bootstrap && make && make install && rm -fr /tmp/cmake_build
+
+# install sparsehash for graph_tool
+RUN  cd /tmp/ && mkdir -p tmpsparsehash && cd tmpsparsehash && wget https://github.com/sparsehash/sparsehash/archive/sparsehash-2.0.3.tar.gz && tar xf sparse*.tar.gz && cd sparsehash*2.0.3 && bash ./configure && make install && rm -fr /tmp/tmpsparsehash
 
 #install conda 
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh -O ~/miniconda.sh && \
@@ -19,20 +26,27 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
     /opt/conda/bin/conda install nb_conda && \
     /opt/conda/bin/conda clean -tipsy && \
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
-    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
-    echo "conda activate base" >> ~/.bashrc
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc 
 
-RUN  /opt/conda/bin/conda create  -c conda-forge --name python3 python=3.6 ipykernel pandas seaborn scikit-learn cython matplotlib networkx python-igraph tabulate fastparquet python-snappy dask pyamg && \
-    /opt/conda/bin/conda clean -tipsy
+# env python3.6
+RUN  /opt/conda/bin/conda create  -c conda-forge --name python3 python=3.6 ipykernel pandas seaborn scikit-learn cython matplotlib networkx \
+	python-igraph tabulate fastparquet python-snappy dask pyamg pycairo gobject-introspection pygobject && \
+     . /etc/profile.d/conda.sh && conda activate python3 && conda install -c pkgw/label/superseded gtk3  && \
+    /opt/conda/bin/conda clean -tipsy && \
+    echo "conda activate python3" >> ~/.bashrc
 
-RUN . /etc/profile.d/conda.sh && conda activate python3 && mkdir -p /tmp/snap_build && cd /tmp/snap_build && wget http://snap.stanford.edu/snappy/release/beta/snap-5.0.9-64-3.0-centos6.5-x64-py3.6.tar.gz && tar xf snap*.tar.gz && cd snap* && python setup.py install && rm -fr /tmp/snap_build && \
+#install snap and networkit
+RUN . /etc/profile.d/conda.sh && conda activate python3 && mkdir -p /tmp/snap_build && cd /tmp/snap_build && wget http://snap.stanford.edu/snappy/release/beta/snap-5.0.9-64-3.0-centos6.5-x64-py3.6.tar.gz && tar xf snap*.tar.gz && cd snap* && python setup.py install && rm -fr /tmp/snap_build && cd ~ &&  \
     python -m pip install --upgrade pip==9.0.3 && pip install networkit
 
-RUN apt-get update && apt-get install libboost-python-dev libboost-context-dev libboost-coroutine-dev libboost-iostreams-dev libboost-graph-dev libboost-regex-dev libboost-thread-dev libexpat1-dev
+#install graph-tool
+RUN apt-get update && apt-get install -y libgmp-dev libcgal-dev
+RUN . /etc/profile.d/conda.sh && conda activate python3 && mkdir -p /tmp/gt_build && cd /tmp/gt_build && \
+	wget https://downloads.skewed.de/graph-tool/graph-tool-2.27.tar.bz2 && tar xf graph-tool-2.27.tar.bz2   && \
+	cd graph-tool-2.27 && CPPFLAGS=-I${CONDA_PREFIX}/include ./configure && make && make install  && \
+	rm -fr /tmp/gt_build && cd ~ 
 
-RUN  cd /tmp/ && mkdir -p tmpsparsehash && cd tmpsparsehash && wget https://github.com/sparsehash/sparsehash/archive/sparsehash-2.0.3.tar.gz && tar xf sparse*.tar.gz && cd sparsehash*2.0.3 && bash ./configure && make install && rm -fr /tmp/tmpsparsehash
-
-
+#RUN apt-get update && apt-get install libboost-python-dev libboost-context-dev libboost-coroutine-dev libboost-iostreams-dev libboost-graph-dev libboost-regex-dev libboost-thread-dev libexpat1-dev libcairomm-1.0-dev
 
 
 #RUN apt-get install zip unzip
