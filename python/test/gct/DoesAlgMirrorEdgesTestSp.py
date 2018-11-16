@@ -73,16 +73,16 @@ class Test(unittest.TestCase):
                         cluster2 = gct.to_cluster(results[dsname2 + alg])
                         compa = gct.ClusterComparator(cluster1, cluster2)
                         gt = list(gct.load_local_graph(dsname).get_ground_truth().values())[0]                    
-                        a += [compa.sklean_nmi, gt.is_overlap, cluster1.is_overlap, cluster2.is_overlap,
+                        a += [compa.sklean_nmi(), gt.is_overlap, cluster1.is_overlap, cluster2.is_overlap,
                               cluster1.num_cluster, cluster2.num_cluster, gt.num_cluster]
                         columns += ['nmi_12', 'ovp_gt', 'ovp1', 'ovp2', "#c1", "#c2", '#c_gt']
                 
                         compa = gct.ClusterComparator(gt, cluster1)            
-                        a += [compa.sklean_nmi]
+                        a += [compa.sklean_nmi()]
                         columns += ['nmi_t1']
                         
                         compa = gct.ClusterComparator(gt, cluster2)            
-                        a += [compa.sklean_nmi]
+                        a += [compa.sklean_nmi()]
                         columns += ['nmi_t2']
                         
                         lst.append(a)
