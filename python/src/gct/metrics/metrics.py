@@ -671,7 +671,6 @@ class GraphClusterMetrics(object):
         
         return self.set_if_not_exists(prop_name, f2)
 
-
     def graph_tool_draw(self, node_size=6, output_size=(1000, 500), edge_pen_width=1,
                    edge_color=[0.0, 0, 0, 0.05], cmap='nipy_spectral', vertex_shape='circle', layout=None):
         layouts = 'sfdp_layout fruchterman_reingold_layout arf_layout planar_layout random_layout'.split(" ")
@@ -686,7 +685,7 @@ class GraphClusterMetrics(object):
         node_size = g_gtool.new_vertex_property("double", np.zeros(g_gtool.num_vertices()) + node_size)
         c_map = plt.get_cmap(cmap)
         n_cluster = self.clusterobj.num_cluster
-        d = self.clusterobj.value().set_index('node')['cluster'].to_dict()
+        d = self.clusterobj.value(erase_overlap=True).set_index('node')['cluster'].to_dict()
         if layout is None: layout = 'sfdp_layout'
         
         # pos = gall.draw.sfdp_layout(g_gtool)
@@ -754,7 +753,7 @@ class ClusterComparator(object):
             df2.index.name = 'node'
             return df1, df2 
 
-        if not self.overlap:
+        if False and not self.overlap:
             self.clean_clusterobj1, self.clean_clusterobj2 = clean()
     
     @property 

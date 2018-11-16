@@ -164,19 +164,25 @@ class Clustering(object):
         else:
             raise ValueError("Error: " + format) 
         
-    def value(self):
+    def value(self, erase_overlap=False):
         '''
         :rtype: Pandas dataframe of clustering
         '''
+        ret = None
         if self.cluster is not None: 
-            return self.cluster
+            ret= self.cluster
         else:
             self.logger.info("reading" + self.path)
             df = fastparquet.ParquetFile(self.path).to_pandas()
             self.cluster = df 
             if self.cluster is not None:
                 self.cluster = self.cluster.drop_duplicates()            
-            return self.cluster
+            ret = self.cluster
+        if not erase_overlap:
+            return ret 
+        else:
+            fn = lambda obj: obj.loc[np.random.choice(obj.index, 1, False),:]
+            return ret.groupby('node', as_index=False).apply(fn)
 
         
 class Dataset(object):
