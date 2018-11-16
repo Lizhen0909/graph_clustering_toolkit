@@ -783,7 +783,7 @@ class ClusterComparator(object):
         '''
         sklearn `normalized_mutual_info_score <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.normalized_mutual_info_score.html>`_
         '''
-        if self.overlap:
+        if False and self.overlap:
             return None 
         else:
             prop_name = "_" + sys._getframe().f_code.co_name 
@@ -798,7 +798,7 @@ class ClusterComparator(object):
         '''
         sklearn `adjusted_mutual_info_score <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_mutual_info_score.html>`_
         '''
-        if self.overlap:
+        if False and self.overlap:
             return None 
         else:
             prop_name = "_" + sys._getframe().f_code.co_name 
@@ -813,7 +813,7 @@ class ClusterComparator(object):
         '''
         sklearn `adjusted_rand_score <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_rand_score.html>`_
         '''
-        if self.overlap:
+        if False and self.overlap:
             return None 
         else:
             prop_name = "_" + sys._getframe().f_code.co_name 
