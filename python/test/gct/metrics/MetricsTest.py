@@ -53,6 +53,8 @@ class Test(unittest.TestCase):
         print ('inter_cluster_density', p.inter_cluster_density)
         print ('relative_cluster_densities', p.relative_cluster_densities)
         print ("modularity2", p.modularity2)
+        print ("snap_modularities", p.snap_modularities())
+        
         print ("cluster_expansions", p.cluster_expansions)
         print ("cluster_cut_ratios", p.cluster_cut_ratios)
         
@@ -84,10 +86,10 @@ class Test(unittest.TestCase):
         cluster = make_cluter_if_not_exists()
         
         p = ClusterComparator(gt, cluster)
-        print ('sklean_nmi', p.sklean_nmi)
-        print ('sklean_ami', p.sklean_ami)
-        print ('sklean_ars', p.sklean_ars)
-        print ('sklean_completeness', p.sklean_completeness)        
+        print ('sklean_nmi', p.sklean_nmi())
+        print ('sklean_ami', p.sklean_ami())
+        print ('sklean_ars', p.sklean_ars())
+        print ('sklean_completeness', p.sklean_completeness())        
         print ('GenConvNMI', p.GenConvNMI(sync=True, membership=1))
         print ('OvpNMI', p.OvpNMI(sync=True, allnmi=True, omega=True))
         print ('xmeasure_nmi', p.xmeasure_nmi(sync=True, all=False))

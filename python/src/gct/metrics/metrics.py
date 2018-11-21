@@ -13,127 +13,7 @@ from gct.dataset.dataset import Clustering
 from gct import utils, config
 import os
 
-
-class GraphMetrics(object):
-    '''
-    metrics for a graph. e.g. density, diameter etc.
-    
-    The class is here just for convenience. It is not powerful and efficient.    
-    One may analyze the graph use other graph libraries (e.g. SNAP, igraph, networkit, etc) using converting functions.
-    '''
-
-    def __init__(self, data):
-        '''
-        :param data: a :class:`gct.Dataset` object 
-        '''
-        if data.is_directed() or data.is_weighted():
-            print ("Warning! Graph will be taken as undirected.")
-        self.data = data 
-
-    def set_if_not_exists(self, name, fun):
-        if hasattr(self, name):
-            return getattr(self, name)
-        else:
-            # print ("call fun for " + name)
-            value = fun()
-            setattr(self, name, value)
-            return value 
-        
-    @property    
-    def directed(self):
-        '''
-        Return True if the graph is directed
-        '''
-        return self.data.directed
-    
-    @property
-    def edges(self):
-
-        def f():
-            df = self.data.get_edges()
-            if not self.data.is_weighted():
-                df['weight'] = float(1)
-            return df 
-
-        return self.set_if_not_exists("_edges", f)
-    
-    @property
-    def weighted(self):
-        '''
-        Return True if the graph is weighted
-        '''
-
-        return self.data.weighted    
-    
-    @property 
-    def num_edges(self):
-        '''
-        Return number of edges
-        '''
-        
-        return self.edges.shape[0]
-    
-    @property 
-    def num_vertices(self):
-        '''
-        Return number of vertices (nodes)
-        '''
-        return self.set_if_not_exists("_num_vetices", lambda: len(set(np.unique(self.edges[['src', 'dest']].values))))
-
-    @property
-    def density1(self):
-        '''
-        Return density of :math:`\\frac{|E|}{|V|}`
-               
-        '''
-        
-        m, n = self.num_edges, self.num_vertices
-        assert n > 1
-        return float(m) / n
-        
-    @property
-    def density(self):
-        '''
-        Return density of :math:`\\frac{|E|}{|all\ possible\ edges|}`.
-        '''
-        
-        m, n = self.num_edges, self.num_vertices
-        assert n > 1
-        return float(m) * 2 / n / (n - 1)
-    
-    @property
-    def degrees(self):
-        '''
-        return weighted node degrees
-        '''
-        return self.weighted_degrees()
-    
-    @property
-    def unweighted_degrees(self):
-        '''
-        return unweighted node degrees (e.g. number of out edges)
-        '''
-
-        def f():
-            arr = self.edges[['src', 'dest']].values.ravel() 
-            unique, counts = np.unique(arr, return_counts=True)
-            return dict(zip(unique, counts))
-
-        prop_name = "_" + sys._getframe().f_code.co_name        
-        return self.set_if_not_exists(prop_name, f)
-
-    @property
-    def weighted_degrees(self):
-
-        def f():
-            df1 = self.edges[['src', 'weight']]
-            df2 = self.edges[['dest', 'weight']]
-            df2.columns = df1.columns
-            df = pd.concat([df1, df2])
-            return df.groupby('src')['weight'].sum().to_dict()
-
-        prop_name = "_" + sys._getframe().f_code.co_name        
-        return self.set_if_not_exists(prop_name, f)
+from .graph_metrics import GraphMetrics, SNAPGraphMetrics
 
 
 class GraphClusterMetrics(object):
@@ -466,8 +346,7 @@ class GraphClusterMetrics(object):
         
         return self.set_if_not_exists(prop_name, f)       
 
-    @property
-    def snap_modularities(self):
+    def snap_modularities(self, frac=1):
         import snap
 
         def f():
@@ -475,11 +354,12 @@ class GraphClusterMetrics(object):
             m = self.num_edges
             ret = {}
             for k, v in self.clusters.groupby('cluster')['node'].apply(lambda u: list(u)).to_dict().items():
-                Nodes = snap.TIntV()
-                for nodeId in v:
-                    Nodes.Add(nodeId)
-                mod = snap.GetModularity(G, Nodes, 1024)
-                ret[k] = mod 
+                if np.random.random() < frac:
+                    Nodes = snap.TInt64V()
+                    for nodeId in v:
+                        Nodes.Add(nodeId)
+                    mod = snap.GetModularity(G, Nodes, m)
+                    ret[k] = mod 
             return ret 
 
         prop_name = "_" + sys._getframe().f_code.co_name
