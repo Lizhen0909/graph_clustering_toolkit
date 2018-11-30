@@ -174,6 +174,7 @@ def generate_ovp_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, 
     Reference
         Lancichinetti, Andrea, and Santo Fortunato. "Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities." Physical Review E 80.1 (2009): 016118.
     '''    
+    
     if not overide and local_exists(name):
         return load_local(name)
     else:

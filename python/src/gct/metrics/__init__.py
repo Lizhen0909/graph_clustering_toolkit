@@ -1,1 +1,1 @@
-from .metrics import GraphMetrics, GraphClusterMetrics, ClusterComparator
+from .metrics import GraphMetrics, GraphClusterMetrics, ClusterComparator, SNAPGraphMetrics
