@@ -1,0 +1,4 @@
+#!/bin/bash
+. /opt/conda/etc/profile.d/conda.sh
+conda activate python3
+jupyter notebook --ip 0.0.0.0 --no-browser --allow-root --notebook-dir=/notebook/
