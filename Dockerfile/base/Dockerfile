@@ -1,4 +1,4 @@
-# docker build -t ubuntu1604py36
+# docker build -t lizhen0909/gct_base .
 FROM ubuntu:16.04
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
@@ -55,9 +55,9 @@ RUN . /etc/profile.d/conda.sh && conda activate python3 && mkdir -p /tmp/gt_buil
 #RUN cd /opt && tar xf a.tar.gz && mv graph* gct && ls -alrt gct && cd gct && git submodule update --init --recursive && find . -type d -name .git -exec rm {} \; && cd  submodules && make && ls -d */*/ |grep -v local | xargs -L1 rm -fr 
 
 
-ENV TINI_VERSION v0.16.1
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
-RUN chmod +x /usr/bin/tini
+#ENV TINI_VERSION v0.16.1
+#ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+#RUN chmod +x /usr/bin/tini
 
-ENTRYPOINT [ "/usr/bin/tini", "--" ]
+#ENTRYPOINT [ "/usr/bin/tini", "--" ]
 CMD [ "/bin/bash" ]
