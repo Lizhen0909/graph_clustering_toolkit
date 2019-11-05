@@ -32,7 +32,8 @@ class GraphClusterMetrics(object):
         if isinstance(clusteringobj, Clustering):
             self.clusterobj = clusteringobj
         elif isinstance(clusteringobj, Result):
-            self.clusterobj = Clustering(clusteringobj.clusters(as_dataframe=True))
+            ##self.clusterobj = Clustering(clusteringobj.clusters(as_dataframe=True))
+            self.clusterobj = Clustering(clusteringobj.clustering(as_dataframe=True))
         elif isinstance(clusteringobj, pd.DataFrame) or isinstance(clusteringobj, list) \
             or isinstance(clusteringobj, np.ndarray) or isinstance(clusteringobj, str) or isinstance(clusteringobj, dict):
             self.clusterobj = Clustering(clusteringobj)
