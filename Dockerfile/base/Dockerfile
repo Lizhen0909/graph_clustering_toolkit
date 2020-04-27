@@ -30,25 +30,17 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
     echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc 
 
 # env python3.6
-RUN  /opt/conda/bin/conda create  -c conda-forge --name python3 python=3.6 ipykernel pandas seaborn scikit-learn cython matplotlib networkx \
-	python-igraph tabulate fastparquet python-snappy dask pyamg pycairo gobject-introspection pygobject && \
-     . /etc/profile.d/conda.sh && conda activate python3 && conda install -c pkgw/label/superseded gtk3  && \
+RUN  /opt/conda/bin/conda create  -c conda-forge --name python3 python=3.7 ipykernel pandas seaborn scikit-learn cython matplotlib networkx \
+	python-igraph tabulate fastparquet python-snappy dask pyamg pycairo gobject-introspection pygobject gtk3 networkit graph-tool && \
     /opt/conda/bin/conda clean -tipsy && \
     echo "conda activate python3" >> ~/.bashrc && \
     echo "alias l='ls -alrt'" >> ~/.bashrc      && \
     echo "alias h='history'" >> ~/.bashrc      && \
     echo "set -o vi" >> ~/.bashrc
 
-#install snap and networkit
+#install snap and karateclub
 RUN . /etc/profile.d/conda.sh && conda activate python3 && mkdir -p /tmp/snap_build && cd /tmp/snap_build && wget http://snap.stanford.edu/snappy/release/beta/snap-5.0.9-64-3.0-centos6.5-x64-py3.6.tar.gz && tar xf snap*.tar.gz && cd snap* && python setup.py install && rm -fr /tmp/snap_build && cd ~ &&  \
-    python -m pip install --upgrade pip==9.0.3 && pip install networkit
-
-#install graph-tool
-RUN . /etc/profile.d/conda.sh && conda activate python3 && mkdir -p /tmp/gt_build && cd /tmp/gt_build && \
-	wget https://downloads.skewed.de/graph-tool/graph-tool-2.27.tar.bz2 && tar xf graph-tool-2.27.tar.bz2   && \
-	cd graph-tool-2.27 && CPPFLAGS=-I${CONDA_PREFIX}/include ./configure && make && make install  && \
-	rm -fr /tmp/gt_build && cd ~ 
-
+    python -m pip install --upgrade pip==9.0.3 && pip install karateclub
 
 
 #COPY  a.tar.gz /opt/
