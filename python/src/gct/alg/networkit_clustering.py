@@ -4,7 +4,6 @@ Created on Oct 27, 2018
 @author: lizhen
 '''
 from gct.dataset import convert
-import igraph    
 from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils
 import networkit

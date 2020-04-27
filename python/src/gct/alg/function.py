@@ -124,9 +124,8 @@ def oslom_copra(name, graph, v=5, v1=None, v2=None, prop=None, repeat=None, mo=N
         ============== ===============================================================
 
     Reference 
-        Lancichinetti, Andrea, Santo Fortunato, and János Kertész. 
-        "Detecting the overlapping and hierarchical community structure in complex networks." 
-        New Journal of Physics 11.3 (2009): 033015.  
+        Gregory, Steve. "Finding overlapping communities in networks by label propagation." 
+        New Journal of Physics 12.10 (2010): 103018.
     
     '''
     try:
@@ -606,7 +605,7 @@ def cdc_MOSES(name, graph, seed=None):
         return None
 
 
-def cdc_MSCD_AFG(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0, seed=None):
+def cdc_MSCD_AFG(name, graph, scale_param='[1.2,2]', extra_param=None, verbose=0, seed=None):
     '''
 
      (Arenas et al.’s) Fast Multi-Scale Community Detection Tools
@@ -634,7 +633,7 @@ def cdc_MSCD_AFG(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0
         return None
 
 
-def cdc_MSCD_HSLSW(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0, seed=None):
+def cdc_MSCD_HSLSW(name, graph, scale_param='[1.2,2]', extra_param=None, verbose=0, seed=None):
     '''
 
      (Huang et al.’s) Fast Multi-Scale Community Detection Tools
@@ -665,7 +664,7 @@ def cdc_MSCD_HSLSW(name, graph, scale_param='[1.0,2]', extra_param=None, verbose
         return None
 
 
-def cdc_MSCD_LFK(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0, seed=None):
+def cdc_MSCD_LFK(name, graph, scale_param='[1.2,2]', extra_param=None, verbose=0, seed=None):
     '''
 
      (Lancichinetti et al.’s) Fast Multi-Scale Community Detection Tools
@@ -702,7 +701,7 @@ def cdc_MSCD_LFK(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0
         return None
 
 
-def cdc_MSCD_LFK2(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0, seed=None):
+def cdc_MSCD_LFK2(name, graph, scale_param='[1.2,2]', extra_param=None, verbose=0, seed=None):
     '''
 
      ( Lancichinetti et al.’s multi-threaded ) Fast Multi-Scale Community Detection Tools
@@ -736,7 +735,7 @@ def cdc_MSCD_LFK2(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=
         return None
 
 
-def cdc_MSCD_RB(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0, seed=None):
+def cdc_MSCD_RB(name, graph, scale_param='[1.2,2]', extra_param=None, verbose=0, seed=None):
     '''
 
      (Reichardt and Bornholdt’s) Fast Multi-Scale Community Detection Tools
@@ -764,7 +763,7 @@ def cdc_MSCD_RB(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0,
         return None
 
 
-def cdc_MSCD_RN(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0, seed=None):
+def cdc_MSCD_RN(name, graph, scale_param='[1.2,2]', extra_param=None, verbose=0, seed=None):
     '''
 
      (Ronhovde and Nussinov’s) Fast Multi-Scale Community Detection Tools
@@ -792,7 +791,7 @@ def cdc_MSCD_RN(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0,
         return None
 
 
-def cdc_MSCD_SO(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0, seed=None):
+def cdc_MSCD_SO(name, graph, scale_param='[1.2,2]', extra_param=None, verbose=0, seed=None):
     '''
 
       stability optimisation (Fast Multi-Scale Community Detection Tools)
@@ -827,7 +826,7 @@ def cdc_MSCD_SO(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0,
         return None
 
 
-def cdc_MSCD_SOM(name, graph, scale_param='[1.0,2]', extra_param=None, verbose=0, seed=None):
+def cdc_MSCD_SOM(name, graph, scale_param='[1.2,2]', extra_param=None, verbose=0, seed=None):
     '''
 
       tability optimisation using matrices  (Fast Multi-Scale Community Detection Tools)
@@ -1433,6 +1432,157 @@ def igraph_community_walktrap(name, graph, seed=None):
     try:
         obj = gct.alg.igraph_clustering.community_walktrap(name)
         obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_BigClam(name, graph, dimensions=8, iterations=50, learning_rate=0.005, seed=None):
+    '''
+
+    
+    An implementation of “BigClam” from the WSDM ‘13 paper “Overlapping Community Detection at Scale: A Non-negative Matrix Factorization Approach”. 
+    The procedure uses gradient ascent to create an embedding which is used for deciding the node-cluster affiliations.
+
+    Parameters:    
+        dimensions (int) – Number of embedding dimensions. Default 8.
+        iterations (int) – Number of training iterations. Default 50.
+        learning_rate (float) – Gradient ascent learning rate. Default is 0.005.
+    
+    
+    '''
+    try:
+        obj = gct.alg.karateclub_clustering.BigClam(name)
+        obj.run(graph, dimensions=dimensions, iterations=iterations, learning_rate=learning_rate, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_DANMF(name, graph, layers=[32, 8], pre_iterations=100, iterations=100, seed=42, lamb=0.01):
+    '''
+
+    An implementation of “DANMF” from the CIKM ‘18 paper “Deep Autoencoder-like Nonnegative Matrix Factorization for Community Detection”. The procedure uses telescopic non-negative matrix factorization in order to learn a cluster membership distribution over nodes. The method can be used in an overlapping and non-overlapping way.
+    
+    Parameters:    
+        layers (list) – Autoencoder layer sizes in a list of integers. Default [32, 8].
+        pre_iterations (int) – Number of pre-training epochs. Default 100.
+        iterations (int) – Number of training epochs. Default 100.
+        seed (int) – Random seed for weight initializations. Default 42.
+        lamb (float) – Regularization parameter. Default 0.01.
+    
+    '''
+    try:
+        obj = gct.alg.karateclub_clustering.DANMF(name)
+        obj.run(graph, layers=layers, pre_iterations=pre_iterations, iterations=iterations, seed=seed, lamb=lamb)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_EdMot(name, graph, component_count=2, cutoff=50, seed=None):
+    '''
+
+    An implementation of “Edge Motif Clustering” from the KDD ‘19 paper “EdMot: An Edge Enhancement Approach for Motif-aware Community Detection”. The tool first creates the graph of higher order motifs. This graph is clustered by the Louvain method. The resulting cluster memberships are stored as a dictionary.
+    
+    Parameters:    
+        component_count (int) – Number of extracted motif hypergraph components. Default is 2.
+        cutoff (int) – Motif edge cut-off value. Default is 50.
+    
+    
+    '''
+    try:
+        obj = gct.alg.karateclub_clustering.EdMot(name)
+        obj.run(graph, component_count=component_count, cutoff=cutoff, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_EgoNetSplitter(name, graph, resolution=1.0, seed=None):
+    '''
+
+    An implementation of “Ego-Splitting” from the KDD ‘17 paper “Ego-Splitting Framework: from Non-Overlapping to Overlapping Clusters”. The tool first creates the ego-nets of nodes. A persona-graph is created which is clustered by the Louvain method. The resulting overlapping cluster memberships are stored as a dictionary.
+    
+    Parameters:    
+        resolution (float) – Resolution parameter of Python Louvain. Default 1.0.
+    
+    '''
+    try:
+        obj = gct.alg.karateclub_clustering.EgoNetSplitter(name)
+        obj.run(graph, resolution=resolution, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_NNSED(name, graph, dimensions=32, iterations=10, seed=42):
+    '''
+
+    An implementation of “NNSED” from the CIKM ‘17 paper “A Non-negative Symmetric Encoder-Decoder Approach for Community Detection”. The procedure uses non-negative matrix factorization in order to learn an unnormalized cluster membership distribution over nodes. The method can be used in an overlapping and non-overlapping way.
+    
+    Parameters:    
+        layers (int) – Embedding layer size. Default is 32.
+        iterations (int) – Number of training epochs. Default 10.
+        seed (int) – Random seed for weight initializations. Default 42.
+    
+    
+    '''
+    try:
+        obj = gct.alg.karateclub_clustering.NNSED(name)
+        obj.run(graph, dimensions=dimensions, iterations=iterations, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_SCD(name, graph, iterations=25, eps=1e-06, seed=None):
+    '''
+
+    An implementation of “SCD” from the WWW ‘14 paper “High Quality, Scalable and Parallel Community Detection for Large Real Graphs”. The procedure greedily optimizes the approximate weighted community clustering metric. First, clusters are built around highly clustered nodes. Second, we refine the initial partition by using the approximate WCC. These refinements happen for the whole vertex set.
+    
+    Parameters:    
+        iterations (int) – Refinemeent iterations. Default is 25.
+        eps (float) – Epsilon score for zero division correction. Default is 10**-6.
+    
+    '''
+    try:
+        obj = gct.alg.karateclub_clustering.SCD(name)
+        obj.run(graph, iterations=iterations, eps=eps, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print("Error: " + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_SymmNMF(name, graph, dimensions=32, iterations=200, rho=100.0, seed=None):
+    '''
+
+    An implementation of “Symm-NMF” from the SDM‘12 paper “Symmetric Nonnegative Matrix Factorization for Graph Clustering”. The procedure decomposed the second power od the normalized adjacency matrix with an ADMM based non-negative matrix factorization based technique. This results in a node embedding and each node is associated with an embedding factor in the created latent space.
+
+    Parameters:    
+        dimensions (int) – Number of dimensions. Default is 32.
+        iterations (int) – Number of power iterations. Default is 200.
+        rho (float) – ADMM tuning parameter. Default is 100.0.
+
+    
+    '''
+    try:
+        obj = gct.alg.karateclub_clustering.SymmNMF(name)
+        obj.run(graph, dimensions=dimensions, iterations=iterations, rho=rho, seed=seed)
         result=Result(obj.result)
         return result
     except UnsupportedException as err:
@@ -2226,4 +2376,4 @@ def alg_streamcom(name, graph, vmax_start=None, vmax_end=None, c=None, niter=Non
         print("Error: " + str(err), file=sys.stderr)
         return None
 
-__ALG_LIST__ += ['oslom_Infohiermap', 'oslom_Infomap', 'oslom_OSLOM', 'oslom_copra', 'oslom_louvain_method', 'oslom_lpm', 'oslom_modopt', 'pycabem_GANXiSw', 'pycabem_HiReCS', 'pycabem_LabelRank', 'cdc_CONGA', 'cdc_CliquePercolation', 'cdc_Connected_Iterative_Scan', 'cdc_DEMON', 'cdc_EAGLE', 'cdc_FastCpm', 'cdc_GCE', 'cdc_HDEMON', 'cdc_LinkCommunities', 'cdc_MOSES', 'cdc_MSCD_AFG', 'cdc_MSCD_HSLSW', 'cdc_MSCD_LFK', 'cdc_MSCD_LFK2', 'cdc_MSCD_RB', 'cdc_MSCD_RN', 'cdc_MSCD_SO', 'cdc_MSCD_SOM', 'cdc_ParCPM', 'cdc_SVINET', 'cdc_TopGC', 'cdc_clique_modularity', 'cgcc_CGGC', 'dct_dlplm', 'dct_dlslm', 'dct_dlslm_map_eq', 'dct_dlslm_no_contraction', 'dct_dlslm_with_seq', 'dct_infomap', 'dct_seq_louvain', 'igraph_community_edge_betweenness', 'igraph_community_fastgreedy', 'igraph_community_infomap', 'igraph_community_label_propagation', 'igraph_community_leading_eigenvector', 'igraph_community_multilevel', 'igraph_community_optimal_modularity', 'igraph_community_spinglass', 'igraph_community_walktrap', 'mcl_MCL', 'networkit_CutClustering', 'networkit_LPDegreeOrdered', 'networkit_PLM', 'networkit_PLP', 'alg_GossipMap', 'alg_RelaxMap', 'alg_pg_label_propagation', 'scan_AnyScan_Scan', 'scan_AnyScan_anyScan', 'scan_AnyScan_anyScanParl', 'scan_AnyScan_pScan', 'scan_Scanpp', 'scan_pScan', 'scan_ppScan', 'scan_ppScanSSE', 'sklearn_AffinityPropagation', 'sklearn_SpectralClustering', 'snap_Clauset_Newman_Moore', 'snap_Girvan_Newman', 'alg_Paris', 'alg_lso_cluster', 'alg_streamcom']
+__ALG_LIST__ += ['oslom_Infohiermap', 'oslom_Infomap', 'oslom_OSLOM', 'oslom_copra', 'oslom_louvain_method', 'oslom_lpm', 'oslom_modopt', 'pycabem_GANXiSw', 'pycabem_HiReCS', 'pycabem_LabelRank', 'cdc_CONGA', 'cdc_CliquePercolation', 'cdc_Connected_Iterative_Scan', 'cdc_DEMON', 'cdc_EAGLE', 'cdc_FastCpm', 'cdc_GCE', 'cdc_HDEMON', 'cdc_LinkCommunities', 'cdc_MOSES', 'cdc_MSCD_AFG', 'cdc_MSCD_HSLSW', 'cdc_MSCD_LFK', 'cdc_MSCD_LFK2', 'cdc_MSCD_RB', 'cdc_MSCD_RN', 'cdc_MSCD_SO', 'cdc_MSCD_SOM', 'cdc_ParCPM', 'cdc_SVINET', 'cdc_TopGC', 'cdc_clique_modularity', 'cgcc_CGGC', 'dct_dlplm', 'dct_dlslm', 'dct_dlslm_map_eq', 'dct_dlslm_no_contraction', 'dct_dlslm_with_seq', 'dct_infomap', 'dct_seq_louvain', 'igraph_community_edge_betweenness', 'igraph_community_fastgreedy', 'igraph_community_infomap', 'igraph_community_label_propagation', 'igraph_community_leading_eigenvector', 'igraph_community_multilevel', 'igraph_community_optimal_modularity', 'igraph_community_spinglass', 'igraph_community_walktrap', 'karateclub_BigClam', 'karateclub_DANMF', 'karateclub_EdMot', 'karateclub_EgoNetSplitter', 'karateclub_NNSED', 'karateclub_SCD', 'karateclub_SymmNMF', 'mcl_MCL', 'networkit_CutClustering', 'networkit_LPDegreeOrdered', 'networkit_PLM', 'networkit_PLP', 'alg_GossipMap', 'alg_RelaxMap', 'alg_pg_label_propagation', 'scan_AnyScan_Scan', 'scan_AnyScan_anyScan', 'scan_AnyScan_anyScanParl', 'scan_AnyScan_pScan', 'scan_Scanpp', 'scan_pScan', 'scan_ppScan', 'scan_ppScanSSE', 'sklearn_AffinityPropagation', 'sklearn_SpectralClustering', 'snap_Clauset_Newman_Moore', 'snap_Girvan_Newman', 'alg_Paris', 'alg_lso_cluster', 'alg_streamcom']

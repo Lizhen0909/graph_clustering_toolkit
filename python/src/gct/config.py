@@ -191,4 +191,3 @@ def get_cdc_prog(name, is_directed=None):
         return os.path.join(GCT_HOME, "submodules/CommunityDetectionCodes/Algorithms/2012-DEMON", name)
     else:
         raise Exception("Unknown " + name)
-
