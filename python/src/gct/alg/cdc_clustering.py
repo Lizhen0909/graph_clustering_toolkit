@@ -8,7 +8,6 @@ from gct import utils, config
 import os
 import numpy as np
 import pandas as pd  
-import multiprocessing
 import numbers
 import glob
 import collections
@@ -183,7 +182,7 @@ class EAGLE(ClusteringAlg):
             raise Exception("only undirected is supported")
         
         if nThread is None or nThread < 1:
-            nThread = max(1, multiprocessing.cpu_count() - 1)
+            nThread = max(1, utils.get_num_thread())
         params = {'nThread':nThread}
         if seed  is not None: self.logger.info("seed ignored")
         

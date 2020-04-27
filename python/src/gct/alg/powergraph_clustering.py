@@ -7,7 +7,6 @@ from gct.alg.clustering import ClusteringAlg, save_result
 from gct import utils, config
 import os
 import glob
-import multiprocessing
 import numpy as np 
 
 prefix = 'alg'
