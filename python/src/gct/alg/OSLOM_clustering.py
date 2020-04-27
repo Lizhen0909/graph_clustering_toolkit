@@ -282,9 +282,8 @@ class copra(ClusteringAlg):
         ============== ===============================================================
 
     Reference 
-        Lancichinetti, Andrea, Santo Fortunato, and János Kertész. 
-        "Detecting the overlapping and hierarchical community structure in complex networks." 
-        New Journal of Physics 11.3 (2009): 033015.  
+        Gregory, Steve. "Finding overlapping communities in networks by label propagation." 
+        New Journal of Physics 12.10 (2010): 103018.
     '''
     
     def __init__(self, name="oslom_copra"):

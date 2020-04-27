@@ -125,7 +125,7 @@ def generate_Erdos_Renyi(name, n_node, n_edge, directed=False, seed=None, overid
     Generates an Erdos-Renyi random graph of the specified GraphType.
     '''
     if not overide and local_exists(name):
-        return load_local(name)
+        raise Exception("graph {} exists".format(name))
     else:
         params = {"name":"Erdos-Renyi", 'n_node':n_node, "n_edge":n_edge, "directed": directed}
         description = "Erdos_Renyi random graph"
@@ -176,7 +176,7 @@ def generate_ovp_LFR(name, N, k=None, maxk=None, mut=None, muw=None, beta=None, 
     '''    
     
     if not overide and local_exists(name):
-        return load_local(name)
+        raise Exception("graph {} exists".format(name))
     else:
         params = locals()
         del params['overide']
@@ -241,7 +241,7 @@ def generate_undirected_unweighted_random_graph_LFR(name, N, k, maxk, mu, t1=Non
       
     '''
     if not overide and local_exists(name):
-        return load_local(name)
+        raise Exception("graph {} exists".format(name))
     else:
         params = locals()
         del params['overide']
@@ -305,7 +305,7 @@ def generate_directed_unweighted_random_graph_LFR(name, N, k=None, maxk=None, mu
       
     '''
     if not overide and local_exists(name):
-        return load_local(name)
+        raise Exception("graph {} exists".format(name))
     else:
         params = locals()
         del params['overide']
@@ -374,7 +374,7 @@ def generate_undirected_weighted_random_graph_LFR(name, N, k=None, maxk=None, mu
       
     '''
     if not overide and local_exists(name):
-        return load_local(name)
+        raise Exception("graph {} exists".format(name))
     else:
         params = locals()
         del params['overide']
@@ -439,7 +439,7 @@ def generate_directed_weighted_random_graph_LFR(name, N, k=None, maxk=None, mut=
       
     '''
     if not overide and local_exists(name):
-        return load_local(name)
+        raise Exception("graph {} exists".format(name))
     else:
         params = locals()
         del params['overide']
@@ -492,7 +492,7 @@ def generate_undirected_unweighted_hier_random_graph_LFR(name, N, k=None, maxk=N
       
     '''
     if not overide and local_exists(name):
-        return load_local(name)
+        raise Exception("graph {} exists".format(name))
     else:
         params = locals()
         del params['overide']
