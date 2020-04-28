@@ -21,7 +21,7 @@ RUN mkdir -p /tmp/cmake_build && cd /tmp/cmake_build && wget https://cmake.org/f
 RUN  cd /tmp/ && mkdir -p tmpsparsehash && cd tmpsparsehash && wget https://github.com/sparsehash/sparsehash/archive/sparsehash-2.0.3.tar.gz && tar xf sparse*.tar.gz && cd sparsehash*2.0.3 && bash ./configure && make install && rm -fr /tmp/tmpsparsehash
 
 #install conda 
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh -O ~/miniconda.sh && \
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py37_4.8.2-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh && \
     /opt/conda/bin/conda install nb_conda && \

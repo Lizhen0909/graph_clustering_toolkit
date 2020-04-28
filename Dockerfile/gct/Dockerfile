@@ -1,7 +1,7 @@
 # docker build -t lizhen0909/graph_clustering_toolkit .
 FROM lizhen0909/gct_base2
 
-RUN cd /opt/gct/submodules/local/bin && find ../..   -executable -type f |grep -v ipynb |grep -v Makefile |grep -v CMake |grep -v 'local/' | xargs -L1 -I{} ln -sf {} .
+RUN mkdir -p /opt/gct/submodules/local/bin  && cd /opt/gct/submodules/local/bin && find ../..   -executable -type f |grep -v ipynb |grep -v Makefile |grep -v CMake |grep -v 'local/' | xargs -L1 -I{} ln -sf {} .
 
 ADD python /usr/bin/
 ADD jupyter_notebook /usr/bin/
