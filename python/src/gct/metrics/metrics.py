@@ -15,7 +15,6 @@ import os
 
 from .graph_metrics import GraphMetrics, SNAPGraphMetrics
 
-
 class GraphClusterMetrics(object):
     '''
     metrics for a clustering of a graph. e.g. modularity.
@@ -277,7 +276,10 @@ class GraphClusterMetrics(object):
             r = {}
             d = self.cluster_edge_sizes
             for cluster, n_node in self.cluster_sizes.items():
-                n_edge = d[cluster]
+                if cluster in d:
+                    n_edge = d[cluster]
+                else: 
+                    n_edge = 0
                 a = float(n_edge) * 2 / n_node / (n_node - 1) if n_node > 1 else 0.0
                 r[cluster] = a
             return r 
@@ -312,7 +314,13 @@ class GraphClusterMetrics(object):
         n_edge = self.num_edges
         n = self.num_vertices
         d = n * (n - 1) - np.sum([u * (u - 1) for u in self.cluster_sizes.values()])
-        return float(n_edge - n_intra_edges) * 2 / d
+        if np.isnan(d):
+            raise "invalid number: " +str(d)
+        
+        if n_edge==n_intra_edges:
+            return 0.0
+        else:
+            return float(n_edge - n_intra_edges) * 2 / d
 
     @property
     def relative_cluster_densities(self):
@@ -407,8 +415,19 @@ class GraphClusterMetrics(object):
         def f():
             a = self.cluster_out_sum_weights
             d = self.cluster_sum_intra_weights
-            return {u:v / (v + d[u]) for u, v in a.items() }
-                
+            keys=set(a.keys()).union(d.keys())
+            ret={}
+            for u in keys:
+                if u in a:
+                    v=a[u]
+                    if u in d:
+                        ret[u] = v / (v + d[u]) 
+                    else:
+                        ret[u] = v / (v + 0) 
+                else:
+                    ret[u]=0
+            return ret
+                    
         prop_name = "_" + sys._getframe().f_code.co_name
         
         return self.set_if_not_exists(prop_name, f)       
@@ -423,7 +442,18 @@ class GraphClusterMetrics(object):
             m = self.sum_weight
             a = self.cluster_out_sum_weights
             d = self.cluster_sum_intra_weights
-            return {u:v / (v + d[u]) + v / (v + m - d[u]) for u, v in a.items() }
+            keys=set(a.keys()).union(d.keys())
+            ret={}
+            for u in keys:
+                if u in a:
+                    v=a[u]
+                    if u in d:
+                        ret[u] = v / (v + d[u]) + v / (v + m - d[u])
+                    else:
+                        ret[u] = v / (v + 0) + v / (v + m - 0)
+                else:
+                    ret[u]=0
+            return ret
                 
         prop_name = "_" + sys._getframe().f_code.co_name
         
@@ -468,7 +498,7 @@ class GraphClusterMetrics(object):
             df2 = df.groupby(['src_c', 'src'])["weight"].sum().reset_index()
             df2.columns = ['cluster', 'node', 'intra_weight']
             df = pd.merge(df1, df2, on=['cluster', 'node'], how='outer')
-            return df
+            return df.fillna(0)
 
         def f2():
             df = f1()
@@ -494,8 +524,18 @@ class GraphClusterMetrics(object):
         
         a = self.cluster_out_sum_weights
         b = self.cluster_sum_intra_weights
-        return {u:b[u] / float(v) for u, v in a.items() }
-        
+        keys=set(a.keys()).union(b.keys())
+        ret={}
+        for u in keys:
+            if u in b:
+                if u in a:
+                    ret[u] =  b[u] / float(a[u]) 
+                else:
+                    ret[u] = b[u]
+            else:
+                ret[u]=0
+        return ret
+            
     @property
     def cluster_clustering_coefficient(self):
         '''
@@ -518,6 +558,8 @@ class GraphClusterMetrics(object):
             for i in self.cluster_indexes:
                 edges = df[df['src_c'] == i]
                 ret[i] = f1(edges)
+                if np.isnan(ret[i]):
+                    ret[i]=0.0
             return ret 
         
         prop_name = "_" + sys._getframe().f_code.co_name
@@ -627,14 +669,21 @@ class ClusterComparator(object):
         def clean():
             df1 = self.clusterobj1.value(self.clusterobj1.is_overlap)
             df2 = self.clusterobj2.value(self.clusterobj2.is_overlap)
-            nodes = set(df1['node']).intersection(set(df2['node']))
+            nodes = set(df1['node']).union(set(df2['node']))
+            
+            for n in nodes.difference(set(df1['node'])):
+                df1=df1.append({'node':n, "cluster": -9999}, ignore_index=True)
+            for n in nodes.difference(set(df2['node'])):
+                df2=df2.append({'node':n, "cluster": -9999}, ignore_index=True)
             self.logger.info ("resulting {} nodes out of {},{}".format(len(nodes), len(df1), len(df2)))
             df1 = df1[df1['node'].isin(nodes)].set_index('node')
             df2 = df2[df2['node'].isin(nodes)].set_index('node').loc[df1.index]
+            df1.index.name = 'node'
             df2.index.name = 'node'
             return df1, df2 
 
-        self.clean_clusterobj1, self.clean_clusterobj2 = clean()
+        clean_clusterobj1, clean_clusterobj2 = clean()
+        self.clean_clusterobj1, self.clean_clusterobj2 =clean_clusterobj1, clean_clusterobj2 
     
     @property 
     def ground_truth(self):  # assume the first one is ground truth
@@ -668,7 +717,7 @@ class ClusterComparator(object):
             prop_name = "_" + sys._getframe().f_code.co_name 
 
             def f():
-                from sklearn.metrics.cluster import normalized_mutual_info_score            
+                from sklearn.metrics.cluster import normalized_mutual_info_score
                 return normalized_mutual_info_score(self.clean_clusterobj1['cluster'].values, self.clean_clusterobj2['cluster'].values)
 
             return utils.set_if_not_exists(self, prop_name, f)
@@ -708,8 +757,8 @@ class ClusterComparator(object):
         sklearn `completeness_score <https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html#sklearn.metrics.completeness_score>`_
         '''        
         if self.overlap:
-            return None 
-        else:
+            print("warning! completeness for overlap graph ")
+        if True:
             prop_name = "_" + sys._getframe().f_code.co_name 
 
             def f():

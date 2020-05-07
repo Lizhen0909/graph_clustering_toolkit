@@ -8,7 +8,7 @@ import os
 import json
 import collections
 import pandas as pd     
-
+from gct.dataset import dataset
 
 def has_result(dataname, runname):
     fpath = os.path.join(config.get_result_file_path(dataname, runname), 'result.txt')
@@ -18,7 +18,16 @@ def has_result(dataname, runname):
 def load_result(dataname, runname):
     fpath = os.path.join(config.get_result_file_path(dataname, runname), 'result.txt')
     with open(fpath, 'rt') as f :
-        return Result(json.load(f))
+        j=json.load(f)
+    d=dataset.load_local(dataname)
+    edges=d.get_edges()
+    nodes= set(edges['src']).union(set(edges['dest']))
+    result_nodes = set()
+    for l in j['clusters'].values():
+        result_nodes.update(l)
+    missed_nodes = nodes.difference(result_nodes)
+    j['clusters']['-9999']=list(missed_nodes)
+    return Result(j)
 
 
 def save_result(result):
