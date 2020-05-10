@@ -1,0 +1,130 @@
+.. Graph Clustering Toolkit documentation master file, created by
+   sphinx-quickstart on Wed Nov 14 09:59:53 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Installation
+====================================================
+
+The toolkit includes a lot of third party algorithms and tools. The dependency is very complicated. So recommend to use docker to install the toolkit. 
+
+Install using Docker
+~~~~~~~~~~~~~~~~~~~~~~~
+.. code-block:: shell
+
+    docker pull lizhen0909/graph_clustering_toolkit
+
+
+Run python or ipython
+-----------------------
+.. code-block:: shell
+
+    docker run -it lizhen0909/graph_clustering_toolkit python
+
+
+Run Jupyter notebook
+-----------------------
+.. code-block:: shell
+
+    docker run  lizhen0909/graph_clustering_toolkit jupyter_notebook
+    
+Run algrithm programs directly
+-----------------------
+Sometimes one may want to run an algrithm directly with a graph data file through command line
+
+.. code-block:: shell
+
+    #see what executables avaiable, it is easy to judge the algorithm by the name
+    docker run lizhen0909/graph_clustering_toolkit ls /opt/gct/submodules/local/bin
+    
+    #run an algrithm, for example mcl 
+    docker run  lizhen0909/graph_clustering_toolkit  mcl --help
+
+
+
+
+
+Manually Compiling
+~~~~~~~~~~~~~~~~~~~~~~ 
+
+It works only on Linux. The docker uses ubuntu 16.4. Other linux should work, but you need to find the dependencies.
+Python 3 is required. 
+
+Prerequisites  
+--------------
+
+*(the versions are from docker image which is sufficient; but a different version may works too)*
+
+**system libraries** 
+
+	* gcc/g++ version 5.4
+	* python version 3.6
+	* bzip2 Version: 1.0.6
+	* curl Version: 7.47.0
+	* git Version: 1:2.7.4
+	* google-perftools Version: 2.4
+	* libarmadillo-dev Version: 1:6.500.5+dfsg-1
+	* libboost-context-dev Version: 1.58.0
+	* libboost-coroutine-dev Version: 1.58
+	* libboost-graph-dev Version: 1.58
+	* libboost-iostreams-dev Version: 1.58
+	* libboost-program-options-dev Version: 1.58
+	* libboost-python-dev Version: 1.58.0
+	* libboost-regex-dev Version: 1.58.0
+	* libboost-thread-dev Version: 1.58.0
+	* libbz2-dev Version: 1.0.6
+	* libcairomm-1.0-dev Version: 1.12.0
+	* libcurl4-openssl-dev Version: 7.47.0
+	* libexpat1-dev Version: 2.1.0
+	* libgsl-dev Version: 2.1+dfsg-2
+	* libjemalloc-dev Version: 3.6.0
+	* libssl-dev Version: 1.0.2g
+	* libtbb-dev Version: 4.4
+	* libxml2-dev Version: 2.9.3+dfsg1
+	* maven Version: 3.3.9-3
+	* openjdk-8-jdk Version: 8u181-b13
+	* openssl Version: 1.0.2g
+	* unzip Version: 6.0
+	* wget Version: 1.17.1
+	* zip Version: 3.0-11
+	* cmake version 3.12.3
+	* gtk3 version 3.14.15
+
+**python libraries**
+
+	* networkx version 2.2
+	* snap version 5.0.9
+	* graph-tool version 2.27
+	* networkit version 4.6
+	* igraph version 0.7.1
+	* ipykernel version 5.1.0
+	* pandas version 0.23.4
+	* seaborn version 0.9.0
+	* scikit-learn version 0.19.1
+	* cython version 0.29
+	* matplotlib version 3.0.0
+	* networkx version 2.2
+	* tabulate version 0.8.2
+	* fastparquet version 0.1.6
+	* python-snappy version 0.5.3
+	* dask version 0.20.0
+	* pyamg version 4.0.0
+	* pycairo version 1.18.0
+	* gobject-introspection version 1.56.1
+	* pygobject version 3.28.3
+
+	
+	
+	
+Compile
+--------------------------------------------------------------------------------------------------------------
+
+.. code-block:: shell
+
+	git clone https://LizhenShi@bitbucket.org/LizhenShi/graph_clustering_toolkit.git
+	export GCT_HOME=$(pwd)/graph_clustering_toolkit #where source is
+	export GCT_DATA=$HOME/.gct #optional, where data is put	
+	export PYTHONPATH=${GCT_HOME}/python/src:$PYTHONPATH #let python3 find the code
+	cd graph_clustering_toolkit/submodules && make
+	
+	

@@ -1,0 +1,38 @@
+.. Graph Clustering Toolkit documentation master file, created by
+   sphinx-quickstart on Wed Nov 14 09:59:53 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+
+
+Dataset (aka graph and/or cluster)
+----------------------------------
+.. contents::
+   :depth: 1
+   :local:
+   :backlinks: none
+
+.. highlight:: console
+
+
+.. autoclass:: gct.Dataset 
+	:members: __all__
+
+.. autoclass:: gct.Result
+	:members: __all__
+	
+.. autoclass:: gct.Clustering
+	:members: __all__					
+
+.. automodule:: gct
+	:members: list_dataset, load_dataset,   
+			  from_edgelist, from_networkx, from_snap, from_igraph, from_networkit,
+				to_networkx, to_igraph, to_networkit, to_graph_tool, to_coo_adjacency_matrix, 
+				as_undirected, as_unweighted, as_unweighted_undirected,	
+				local_graph_exists, load_local_graph, list_local_graph, remove_local_graph, list_clustering_result, list_all_clustering_results,
+    			remove_results, remove_data, 
+				generate_undirected_unweighted_random_graph_LFR, generate_directed_unweighted_random_graph_LFR, 
+    			generate_undirected_weighted_random_graph_LFR, generate_directed_weighted_random_graph_LFR, 
+    			generate_undirected_unweighted_hier_random_graph_LFR, generate_random_ovp_graph_LFR,
+		
+	

@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Installation &#8212; Graph Clustering Toolkit asdf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Usage" href="usage.html" />
+    <link rel="prev" title="Graph Clustering Toolkit Documentation" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>The toolkit includes a lot of third party algorithms and tools. The dependency is very complicated. So recommend to use docker to install the toolkit.</p>
+<div class="section" id="install-using-docker">
+<h2>Install using Docker<a class="headerlink" href="#install-using-docker" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker pull lizhen0909/graph_clustering_toolkit
+</pre></div>
+</div>
+<div class="section" id="run-python-or-ipython">
+<h3>Run python or ipython<a class="headerlink" href="#run-python-or-ipython" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run -it lizhen0909/graph_clustering_toolkit python
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-jupyter-notebook">
+<h3>Run Jupyter notebook<a class="headerlink" href="#run-jupyter-notebook" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker run  lizhen0909/graph_clustering_toolkit jupyter_notebook
+</pre></div>
+</div>
+</div>
+<div class="section" id="run-algrithm-programs-directly">
+<h3>Run algrithm programs directly<a class="headerlink" href="#run-algrithm-programs-directly" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes one may want to run an algrithm directly with a graph data file through command line</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1">#see what executables avaiable, it is easy to judge the algorithm by the name</span>
+docker run lizhen0909/graph_clustering_toolkit ls /opt/gct/submodules/local/bin
+
+<span class="c1">#run an algrithm, for example mcl</span>
+docker run  lizhen0909/graph_clustering_toolkit  mcl --help
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="manually-compiling">
+<h2>Manually Compiling<a class="headerlink" href="#manually-compiling" title="Permalink to this headline">¶</a></h2>
+<p>It works only on Linux. The docker uses ubuntu 16.4. Other linux should work, but you need to find the dependencies.
+Python 3 is required.</p>
+<div class="section" id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
+<p><em>(the versions are from docker image which is sufficient; but a different version may works too)</em></p>
+<p><strong>system libraries</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>gcc/g++ version 5.4</p></li>
+<li><p>python version 3.6</p></li>
+<li><p>bzip2 Version: 1.0.6</p></li>
+<li><p>curl Version: 7.47.0</p></li>
+<li><p>git Version: 1:2.7.4</p></li>
+<li><p>google-perftools Version: 2.4</p></li>
+<li><p>libarmadillo-dev Version: 1:6.500.5+dfsg-1</p></li>
+<li><p>libboost-context-dev Version: 1.58.0</p></li>
+<li><p>libboost-coroutine-dev Version: 1.58</p></li>
+<li><p>libboost-graph-dev Version: 1.58</p></li>
+<li><p>libboost-iostreams-dev Version: 1.58</p></li>
+<li><p>libboost-program-options-dev Version: 1.58</p></li>
+<li><p>libboost-python-dev Version: 1.58.0</p></li>
+<li><p>libboost-regex-dev Version: 1.58.0</p></li>
+<li><p>libboost-thread-dev Version: 1.58.0</p></li>
+<li><p>libbz2-dev Version: 1.0.6</p></li>
+<li><p>libcairomm-1.0-dev Version: 1.12.0</p></li>
+<li><p>libcurl4-openssl-dev Version: 7.47.0</p></li>
+<li><p>libexpat1-dev Version: 2.1.0</p></li>
+<li><p>libgsl-dev Version: 2.1+dfsg-2</p></li>
+<li><p>libjemalloc-dev Version: 3.6.0</p></li>
+<li><p>libssl-dev Version: 1.0.2g</p></li>
+<li><p>libtbb-dev Version: 4.4</p></li>
+<li><p>libxml2-dev Version: 2.9.3+dfsg1</p></li>
+<li><p>maven Version: 3.3.9-3</p></li>
+<li><p>openjdk-8-jdk Version: 8u181-b13</p></li>
+<li><p>openssl Version: 1.0.2g</p></li>
+<li><p>unzip Version: 6.0</p></li>
+<li><p>wget Version: 1.17.1</p></li>
+<li><p>zip Version: 3.0-11</p></li>
+<li><p>cmake version 3.12.3</p></li>
+<li><p>gtk3 version 3.14.15</p></li>
+</ul>
+</div></blockquote>
+<p><strong>python libraries</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>networkx version 2.2</p></li>
+<li><p>snap version 5.0.9</p></li>
+<li><p>graph-tool version 2.27</p></li>
+<li><p>networkit version 4.6</p></li>
+<li><p>igraph version 0.7.1</p></li>
+<li><p>ipykernel version 5.1.0</p></li>
+<li><p>pandas version 0.23.4</p></li>
+<li><p>seaborn version 0.9.0</p></li>
+<li><p>scikit-learn version 0.19.1</p></li>
+<li><p>cython version 0.29</p></li>
+<li><p>matplotlib version 3.0.0</p></li>
+<li><p>networkx version 2.2</p></li>
+<li><p>tabulate version 0.8.2</p></li>
+<li><p>fastparquet version 0.1.6</p></li>
+<li><p>python-snappy version 0.5.3</p></li>
+<li><p>dask version 0.20.0</p></li>
+<li><p>pyamg version 4.0.0</p></li>
+<li><p>pycairo version 1.18.0</p></li>
+<li><p>gobject-introspection version 1.56.1</p></li>
+<li><p>pygobject version 3.28.3</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="compile">
+<h3>Compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://LizhenShi@bitbucket.org/LizhenShi/graph_clustering_toolkit.git
+<span class="nb">export</span> <span class="nv">GCT_HOME</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/graph_clustering_toolkit <span class="c1">#where source is</span>
+<span class="nb">export</span> <span class="nv">GCT_DATA</span><span class="o">=</span><span class="nv">$HOME</span>/.gct <span class="c1">#optional, where data is put</span>
+<span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="si">${</span><span class="nv">GCT_HOME</span><span class="si">}</span>/python/src:<span class="nv">$PYTHONPATH</span> <span class="c1">#let python3 find the code</span>
+<span class="nb">cd</span> graph_clustering_toolkit/submodules <span class="o">&amp;&amp;</span> make
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Graph Clustering Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-using-docker">Install using Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#run-python-or-ipython">Run python or ipython</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-jupyter-notebook">Run Jupyter notebook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#run-algrithm-programs-directly">Run algrithm programs directly</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#manually-compiling">Manually Compiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compile">Compile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pydoc.html">API Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">Graph Clustering Toolkit Documentation</a></li>
+      <li>Next: <a href="usage.html" title="next chapter">Usage</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Lizhen Shi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/usage/installation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

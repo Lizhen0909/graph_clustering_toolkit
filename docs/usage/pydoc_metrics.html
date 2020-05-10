@@ -1,0 +1,974 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Metrics &#8212; Graph Clustering Toolkit asdf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Dataset (aka graph and/or cluster)" href="pydoc_data.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="metrics">
+<h1>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="gct.GraphMetrics">
+<em class="property">class </em><code class="sig-prename descclassname">gct.</code><code class="sig-name descname">GraphMetrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.GraphMetrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>metrics for a graph. e.g. density, diameter etc.</p>
+<p>The class is here just for convenience. It is not powerful and efficient.    
+One may analyze the graph use other graph libraries (e.g. SNAP, igraph, networkit, etc) using converting functions.</p>
+<dl class="py method">
+<dt id="gct.GraphMetrics.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.GraphMetrics.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – a <a class="reference internal" href="pydoc_data.html#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a> object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphMetrics.directed">
+<em class="property">property </em><code class="sig-name descname">directed</code><a class="headerlink" href="#gct.GraphMetrics.directed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the graph is directed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphMetrics.weighted">
+<em class="property">property </em><code class="sig-name descname">weighted</code><a class="headerlink" href="#gct.GraphMetrics.weighted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if the graph is weighted</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphMetrics.num_edges">
+<em class="property">property </em><code class="sig-name descname">num_edges</code><a class="headerlink" href="#gct.GraphMetrics.num_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of edges</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphMetrics.num_vertices">
+<em class="property">property </em><code class="sig-name descname">num_vertices</code><a class="headerlink" href="#gct.GraphMetrics.num_vertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of vertices (nodes)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphMetrics.density1">
+<em class="property">property </em><code class="sig-name descname">density1</code><a class="headerlink" href="#gct.GraphMetrics.density1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return density of <span class="math notranslate nohighlight">\(\frac{|E|}{|V|}\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphMetrics.density">
+<em class="property">property </em><code class="sig-name descname">density</code><a class="headerlink" href="#gct.GraphMetrics.density" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return density of <span class="math notranslate nohighlight">\(\frac{|E|}{|all\ possible\ edges|}\)</span>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphMetrics.degrees">
+<em class="property">property </em><code class="sig-name descname">degrees</code><a class="headerlink" href="#gct.GraphMetrics.degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>return weighted node degrees</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphMetrics.unweighted_degrees">
+<em class="property">property </em><code class="sig-name descname">unweighted_degrees</code><a class="headerlink" href="#gct.GraphMetrics.unweighted_degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>return unweighted node degrees (e.g. number of out edges)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="gct.SNAPGraphMetrics">
+<em class="property">class </em><code class="sig-prename descclassname">gct.</code><code class="sig-name descname">SNAPGraphMetrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>metrics for a graph using SNAP</p>
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – a <a class="reference internal" href="pydoc_data.html#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a> object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.degree_histogram">
+<em class="property">property </em><code class="sig-name descname">degree_histogram</code><a class="headerlink" href="#gct.SNAPGraphMetrics.degree_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>return list[(degree,num_node)]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.degree_in_histogram">
+<em class="property">property </em><code class="sig-name descname">degree_in_histogram</code><a class="headerlink" href="#gct.SNAPGraphMetrics.degree_in_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>return list[(degree,num_node)] of in degree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.degree_out_histogram">
+<em class="property">property </em><code class="sig-name descname">degree_out_histogram</code><a class="headerlink" href="#gct.SNAPGraphMetrics.degree_out_histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>return list[(degree,num_node)] of out degree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.node_degrees">
+<em class="property">property </em><code class="sig-name descname">node_degrees</code><a class="headerlink" href="#gct.SNAPGraphMetrics.node_degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>return list[(node,degree)]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.num_self_edges">
+<em class="property">property </em><code class="sig-name descname">num_self_edges</code><a class="headerlink" href="#gct.SNAPGraphMetrics.num_self_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>return number of self edges</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.scc_distribution">
+<em class="property">property </em><code class="sig-name descname">scc_distribution</code><a class="headerlink" href="#gct.SNAPGraphMetrics.scc_distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>return list[(scc_size, count)] for strongly connected components</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.wcc_distribution">
+<em class="property">property </em><code class="sig-name descname">wcc_distribution</code><a class="headerlink" href="#gct.SNAPGraphMetrics.wcc_distribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>return list[(cc_size, count)] for weakly connected components</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.edge_bridges">
+<em class="property">property </em><code class="sig-name descname">edge_bridges</code><a class="headerlink" href="#gct.SNAPGraphMetrics.edge_bridges" title="Permalink to this definition">¶</a></dt>
+<dd><p>return list[edge] where edge is a bridge.</p>
+<p>An edge is a bridge if, when removed, increases the number of connected components.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.effect_diameter">
+<code class="sig-name descname">effect_diameter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_node</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">isDir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.effect_diameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the (approximation of the) Effective Diameter (90-th percentile of the distribution of shortest path lengths) of a graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_node</strong> – number of nodes to sample</p></li>
+<li><p><strong>isDir</strong> – consider direct or not</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.diameter">
+<code class="sig-name descname">diameter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_node</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">isDir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.diameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the diameter, or ‘longest shortest path’, of a Graph</p>
+<blockquote>
+<div><p>This diameter is approximate, as it is calculated with an n_node number of random starting nodes.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_node</strong> – number of nodes to sample</p></li>
+<li><p><strong>isDir</strong> – consider direct or not</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.sample_shortest_path">
+<code class="sig-name descname">sample_shortest_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_node</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">isDir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.sample_shortest_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>sample diameter, e.g. ‘shortest path’, of a Graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_node</strong> – number of nodes to sample</p></li>
+<li><p><strong>isDir</strong> – consider direct or not</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.sample_degree_centrality">
+<code class="sig-name descname">sample_degree_centrality</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_node</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.sample_degree_centrality" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Degree centrality of a node is defined as its degree/(N-1), where N is the number of nodes in the network.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_node</strong> – number of nodes to sample</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.sample_betweenness_centrality">
+<code class="sig-name descname">sample_betweenness_centrality</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">quality</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">isDir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.sample_betweenness_centrality" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Computes (approximate) Node and Edge Betweenness Centrality based on a sample</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>quality</strong> – Quality of the approximation. 1.0 gives exact betweenness values.</p></li>
+<li><p><strong>isDir</strong> – consider direct or not</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.sample_closeness_centrality">
+<code class="sig-name descname">sample_closeness_centrality</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_node</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">normalized</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">isDir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.sample_closeness_centrality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns closeness centrality sample in Graph. Closeness centrality is equal to 1/farness centrality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_node</strong> – number of nodes to sample</p></li>
+<li><p><strong>normalized</strong> – Output should be normalized (True) or not (False).</p></li>
+<li><p><strong>isDir</strong> – consider direct or not</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.sample_farness_centrality">
+<code class="sig-name descname">sample_farness_centrality</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_node</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">normalized</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">isDir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.sample_farness_centrality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns farness centrality sample in Graph. Farness centrality of a node is the average shortest path length to all other nodes that reside in the same connected component as the given node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_node</strong> – number of nodes to sample</p></li>
+<li><p><strong>normalized</strong> – Output should be normalized (True) or not (False).</p></li>
+<li><p><strong>isDir</strong> – consider direct or not</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.page_rank_score">
+<code class="sig-name descname">page_rank_score</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">C</span><span class="o">=</span><span class="default_value">0.85</span></em>, <em class="sig-param"><span class="n">Eps</span><span class="o">=</span><span class="default_value">0.0001</span></em>, <em class="sig-param"><span class="n">MaxIter</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.page_rank_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the PageRank score of every node in Graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>C</strong> – Damping factor.</p></li>
+<li><p><strong>Eps</strong> – Convergence difference.</p></li>
+<li><p><strong>MaxIter</strong> – Maximum number of iterations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.hubs_and_authorities_score">
+<code class="sig-name descname">hubs_and_authorities_score</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">MaxIter</span><span class="o">=</span><span class="default_value">20</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.hubs_and_authorities_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the Hubs and Authorities score of every node in Graph</p>
+<p>return tuple of hubs score and authorrities score
+:param MaxIter: Maximum number of iterations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.sample_node_eccentricity">
+<code class="sig-name descname">sample_node_eccentricity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_node</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">normalized</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">isDir</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.sample_node_eccentricity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns node eccentricity, the largest shortest-path distance from the node to any other node in the Graph.</p>
+<p>return tuple of hubs score and authorrities score
+:param MaxIter: Maximum number of iterations.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.eigenvector_centrality">
+<code class="sig-name descname">eigenvector_centrality</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Eps</span><span class="o">=</span><span class="default_value">0.0001</span></em>, <em class="sig-param"><span class="n">MaxIter</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.eigenvector_centrality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes eigenvector centrality of all nodes in Graph. 
+Eigenvector Centrality of a node N is defined recursively as the average of centrality values of N’s neighbors in the network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Eps</strong> – Convergence difference.</p></li>
+<li><p><strong>MaxIter</strong> – Maximum number of iterations.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.average_clustering_coefficient">
+<code class="sig-name descname">average_clustering_coefficient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_node</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.average_clustering_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the average clustering coefficient as defined in Watts and Strogatz, Collective dynamics of ‘small-world’ networks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sample_node</strong> – compute clustering coefficient only for a random sample of SampleNodes nodes. Useful for approximate but quick computations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.distribution_clustering_coefficient">
+<code class="sig-name descname">distribution_clustering_coefficient</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_node</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.distribution_clustering_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the distribution of clustering coefficient as defined in Watts and Strogatz, Collective dynamics of ‘small-world’ networks</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sample_node</strong> – compute clustering coefficient only for a random sample of SampleNodes nodes. Useful for approximate but quick computations.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.SNAPGraphMetrics.k_core">
+<code class="sig-name descname">k_core</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">K</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.SNAPGraphMetrics.k_core" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the K-core of the graph Graph. If the core of order K does not exist, the function returns an empty graph.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="gct.GraphClusterMetrics">
+<em class="property">class </em><code class="sig-prename descclassname">gct.</code><code class="sig-name descname">GraphClusterMetrics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">clusteringobj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.GraphClusterMetrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>metrics for a clustering of a graph. e.g. modularity.</p>
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">clusteringobj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.GraphClusterMetrics.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – a <a class="reference internal" href="pydoc_data.html#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a> object</p></li>
+<li><p><strong>clusteringobj</strong> – a <a class="reference internal" href="pydoc_data.html#gct.Clustering" title="gct.Clustering"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Clustering</span></code></a> object or refer to the <em>groundtruth</em> parameter of  <a class="reference internal" href="pydoc_data.html#gct.from_edgelist" title="gct.from_edgelist"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gct.from_edgelist()</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.num_edges">
+<em class="property">property </em><code class="sig-name descname">num_edges</code><a class="headerlink" href="#gct.GraphClusterMetrics.num_edges" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of edges of the graph</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.num_vertices">
+<em class="property">property </em><code class="sig-name descname">num_vertices</code><a class="headerlink" href="#gct.GraphClusterMetrics.num_vertices" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of vertices (nodes) of the graph</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.node_degrees">
+<em class="property">property </em><code class="sig-name descname">node_degrees</code><a class="headerlink" href="#gct.GraphClusterMetrics.node_degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>degrees for all the nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.node_weights">
+<em class="property">property </em><code class="sig-name descname">node_weights</code><a class="headerlink" href="#gct.GraphClusterMetrics.node_weights" title="Permalink to this definition">¶</a></dt>
+<dd><p>weight sum for each node</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.unweighted_degrees">
+<em class="property">property </em><code class="sig-name descname">unweighted_degrees</code><a class="headerlink" href="#gct.GraphClusterMetrics.unweighted_degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>unweighted degrees of nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.weighted_degrees">
+<em class="property">property </em><code class="sig-name descname">weighted_degrees</code><a class="headerlink" href="#gct.GraphClusterMetrics.weighted_degrees" title="Permalink to this definition">¶</a></dt>
+<dd><p>weighted degrees of nodes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.num_clusters">
+<em class="property">property </em><code class="sig-name descname">num_clusters</code><a class="headerlink" href="#gct.GraphClusterMetrics.num_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of partitions</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.cluster_indexes">
+<em class="property">property </em><code class="sig-name descname">cluster_indexes</code><a class="headerlink" href="#gct.GraphClusterMetrics.cluster_indexes" title="Permalink to this definition">¶</a></dt>
+<dd><p>cluster identifiers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.cluster_sizes">
+<em class="property">property </em><code class="sig-name descname">cluster_sizes</code><a class="headerlink" href="#gct.GraphClusterMetrics.cluster_sizes" title="Permalink to this definition">¶</a></dt>
+<dd><p>return cluster size for each cluster</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.cluster_expansions">
+<em class="property">property </em><code class="sig-name descname">cluster_expansions</code><a class="headerlink" href="#gct.GraphClusterMetrics.cluster_expansions" title="Permalink to this definition">¶</a></dt>
+<dd><p>return expansions for each cluster where expansions is</p>
+<div class="math notranslate nohighlight">
+\[\frac{c_s}{n_s}\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_s\)</span> is the cluster size of cluster <span class="math notranslate nohighlight">\(s\)</span> and <span class="math notranslate nohighlight">\(n_s\)</span> is the number of vertices for the cluster.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.cluster_cut_ratios">
+<em class="property">property </em><code class="sig-name descname">cluster_cut_ratios</code><a class="headerlink" href="#gct.GraphClusterMetrics.cluster_cut_ratios" title="Permalink to this definition">¶</a></dt>
+<dd><p>return cut ratio for each cluster which is</p>
+<div class="math notranslate nohighlight">
+\[\frac{c_s}{n_s(n-n_s)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_s\)</span> is the cluster size of cluster <span class="math notranslate nohighlight">\(s\)</span>,  n is the number of node of graph and <span class="math notranslate nohighlight">\(n_s\)</span> is the number of vertices for the cluster.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.intra_cluster_densities">
+<em class="property">property </em><code class="sig-name descname">intra_cluster_densities</code><a class="headerlink" href="#gct.GraphClusterMetrics.intra_cluster_densities" title="Permalink to this definition">¶</a></dt>
+<dd><p>return internal cluster density for each cluster which is</p>
+<div class="math notranslate nohighlight">
+\[\frac{m_s}{n_s(n-n_s)/2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(m_s\)</span> is number of edges of cluster <span class="math notranslate nohighlight">\(s\)</span>,  n is the number of node of graph and <span class="math notranslate nohighlight">\(n_s\)</span> is the number of vertices for the cluster.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.inter_cluster_density">
+<em class="property">property </em><code class="sig-name descname">inter_cluster_density</code><a class="headerlink" href="#gct.GraphClusterMetrics.inter_cluster_density" title="Permalink to this definition">¶</a></dt>
+<dd><p>return internal cluster density for the clustring which is</p>
+<div class="math notranslate nohighlight">
+\[\frac{|\{ (u,v) | u \in C_i, v \in C_j, i \neq j \}|}{n(n-1)/2 + \sum_{s=1}^{k}  n_s(n-n_s)/2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(m_s\)</span> is number of edges of cluster <span class="math notranslate nohighlight">\(s\)</span>,  n is the number of node of graph, <span class="math notranslate nohighlight">\(n_s\)</span> is the number of vertices for the cluster, <span class="math notranslate nohighlight">\(C_i\)</span> is the set of nodes in i-th cluster</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.relative_cluster_densities">
+<em class="property">property </em><code class="sig-name descname">relative_cluster_densities</code><a class="headerlink" href="#gct.GraphClusterMetrics.relative_cluster_densities" title="Permalink to this definition">¶</a></dt>
+<dd><p>return relative cluster density for each cluster which is</p>
+<div class="math notranslate nohighlight">
+\[\frac{deg_{intra}}{deg_{intra}+deg_{out}}\]</div>
+<p>where the degree is weighted degree.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.modularity">
+<em class="property">property </em><code class="sig-name descname">modularity</code><a class="headerlink" href="#gct.GraphClusterMetrics.modularity" title="Permalink to this definition">¶</a></dt>
+<dd><p>return modularity of the clustering for weighted or unweighted graph.  For unweighted graph it is</p>
+<div class="math notranslate nohighlight">
+\[Q=1/(2m)  \sum_{i,j} (A_{ij}- \frac{k_i k_j}{2m}) 1_{(i=j)}\]</div>
+<p>where m is the number of edges, A is the adjacency matrix, 1 is indicator function, <span class="math notranslate nohighlight">\(k_i k_j\)</span> is the expected number of random edges between the two nodes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.conductance">
+<em class="property">property </em><code class="sig-name descname">conductance</code><a class="headerlink" href="#gct.GraphClusterMetrics.conductance" title="Permalink to this definition">¶</a></dt>
+<dd><p>return conductance of a cluster S,  for unweighted graph which is</p>
+<div class="math notranslate nohighlight">
+\[\frac{Cut_S}{\min (deg_S, deg_{(V \setminus S}))}\]</div>
+<p>where S is a cluster</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.normalized_cut">
+<em class="property">property </em><code class="sig-name descname">normalized_cut</code><a class="headerlink" href="#gct.GraphClusterMetrics.normalized_cut" title="Permalink to this definition">¶</a></dt>
+<dd><p>normalized cut</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.cluster_max_out_degree_fraction">
+<em class="property">property </em><code class="sig-name descname">cluster_max_out_degree_fraction</code><a class="headerlink" href="#gct.GraphClusterMetrics.cluster_max_out_degree_fraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>max out degree fraction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.cluster_avg_out_degree_fraction">
+<em class="property">property </em><code class="sig-name descname">cluster_avg_out_degree_fraction</code><a class="headerlink" href="#gct.GraphClusterMetrics.cluster_avg_out_degree_fraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>average out degree fraction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.cluster_flake_out_degree_fraction">
+<em class="property">property </em><code class="sig-name descname">cluster_flake_out_degree_fraction</code><a class="headerlink" href="#gct.GraphClusterMetrics.cluster_flake_out_degree_fraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flake out degree fraction</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.separability">
+<em class="property">property </em><code class="sig-name descname">separability</code><a class="headerlink" href="#gct.GraphClusterMetrics.separability" title="Permalink to this definition">¶</a></dt>
+<dd><p>separability <span class="math notranslate nohighlight">\(m_s/c_s\)</span></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.cluster_clustering_coefficient">
+<em class="property">property </em><code class="sig-name descname">cluster_clustering_coefficient</code><a class="headerlink" href="#gct.GraphClusterMetrics.cluster_clustering_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>(global) clustering coefficient</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.GraphClusterMetrics.cluster_local_clustering_coefficient">
+<em class="property">property </em><code class="sig-name descname">cluster_local_clustering_coefficient</code><a class="headerlink" href="#gct.GraphClusterMetrics.cluster_local_clustering_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>local clustering coefficient</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="gct.ClusterComparator">
+<em class="property">class </em><code class="sig-prename descclassname">gct.</code><code class="sig-name descname">ClusterComparator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">clusteringobj1</span></em>, <em class="sig-param"><span class="n">clusteringobj2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.ClusterComparator" title="Permalink to this definition">¶</a></dt>
+<dd><p>metrics for two clustering. e.g. nmi, overlap nmi etc.
+In case that some metrics requires ground truth, make ground truth as the first parameter.</p>
+<p>When calculating a metric that does not support overlapping, the overlapped nodes are removed or retrun None</p>
+<dl class="py method">
+<dt id="gct.ClusterComparator.ground_truth">
+<em class="property">property </em><code class="sig-name descname">ground_truth</code><a class="headerlink" href="#gct.ClusterComparator.ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for for the first Clustering of constructor</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.ClusterComparator.predition">
+<em class="property">property </em><code class="sig-name descname">predition</code><a class="headerlink" href="#gct.ClusterComparator.predition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for for the second Clustering of constructor</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.ClusterComparator.sklean_nmi">
+<code class="sig-name descname">sklean_nmi</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gct.ClusterComparator.sklean_nmi" title="Permalink to this definition">¶</a></dt>
+<dd><p>sklearn <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.normalized_mutual_info_score.html">normalized_mutual_info_score</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.ClusterComparator.sklean_ami">
+<code class="sig-name descname">sklean_ami</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gct.ClusterComparator.sklean_ami" title="Permalink to this definition">¶</a></dt>
+<dd><p>sklearn <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_mutual_info_score.html">adjusted_mutual_info_score</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.ClusterComparator.sklean_ars">
+<code class="sig-name descname">sklean_ars</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gct.ClusterComparator.sklean_ars" title="Permalink to this definition">¶</a></dt>
+<dd><p>sklearn <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_rand_score.html">adjusted_rand_score</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.ClusterComparator.sklean_completeness">
+<code class="sig-name descname">sklean_completeness</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gct.ClusterComparator.sklean_completeness" title="Permalink to this definition">¶</a></dt>
+<dd><p>sklearn <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html#sklearn.metrics.completeness_score">completeness_score</a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.ClusterComparator.GenConvNMI">
+<code class="sig-name descname">GenConvNMI</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sync</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">id_remap</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nmis</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fnmi</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">risk</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">error</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fast</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">membership</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">retain_dups</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.ClusterComparator.GenConvNMI" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for <a class="reference external" href="https://github.com/eXascaleInfolab/GenConvNMI">https://github.com/eXascaleInfolab/GenConvNMI</a></p>
+<p>Arguments</p>
+<blockquote>
+<div><p>Usage:  ./gecmi [options] &lt;clusters1&gt; &lt;clusters2&gt;
+clusters  - clusters file in the <a class="reference external" href="https://github.com/eXascaleInfolab/PyCABeM/blob/master/formats/format.cnl">CNL format</a>, where each line lists space separated ids of the cluster members</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-h [ –help ]</p></td>
+<td><p>produce help message</p></td>
+</tr>
+<tr class="row-even"><td><p>–input arg</p></td>
+<td><p>name of the input files</p></td>
+</tr>
+<tr class="row-odd"><td><p>-s [ –sync ]</p></td>
+<td><p>synchronize the node base omitting the
+non-matching nodes for the fair evaluation. The
+node base is selected automatically as a
+clustering having the least number of nodes.</p></td>
+</tr>
+<tr class="row-even"><td><p>-i [ –id-remap ]</p></td>
+<td><p>remap ids allowing arbitrary input ids
+(non-contiguous ranges), otherwise ids should
+form a solid range and start from 0 or 1</p></td>
+</tr>
+<tr class="row-odd"><td><p>-n [ –nmis ]</p></td>
+<td><p>output both NMI [max] and NMI_sqrt</p></td>
+</tr>
+<tr class="row-even"><td><p>-f [ –fnmi ]</p></td>
+<td><p>evaluate also FNMI, includes ‘-n’</p></td>
+</tr>
+<tr class="row-odd"><td><p>-r [ –risk ] arg (=0.01)</p></td>
+<td><p>probability of value being outside</p></td>
+</tr>
+<tr class="row-even"><td><p>-e [ –error ] arg (=0.01)</p></td>
+<td><p>admissible error</p></td>
+</tr>
+<tr class="row-odd"><td><p>-a [ –fast ]</p></td>
+<td><p>apply fast approximate evaluations that are less
+accurate, but much faster on large networks</p></td>
+</tr>
+<tr class="row-even"><td><p>-m [–membership] arg (=1)</p></td>
+<td><p>average expected membership of nodes in the
+clusters, &gt; 0, typically &gt;= 1</p></td>
+</tr>
+<tr class="row-odd"><td><p>-d [ –retain-dups ]</p></td>
+<td><p>retain duplicated clusters if any instead of filtering them out (not recommended)</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Reference</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 95%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>overlap nmi</p></td>
+<td><p>Esquivel, Alcides Viamontes, and Martin Rosvall. “Comparing network covers using mutual information.” arXiv preprint arXiv:1202.0425 (2012).</p></td>
+</tr>
+<tr class="row-even"><td><p>fair nmi</p></td>
+<td><p>Amelio, Alessia, and Clara Pizzuti. “Is normalized mutual information a fair measure for comparing community detection methods?.” Proceedings of the 2015 IEEE/ACM International Conference on Advances in Social Networks Analysis and Mining 2015. ACM, 2015.</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.ClusterComparator.OvpNMI">
+<code class="sig-name descname">OvpNMI</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sync</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">allnmi</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">omega</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">membership</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.ClusterComparator.OvpNMI" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for <a class="reference external" href="https://github.com/eXascaleInfolab/OvpNMI">https://github.com/eXascaleInfolab/OvpNMI</a></p>
+<p>Compare sets of clusters by their members (nodes) using various measures (NMI,
+Omega) and considering overlaps</p>
+<p>Arguments</p>
+<blockquote>
+<div><p>Usage: onmi [OPTIONS] clsfile1 clsfile2</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 79%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-a, –allnmis</p></td>
+<td><p>output all NMIs (sqrt and sum-denominators, LFK besides the max-denominator)  (default=off)</p></td>
+</tr>
+<tr class="row-even"><td><p>-m, –membership=FLOAT</p></td>
+<td><p>average expected membership of nodes in the clusters, &gt; 0, typically &gt;= 1  (default=`1’)</p></td>
+</tr>
+<tr class="row-odd"><td><p>-o, –omega</p></td>
+<td><p>print the Omega measure (can be slow)  (default=off)</p></td>
+</tr>
+<tr class="row-even"><td><p>-v, –verbose</p></td>
+<td><p>detailed debugging  (default=off)</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Reference</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 95%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>overlap nmi</p></td>
+<td><p>McDaid, Aaron F., Derek Greene, and Neil Hurley. “Normalized mutual information to evaluate overlapping community finding algorithms.” arXiv preprint arXiv:1110.2515 (2011).</p></td>
+</tr>
+<tr class="row-even"><td><p>overlap nmi</p></td>
+<td><p>Lancichinetti, Andrea, Santo Fortunato, and János Kertész. “Detecting the overlapping and hierarchical community structure in complex networks.” New Journal of Physics 11.3 (2009): 033015.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Omega</p></td>
+<td><p>Collins, Linda M., and Clyde W. Dent. “Omega: A general formulation of the rand index of cluster recovery suitable for non-disjoint solutions.” Multivariate Behavioral Research 23.2 (1988): 231-242.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.ClusterComparator.xmeasure_nmi">
+<code class="sig-name descname">xmeasure_nmi</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sync</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">all</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">membership</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">detailed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.ClusterComparator.xmeasure_nmi" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for <a class="reference external" href="https://github.com/eXascaleInfolab/xmeasures">https://github.com/eXascaleInfolab/xmeasures</a>.</p>
+<p>Normalized Mutual Information, normalized by either max or also
+sqrt, avg and min information content denominators.</p>
+<p>ATTENTION: This is a standard NMI, which should be used ONLY for the HARD
+partitioning evaluation (non-overlapping clustering on a single resolution).
+It penalizes overlapping and multi-resolution structures.</p>
+<p>Arguments</p>
+<blockquote>
+<div><p>Usage: onmi [OPTIONS] clsfile1 clsfile2</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-m, –membership=FLOAT</p></td>
+<td><dl class="simple">
+<dt>average expected membership of the nodes in the</dt><dd><p>clusters, &gt; 0, typically &gt;= 1. Used only to
+facilitate estimation of the nodes number on
+the containers preallocation if this number
+is not specified in the file header.
+(default=`1’)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><p>-n, –nmi</p></td>
+<td><dl class="simple">
+<dt>evaluate NMI (Normalized Mutual Information),</dt><dd><p>applicable only to the non-overlapping
+clusters  (default=off)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p>-a, –all</p></td>
+<td><dl class="simple">
+<dt>evaluate all NMIs using sqrt, avg and min</dt><dd><p>denominators besides the max one
+(default=off)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><p>-d, –detailed</p></td>
+<td><dl class="simple">
+<dt>detailed (verbose) results output</dt><dd><p>(default=off)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt id="gct.ClusterComparator.xmeasure">
+<code class="sig-name descname">xmeasure</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sync</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ovp</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">unique</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">omega</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">extended</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">f1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kind</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">membership</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">detailed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.ClusterComparator.xmeasure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluating measures are:</p>
+<ul class="simple">
+<li><p>OI:        Omega Index (a fuzzy version of the Adjusted Rand Index, identical to the Fuzzy Rand Index), which yields the same value as Adjusted Rand Index when applied to the non-overlapping clusterings.</p></li>
+<li><p>[M]F1:     various [mean] F1 measures of the Greatest (Max) Match including the Average F1-Score (suggested by J. Leskovec) with optional weighting.  NOTE: There are 3 matching policies available for each kind of F1. The most representative evaluation is performed by the F1p with combined matching policy (considers both micro and macro weighting).</p></li>
+</ul>
+<p>Arguments</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 69%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-O, –ovp</p></td>
+<td><dl class="simple">
+<dt>evaluate overlapping instead of the</dt><dd><p>multi-resolution clusters, where max matching
+for any shared member between R overlapping
+clusters is 1/R (the member is shared)
+instead of 1 (the member fully belongs to
+each [hierarchical  sub]group) for the member
+belonging to R distinct clusters on R
+resolutions.
+NOTE: It has no effect for the Omega Index
+evaluation.  (default=off)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><p>-q, –unique</p></td>
+<td><dl class="simple">
+<dt>ensure on loading that all cluster members are</dt><dd><p>unique by removing all duplicates.
+(default=off)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p>-m, –membership=FLOAT</p></td>
+<td><dl class="simple">
+<dt>average expected membership of the nodes in the</dt><dd><p>clusters, &gt; 0, typically &gt;= 1. Used only to
+facilitate estimation of the nodes number on
+the containers preallocation if this number
+is not specified in the file header.
+(default=`1’)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><p>-d, –detailed</p></td>
+<td><dl class="simple">
+<dt>detailed (verbose) results output</dt><dd><p>(default=off)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Omega Index options :</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 69%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-o, –omega</p></td>
+<td><dl class="simple">
+<dt>evaluate Omega Index (a fuzzy version of the</dt><dd><p>Adjusted Rand Index, identical to the Fuzzy
+Rand Index and on the non-overlapping
+clusterings equals to ARI).  (default=off)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><p>-x, –extended</p></td>
+<td><dl class="simple">
+<dt>evaluate extended (Soft) Omega Index, which</dt><dd><p>does not excessively penalize distinctly
+shared nodes.  (default=off)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Mean F1 options:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 91%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-f, –f1[=ENUM]</p></td>
+<td><dl>
+<dt>evaluate mean F1 of the [weighted] average of</dt><dd><p>the greatest (maximal) match by F1 or partial
+probability.
+NOTE: F1p &lt;= F1h &lt;= F1a, where:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>p (F1p or Ph): Harmonic mean (F1) of two [weighted] averages of the Partial Probabilities, the most indicative as satisfies the largest number of the Formal Constraints (homogeneity, completeness and size/quantity except the rag bag in some cases);</p></li>
+<li><p>h (F1h):  Harmonic mean (F1) of two [weighted] averages of all local F1 (harmonic means of the Precision and Recall of the best matches of the clusters);</p></li>
+<li><p>a (F1a):  Arithmetic mean (average) of two [weighted] averages of all local F1, the least discriminative and satisfies the lowest number of the Formal Constraints.</p></li>
+</ul>
+</div></blockquote>
+</dd>
+</dl>
+<p>(possible values=”partprob”,”harmonic”, “average” default=`partprob’)</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>-k, –kind[=ENUM]</p></td>
+<td><p>kind of the matching policy:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>w  - Weighted by the number of nodes in each cluster</p></li>
+<li><p>u  - Unweighed, where each cluster is treated equally</p></li>
+<li><p>c  - Combined(w, u) using geometric mean (drops the value not so much as harmonic mean)</p></li>
+</ul>
+</div></blockquote>
+<p>(possible values=”weighted”, “unweighed”, “combined” default=`weighted’)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Reference</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 93%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>F1a (Average F1-Score)</p></td>
+<td><p>Yang, Jaewon, and Jure Leskovec. “Overlapping community detection at scale: a nonnegative matrix factorization approach.” Proceedings of the sixth ACM international conference on Web search and data mining. ACM, 2013.</p></td>
+</tr>
+<tr class="row-even"><td><p>Omega</p></td>
+<td><p>Collins, Linda M., and Clyde W. Dent. “Omega: A general formulation of the rand index of cluster recovery suitable for non-disjoint solutions.” Multivariate Behavioral Research 23.2 (1988): 231-242.</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Graph Clustering Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="pydoc.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pydoc_alg.html">Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydoc_data.html">Dataset (aka graph and/or cluster)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Metrics</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="pydoc.html">API Documentation</a><ul>
+      <li>Previous: <a href="pydoc_data.html" title="previous chapter">Dataset (aka graph and/or cluster)</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Lizhen Shi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/usage/pydoc_metrics.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

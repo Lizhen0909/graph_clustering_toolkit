@@ -1,0 +1,2143 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Algorithms &#8212; Graph Clustering Toolkit asdf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Dataset (aka graph and/or cluster)" href="pydoc_data.html" />
+    <link rel="prev" title="API Documentation" href="pydoc.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="algorithms">
+<span id="api-algorithms-label"></span><h1>Algorithms<a class="headerlink" href="#algorithms" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-gct"></span><dl class="py function">
+<dt id="gct.oslom_Infohiermap">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">oslom_Infohiermap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.oslom_Infohiermap" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>Hierarchical Infomap</em> collected from <a class="reference external" href="http://www.oslom.org/index.html">OSLOM</a></p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>seed : int,         random seed</p>
+</dd>
+<dt>Reference </dt><dd><p>Martin Rosvall and Carl T. Bergstrom Multilevel compression of random walks on
+networks reveals hierarchical organization in large integrated systems. PLoS ONE 6(4):
+e18209 (2011).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.oslom_Infomap">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">oslom_Infomap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.oslom_Infomap" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>infomap</em> collected from <a class="reference external" href="http://www.oslom.org/index.html">OSLOM</a></p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>seed : int,         random seed</p>
+</dd>
+<dt>Reference </dt><dd><p>Rosvall, M. and Bergstrom, C. T. Maps of random
+walks on complex networks reveal community structure. Proc. Natl. Acad. Sci.
+USA 105, 11181123 (2008).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.oslom_OSLOM">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">oslom_OSLOM</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">r</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">hr</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">t</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">cp</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">fast</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">singlet</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">infomap</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">copra</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">louvain</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">runs</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.oslom_OSLOM" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>OSLOM (Order Statistics Local Optimization Method)</em> collected from <a class="reference external" href="http://www.oslom.org/index.html">OSLOM</a></p>
+<p>Arguments</p>
+<blockquote>
+<div><p>[-r R]:                       sets the number of runs for the first hierarchical level, bigger this value, more accurate the output (of course, it takes more). Default value is 10.</p>
+<p>[-hr R]:                      sets the number of runs  for higher hierarchical levels. Default value is 50 (the method should be faster since the aggregated network is usually much smaller).</p>
+<p>[-seed m]:                    sets m equal to the seed for the random number generator. (instead of reading from time_seed.dat)</p>
+<p>[-hint filename]:             takes a partition from filename. The file is expected to have the nodes belonging to the same cluster on the same line.</p>
+<p>[-load filename]:             takes modules from a tp file you already got in a previous run.</p>
+<p>[-t T]:                       sets the threshold equal to T, default value is 0.1</p>
+<dl class="simple">
+<dt>[-singlet]:                    finds singletons. If you use this flag, the program generally finds a number of nodes which are not assigned to any module.</dt><dd><p>the program will assign each node with at least one not homeless neighbor. This only applies to the lowest hierarchical level.</p>
+</dd>
+<dt>[-cp P]:                      sets a kind of resolution parameter equal to P. This parameter is used to decide if it is better to take some modules or their union.</dt><dd><p>Default value is 0.5. Bigger value leads to bigger clusters. P must be in the interval (0, 1).</p>
+</dd>
+</dl>
+<p>[-fast]:                      is equivalent to “-r 1 -hr 1” (the fastest possible execution).</p>
+<p>[-infomap runs]:              calls infomap and uses its output as a starting point. runs is the number of times you want to call infomap.</p>
+<p>[-copra runs]:                same as above using copra.</p>
+<p>[-louvain runs]:              same as above using louvain method.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Reference </dt><dd><p>A. Lancichinetti, F. Radicchi, J.J. Ramasco and S. Fortunato Finding statistically sig-
+nificant communities in networks PloS One 6, e18961 (2011)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.oslom_copra">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">oslom_copra</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">v</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">v1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">v2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">prop</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">repeat</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mo</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nosplit</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">extrasimplify</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">q</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.oslom_copra" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>COPRA (Community Overlap PRopagation Algorithm)</em> collected from <a class="reference external" href="http://www.oslom.org/index.html">OSLOM</a></p>
+<dl>
+<dt>Arguments</dt><dd><p>Usage: java COPRA &lt;file&gt; &lt;options&gt;</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18%" />
+<col style="width: 82%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-bi</p></td>
+<td><p>&lt;file&gt; is a bipartite network. “-w” not allowed.</p></td>
+</tr>
+<tr class="row-even"><td><p>-w</p></td>
+<td><p>&lt;file&gt; is a weighted unipartite network. “-bi” not allowed.</p></td>
+</tr>
+<tr class="row-odd"><td><p>-v &lt;v&gt;</p></td>
+<td><p>&lt;v&gt; is maximum number of communities/vertex. Default: 1.</p></td>
+</tr>
+<tr class="row-even"><td><p>-vs &lt;v1&gt; &lt;v2&gt;</p></td>
+<td><p>Repeats for -v &lt;v&gt; for all &lt;v&gt; between &lt;v1&gt;-&lt;v2&gt;.</p></td>
+</tr>
+<tr class="row-odd"><td><p>-prop &lt;p&gt;</p></td>
+<td><p>&lt;p&gt; is maximum number of propagations. Default: no limit.</p></td>
+</tr>
+<tr class="row-even"><td><p>-repeat &lt;r&gt;</p></td>
+<td><p>Repeats &lt;r&gt; times, for each &lt;v&gt;, and computes average.</p></td>
+</tr>
+<tr class="row-odd"><td><p>-mo</p></td>
+<td><p>Compute the overlap modularity of each solution.</p></td>
+</tr>
+<tr class="row-even"><td><p>-nosplit</p></td>
+<td><p>Don’t split discontiguous communities.</p></td>
+</tr>
+<tr class="row-odd"><td><p>-extrasimplify</p></td>
+<td><p>Simplify communities again after splitting.</p></td>
+</tr>
+<tr class="row-even"><td><p>-q</p></td>
+<td><p>Don’t show information when starting program.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt>Reference </dt><dd><p>Gregory, Steve. “Finding overlapping communities in networks by label propagation.” 
+New Journal of Physics 12.10 (2010): 103018.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.oslom_louvain_method">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">oslom_louvain_method</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.oslom_louvain_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>Louvain</em> algorithm collected from <a class="reference external" href="http://www.oslom.org/index.html">OSLOM</a></p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>seed : int, random seed</p>
+</dd>
+<dt>Reference </dt><dd><p>V.D. Blondel, J.-L. Guillaume, R. Lambiotte and E. Lefebvre Fast unfolding of com-
+munity hierarchies in large networks. J. Stat. Mech. 2008 (10): P10008</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.oslom_lpm">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">oslom_lpm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.oslom_lpm" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>Label Propagation Method</em> collected from <a class="reference external" href="http://www.oslom.org/index.html">OSLOM</a></p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>seed : int,         random seed</p>
+</dd>
+<dt>Reference </dt><dd><p>Raghavan, U. N., Albert, R. and Kumara, S. Near linear time algorithm to detect
+community structures in large-scale networks. Phys. Rev. E 76, 036106 (2007).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.oslom_modopt">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">oslom_modopt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">lamb</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">trials</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">temp_step</span><span class="o">=</span><span class="default_value">0.999</span></em>, <em class="sig-param"><span class="n">initial_temp</span><span class="o">=</span><span class="default_value">1e-06</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.oslom_modopt" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>Modularity Optimization (Simulated Annealing)</em> collected from <a class="reference external" href="http://www.oslom.org/index.html">OSLOM</a></p>
+<dl>
+<dt>Arguments</dt><dd><p>./modopt [netfile] [random_seed] [lambda] [trials] [temp_step] [initial_temp]</p>
+<p>default random_seed = 1</p>
+<p>default lambda= 1</p>
+<p>default trials= 5</p>
+<p>default temp_step= 0.999</p>
+<p>default initial_temp= 1e-6</p>
+</dd>
+<dt>Reference </dt><dd><p>Sales-Pardo, M., Guimer, R., Moreira, A. A. and Amaral, L. A. N Extracting the
+hierarchical organization of complex systems. Proc. Natl. Acad. Sci. USA 104, 1522415229 (2007).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.pycabem_GANXiSw">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">pycabem_GANXiSw</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.pycabem_GANXiSw" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>GANXiSw</em> algorithm from <a class="reference external" href="https://sites.google.com/site/communitydetectionslpa/">https://sites.google.com/site/communitydetectionslpa/</a>.</p>
+<dl>
+<dt>Arguments</dt><dd><p>GANXiSw 3.0.2(used to be SLPAw) is for weighted (directed) networks, version=3.0.2
+Usage: java -jar GANXiSw.jar -i networkfile</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 92%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-i</p></td>
+<td><p>input network file</p></td>
+</tr>
+<tr class="row-even"><td><p>-d</p></td>
+<td><p>output director (default: output)</p></td>
+</tr>
+<tr class="row-odd"><td><p>-L</p></td>
+<td><p>set to 1 to use only the largest connected component</p></td>
+</tr>
+<tr class="row-even"><td><p>-t</p></td>
+<td><p>maximum iteration (default: 100)</p></td>
+</tr>
+<tr class="row-odd"><td><p>-run</p></td>
+<td><p>number of repetitions</p></td>
+</tr>
+<tr class="row-even"><td><p>-r a</p></td>
+<td><p>specific threshold in [0,0.5]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-ov</p></td>
+<td><p>set to 0 to perform disjoint detection</p></td>
+</tr>
+<tr class="row-even"><td><p>-W</p></td>
+<td><p>treat the input as a weighted network, set 0 to ignore the weights(default 1)</p></td>
+</tr>
+<tr class="row-odd"><td><p>-Sym</p></td>
+<td><p>set to 1 to make the edges symmetric/bi-directional (default 0)</p></td>
+</tr>
+<tr class="row-even"><td><p>-seed</p></td>
+<td><p>user specified seed for random generator</p></td>
+</tr>
+<tr class="row-odd"><td><p>-help</p></td>
+<td><p>to display usage info</p></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><p>—————————–Advanced Parameters———————————</p>
+</div></blockquote>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 87%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-v</p></td>
+<td><p>weighted version in {1,2,3}, default=3</p></td>
+</tr>
+<tr class="row-even"><td><p>-Oov</p></td>
+<td><p>set to 1 to output overlapping file, default=0</p></td>
+</tr>
+<tr class="row-odd"><td><p>-Onc</p></td>
+<td><p>set to 1 to output &lt;nodeID communityID&gt; format, 2 to output &lt;communityID nodeID&gt; format</p></td>
+</tr>
+<tr class="row-even"><td><p>-minC</p></td>
+<td><p>min community size threshold, default=2</p></td>
+</tr>
+<tr class="row-odd"><td><p>-maxC</p></td>
+<td><p>max community size threshold</p></td>
+</tr>
+<tr class="row-even"><td><p>-ev</p></td>
+<td><p>embedded SLPAw’s weighted version in {1,2,3}, default=1</p></td>
+</tr>
+<tr class="row-odd"><td><p>-loopfactor</p></td>
+<td><p>determine the num of loops for depomposing each large com, default=1.0</p></td>
+</tr>
+<tr class="row-even"><td><p>-Ohis1</p></td>
+<td><p>set to 1 to output histgram Level1</p></td>
+</tr>
+<tr class="row-odd"><td><p>-Ohis2</p></td>
+<td><p>set to 1 to output histgram Level2</p></td>
+</tr>
+<tr class="row-even"><td><p>-OMem1</p></td>
+<td><p>set to 1 to output each node’s memory content at Level 1</p></td>
+</tr>
+<tr class="row-odd"><td><p>-EC</p></td>
+<td><p>evolution cutoff, a real value &gt; 1.0</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="simple">
+<dt>NOTE: 1. more parameters refer to Readme.pdf</dt><dd><ol class="arabic simple" start="2">
+<li><p>parameters are <em>CASE-SENSITIVE</em>, e.g., -Onc is not -onc</p></li>
+</ol>
+</dd>
+</dl>
+</dd>
+<dt>Reference</dt><dd><ol class="upperalpha simple" start="10">
+<li><p>Xie, B. K. Szymanski and X. Liu, “SLPA: Uncovering Overlapping Communities in Social Networks via A Speaker-listener Interaction Dynamic Process”</p></li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.pycabem_HiReCS">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">pycabem_HiReCS</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">f</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">m</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.pycabem_HiReCS" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>hirecs</em> algorithm from <a class="reference external" href="http://www.lumais.com/hirecs">http://www.lumais.com/hirecs</a>.</p>
+<dl>
+<dt>Arguments</dt><dd><p>Usage: ./hirecs [-o{t,c,j}] [-f] [-r] [-m&lt;float&gt;] &lt;adjacency_matrix.hig&gt;</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 89%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-c</p></td>
+<td><p>clean links, skip links validation</p></td>
+</tr>
+<tr class="row-even"><td><p>-f</p></td>
+<td><p>fast quazy-mutual clustering (faster). Default: strictly-mutual (better)</p></td>
+</tr>
+<tr class="row-odd"><td><p>-r</p></td>
+<td><p>rand reorder (shuffle) nodes and links on nodes construction</p></td>
+</tr>
+<tr class="row-even"><td><p>-m&lt;float&gt;</p></td>
+<td><p>modularity profit margin for early exit, float E [-1, 1]. Default: -0.999, but on practice &gt;~= 0</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt>Reference</dt><dd><p>Cannot find any publication. Please refer to <a class="reference external" href="http://www.lumais.com/hirecs">http://www.lumais.com/hirecs</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.pycabem_LabelRank">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">pycabem_LabelRank</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">cutoff_r</span><span class="o">=</span><span class="default_value">0.01</span></em>, <em class="sig-param"><span class="n">inflation_in</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">NBDisimilarity_q</span><span class="o">=</span><span class="default_value">0.3</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.pycabem_LabelRank" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>LabelRank</em> algorithm from <a class="reference external" href="https://sites.google.com/site/communitydetectionslpa/">https://sites.google.com/site/communitydetectionslpa/</a>.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>&gt; LabelRank netName cutoff_r inflation_in NBDisimilarity_q</p>
+</dd>
+<dt>Reference</dt><dd><ol class="upperalpha simple" start="10">
+<li><p>Xie, B. K. Szymanski, “LabelRank: A Stabilized Label Propagation Algorithm for Community Detection in Networks”, IEEE NSW, West point, NY, 2013</p></li>
+</ol>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_CONGA">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_CONGA</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">silent</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">recompute</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">horizon</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nComm</span><span class="o">=</span><span class="default_value">[5]</span></em>, <em class="sig-param"><span class="n">weight</span><span class="o">=</span><span class="default_value">'mean'</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_CONGA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cluster-Overlap Newman Girvan Algorithm</p>
+<dl>
+<dt><em>Arguments</em></dt><dd><dl>
+<dt>Usage: java conga.CONGA &lt;file&gt; [-e] [-g f] [-n nC] [-s] [-cd t] [-f v] [-r]</dt><dd><p>[-mem] [-m c] [-mo c] [-vad c] [-ov c]
+[-dia c] [-h h] [-GN] [-peacock s] [-w eW]</p>
+</dd>
+<dt>Options:</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-n</span></kbd></dt>
+<dd><p>Find clustering containing nC clusters. Default: 0.</p>
+</dd>
+<dt><kbd><span class="option">-s</span></kbd></dt>
+<dd><p>Silent operation: don’t display steps in algorithm.</p>
+</dd>
+<dt><kbd><span class="option">-r</span></kbd></dt>
+<dd><p>Recompute clusters even if clustering file exists.</p>
+</dd>
+<dt><kbd><span class="option">-h</span></kbd></dt>
+<dd><p>Use region with horizon h. Default: unlimited.</p>
+</dd>
+<dt><kbd><span class="option">-w</span></kbd></dt>
+<dd><p>Include edge weights in computations. A positive number or ‘min’, ‘mean’,’max’.  Default: unweighted.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Gregory, Steve. “An algorithm to find overlapping community structure in networks.” European Conference on Principles of Data Mining and Knowledge Discovery. Springer, Berlin, Heidelberg, 2007.</p>
+<p>Gregory, Steve. “A fast algorithm to find overlapping communities in networks.” Joint European Conference on Machine Learning and Knowledge Discovery in Databases. Springer, Berlin, Heidelberg, 2008.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_CliquePercolation">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_CliquePercolation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">k</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_CliquePercolation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sequential clique percolation algorithm is method for detecting clique percolation communities. 
+It is an alternative to CFinder: instead of finding maximal cliques in a graph and producing communities 
+of all the possible clique sizes, the SCP algorithm finds all the cliques of single size and produces 
+the community structure for all the possible thresholds. 
+The SCP algorithm should work well even for large sparse networks, 
+but might have trouble for dense networks and cliques of large size.</p>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>Usage: ./k_clique [inputfile] [options]</p>
+<p>Options:</p>
+<blockquote>
+<div><p>-k=[clique size] : The size of the clique.</p>
+<p>-v : Verbose mode.</p>
+</div></blockquote>
+</dd>
+<dt><em>Reference</em>             </dt><dd><p>Kumpula, Jussi M., et al. “Sequential algorithm for fast clique percolation.” Physical Review E 78.2 (2008): 026109.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_Connected_Iterative_Scan">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_Connected_Iterative_Scan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_Connected_Iterative_Scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connected Iterative Scan Connected Iterative Scan is also known at times as Locally Optimal Sets.</p>
+<dl class="simple">
+<dt><em>Arguments</em></dt><dd><p>./cis -i network -o output -dl delimiter -s seed file -l lambda value</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Kelley, Stephen. The existence and discovery of overlapping communities in large-scale networks.  Diss. Rensselaer Polytechnic Institute, 2009.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_DEMON">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_DEMON</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.25</span></em>, <em class="sig-param"><span class="n">min_community_size</span><span class="o">=</span><span class="default_value">3</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_DEMON" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>DEMON</p>
+</div></blockquote>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>epsilon  the tolerance required in order to merge communities</p>
+<p>min_community_size: min_community_size</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Michele Coscia, Giulio Rossetti, Fosca Giannotti, Dino Pedreschi:
+DEMON: a local-first discovery method for overlapping communities.
+KDD 2012:615-623</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_EAGLE">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_EAGLE</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">nThread</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_EAGLE" title="Permalink to this definition">¶</a></dt>
+<dd><p>EAGLE (agglomerativE hierarchicAl clusterinG based on maximaL cliquE)</p>
+<dl class="simple">
+<dt><em>Arguments</em></dt><dd><p>Sinopsi: ./2009-eagle nThreads src &lt;dir|undir&gt; [dest]</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Shen, Huawei, et al. “Detect overlapping and hierarchical community structure in networks.” 
+Physica A: Statistical Mechanics and its Applications 388.8 (2009): 1706-1712.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_FastCpm">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_FastCpm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">k</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_FastCpm" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Find maximal cliques, via the Bron Kerbosch algorithm, <a class="reference external" href="http://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm">http://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm</a>. Then perform k-clique percolation on these cliques, for a given value of k.</p>
+</div></blockquote>
+<dl class="simple">
+<dt><em>Arguments</em></dt><dd><p>k:  k for k-clique</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Reid, Fergal, Aaron McDaid, and Neil Hurley. 
+“Percolation computation in complex networks.” 
+Proceedings of the 2012 international conference on advances in social networks analysis and mining (asonam 2012). 
+IEEE Computer Society, 2012.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_GCE">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_GCE</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">minimumCliqueSizeK</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="n">overlapToDiscardEta</span><span class="o">=</span><span class="default_value">0.6</span></em>, <em class="sig-param"><span class="n">fitnessExponentAlpha</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">CCHthresholdPhi</span><span class="o">=</span><span class="default_value">0.75</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_GCE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Greedy Clique Expansion Community Finder
+Community finder. Requires edge list of nodes. Processes graph in undirected, unweighted form. 
+Edgelist must be two values separated with non digit character.</p>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>Use with either full (if specify all 5) or default (specify just graph file) parameters:</p>
+<p>Full parameters are:</p>
+<blockquote>
+<div><p>The name of the file to load</p>
+<p>The minimum size of cliques to use as seeds. Recommend 4 as default, unless particularly small communities are required (in which case use 3).</p>
+<p>The minimum value for one seed to overlap with another seed before it is considered sufficiently overlapping to be discarded (eta). 1 is complete overlap. However smaller values may be used to prune seeds more aggressively. A value of 0.6 is recommended.</p>
+<p>The alpha value to use in the fitness function greedily expanding the seeds. 1.0 is recommended default. Values between .8 and 1.5 may be useful. As the density of edges increases, alpha may need to be increased to stop communities expanding to engulf the whole graph. If this occurs, a warning message advising that a higher value of alpha be used, will be printed.</p>
+<p>The proportion of nodes (phi) within a core clique that must have already been covered by other cliques, for the clique to be ‘sufficiently covered’ in the Clique Coveage Heuristic</p>
+</div></blockquote>
+<p>Usage: ./2011-gce graphfilename minimumCliqueSizeK overlapToDiscardEta fitnessExponentAlpha CCHthresholdPhi</p>
+<p>Usage (with defaults): ./2011-gce graphfilename</p>
+<p>This will run with the default values of: minimumCliqueSizeK 4, overlapToDiscardEta 0.6, fitnessExponentAlpha 1.0, CCHthresholdPhi .75</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Lee, Conrad, et al. “Detecting highly overlapping community structure by greedy clique expansion.” arXiv preprint arXiv:1002.1827 (2010).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_HDEMON">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_HDEMON</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0.25</span></em>, <em class="sig-param"><span class="n">min_community_size</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_HDEMON" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Hierarchical Demon</p>
+</div></blockquote>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>epsilon  the tolerance required in order to merge communities</p>
+<p>min_community_size: min_community_size</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>M. Coscia, G. Rossetti, F. Giannotti, D. Pedreschi:
+Uncovering Hierarchical and Overlapping Communities with a Local-First Approach, TKDD 2015</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_LinkCommunities">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_LinkCommunities</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">[0.01]</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_LinkCommunities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Link communities algorithm</p>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>./calcJaccards input.pairs output.jaccs</p>
+<p>./clusterJaccards network.pairs network.jaccs network.clusters network.cluster_stats threshold</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Yong-Yeol Ahn, James P. Bagrow, and Sune Lehmann, Link communities reveal multiscale complexity in networks, Nature 466, 761 (2010)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_MOSES">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_MOSES</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_MOSES" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Model-based Overlapping Seed Expansion</p>
+</div></blockquote>
+<p><em>Arguments</em></p>
+<p><em>Reference</em></p>
+<p>Aaron McDaid, Neil Hurley. Detecting highly overlapping communities with Model-based Overlapping Seed Expansion. ASONAM 2010</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_MSCD_AFG">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_MSCD_AFG</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">scale_param</span><span class="o">=</span><span class="default_value">'[1.2,2]'</span></em>, <em class="sig-param"><span class="n">extra_param</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_MSCD_AFG" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>(Arenas et al.’s) Fast Multi-Scale Community Detection Tools</p>
+</div></blockquote>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>scale_param: scale parameter values (e.g.[1,2], [1:1:10])</p>
+<p>extra_param: optional extra parameters for the given algorithm</p>
+<p>verbose: verbose level (default=0, max=2)</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Arenas, Alex, Alberto Fernandez, and Sergio Gomez. “Analysis of the structure of complex networks at different resolution levels.” New Journal of Physics 10.5 (2008): 053039.</p>
+<p>Le Martelot, Erwan, and Chris Hankin.  “Fast multi-scale detection of relevant communities in large-scale networks.” The Computer Journal 56.9 (2013): 1136-1150.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_MSCD_HSLSW">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_MSCD_HSLSW</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">scale_param</span><span class="o">=</span><span class="default_value">'[1.2,2]'</span></em>, <em class="sig-param"><span class="n">extra_param</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_MSCD_HSLSW" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>(Huang et al.’s) Fast Multi-Scale Community Detection Tools</p>
+</div></blockquote>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>scale_param: scale parameter values (e.g.[1,2], [1:1:10])</p>
+<p>extra_param: optional extra parameters for the given algorithm</p>
+<p>verbose: verbose level (default=0, max=2)</p>
+<dl class="simple">
+<dt>The optional extra parameters must be given in order as a list with ‘,’ between values and no space. The parameters are:</dt><dd><ol class="arabic simple">
+<li><p>Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)</p></li>
+</ol>
+</dd>
+</dl>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Huang, Jianbin, et al. “Towards online multiresolution community detection in large-scale networks.” PloS one 6.8 (2011): e23829.</p>
+<p>Le Martelot, Erwan, and Chris Hankin.  “Fast multi-scale detection of relevant communities in large-scale networks.” The Computer Journal 56.9 (2013): 1136-1150.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_MSCD_LFK">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_MSCD_LFK</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">scale_param</span><span class="o">=</span><span class="default_value">'[1.2,2]'</span></em>, <em class="sig-param"><span class="n">extra_param</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_MSCD_LFK" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>(Lancichinetti et al.’s) Fast Multi-Scale Community Detection Tools</p>
+</div></blockquote>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>scale_param: scale parameter values (e.g.[1,2], [1:1:10])</p>
+<p>extra_param: optional extra parameters for the given algorithm</p>
+<p>verbose: verbose level (default=0, max=2)</p>
+<dl>
+<dt>The optional extra parameters must be given in order as a list with ‘,’ between values and no space. The parameters are:</dt><dd><ol class="arabic simple">
+<li><p>Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)</p></li>
+<li><p>When growing a community, maximum number of neighbours from the sorted list of candidate nodes that can fail to join before the failures makes the growth stop. (default: infinite / value 0)</p></li>
+<li><p>When growing a community, maximum number of iterations through all nodes during which nodes can be removed. (default: infinite / value 0)</p></li>
+</ol>
+<p>Ex: To merge communities with 30% of overlapping nodes</p>
+<blockquote>
+<div><p>mscd -g network.edges -w -c coms -p 0.3 -a LFK [1:-0.01:0]</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Lancichinetti, Andrea, Santo Fortunato, and János Kertész. “Detecting the overlapping and hierarchical community structure in complex networks.” New Journal of Physics 11.3 (2009): 033015.</p>
+<p>Le Martelot, Erwan, and Chris Hankin.  “Fast multi-scale detection of relevant communities in large-scale networks.” The Computer Journal 56.9 (2013): 1136-1150.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_MSCD_LFK2">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_MSCD_LFK2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">scale_param</span><span class="o">=</span><span class="default_value">'[1.2,2]'</span></em>, <em class="sig-param"><span class="n">extra_param</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_MSCD_LFK2" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>( Lancichinetti et al.’s multi-threaded ) Fast Multi-Scale Community Detection Tools</p>
+</div></blockquote>
+<p><em>Arguments</em></p>
+<blockquote>
+<div><p>scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+extra_param: optional extra parameters for the given algorithm
+verbose: verbose level (default=0, max=2)</p>
+<p>The optional extra parameters must be given in order as a list with ‘,’ between values and no space. The parameters are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)</p></li>
+<li><p>Maximum number of additional threads the program can use (default: number of cores available / value 0)</p></li>
+<li><p>Maximum number of seeds to start growing communities. (default: infinite / value 0)</p></li>
+<li><p>Recursive level of seed neighbours not to use as seeds must be 0, 1 or 2. (default 1) (i.e. with 1, all the neighbours of a seed cannot be added as a seed)</p></li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<dl>
+<dt><em>Reference</em> </dt><dd><p>Lancichinetti, Andrea, Santo Fortunato, and János Kertész. “Detecting the overlapping and hierarchical community structure in complex networks.” New Journal of Physics 11.3 (2009): 033015.</p>
+<p>Le Martelot, Erwan, and Chris Hankin.  “Fast multi-scale detection of relevant communities in large-scale networks.” The Computer Journal 56.9 (2013): 1136-1150.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_MSCD_RB">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_MSCD_RB</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">scale_param</span><span class="o">=</span><span class="default_value">'[1.2,2]'</span></em>, <em class="sig-param"><span class="n">extra_param</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_MSCD_RB" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>(Reichardt and Bornholdt’s) Fast Multi-Scale Community Detection Tools</p>
+</div></blockquote>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>scale_param: scale parameter values (e.g.[1,2], [1:1:10])</p>
+<p>extra_param: optional extra parameters for the given algorithm</p>
+<p>verbose: verbose level (default=0, max=2)</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Reichardt, Jörg, and Stefan Bornholdt. “Statistical mechanics of community detection.” Physical Review E 74.1 (2006): 016110.</p>
+<p>Le Martelot, Erwan, and Chris Hankin.  “Fast multi-scale detection of relevant communities in large-scale networks.” The Computer Journal 56.9 (2013): 1136-1150.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_MSCD_RN">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_MSCD_RN</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">scale_param</span><span class="o">=</span><span class="default_value">'[1.2,2]'</span></em>, <em class="sig-param"><span class="n">extra_param</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_MSCD_RN" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>(Ronhovde and Nussinov’s) Fast Multi-Scale Community Detection Tools</p>
+</div></blockquote>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>scale_param: scale parameter values (e.g.[1,2], [1:1:10])</p>
+<p>extra_param: optional extra parameters for the given algorithm</p>
+<p>verbose: verbose level (default=0, max=2)</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Ronhovde, Peter, and Zohar Nussinov. “Local resolution-limit-free Potts model for community detection.” Physical Review E 81.4 (2010): 046114.</p>
+<p>Le Martelot, Erwan, and Chris Hankin.  “Fast multi-scale detection of relevant communities in large-scale networks.” The Computer Journal 56.9 (2013): 1136-1150.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_MSCD_SO">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_MSCD_SO</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">scale_param</span><span class="o">=</span><span class="default_value">'[1.2,2]'</span></em>, <em class="sig-param"><span class="n">extra_param</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_MSCD_SO" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>stability optimisation (Fast Multi-Scale Community Detection Tools)</p>
+</div></blockquote>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>scale_param: scale parameter values (e.g.[1,2], [1:1:10])</p>
+<p>extra_param: optional extra parameters for the given algorithm</p>
+<p>verbose: verbose level (default=0, max=2)</p>
+<p>The optional extra parameters must be given in order as a list with ‘,’ between values and no space. The parameters are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>edge threshold (for walks of length&gt;1 computed edges below this value are discarded) (default: 0)</p></li>
+<li><p>memory saving mode (for walks of length&gt;1 the number of networks kept in memory) (default: 0, i.e. off)</p></li>
+</ol>
+<p>Ex: mscd -g network.edges -w -c coms -p 0.01,1 -a SO [0:0.1:5]</p>
+</div></blockquote>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Le Martelot, Erwan, and Chris Hankin. “Multi-scale community detection using stability optimisation within greedy algorithms.” arXiv preprint arXiv:1201.3307 (2012).</p>
+<p>Le Martelot, Erwan, and Chris Hankin.  “Fast multi-scale detection of relevant communities in large-scale networks.” The Computer Journal 56.9 (2013): 1136-1150.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_MSCD_SOM">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_MSCD_SOM</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">scale_param</span><span class="o">=</span><span class="default_value">'[1.2,2]'</span></em>, <em class="sig-param"><span class="n">extra_param</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_MSCD_SOM" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>tability optimisation using matrices  (Fast Multi-Scale Community Detection Tools)</p>
+</div></blockquote>
+<dl>
+<dt><em>Arguments</em></dt><dd><p>scale_param: scale parameter values (e.g.[1,2], [1:1:10])</p>
+<p>extra_param: optional extra parameters for the given algorithm</p>
+<p>verbose: verbose level (default=0, max=2)</p>
+<p>The optional extra parameters must be given in order as a list with ‘,’ between values and no space. The parameters are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>memory saving mode (for walks of length&gt;1 the number of networks kept in memory) (default: 0, i.e. off)</p></li>
+</ol>
+<p>Ex: mscd -g network.edges -w -c coms -p 1 -a SOM [0:0.1:5]</p>
+</div></blockquote>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Le Martelot, Erwan, and Chris Hankin. “Multi-scale community detection using stability optimisation within greedy algorithms.” arXiv preprint arXiv:1201.3307 (2012).</p>
+<p>Le Martelot, Erwan, and Chris Hankin.  “Fast multi-scale detection of relevant communities in large-scale networks.” The Computer Journal 56.9 (2013): 1136-1150.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_ParCPM">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_ParCPM</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">n_thread</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">W</span><span class="o">=</span><span class="default_value">30</span></em>, <em class="sig-param"><span class="n">poc</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_ParCPM" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Model-based Overlapping Seed Expansion</p>
+</div></blockquote>
+<dl>
+<dt><em>Arguments</em></dt><dd><table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-P &lt;num_threads&gt;</p></td>
+<td><p>Specifies the number of parallel threads to be executed.
+Default value is 8.</p></td>
+</tr>
+<tr class="row-even"><td><p>-W &lt;exp&gt;</p></td>
+<td><p>Set the sliding window buffer size to 2**&lt;exp&gt; Bytes.
+Default value is 30 for a sliding window buffer size of 2**30 B = 1 GB.</p></td>
+</tr>
+<tr class="row-odd"><td><p>-p</p></td>
+<td><p>Specifies to use the proof-of-concept method COSpoc rather than COS.
+With this option, parameter -W is ignored.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Gregori, Enrico, Luciano Lenzini, and Simone Mainardi. 
+“Parallel k-clique community detection on large-scale networks.” 
+IEEE Transactions on Parallel and Distributed Systems 24.8 (2013): 1651-1660.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_SVINET">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_SVINET</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">num_cluster</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">inference</span><span class="o">=</span><span class="default_value">'link-sampling'</span></em>, <em class="sig-param"><span class="n">stratified</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">rfreq</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_iterations</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">no_stop</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_SVINET" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>SVINET implements sampling based algorithms that derive from stochastic variational inference under the (assortative) mixed-membership stochastic blockmodel.</p>
+</div></blockquote>
+<p><em>Arguments</em></p>
+<blockquote>
+<div><p>SVINET: fast stochastic variational inference of undirected networks</p>
+<dl>
+<dt>svinet [OPTIONS]</dt><dd><table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 88%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-file &lt;name&gt;</p></td>
+<td><p>input tab-separated file with a list of undirected links</p></td>
+</tr>
+<tr class="row-even"><td><p>-n &lt;N&gt;</p></td>
+<td><p>number of nodes in network</p></td>
+</tr>
+<tr class="row-odd"><td><p>-k &lt;K&gt;</p></td>
+<td><p>number of communities</p></td>
+</tr>
+<tr class="row-even"><td><p>-batch</p></td>
+<td><p>run batch variational inference</p></td>
+</tr>
+<tr class="row-odd"><td><p>-stratified</p></td>
+<td><p>use stratified sampling, use with rpair or rnode options</p></td>
+</tr>
+<tr class="row-even"><td><p>-rnode</p></td>
+<td><p>inference using random node sampling</p></td>
+</tr>
+<tr class="row-odd"><td><p>-rpair</p></td>
+<td><p>inference using random pair sampling</p></td>
+</tr>
+<tr class="row-even"><td><p>-link-sampling</p></td>
+<td><p>inference using link sampling</p></td>
+</tr>
+<tr class="row-odd"><td><p>-infset</p></td>
+<td><p>inference using informative set sampling</p></td>
+</tr>
+<tr class="row-even"><td><p>-rfreq</p></td>
+<td><p>set the frequency at which  (convergence is estimated;  statistics, e.g., heldout likelihood are computed)</p></td>
+</tr>
+<tr class="row-odd"><td><p>-max-iterations</p></td>
+<td><p>maximum number of iterations (use with -no-stop to avoid stopping in an earlier iteration)</p></td>
+</tr>
+<tr class="row-even"><td><p>-no-stop</p></td>
+<td><p>disable stopping criteria</p></td>
+</tr>
+<tr class="row-odd"><td><p>-seed</p></td>
+<td><p>set GSL random generator seed</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt><em>Reference</em> </dt><dd><p>Prem K. Gopalan, David M. Blei. Efficient discovery of overlapping communities in massive networks. To appear in the Proceedings of the National Academy of Sciences, 2013</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_TopGC">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_TopGC</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_TopGC" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Top Graph Clusters (TopGC)</p>
+</div></blockquote>
+<p><em>Arguments</em></p>
+<blockquote>
+<div><p>Usage: java -jar TopGC.jar -i inputGraph [-p mostProm] [-max maxClusterSize] [-min minClusterSize] [-lambda overlapThreshold] [-l wordLength] [-m m] [-w numWords] [-trials trials]</p>
+<p>Options:</p>
+<dl class="option-list">
+<dt><kbd><span class="option">-m<var>ax</var></span></kbd></dt>
+<dd><p>maxClusterSize
+The maximum size allowed for a cluster.
+Default is 20.</p>
+</dd>
+<dt><kbd><span class="option">-m<var>in</var></span></kbd></dt>
+<dd><p>minClusterSize
+The minimum size allowed for a cluster.
+Default is 5.</p>
+</dd>
+<dt><kbd><span class="option">-p</span></kbd></dt>
+<dd><p>mostProm
+The pruning parameter. Limits the number of nodes to
+consider for final clustering. Lower values will
+achieve greater pruning, as well as limit memory
+usage of the program. Ranges from 1 to graph size.
+Default is 0.3*(# of nodes in graph) or
+50,000 (whichever is smaller).</p>
+</dd>
+<dt><kbd><span class="option">-l<var>ambda</var></span></kbd></dt>
+<dd><p>overlapThreshold
+The maximum overlap allowed between the nodes of
+two clusters. Calculated as the ratio of the
+size of their intersection and the smallest cluster
+size. A double value ranging from 0 to 1.
+Default is 0.2.</p>
+</dd>
+<dt><kbd><span class="option">-l</span></kbd></dt>
+<dd><p>wordLength
+Length of node signature. Experimentally, higher 
+values tend to achieve greater precision, though 
+lower recall.</p>
+</dd>
+<dt><kbd><span class="option">-m</span></kbd></dt>
+<dd><p>m
+Number of minhash values to obtain per node.</p>
+</dd>
+<dt><kbd><span class="option">-w</span></kbd></dt>
+<dd><p>w
+Number of signatures to create per node.
+Higher values may be necessary in graphs with loose
+clusters.</p>
+</dd>
+<dt><kbd><span class="option">-t<var>rials</var></span></kbd></dt>
+<dd><p>trials
+The number of neighborhood instances to create
+per node. Used only in weighted graphs.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt><em>Reference</em> </dt><dd><p>Macropol, Kathy, and Ambuj Singh. “Scalable discovery of best clusters on large graphs.” Proceedings of the VLDB Endowment 3.1-2 (2010): 693-702.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cdc_clique_modularity">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cdc_clique_modularity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'BK'</span></em>, <em class="sig-param"><span class="n">nComm</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cdc_clique_modularity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detecting Communities in Networks by Merging Cliques</p>
+<dl class="simple">
+<dt><em>Arguments</em></dt><dd><p>java -cp CM.jar clique_modularity.CM &lt;networkFile&gt; -m &lt;method&gt; -c &lt;nComm&gt;
+where method is BK or KJ</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Yan, Bowen, and Steve Gregory. “Detecting communities in networks by merging cliques.” Intelligent Computing and Intelligent Systems, 2009. ICIS 2009. IEEE International Conference on. Vol. 1. IEEE, 2009.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.cgcc_CGGC">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">cgcc_CGGC</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">startk</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">finalk</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">runs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ensemblesize</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.cgcc_CGGC" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>CGGC</em> (Core Groups Graph ensemble Clustering) method* from <cite>https://github.com/eXascaleInfolab/CGGC</cite></p>
+<p>Performs clustering of the unweighed undirected network (graph) using RG, CGGC_RG or CGGCi_RG algorithms.</p>
+<p>Arguments</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-h [ –help ]</p></td>
+<td><p>Display this message</p></td>
+</tr>
+<tr class="row-even"><td><p>-i [ –inpfmt ] arg (=)</p></td>
+<td><p>input network format (inferred from the file
+extension if not specified explicitly):
+e - nse format: header in comments + each
+line specifies a single edge: &lt;sid&gt; &lt;did&gt;,
+a - nse format: header in comments + each
+line specifies a single arc: &lt;sid&gt; &lt;did&gt;,
+m - Metis format of the unweighted network,
+p - Pajek format of the undirected unweighted
+network</p></td>
+</tr>
+<tr class="row-odd"><td><p>-s [ –startk ] arg (=2)</p></td>
+<td><p>sample size of RG</p></td>
+</tr>
+<tr class="row-even"><td><p>-f [ –finalk ] arg (=2000)</p></td>
+<td><p>sample size for final RG step</p></td>
+</tr>
+<tr class="row-odd"><td><p>-r [ –runs ] arg (=1)</p></td>
+<td><p>number of runs from which to pick the best
+result</p></td>
+</tr>
+<tr class="row-even"><td><p>-e [ –ensemblesize ] arg (=-1)</p></td>
+<td><p>size of ensemble for ensemble algorithms (-1
+= ln(#vertices))</p></td>
+</tr>
+<tr class="row-odd"><td><p>-a [ –algorithm ] arg (=3)</p></td>
+<td><p>algorithm: 1: RG, 2: CGGC_RG, 3: CGGCi_RG</p></td>
+</tr>
+<tr class="row-even"><td><p>-o [ –outfmt ] arg (=l)</p></td>
+<td><p>output clusters format:
+l - cnl format: header in comments + each
+line corresponds to the cluster and contains
+ids of the member vertices,
+c - each line corresponds to the cluster and
+contains ids of the member vertices,
+v - each line corresponds to the vertex and
+contains id of the owner cluster</p></td>
+</tr>
+<tr class="row-odd"><td><p>-f [ –outfile ] arg</p></td>
+<td><p>file to store the detected communities</p></td>
+</tr>
+<tr class="row-even"><td><p>-d [ –seed ] arg</p></td>
+<td><p>seed value to initialize random number
+generator</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="simple">
+<dt>Reference </dt><dd><p>Ovelgönne, Michael, and Andreas Geyer-Schulz. 
+“An ensemble learning strategy for graph clustering.” 
+Graph Partitioning and Graph Clustering 588 (2012): 187.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.dct_dlplm">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">dct_dlplm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.dct_dlplm" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>dlplm (Distributed Graph Clustering using Thrill)</em> algorithm collected from <cite>https://github.com/kit-algo/distributed_clustering_thrill</cite></p>
+<dl class="simple">
+<dt><em>Arguments</em></dt><dd><p>None</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Hamann, Michael, et al. “Distributed Graph Clustering Using Modularity and Map Equation.” 
+European Conference on Parallel Processing. Springer, Cham, 2018.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.dct_dlslm">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">dct_dlslm</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.dct_dlslm" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>dlslm (Distributed Graph Clustering using Thrill)</em> algorithm collected from <cite>https://github.com/kit-algo/distributed_clustering_thrill</cite></p>
+<dl class="simple">
+<dt><em>Arguments</em></dt><dd><p>None</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Hamann, Michael, et al. “Distributed Graph Clustering Using Modularity and Map Equation.” 
+European Conference on Parallel Processing. Springer, Cham, 2018.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.dct_dlslm_map_eq">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">dct_dlslm_map_eq</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.dct_dlslm_map_eq" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>dlslm_map_eq (Distributed Graph Clustering using Thrill)</em> algorithm collected from <cite>https://github.com/kit-algo/distributed_clustering_thrill</cite></p>
+<dl class="simple">
+<dt><em>Arguments</em></dt><dd><p>None</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Hamann, Michael, et al. “Distributed Graph Clustering Using Modularity and Map Equation.” 
+European Conference on Parallel Processing. Springer, Cham, 2018.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.dct_dlslm_no_contraction">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">dct_dlslm_no_contraction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.dct_dlslm_no_contraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>dlslm_no_contraction (Distributed Graph Clustering using Thrill)</em> algorithm collected from <cite>https://github.com/kit-algo/distributed_clustering_thrill</cite></p>
+<p><em>Arguments</em>
+None</p>
+<p><em>Reference</em> 
+Hamann, Michael, et al. “Distributed Graph Clustering Using Modularity and Map Equation.” 
+European Conference on Parallel Processing. Springer, Cham, 2018.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.dct_dlslm_with_seq">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">dct_dlslm_with_seq</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.dct_dlslm_with_seq" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>dlslm_with_seq (Distributed Graph Clustering using Thrill)</em> algorithm collected from <cite>https://github.com/kit-algo/distributed_clustering_thrill</cite></p>
+<dl class="simple">
+<dt><em>Arguments</em></dt><dd><p>None</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Hamann, Michael, et al. “Distributed Graph Clustering Using Modularity and Map Equation.” 
+European Conference on Parallel Processing. Springer, Cham, 2018.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.dct_infomap">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">dct_infomap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.dct_infomap" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>infomap</em> algorithm collected from <cite>https://github.com/kit-algo/distributed_clustering_thrill</cite></p>
+<p><em>Arguments</em>
+seed : int,         random seed</p>
+<dl class="simple">
+<dt><em>Reference</em> </dt><dd><p>Rosvall, M., Axelsson, D., Bergstrom, C.T.: The map equation. The European
+Physical Journal Special Topics 178(1), 13–23 (2009)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.dct_seq_louvain">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">dct_seq_louvain</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.dct_seq_louvain" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>Louvain</em> algorithm collected from <cite>https://github.com/kit-algo/distributed_clustering_thrill</cite></p>
+<dl class="simple">
+<dt><em>Arguments</em></dt><dd><p>seed : int,         random seed</p>
+</dd>
+<dt><em>Reference</em> </dt><dd><p>Blondel, V., Guillaume, J.L., Lambiotte, R., Lefebvre, E.: Fast unfolding of communities
+in large networks. Journal of Statistical Mechanics: Theory and Experiment
+2008(10) (2008)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.igraph_community_edge_betweenness">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">igraph_community_edge_betweenness</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.igraph_community_edge_betweenness" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>community_edge_betweenness</em> algorithm from iGraph</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference </dt><dd><p>M Girvan and MEJ Newman: Community structure in social and biological networks, Proc. Nat. Acad. Sci. USA 99, 7821-7826 (2002)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.igraph_community_fastgreedy">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">igraph_community_fastgreedy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.igraph_community_fastgreedy" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>community_fastgreedy</em> algorithm from iGraph</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference </dt><dd><p>A Clauset, MEJ Newman and C Moore: Finding community structure in very large networks. Phys Rev E 70, 066111 (2004).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.igraph_community_infomap">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">igraph_community_infomap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.igraph_community_infomap" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>community_infomap</em> algorithm from iGraph</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+</dl>
+<p>Reference 
+M. Rosvall and C. T. Bergstrom: Maps of information flow reveal community structure in complex networks, PNAS 105, 1118 (2008). <a class="reference external" href="http://dx.doi.org/10.1073/pnas.0706851105">http://dx.doi.org/10.1073/pnas.0706851105</a>, <a class="reference external" href="http://arxiv.org/abs/0707.0609">http://arxiv.org/abs/0707.0609</a></p>
+<ol class="upperalpha simple" start="13">
+<li><p>Rosvall, D. Axelsson, and C. T. Bergstrom: The map equation, Eur. Phys. J. Special Topics 178, 13 (2009). <a class="reference external" href="http://dx.doi.org/10.1140/epjst/e2010-01179-1">http://dx.doi.org/10.1140/epjst/e2010-01179-1</a>, <a class="reference external" href="http://arxiv.org/abs/0906.1405">http://arxiv.org/abs/0906.1405</a></p></li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.igraph_community_label_propagation">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">igraph_community_label_propagation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.igraph_community_label_propagation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>community_label_propagation</em> algorithm from iGraph</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference </dt><dd><p>Raghavan, U.N. and Albert, R. and Kumara, S. Near linear time algorithm to detect community structures in large-scale networks. Phys Rev E 76:036106, 2007. <a class="reference external" href="http://arxiv.org/abs/0709.2938">http://arxiv.org/abs/0709.2938</a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.igraph_community_leading_eigenvector">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">igraph_community_leading_eigenvector</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.igraph_community_leading_eigenvector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>community_leading_eigenvector</em> algorithm from iGraph</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference </dt><dd><p>MEJ Newman: Finding community structure in networks using the eigenvectors of matrices, arXiv:physics/0605087</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.igraph_community_multilevel">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">igraph_community_multilevel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.igraph_community_multilevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>community_multilevel</em> algorithm from iGraph</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference </dt><dd><p>VD Blondel, J-L Guillaume, R Lambiotte and E Lefebvre: Fast unfolding of community hierarchies in large networks, J Stat Mech P10008 (2008), <a class="reference external" href="http://arxiv.org/abs/0803.0476">http://arxiv.org/abs/0803.0476</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.igraph_community_optimal_modularity">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">igraph_community_optimal_modularity</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.igraph_community_optimal_modularity" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>community_optimal_modularity</em> algorithm from iGraph</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference </dt><dd><p>TBD</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.igraph_community_spinglass">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">igraph_community_spinglass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.igraph_community_spinglass" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>community_spinglass</em> algorithm from iGraph</p>
+<dl>
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference </dt><dd><p>Reichardt J and Bornholdt S: Statistical mechanics of community detection. Phys Rev E 74:016110 (2006). <a class="reference external" href="http://arxiv.org/abs/cond-mat/0603718">http://arxiv.org/abs/cond-mat/0603718</a>.</p>
+<p>Traag VA and Bruggeman J: Community detection in networks with positive and negative links. Phys Rev E 80:036115 (2009). <a class="reference external" href="http://arxiv.org/abs/0811.2329">http://arxiv.org/abs/0811.2329</a>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.igraph_community_walktrap">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">igraph_community_walktrap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.igraph_community_walktrap" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>community_walktrap</em> algorithm from iGraph</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference </dt><dd><p>Pascal Pons, Matthieu Latapy: Computing communities in large networks using random walks, <a class="reference external" href="http://arxiv.org/abs/physics/0512106">http://arxiv.org/abs/physics/0512106</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.karateclub_BigClam">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">karateclub_BigClam</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">dimensions</span><span class="o">=</span><span class="default_value">8</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">learning_rate</span><span class="o">=</span><span class="default_value">0.005</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.karateclub_BigClam" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of “BigClam” from the WSDM ‘13 paper “Overlapping Community Detection at Scale: A Non-negative Matrix Factorization Approach”. 
+The procedure uses gradient ascent to create an embedding which is used for deciding the node-cluster affiliations.</p>
+<dl class="simple">
+<dt>Parameters:    </dt><dd><p>dimensions (int) – Number of embedding dimensions. Default 8.
+iterations (int) – Number of training iterations. Default 50.
+learning_rate (float) – Gradient ascent learning rate. Default is 0.005.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.karateclub_DANMF">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">karateclub_DANMF</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">layers</span><span class="o">=</span><span class="default_value">[32, 8]</span></em>, <em class="sig-param"><span class="n">pre_iterations</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">42</span></em>, <em class="sig-param"><span class="n">lamb</span><span class="o">=</span><span class="default_value">0.01</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.karateclub_DANMF" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of “DANMF” from the CIKM ‘18 paper “Deep Autoencoder-like Nonnegative Matrix Factorization for Community Detection”. The procedure uses telescopic non-negative matrix factorization in order to learn a cluster membership distribution over nodes. The method can be used in an overlapping and non-overlapping way.</p>
+<dl class="simple">
+<dt>Parameters:    </dt><dd><p>layers (list) – Autoencoder layer sizes in a list of integers. Default [32, 8].
+pre_iterations (int) – Number of pre-training epochs. Default 100.
+iterations (int) – Number of training epochs. Default 100.
+seed (int) – Random seed for weight initializations. Default 42.
+lamb (float) – Regularization parameter. Default 0.01.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.karateclub_EdMot">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">karateclub_EdMot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">component_count</span><span class="o">=</span><span class="default_value">2</span></em>, <em class="sig-param"><span class="n">cutoff</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.karateclub_EdMot" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of “Edge Motif Clustering” from the KDD ‘19 paper “EdMot: An Edge Enhancement Approach for Motif-aware Community Detection”. The tool first creates the graph of higher order motifs. This graph is clustered by the Louvain method. The resulting cluster memberships are stored as a dictionary.</p>
+<dl class="simple">
+<dt>Parameters:    </dt><dd><p>component_count (int) – Number of extracted motif hypergraph components. Default is 2.
+cutoff (int) – Motif edge cut-off value. Default is 50.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.karateclub_EgoNetSplitter">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">karateclub_EgoNetSplitter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">resolution</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.karateclub_EgoNetSplitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of “Ego-Splitting” from the KDD ‘17 paper “Ego-Splitting Framework: from Non-Overlapping to Overlapping Clusters”. The tool first creates the ego-nets of nodes. A persona-graph is created which is clustered by the Louvain method. The resulting overlapping cluster memberships are stored as a dictionary.</p>
+<dl class="simple">
+<dt>Parameters:    </dt><dd><p>resolution (float) – Resolution parameter of Python Louvain. Default 1.0.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.karateclub_NNSED">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">karateclub_NNSED</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">dimensions</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">42</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.karateclub_NNSED" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of “NNSED” from the CIKM ‘17 paper “A Non-negative Symmetric Encoder-Decoder Approach for Community Detection”. The procedure uses non-negative matrix factorization in order to learn an unnormalized cluster membership distribution over nodes. The method can be used in an overlapping and non-overlapping way.</p>
+<dl class="simple">
+<dt>Parameters:    </dt><dd><p>layers (int) – Embedding layer size. Default is 32.
+iterations (int) – Number of training epochs. Default 10.
+seed (int) – Random seed for weight initializations. Default 42.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.karateclub_SCD">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">karateclub_SCD</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">25</span></em>, <em class="sig-param"><span class="n">eps</span><span class="o">=</span><span class="default_value">1e-06</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.karateclub_SCD" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of “SCD” from the WWW ‘14 paper “High Quality, Scalable and Parallel Community Detection for Large Real Graphs”. The procedure greedily optimizes the approximate weighted community clustering metric. First, clusters are built around highly clustered nodes. Second, we refine the initial partition by using the approximate WCC. These refinements happen for the whole vertex set.</p>
+<dl class="simple">
+<dt>Parameters:    </dt><dd><p>iterations (int) – Refinemeent iterations. Default is 25.
+eps (float) – Epsilon score for zero division correction. Default is 10**-6.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.karateclub_SymmNMF">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">karateclub_SymmNMF</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">dimensions</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">200</span></em>, <em class="sig-param"><span class="n">rho</span><span class="o">=</span><span class="default_value">100.0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.karateclub_SymmNMF" title="Permalink to this definition">¶</a></dt>
+<dd><p>An implementation of “Symm-NMF” from the SDM‘12 paper “Symmetric Nonnegative Matrix Factorization for Graph Clustering”. The procedure decomposed the second power od the normalized adjacency matrix with an ADMM based non-negative matrix factorization based technique. This results in a node embedding and each node is associated with an embedding factor in the created latent space.</p>
+<dl class="simple">
+<dt>Parameters:    </dt><dd><p>dimensions (int) – Number of dimensions. Default is 32.
+iterations (int) – Number of power iterations. Default is 200.
+rho (float) – ADMM tuning parameter. Default is 100.0.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.mcl_MCL">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">mcl_MCL</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.mcl_MCL" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>MCL (Markov Cluster Algorithm)</em> from <a class="reference external" href="https://micans.org/mcl/">https://micans.org/mcl/</a></p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>Since there are a lot options for mcl. refer to <a class="reference external" href="https://micans.org/mcl/man/mcl.html">https://micans.org/mcl/man/mcl.html</a> for all of them.
+However only specify algrithm options, don’t specify file/folder/format related option.</p>
+</dd>
+<dt>Reference</dt><dd><p>Stijn van Dongen, Graph Clustering by Flow Simulation. PhD thesis, University of Utrecht, May 2000</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.networkit_CutClustering">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">networkit_CutClustering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">alpha</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.networkit_CutClustering" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>CutClustering</em> algorithm from NetworKit.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference</dt><dd><p>Tarjan, Robert E.; Tsioutsiouliklis, Kostas. Graph Clustering and Minimum Cut Trees. Internet Mathematics 1 (2003), no. 4, 385–408.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.networkit_LPDegreeOrdered">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">networkit_LPDegreeOrdered</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.networkit_LPDegreeOrdered" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>LPDegreeOrdered</em> algorithm from NetworKit. 
+Label propagation-based community detection algorithm which processes nodes in increasing order of node degree.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference </dt><dd><p>TBD</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.networkit_PLM">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">networkit_PLM</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">refine</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">gamma</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">par</span><span class="o">=</span><span class="default_value">'balanced'</span></em>, <em class="sig-param"><span class="n">maxIter</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">turbo</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">recurse</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.networkit_PLM" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>PLM (Parallel Louvain Method)</em> algorithm from NetworKit. 
+Parallel Louvain Method - the Louvain method, optionally extended to a full multi-level algorithm with refinement</p>
+<dl>
+<dt>Arguments</dt><dd><p>refine (bool, optional) – Add a second move phase to refine the communities.</p>
+<p>gamma (double) – Multi-resolution modularity parameter: 1.0 -&gt; standard modularity 0.0 -&gt; one community 2m -&gt; singleton communities</p>
+<p>par (string) – parallelization strategy</p>
+<p>maxIter (count) – maximum number of iterations for move phase</p>
+<p>turbo (bool, optional) – faster but uses O(n) additional memory per thread</p>
+<p>recurse (bool, optional) – use recursive coarsening, see <a class="reference external" href="http://journals.aps.org/pre/abstract/10.1103/PhysRevE.89.049902">http://journals.aps.org/pre/abstract/10.1103/PhysRevE.89.049902</a> for some explanations (default: true)</p>
+</dd>
+<dt>Reference</dt><dd><p>TBD</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.networkit_PLP">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">networkit_PLP</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">updateThreshold</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxIterations</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.networkit_PLP" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>PLP (Parallel Label Propagation)</em> algorithm from NetworKit. 
+Parallel label propagation for community detection: Moderate solution quality, very short time to solution.</p>
+<p>As described in Ovelgoenne et al: An Ensemble Learning Strategy for Graph Clustering Raghavan et al. proposed 
+a label propagation algorithm for graph clustering. 
+This algorithm initializes every vertex of a graph with a 
+unique label. Then, in iterative sweeps over the set of vertices the vertex labels are updated. A vertex gets 
+the label that the maximum number of its neighbors have. The procedure is stopped when every vertex has the 
+label that at least half of its neighbors have.</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference</dt><dd><p>Ovelgönne, Michael, and Andreas Geyer-Schulz. “An ensemble learning strategy for graph clustering.” Graph Partitioning and Graph Clustering 588 (2012): 187.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.alg_GossipMap">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">alg_GossipMap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">thresh</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxiter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxspiter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">trials</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">interval</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">outmode</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ncpus</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scheduler</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">engine_opts</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">graph_opts</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scheduler_opts</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.alg_GossipMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>GossipMap</em> algorithm from <a class="reference external" href="https://github.com/uwescience/GossipMap">https://github.com/uwescience/GossipMap</a>.</p>
+<dl>
+<dt>Arguments</dt><dd><p>GossipMap Algorithm:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>–help</p></td>
+<td><p>Print this help message.</p></td>
+</tr>
+<tr class="row-even"><td><p>–graph arg</p></td>
+<td><p>The graph file. Required.</p></td>
+</tr>
+<tr class="row-odd"><td><p>–format arg (=snap)</p></td>
+<td><p>The graph file format.</p></td>
+</tr>
+<tr class="row-even"><td><p>–thresh arg (=0.001)</p></td>
+<td><p>The threshold for convergence condition.</p></td>
+</tr>
+<tr class="row-odd"><td><p>–tol arg (=1.00e-15)</p></td>
+<td><p>The threshold for pagerank (ergodic
+state) convergence condition.</p></td>
+</tr>
+<tr class="row-even"><td><p>–maxiter arg (=10)</p></td>
+<td><p>The maximum of the iteration for finding
+community.</p></td>
+</tr>
+<tr class="row-odd"><td><p>–maxspiter arg (=3)</p></td>
+<td><p>The maximum of the iteration of sp-graph
+for finding community.</p></td>
+</tr>
+<tr class="row-even"><td><p>–trials arg (=1)</p></td>
+<td><p>The number of trials for finding
+community repeatedly.</p></td>
+</tr>
+<tr class="row-odd"><td><p>–interval arg (=3)</p></td>
+<td><p>The time interval for checking whether
+the received message is valid or not.</p></td>
+</tr>
+<tr class="row-even"><td><p>–mode arg (=1)</p></td>
+<td><p>The running mode of finding community: 1
+- coreOnce, 2 - coreRepeat.</p></td>
+</tr>
+<tr class="row-odd"><td><p>–outmode arg (=2)</p></td>
+<td><p>The running outerloop mode of finding
+community: 1 - outerOnce, 2 -
+outerRepeat.</p></td>
+</tr>
+<tr class="row-even"><td><p>–prefix arg</p></td>
+<td><p>If set, this app will save the community
+detection result.</p></td>
+</tr>
+<tr class="row-odd"><td><p>–ncpus arg (=6)</p></td>
+<td><p>Number of cpus to use per machine.
+Defaults to (#cores - 2)</p></td>
+</tr>
+<tr class="row-even"><td><p>–scheduler arg</p></td>
+<td><p>Supported schedulers are: fifo, sweep,
+priority, queued_fifo. Too see options
+for each scheduler, run the program with
+the option —schedhelp=[scheduler_name]</p></td>
+</tr>
+<tr class="row-odd"><td><p>–engine_opts arg</p></td>
+<td><p>string of engine options i.e.,
+“timeout=100”</p></td>
+</tr>
+<tr class="row-even"><td><p>–graph_opts arg</p></td>
+<td><p>String of graph options i.e.,
+“ingress=random”</p></td>
+</tr>
+<tr class="row-odd"><td><p>–scheduler_opts arg</p></td>
+<td><p>String of scheduler options i.e.,
+“strict=true”</p></td>
+</tr>
+<tr class="row-even"><td><p>–engine_help arg</p></td>
+<td><p>Display help for engine options.</p></td>
+</tr>
+<tr class="row-odd"><td><p>–graph_help arg</p></td>
+<td><p>Display help for the distributed graph.</p></td>
+</tr>
+<tr class="row-even"><td><p>–scheduler_help arg</p></td>
+<td><p>Display help for schedulers.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt>Reference</dt><dd><p>Bae, Seung-Hee, and Bill Howe. “GossipMap: A distributed community detection algorithm for billion-edge directed graphs.” High Performance Computing, Networking, Storage and Analysis, 2015 SC-International Conference for. IEEE, 2015.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.alg_RelaxMap">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">alg_RelaxMap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">thread</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">vThresh</span><span class="o">=</span><span class="default_value">0.0</span></em>, <em class="sig-param"><span class="n">maxIter</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">prior</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.alg_RelaxMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>RelaxMap</em> algorithm from <a class="reference external" href="https://github.com/uwescience/RelaxMap">https://github.com/uwescience/RelaxMap</a>.</p>
+<p>Arguments</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>args[0]:</p></td>
+<td><p>seed - random seed value for generating random sequential order of vertices for each iteration.</p></td>
+</tr>
+<tr class="row-even"><td><p>args[1]:</p></td>
+<td><p>network data - the input graph data.
+RelaxMap supports 1) pajek format (.net) and 2) edge list format (.txt).</p></td>
+</tr>
+<tr class="row-odd"><td><p>args[2]:</p></td>
+<td><p># thread - the number of threads</p></td>
+</tr>
+<tr class="row-even"><td><p>args[3]:</p></td>
+<td><p># attempts - the number of attempts.
+(this is not applied yet, so it only return with 1 attempt.)</p></td>
+</tr>
+<tr class="row-odd"><td><p>args[4]:</p></td>
+<td><p>threshold - the stop condition threshold (recommended 1e-3 or 1e-4)</p></td>
+</tr>
+<tr class="row-even"><td><p>args[5]:</p></td>
+<td><p>vThresh - the threshold value for each vertex movement (recommended 0.0)</p></td>
+</tr>
+<tr class="row-odd"><td><p>args[6]:</p></td>
+<td><p>maxIter - the number of maximum iteration for each super-step.</p></td>
+</tr>
+<tr class="row-even"><td><p>args[7]:</p></td>
+<td><p>outDir - the directory where the output files will be located.</p></td>
+</tr>
+<tr class="row-odd"><td><p>args[8]:</p></td>
+<td><p>prior/normal flag - apply the prioritized search for efficient runs (prior) or not (normal).</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="simple">
+<dt>Reference</dt><dd><p>Seung-Hee Bae, Daniel Halperin, Jevin West, Martin Rosvall, and Bill Howe, 
+“Scalable Flow-Based Community Detection for Large-Scale Network Analysis,”
+In Proceedings of IEEE 13th International Conference on Data Mining Workshop (ICDMW), 2013</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.alg_pg_label_propagation">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">alg_pg_label_propagation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">execution</span><span class="o">=</span><span class="default_value">'async'</span></em>, <em class="sig-param"><span class="n">ncpus</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scheduler</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">engine_opts</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">graph_opts</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">scheduler_opts</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.alg_pg_label_propagation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>LPA</em> algorithm from PowerGraph.</p>
+<dl>
+<dt>Arguments</dt><dd><p>Label Propagation algorithm:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 37%" />
+<col style="width: 63%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>–help</p></td>
+<td><p>Print this help message.</p></td>
+</tr>
+<tr class="row-even"><td><p>–graph arg</p></td>
+<td><p>The graph file. Required</p></td>
+</tr>
+<tr class="row-odd"><td><p>–execution arg (=synchronous)</p></td>
+<td><p>Execution type (synchronous or asynchronous)</p></td>
+</tr>
+<tr class="row-even"><td><p>–saveprefix arg</p></td>
+<td><p>If set, will save the resultant pagerank to a
+sequence of files with prefix saveprefix</p></td>
+</tr>
+<tr class="row-odd"><td><p>–ncpus arg (=6)</p></td>
+<td><p>Number of cpus to use per machine. Defaults to
+(#cores - 2)</p></td>
+</tr>
+<tr class="row-even"><td><p>–scheduler arg</p></td>
+<td><p>Supported schedulers are: fifo, sweep,
+priority, queued_fifo. Too see options for
+each scheduler, run the program with the
+option —schedhelp=[scheduler_name]</p></td>
+</tr>
+<tr class="row-odd"><td><p>–engine_opts arg</p></td>
+<td><p>string of engine options i.e., “timeout=100”</p></td>
+</tr>
+<tr class="row-even"><td><p>–graph_opts arg</p></td>
+<td><p>String of graph options i.e., “ingress=random”</p></td>
+</tr>
+<tr class="row-odd"><td><p>–scheduler_opts arg</p></td>
+<td><p>String of scheduler options i.e.,
+“strict=true”</p></td>
+</tr>
+<tr class="row-even"><td><p>–engine_help arg</p></td>
+<td><p>Display help for engine options.</p></td>
+</tr>
+<tr class="row-odd"><td><p>–graph_help arg</p></td>
+<td><p>Display help for the distributed graph.</p></td>
+</tr>
+<tr class="row-even"><td><p>–scheduler_help arg</p></td>
+<td><p>Display help for schedulers.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt>Reference</dt><dd><p>Gonzalez, Joseph E., et al. “Powergraph: distributed graph-parallel computation on natural graphs.” OSDI. Vol. 12. No. 1. 2012.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.scan_AnyScan_Scan">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">scan_AnyScan_Scan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.scan_AnyScan_Scan" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>scan&#64;anyscan</em> algorithm</p>
+<dl>
+<dt>Arguments</dt><dd><dl>
+<dt>Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-m <var>minpts</var></span></kbd></dt>
+<dd><p>: input parameter of DBSCAN, min points to form a cluster, e.g. 2</p>
+</dd>
+<dt><kbd><span class="option">-e <var>epsilon</var></span></kbd></dt>
+<dd><p>: input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8</p>
+</dd>
+<dt><kbd><span class="option">-a <var>alpha</var></span></kbd></dt>
+<dd><p>: block size alpha</p>
+</dd>
+<dt><kbd><span class="option">-b <var>beta</var></span></kbd></dt>
+<dd><p>: block size beta</p>
+</dd>
+<dt><kbd><span class="option">-t <var>threads</var></span></kbd></dt>
+<dd><p>: number of threads to be employed</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>Reference</dt><dd><p>Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.scan_AnyScan_anyScan">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">scan_AnyScan_anyScan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.scan_AnyScan_anyScan" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>anyscan</em> algorithm</p>
+<dl>
+<dt>Arguments</dt><dd><dl>
+<dt>Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-m <var>minpts</var></span></kbd></dt>
+<dd><p>: input parameter of DBSCAN, min points to form a cluster, e.g. 2</p>
+</dd>
+<dt><kbd><span class="option">-e <var>epsilon</var></span></kbd></dt>
+<dd><p>: input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8</p>
+</dd>
+<dt><kbd><span class="option">-a <var>alpha</var></span></kbd></dt>
+<dd><p>: block size alpha</p>
+</dd>
+<dt><kbd><span class="option">-b <var>beta</var></span></kbd></dt>
+<dd><p>: block size beta</p>
+</dd>
+<dt><kbd><span class="option">-t <var>threads</var></span></kbd></dt>
+<dd><p>: number of threads to be employed</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>Reference</dt><dd><p>Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.scan_AnyScan_anyScanParl">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">scan_AnyScan_anyScanParl</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.scan_AnyScan_anyScanParl" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>anyscan parallel</em> algorithm</p>
+<dl>
+<dt>Arguments</dt><dd><dl>
+<dt>Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-m <var>minpts</var></span></kbd></dt>
+<dd><p>: input parameter of DBSCAN, min points to form a cluster, e.g. 2</p>
+</dd>
+<dt><kbd><span class="option">-e <var>epsilon</var></span></kbd></dt>
+<dd><p>: input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8</p>
+</dd>
+<dt><kbd><span class="option">-a <var>alpha</var></span></kbd></dt>
+<dd><p>: block size alpha</p>
+</dd>
+<dt><kbd><span class="option">-b <var>beta</var></span></kbd></dt>
+<dd><p>: block size beta</p>
+</dd>
+<dt><kbd><span class="option">-t <var>threads</var></span></kbd></dt>
+<dd><p>: number of threads to be employed</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>Reference</dt><dd><p>Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.scan_AnyScan_pScan">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">scan_AnyScan_pScan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.scan_AnyScan_pScan" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>pScan&#64;anyscan</em> algorithm</p>
+<dl>
+<dt>Arguments</dt><dd><dl>
+<dt>Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads</dt><dd><dl class="option-list">
+<dt><kbd><span class="option">-m <var>minpts</var></span></kbd></dt>
+<dd><p>: input parameter of DBSCAN, min points to form a cluster, e.g. 2</p>
+</dd>
+<dt><kbd><span class="option">-e <var>epsilon</var></span></kbd></dt>
+<dd><p>: input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8</p>
+</dd>
+<dt><kbd><span class="option">-a <var>alpha</var></span></kbd></dt>
+<dd><p>: block size alpha</p>
+</dd>
+<dt><kbd><span class="option">-b <var>beta</var></span></kbd></dt>
+<dd><p>: block size beta</p>
+</dd>
+<dt><kbd><span class="option">-t <var>threads</var></span></kbd></dt>
+<dd><p>: number of threads to be employed</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>Reference</dt><dd><p>Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.scan_Scanpp">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">scan_Scanpp</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">mu</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">epsilon</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.scan_Scanpp" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>scan++</em> algorithm</p>
+<p>Arguments</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 41%" />
+<col style="width: 48%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>option</p></td>
+<td><p>arguments (Default)</p></td>
+<td><p>description</p></td>
+</tr>
+<tr class="row-even"><td><p>-e</p></td>
+<td><p>Real number between 0 and 1 (Default: 0)</p></td>
+<td><p>Set the epsilon parameter for the clustering.</p></td>
+</tr>
+<tr class="row-odd"><td><p>-m</p></td>
+<td><p>Natural number (Default: 1)</p></td>
+<td><p>Set the mu parameter for the clustering.</p></td>
+</tr>
+<tr class="row-even"><td><p>-v</p></td>
+<td><p>No arguments are required.</p></td>
+<td><p>Display statistics of the clustering.</p></td>
+</tr>
+<tr class="row-odd"><td><p>-r</p></td>
+<td><p>No arguments are required.</p></td>
+<td><p>Display the clustering results.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="simple">
+<dt>Reference</dt><dd><p>Shiokawa H, Fujiwara Y, Onizuka M. SCAN++: efficient algorithm for finding clusters, hubs and outliers on large-scale graphs[J]. Proceedings of the VLDB Endowment, 2015, 8(11): 1178-1189.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.scan_pScan">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">scan_pScan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.scan_pScan" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>pScan</em> algorithm</p>
+<p>Arguments</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>epsilon:</p></td>
+<td><p>similarity-threshold</p></td>
+</tr>
+<tr class="row-even"><td><p>mu:</p></td>
+<td><p>density-threshold</p></td>
+</tr>
+</tbody>
+</table>
+<dl>
+<dt>Reference</dt><dd><p>Chang L, Li W, Qin L, et al. $mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.</p>
+<p>Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.scan_ppScan">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">scan_ppScan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.scan_ppScan" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>ppScan</em> algorithm</p>
+<p>Arguments</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>epsilon:</p></td>
+<td><p>similarity-threshold</p></td>
+</tr>
+<tr class="row-even"><td><p>mu:</p></td>
+<td><p>density-threshold</p></td>
+</tr>
+</tbody>
+</table>
+<dl>
+<dt>Reference</dt><dd><p>Chang L, Li W, Qin L, et al. $mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.</p>
+<p>Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.scan_ppScanSSE">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">scan_ppScanSSE</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.scan_ppScanSSE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>ppScanSSE</em> algorithm</p>
+<p>Arguments</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>epsilon:</p></td>
+<td><p>similarity-threshold</p></td>
+</tr>
+<tr class="row-even"><td><p>mu:</p></td>
+<td><p>density-threshold</p></td>
+</tr>
+</tbody>
+</table>
+<dl>
+<dt>Reference</dt><dd><p>Chang L, Li W, Qin L, et al. $mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.</p>
+<p>Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.sklearn_AffinityPropagation">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">sklearn_AffinityPropagation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">damping</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_iter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">convergence</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.sklearn_AffinityPropagation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>AffinityPropagation</em> algorithm from <a class="reference external" href="http://scikit-learn.org">http://scikit-learn.org</a>.</p>
+<p>Parameters</p>
+<blockquote>
+<div><dl class="simple">
+<dt>damping<span class="classifier">float, optional, default: 0.5</span></dt><dd><p>Damping factor (between 0.5 and 1) is the extent to
+which the current value is maintained relative to
+incoming values (weighted 1 - damping). This in order
+to avoid numerical oscillations when updating these
+values (messages).</p>
+</dd>
+<dt>max_iter<span class="classifier">int, optional, default: 200</span></dt><dd><p>Maximum number of iterations.</p>
+</dd>
+<dt>convergence_iter<span class="classifier">int, optional, default: 15</span></dt><dd><p>Number of iterations with no change in the number
+of estimated clusters that stops the convergence.</p>
+</dd>
+<dt>verbose<span class="classifier">boolean, optional, default: False</span></dt><dd><p>Whether to be verbose.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt>Reference</dt><dd><p>Brendan J. Frey and Delbert Dueck, “Clustering by Passing Messages Between Data Points”, Science Feb. 2007</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.sklearn_SpectralClustering">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">sklearn_SpectralClustering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.sklearn_SpectralClustering" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>SpectralClustering</em> algorithm from <a class="reference external" href="http://scikit-learn.org">http://scikit-learn.org</a>.</p>
+<dl>
+<dt>Parameters</dt><dd><dl class="simple">
+<dt>eigen_solver<span class="classifier">{None, ‘arpack’, ‘lobpcg’, or ‘amg’}</span></dt><dd><p>The eigenvalue decomposition strategy to use. AMG requires pyamg
+to be installed. It can be faster on very large, sparse problems,
+but may also lead to instabilities</p>
+</dd>
+<dt>random_state<span class="classifier">int, RandomState instance or None (default)</span></dt><dd><p>A pseudo random number generator used for the initialization of the
+lobpcg eigen vectors decomposition when eigen_solver == ‘amg’ and by
+the K-Means initialization. Use an int to make the randomness
+deterministic.</p>
+</dd>
+<dt>n_init<span class="classifier">int, optional, default: 10</span></dt><dd><p>Number of time the k-means algorithm will be run with different
+centroid seeds. The final results will be the best output of
+n_init consecutive runs in terms of inertia.</p>
+</dd>
+<dt>gamma<span class="classifier">float, default=1.0</span></dt><dd><p>Kernel coefficient for rbf, poly, sigmoid, laplacian and chi2 kernels.
+Ignored for <code class="docutils literal notranslate"><span class="pre">affinity='nearest_neighbors'</span></code>.</p>
+</dd>
+<dt>n_neighbors<span class="classifier">integer</span></dt><dd><p>Number of neighbors to use when constructing the affinity matrix using
+the nearest neighbors method. Ignored for <code class="docutils literal notranslate"><span class="pre">affinity='rbf'</span></code>.</p>
+</dd>
+<dt>eigen_tol<span class="classifier">float, optional, default: 0.0</span></dt><dd><p>Stopping criterion for eigendecomposition of the Laplacian matrix
+when using arpack eigen_solver.</p>
+</dd>
+<dt>assign_labels<span class="classifier">{‘kmeans’, ‘discretize’}, default: ‘kmeans’</span></dt><dd><p>The strategy to use to assign labels in the embedding
+space. There are two ways to assign labels after the laplacian
+embedding. k-means can be applied and is a popular choice. But it can
+also be sensitive to initialization. Discretization is another approach
+which is less sensitive to random initialization.</p>
+</dd>
+<dt>degree<span class="classifier">float, default=3</span></dt><dd><p>Degree of the polynomial kernel. Ignored by other kernels.</p>
+</dd>
+<dt>coef0<span class="classifier">float, default=1</span></dt><dd><p>Zero coefficient for polynomial and sigmoid kernels.
+Ignored by other kernels.</p>
+</dd>
+<dt>kernel_params<span class="classifier">dictionary of string to any, optional</span></dt><dd><p>Parameters (keyword arguments) and values for kernel passed as
+callable object. Ignored by other kernels.</p>
+</dd>
+<dt>n_jobs<span class="classifier">int or None, optional (default=None)</span></dt><dd><p>The number of parallel jobs to run.
+<code class="docutils literal notranslate"><span class="pre">None</span></code> means 1 unless in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">joblib.parallel_backend</span></code> context.
+<code class="docutils literal notranslate"><span class="pre">-1</span></code> means using all processors.</p>
+</dd>
+</dl>
+</dd>
+<dt>Reference</dt><dd><p>Normalized cuts and image segmentation, 2000 Jianbo Shi, Jitendra Malik <a class="reference external" href="http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.160.2324">http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.160.2324</a></p>
+<p>A Tutorial on Spectral Clustering, 2007 Ulrike von Luxburg <a class="reference external" href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.165.9323">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.165.9323</a></p>
+<p>Multiclass spectral clustering, 2003 Stella X. Yu, Jianbo Shi <a class="reference external" href="http://www1.icsi.berkeley.edu/~stellayu/publication/doc/2003kwayICCV.pdf">http://www1.icsi.berkeley.edu/~stellayu/publication/doc/2003kwayICCV.pdf</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.snap_Clauset_Newman_Moore">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">snap_Clauset_Newman_Moore</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.snap_Clauset_Newman_Moore" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>CommunityCNM</em> algorithm from SNAP</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference</dt><dd><p>Clauset, Aaron, Mark EJ Newman, and Cristopher Moore. “Finding community structure in very large networks.” Physical review E 70.6 (2004): 066111.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.snap_Girvan_Newman">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">snap_Girvan_Newman</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.snap_Girvan_Newman" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>CommunityGirvanNewman</em> algorithm from SNAP</p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference</dt><dd><p>Girvan, Michelle, and Mark EJ Newman. “Community structure in social and biological networks.” Proceedings of the national academy of sciences 99.12 (2002): 7821-7826.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.alg_Paris">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">alg_Paris</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">vmax_start</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">vmax_end</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">c</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">niter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.alg_Paris" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>paris</em> algorithm from <a class="reference external" href="https://github.com/tbonald/paris">https://github.com/tbonald/paris</a></p>
+<dl class="simple">
+<dt>Arguments</dt><dd><p>None</p>
+</dd>
+<dt>Reference</dt><dd><p>Bonald, Thomas, et al. “Hierarchical Graph Clustering using Node Pair Sampling.” arXiv preprint arXiv:1806.01664 (2018).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.alg_lso_cluster">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">alg_lso_cluster</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.alg_lso_cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>lso-cluster</em> algorithm from <a class="reference external" href="https://github.com/twanvl/graph-cluster">https://github.com/twanvl/graph-cluster</a></p>
+<p>Please specify long-format options. Don’t specify output.</p>
+<dl>
+<dt>Arguments</dt><dd><p>Optional parameters regarding the clustering:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 94%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>‘eval’,</p></td>
+<td><p>clustering Evaluate the objective function on clustering, do not optimize.</p></td>
+</tr>
+<tr class="row-even"><td><p>‘init’,</p></td>
+<td><p>clustering Use the given clustering as initial value for the optimization. Default: each node is initially in a separate cluster, i.e. clustering=1:length(A).</p></td>
+</tr>
+</tbody>
+</table>
+<p>Optional parameters regarding the objective:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 93%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>‘loss’,</p></td>
+<td><p>loss Use the given loss/objective function. The loss is given a string name. See below for a list of supported loss functions. Default: loss = ‘modularity’</p></td>
+</tr>
+<tr class="row-even"><td><p>‘total_volume’,</p></td>
+<td><p>m Replace the total volume (sum of edges) by m. Many objectives use the total volume for normalization, and changing it will change the scale at which clusters are found. Usually increasing the total volume will result in larger clusters. Default: m = sum(sum(A))</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘extra_loss’,</p></td>
+<td><p>alpha Add a term to the loss function that penalizes the volume of clusters, with weight alpha.</p></td>
+</tr>
+<tr class="row-even"><td><p>‘num_clusters’,</p></td>
+<td><p>n Force the solution to have the given number of clusters. The algorithm uses a binary search to alter the objective until it finds a solution with the given number of clusters. The alteration is the same as the one used by extra_loss.</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘min_num_cluster’,</p></td>
+<td><p>n Force the solution to have at least the given number of clusters.</p></td>
+</tr>
+<tr class="row-even"><td><p>‘max_num_cluster’,</p></td>
+<td><p>n Force the solution to have at most the given number of clusters.</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘max_cluster_size’,</p></td>
+<td><p>n Allow clusters to have at most n nodes.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Optional parameters about internal algorithm details, you only need these if you know what you are doing:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>‘seed’,</p></td>
+<td><p>random_seed Use a given random seed. By default a fixed seed is used, so repeated runs with the same input give the same output.</p></td>
+</tr>
+<tr class="row-even"><td><p>‘num_repeats’,</p></td>
+<td><p>n Repeat the search n times from scratch with different random seeds and return the best result. Default: 1</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘num_partitions’,</p></td>
+<td><p>n Number of times to try and break apart the clusters and re-cluster them Default: 0</p></td>
+</tr>
+<tr class="row-even"><td><p>‘optimize_exhaustive’,</p></td>
+<td><p>bool Use an exhaustive search instead of local search. This is of course very slow. Can be combined with max_num_cluster. Default: false.</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘optimize_higher_level’,</p></td>
+<td><p>bool Use a hierarchical optimizer, where small clusters are considered as nodes of a higher level graph. Default: true.</p></td>
+</tr>
+<tr class="row-even"><td><p>‘always_consider_empty’,</p></td>
+<td><p>bool Always consider the move of a node into a new singleton cluster. Default: true.</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘num_loss_tweaks’,</p></td>
+<td><p>n Maximum number of iterations in the binary search to force the specified number of clusters. Default: 32</p></td>
+</tr>
+<tr class="row-even"><td><p>‘check_invariants’,</p></td>
+<td><p>bool Check invariants of the algorithm (for debugging). Default: false.</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘trace_file’,</p></td>
+<td><p>filename Write a trace of the steps performed by the optimization algorithm to a file in JSON format.</p></td>
+</tr>
+<tr class="row-even"><td><p>‘verbose’,</p></td>
+<td><p>level Level of debug output. Levels go up to 7 and are increasingly chatty. Default: level = 0, i.e. no output.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Some of the supported loss functions are:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>‘modularity’,</p></td>
+<td><p>loss = -sum_c (w_c/m - v_c^2/m^2) This is the negation of the usual definition</p></td>
+</tr>
+<tr class="row-even"><td><p>‘infomap’:</p></td>
+<td><p>The infomap objective by [3].</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘ncut’:</p></td>
+<td><p>Normalized cut, loss = sum_c (v_c - w_c) / n_c</p></td>
+</tr>
+<tr class="row-even"><td><p>‘rcut’:</p></td>
+<td><p>Ratio cut, loss = sum_c (v_c - w_c) / v_c</p></td>
+</tr>
+<tr class="row-odd"><td><p>{‘pmod’,p}:</p></td>
+<td><p>Modularity with a different power, loss = -sum_c (w_c/m - (v_c/m)^p / (p-1))</p></td>
+</tr>
+<tr class="row-even"><td><p>{‘mom’,m}:</p></td>
+<td><p>Monotonic variant of modularity, loss = -sum_c (w_c/(m + 2v_c) - (v_c/(m + 2v_c))^2)</p></td>
+</tr>
+<tr class="row-odd"><td><p>‘w-log-v’,</p></td>
+<td><p>loss = sum_c (w_c/m * log(v_c) )</p></td>
+</tr>
+<tr class="row-even"><td><p>num loss = <a href="#id7"><span class="problematic" id="id8">|C|</span></a>:</p></td>
+<td><p>Minimize the number of clusters, this leads to finding the connected components.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt>Reference</dt><dd><p>Graph clustering: does the optimization procedure matter more than the objective function?; Twan van Laarhoven and Elena Marchiori; Physical Review E 87, 012812 (2013)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.alg_streamcom">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">alg_streamcom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">vmax_start</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">vmax_end</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">c</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">niter</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.alg_streamcom" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper of <em>streamcom</em> algorithm from <a class="reference external" href="https://github.com/ahollocou/graph-streaming">https://github.com/ahollocou/graph-streaming</a></p>
+<dl>
+<dt>Arguments</dt><dd><p>Usage: streamcom &lt;flags&gt;
+Availaible flags:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 67%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-f [graph file name] :</p></td>
+<td><p>Specifies the graph file.</p></td>
+</tr>
+<tr class="row-even"><td><p>–skip [number of lines] :</p></td>
+<td><p>Specifies the number of lines to skip in the graph file.</p></td>
+</tr>
+<tr class="row-odd"><td><p>-o [output file name] :</p></td>
+<td><p>Specifies the output file for communities.</p></td>
+</tr>
+<tr class="row-even"><td><p>–vmax-start [maximum volume range start] :</p></td>
+<td><p>Specifies the maximum volume for the aggregation phase, beginning of the range.</p></td>
+</tr>
+<tr class="row-odd"><td><p>–vmax-end [maximum volume range end] :</p></td>
+<td><p>Specifies the maximum volume for the aggregation phase, end of the range.</p></td>
+</tr>
+<tr class="row-even"><td><p>-c [condition] :</p></td>
+<td><p>Specifies the aggregation condition for the aggregation phase: 0 is AND and 1 is OR.</p></td>
+</tr>
+<tr class="row-odd"><td><p>–seed [random seed]:</p></td>
+<td><p>Specifies the random seed if the edges need to be shuffle.</p></td>
+</tr>
+<tr class="row-even"><td><p>–niter [number of iteration]:</p></td>
+<td><p>Specifies the number of iteration of the algorithm.</p></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt>Reference</dt><dd><p>Hollocou, Alexandre, et al. “A Streaming Algorithm for Graph Clustering.” arXiv preprint arXiv:1712.04337 (2017)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Graph Clustering Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="pydoc.html">API Documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydoc_data.html">Dataset (aka graph and/or cluster)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydoc_metrics.html">Metrics</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="pydoc.html">API Documentation</a><ul>
+      <li>Previous: <a href="pydoc.html" title="previous chapter">API Documentation</a></li>
+      <li>Next: <a href="pydoc_data.html" title="next chapter">Dataset (aka graph and/or cluster)</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Lizhen Shi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/usage/pydoc_alg.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

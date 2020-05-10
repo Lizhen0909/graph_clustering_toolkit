@@ -1,0 +1,3067 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;no title&gt; &#8212; Graph Clustering Toolkit asdf documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">pkgutil</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s2">&quot;../../graph_clustering_toolkit/python/src/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">gct.alg</span>
+<span class="kn">from</span> <span class="nn">gct.alg.clustering</span> <span class="kn">import</span> <span class="n">ClusteringAlg</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<script type="text/javascript">
+<!--
+
+{
+        var element = document.getElementById('NetworKit_script');
+        if (element) {
+                element.parentNode.removeChild(element);
+        }
+        element = document.createElement('script');
+        element.type = 'text/javascript';
+        element.innerHTML = 'function NetworKit_pageEmbed(id) { var i, j; var elements; elements = document.getElementById(id).getElementsByClassName("Plot"); for (i=0; i<elements.length; i++) { elements[i].id = id + "_Plot_" + i; var data = elements[i].getAttribute("data-image").split("|"); elements[i].removeAttribute("data-image"); var content = "<div class=\\"Image\\" id=\\"" + elements[i].id + "_Image\\" />"; elements[i].innerHTML = content; elements[i].setAttribute("data-image-index", 0); elements[i].setAttribute("data-image-length", data.length); for (j=0; j<data.length; j++) { elements[i].setAttribute("data-image-" + j, data[j]); } NetworKit_plotUpdate(elements[i]); elements[i].onclick = function (e) { NetworKit_overlayShow((e.target) ? e.target : e.srcElement); } } elements = document.getElementById(id).getElementsByClassName("HeatCell"); for (i=0; i<elements.length; i++) { var data = parseFloat(elements[i].getAttribute("data-heat")); var color = "#00FF00"; if (data <= 1 && data > 0) { color = "hsla(0, 100%, 75%, " + (data) + ")"; } else if (data <= 0 && data >= -1) { color = "hsla(240, 100%, 75%, " + (-data) + ")"; } elements[i].style.backgroundColor = color; } elements = document.getElementById(id).getElementsByClassName("Details"); for (i=0; i<elements.length; i++) { elements[i].setAttribute("data-title", "-"); NetworKit_toggleDetails(elements[i]); elements[i].onclick = function (e) { NetworKit_toggleDetails((e.target) ? e.target : e.srcElement); } } elements = document.getElementById(id).getElementsByClassName("MathValue"); for (i=elements.length-1; i>=0; i--) { value = elements[i].innerHTML.trim(); if (value === "nan") { elements[i].parentNode.innerHTML = "" } } elements = document.getElementById(id).getElementsByClassName("SubCategory"); for (i=elements.length-1; i>=0; i--) { value = elements[i].innerHTML.trim(); if (value === "") { elements[i].parentNode.removeChild(elements[i]) } } elements = document.getElementById(id).getElementsByClassName("Category"); for (i=elements.length-1; i>=0; i--) { value = elements[i].innerHTML.trim(); if (value === "") { elements[i].parentNode.removeChild(elements[i]) } } var isFirefox = false; try { isFirefox = typeof InstallTrigger !== "undefined"; } catch (e) {} if (!isFirefox) { alert("Currently the function\'s output is only fully supported by Firefox."); } } function NetworKit_plotUpdate(source) { var index = source.getAttribute("data-image-index"); var data = source.getAttribute("data-image-" + index); var image = document.getElementById(source.id + "_Image"); image.style.backgroundImage = "url(" + data + ")"; } function NetworKit_showElement(id, show) { var element = document.getElementById(id); element.style.display = (show) ? "block" : "none"; } function NetworKit_overlayShow(source) { NetworKit_overlayUpdate(source); NetworKit_showElement("NetworKit_Overlay", true); } function NetworKit_overlayUpdate(source) { document.getElementById("NetworKit_Overlay_Title").innerHTML = source.title; var index = source.getAttribute("data-image-index"); var data = source.getAttribute("data-image-" + index); var image = document.getElementById("NetworKit_Overlay_Image"); image.setAttribute("data-id", source.id); image.style.backgroundImage = "url(" + data + ")"; var link = document.getElementById("NetworKit_Overlay_Toolbar_Bottom_Save"); link.href = data; link.download = source.title + ".svg"; } function NetworKit_overlayImageShift(delta) { var image = document.getElementById("NetworKit_Overlay_Image"); var source = document.getElementById(image.getAttribute("data-id")); var index = parseInt(source.getAttribute("data-image-index")); var length = parseInt(source.getAttribute("data-image-length")); var index = (index+delta) % length; if (index < 0) { index = length + index; } source.setAttribute("data-image-index", index); NetworKit_overlayUpdate(source); } function NetworKit_toggleDetails(source) { var childs = source.children; var show = false; if (source.getAttribute("data-title") == "-") { source.setAttribute("data-title", "+"); show = false; } else { source.setAttribute("data-title", "-"); show = true; } for (i=0; i<childs.length; i++) { if (show) { childs[i].style.display = "block"; } else { childs[i].style.display = "none"; } } }';
+        element.setAttribute('id', 'NetworKit_script');
+        document.head.appendChild(element);
+}
+
+
+{
+        var element = document.getElementById('NetworKit_style');
+        if (element) {
+                element.parentNode.removeChild(element);
+        }
+        element = document.createElement('style');
+        element.type = 'text/css';
+        element.innerHTML = '.NetworKit_Page { font-family: Arial, Helvetica, sans-serif; font-size: 14px; } .NetworKit_Page .Value:before { font-family: Arial, Helvetica, sans-serif; font-size: 1.05em; content: attr(data-title) ":"; margin-left: -2.5em; padding-right: 0.5em; } .NetworKit_Page .Details .Value:before { display: block; } .NetworKit_Page .Value { font-family: monospace; white-space: pre; padding-left: 2.5em; white-space: -moz-pre-wrap !important; white-space: -pre-wrap; white-space: -o-pre-wrap; white-space: pre-wrap; word-wrap: break-word; tab-size: 4; -moz-tab-size: 4; } .NetworKit_Page .Category { clear: both; padding-left: 1em; margin-bottom: 1.5em; } .NetworKit_Page .Category:before { content: attr(data-title); font-size: 1.75em; display: block; margin-left: -0.8em; margin-bottom: 0.5em; } .NetworKit_Page .SubCategory { margin-bottom: 1.5em; padding-left: 1em; } .NetworKit_Page .SubCategory:before { font-size: 1.6em; display: block; margin-left: -0.8em; margin-bottom: 0.5em; } .NetworKit_Page .SubCategory[data-title]:before { content: attr(data-title); } .NetworKit_Page .Block { display: block; } .NetworKit_Page .Block:after { content: "."; visibility: hidden; display: block; height: 0; clear: both; } .NetworKit_Page .Block .Thumbnail_Overview, .NetworKit_Page .Block .Thumbnail_ScatterPlot { width: 260px; float: left; } .NetworKit_Page .Block .Thumbnail_Overview img, .NetworKit_Page .Block .Thumbnail_ScatterPlot img { width: 260px; } .NetworKit_Page .Block .Thumbnail_Overview:before, .NetworKit_Page .Block .Thumbnail_ScatterPlot:before { display: block; text-align: center; font-weight: bold; } .NetworKit_Page .Block .Thumbnail_Overview:before { content: attr(data-title); } .NetworKit_Page .HeatCell { font-family: "Courier New", Courier, monospace; cursor: pointer; } .NetworKit_Page .HeatCell, .NetworKit_Page .HeatCellName { display: inline; padding: 0.1em; margin-right: 2px; background-color: #FFFFFF } .NetworKit_Page .HeatCellName { margin-left: 0.25em; } .NetworKit_Page .HeatCell:before { content: attr(data-heat); display: inline-block; color: #000000; width: 4em; text-align: center; } .NetworKit_Page .Measure { clear: both; } .NetworKit_Page .Measure .Details { cursor: pointer; } .NetworKit_Page .Measure .Details:before { content: "[" attr(data-title) "]"; display: block; } .NetworKit_Page .Measure .Details .Value { border-left: 1px dotted black; margin-left: 0.4em; padding-left: 3.5em; pointer-events: none; } .NetworKit_Page .Measure .Details .Spacer:before { content: "."; opacity: 0.0; pointer-events: none; } .NetworKit_Page .Measure .Plot { width: 440px; height: 440px; cursor: pointer; float: left; margin-left: -0.9em; margin-right: 20px; } .NetworKit_Page .Measure .Plot .Image { background-repeat: no-repeat; background-position: center center; background-size: contain; height: 100%; pointer-events: none; } .NetworKit_Page .Measure .Stat { width: 500px; float: left; } .NetworKit_Page .Measure .Stat .Group { padding-left: 1.25em; margin-bottom: 0.75em; } .NetworKit_Page .Measure .Stat .Group .Title { font-size: 1.1em; display: block; margin-bottom: 0.3em; margin-left: -0.75em; border-right-style: dotted; border-right-width: 1px; border-bottom-style: dotted; border-bottom-width: 1px; background-color: #D0D0D0; padding-left: 0.2em; } .NetworKit_Page .Measure .Stat .Group .List { -webkit-column-count: 3; -moz-column-count: 3; column-count: 3; } .NetworKit_Page .Measure .Stat .Group .List .Entry { position: relative; line-height: 1.75em; } .NetworKit_Page .Measure .Stat .Group .List .Entry[data-tooltip]:before { position: absolute; left: 0; top: -40px; background-color: #808080; color: #ffffff; height: 30px; line-height: 30px; border-radius: 5px; padding: 0 15px; content: attr(data-tooltip); white-space: nowrap; display: none; } .NetworKit_Page .Measure .Stat .Group .List .Entry[data-tooltip]:after { position: absolute; left: 15px; top: -10px; border-top: 7px solid #808080; border-left: 7px solid transparent; border-right: 7px solid transparent; content: ""; display: none; } .NetworKit_Page .Measure .Stat .Group .List .Entry[data-tooltip]:hover:after, .NetworKit_Page .Measure .Stat .Group .List .Entry[data-tooltip]:hover:before { display: block; } .NetworKit_Page .Measure .Stat .Group .List .Entry .MathValue { font-family: "Courier New", Courier, monospace; } .NetworKit_Page .Measure:after { content: "."; visibility: hidden; display: block; height: 0; clear: both; } .NetworKit_Page .PartitionPie { clear: both; } .NetworKit_Page .PartitionPie img { width: 600px; } #NetworKit_Overlay { left: 0px; top: 0px; display: none; position: absolute; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1000; } #NetworKit_Overlay_Title { position: absolute; color: white; transform: rotate(-90deg); width: 32em; height: 32em; padding-right: 0.5em; padding-top: 0.5em; text-align: right; font-size: 40px; } #NetworKit_Overlay .button { background: white; cursor: pointer; } #NetworKit_Overlay .button:before { size: 13px; display: inline-block; text-align: center; margin-top: 0.5em; margin-bottom: 0.5em; width: 1.5em; height: 1.5em; } #NetworKit_Overlay .icon-close:before { content: "X"; } #NetworKit_Overlay .icon-previous:before { content: "P"; } #NetworKit_Overlay .icon-next:before { content: "N"; } #NetworKit_Overlay .icon-save:before { content: "S"; } #NetworKit_Overlay_Toolbar_Top, #NetworKit_Overlay_Toolbar_Bottom { position: absolute; width: 40px; right: 13px; text-align: right; z-index: 1100; } #NetworKit_Overlay_Toolbar_Top { top: 0.5em; } #NetworKit_Overlay_Toolbar_Bottom { Bottom: 0.5em; } #NetworKit_Overlay_ImageContainer { position: absolute; top: 5%; left: 5%; height: 90%; width: 90%; background-repeat: no-repeat; background-position: center center; background-size: contain; } #NetworKit_Overlay_Image { height: 100%; width: 100%; background-repeat: no-repeat; background-position: center center; background-size: contain; }';
+        element.setAttribute('id', 'NetworKit_style');
+        document.head.appendChild(element);
+}
+
+
+{
+        var element = document.getElementById('NetworKit_Overlay');
+        if (element) {
+                element.parentNode.removeChild(element);
+        }
+        element = document.createElement('div');
+        element.innerHTML = '<div id="NetworKit_Overlay_Toolbar_Top"><div class="button icon-close" id="NetworKit_Overlay_Close" /></div><div id="NetworKit_Overlay_Title" /> <div id="NetworKit_Overlay_ImageContainer"> <div id="NetworKit_Overlay_Image" /> </div> <div id="NetworKit_Overlay_Toolbar_Bottom"> <div class="button icon-previous" onclick="NetworKit_overlayImageShift(-1)" /> <div class="button icon-next" onclick="NetworKit_overlayImageShift(1)" /> <a id="NetworKit_Overlay_Toolbar_Bottom_Save"><div class="button icon-save" /></a> </div>';
+        element.setAttribute('id', 'NetworKit_Overlay');
+        document.body.appendChild(element);
+        document.getElementById('NetworKit_Overlay_Close').onclick = function (e) {
+                document.getElementById('NetworKit_Overlay').style.display = 'none';
+        }
+}
+
+-->
+</script></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING:smart_open.transport:unable to import &#39;smart_open.gcs&#39;, disabling that module
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">modules</span><span class="o">=</span><span class="p">[]</span>
+
+<span class="n">package</span> <span class="o">=</span> <span class="n">gct</span><span class="o">.</span><span class="n">alg</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="n">package</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
+<span class="k">for</span> <span class="n">importer</span><span class="p">,</span> <span class="n">modname</span><span class="p">,</span> <span class="n">ispkg</span> <span class="ow">in</span> <span class="n">pkgutil</span><span class="o">.</span><span class="n">iter_modules</span><span class="p">(</span><span class="n">package</span><span class="o">.</span><span class="n">__path__</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">modname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;gct.alg.AlgTestBase&#39;</span><span class="p">]:</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Found submodule </span><span class="si">%s</span><span class="s2"> (is a package: </span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">modname</span><span class="p">,</span> <span class="n">ispkg</span><span class="p">))</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">modname</span><span class="p">,</span> <span class="n">fromlist</span><span class="o">=</span><span class="s2">&quot;dummy&quot;</span><span class="p">)</span>
+        <span class="n">modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Imported&quot;</span><span class="p">,</span> <span class="n">module</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Found submodule gct.alg.OSLOM_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.OSLOM_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/OSLOM_clustering.py&#39;&gt;
+Found submodule gct.alg.PyCABeM_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.PyCABeM_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/PyCABeM_clustering.py&#39;&gt;
+Found submodule gct.alg.cdc_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.cdc_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/cdc_clustering.py&#39;&gt;
+Found submodule gct.alg.cggc_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.cggc_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/cggc_clustering.py&#39;&gt;
+Found submodule gct.alg.clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/clustering.py&#39;&gt;
+Found submodule gct.alg.dct_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.dct_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/dct_clustering.py&#39;&gt;
+Found submodule gct.alg.function (is a package: False)
+Imported &lt;module &#39;gct.alg.function&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/function.py&#39;&gt;
+Found submodule gct.alg.igraph_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.igraph_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/igraph_clustering.py&#39;&gt;
+Found submodule gct.alg.karateclub_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.karateclub_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/karateclub_clustering.py&#39;&gt;
+Found submodule gct.alg.mcl_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.mcl_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/mcl_clustering.py&#39;&gt;
+Found submodule gct.alg.networkit_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.networkit_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/networkit_clustering.py&#39;&gt;
+Found submodule gct.alg.powergraph_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.powergraph_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/powergraph_clustering.py&#39;&gt;
+Found submodule gct.alg.scan_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.scan_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/scan_clustering.py&#39;&gt;
+Found submodule gct.alg.sklearn_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.sklearn_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/sklearn_clustering.py&#39;&gt;
+Found submodule gct.alg.snap_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.snap_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/snap_clustering.py&#39;&gt;
+Found submodule gct.alg.unsorted_clustering (is a package: False)
+Imported &lt;module &#39;gct.alg.unsorted_clustering&#39; from &#39;../../graph_clustering_toolkit/python/src/gct/alg/unsorted_clustering.py&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">template</span><span class="o">=</span>\
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">def {funname}(name, graph, {param}):</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">{docstring}</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    try:</span>
+<span class="sd">        obj = {clazname}(name)</span>
+<span class="sd">        obj.run(graph, {callparam})</span>
+<span class="sd">        result=Result(obj.result)</span>
+<span class="sd">        return result</span>
+<span class="sd">    except UnsupportedException as err:</span>
+<span class="sd">        print(&quot;Error: &quot; + str(err), file=sys.stderr)</span>
+<span class="sd">        return None</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">len</span><span class="p">(</span><span class="n">modules</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+16
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">get_run_args</span><span class="p">(</span><span class="n">claz</span><span class="p">):</span>
+    <span class="n">a</span><span class="o">=</span><span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">claz</span><span class="p">,</span><span class="s1">&#39;run&#39;</span><span class="p">))</span>
+    <span class="n">keys</span><span class="o">=</span> <span class="p">[</span> <span class="n">u</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">u</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;self&#39;</span><span class="p">,</span><span class="s1">&#39;data&#39;</span><span class="p">]]</span>
+    <span class="n">b</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;self, &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;data, &quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;(&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;)&quot;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">c</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="s1">&#39;**kwargs&#39;</span> <span class="k">if</span> <span class="n">u</span> <span class="o">==</span> <span class="s1">&#39;kwargs&#39;</span> <span class="k">else</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">u</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">outputs</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">methods</span><span class="o">=</span><span class="p">[]</span>
+<span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span>  <span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">module</span><span class="p">)):</span>
+        <span class="n">obj</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span><span class="n">ClusteringAlg</span><span class="p">)</span> <span class="ow">and</span> <span class="n">obj</span> <span class="o">!=</span> <span class="n">ClusteringAlg</span> \
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span><span class="s1">&#39;ignore_export&#39;</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+            <span class="n">funname</span><span class="o">=</span><span class="n">module</span><span class="o">.</span><span class="n">prefix</span><span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="n">name</span>
+            <span class="n">clazname</span><span class="o">=</span><span class="n">module</span><span class="o">.</span><span class="vm">__name__</span><span class="o">+</span><span class="s2">&quot;.&quot;</span><span class="o">+</span><span class="n">name</span>
+            <span class="n">docstring</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="vm">__doc__</span>
+            <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="n">get_run_args</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+            <span class="n">outputs</span><span class="o">.</span><span class="n">append</span> <span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">funname</span><span class="o">=</span><span class="n">funname</span><span class="p">,</span><span class="n">clazname</span><span class="o">=</span><span class="n">clazname</span><span class="p">,</span> <span class="n">docstring</span><span class="o">=</span><span class="n">docstring</span><span class="p">,</span>
+                                            <span class="n">param</span><span class="o">=</span><span class="n">a</span><span class="p">,</span><span class="n">callparam</span><span class="o">=</span><span class="n">b</span><span class="p">))</span>
+            <span class="n">methods</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">funname</span><span class="p">)</span>
+    <span class="c1">#break</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Infohiermap
+Infomap
+OSLOM
+copra
+louvain_method
+lpm
+modopt
+GANXiSw
+HiReCS
+LabelRank
+CONGA
+CliquePercolation
+Connected_Iterative_Scan
+DEMON
+EAGLE
+FastCpm
+GCE
+HDEMON
+LinkCommunities
+MOSES
+MSCD_AFG
+MSCD_HSLSW
+MSCD_LFK
+MSCD_LFK2
+MSCD_RB
+MSCD_RN
+MSCD_SO
+MSCD_SOM
+ParCPM
+SVINET
+TopGC
+clique_modularity
+CGGC
+dlplm
+dlslm
+dlslm_map_eq
+dlslm_no_contraction
+dlslm_with_seq
+infomap
+seq_louvain
+community_edge_betweenness
+community_fastgreedy
+community_infomap
+community_label_propagation
+community_leading_eigenvector
+community_multilevel
+community_optimal_modularity
+community_spinglass
+community_walktrap
+BigClam
+DANMF
+EdMot
+EgoNetSplitter
+NNSED
+SCD
+SymmNMF
+MCL
+CutClustering
+LPDegreeOrdered
+PLM
+PLP
+GossipMap
+RelaxMap
+pg_label_propagation
+AnyScan_Scan
+AnyScan_anyScan
+AnyScan_anyScanParl
+AnyScan_pScan
+Scanpp
+pScan
+ppScan
+ppScanSSE
+AffinityPropagation
+SpectralClustering
+Clauset_Newman_Moore
+Girvan_Newman
+Paris
+lso_cluster
+streamcom
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">str</span><span class="p">(</span><span class="n">methods</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">methods</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#34;[&#39;oslom_Infohiermap&#39;, &#39;oslom_Infomap&#39;, &#39;oslom_OSLOM&#39;, &#39;oslom_copra&#39;, &#39;oslom_louvain_method&#39;, &#39;oslom_lpm&#39;, &#39;oslom_modopt&#39;, &#39;pycabem_GANXiSw&#39;, &#39;pycabem_HiReCS&#39;, &#39;pycabem_LabelRank&#39;, &#39;cdc_CONGA&#39;, &#39;cdc_CliquePercolation&#39;, &#39;cdc_Connected_Iterative_Scan&#39;, &#39;cdc_DEMON&#39;, &#39;cdc_EAGLE&#39;, &#39;cdc_FastCpm&#39;, &#39;cdc_GCE&#39;, &#39;cdc_HDEMON&#39;, &#39;cdc_LinkCommunities&#39;, &#39;cdc_MOSES&#39;, &#39;cdc_MSCD_AFG&#39;, &#39;cdc_MSCD_HSLSW&#39;, &#39;cdc_MSCD_LFK&#39;, &#39;cdc_MSCD_LFK2&#39;, &#39;cdc_MSCD_RB&#39;, &#39;cdc_MSCD_RN&#39;, &#39;cdc_MSCD_SO&#39;, &#39;cdc_MSCD_SOM&#39;, &#39;cdc_ParCPM&#39;, &#39;cdc_SVINET&#39;, &#39;cdc_TopGC&#39;, &#39;cdc_clique_modularity&#39;, &#39;cgcc_CGGC&#39;, &#39;dct_dlplm&#39;, &#39;dct_dlslm&#39;, &#39;dct_dlslm_map_eq&#39;, &#39;dct_dlslm_no_contraction&#39;, &#39;dct_dlslm_with_seq&#39;, &#39;dct_infomap&#39;, &#39;dct_seq_louvain&#39;, &#39;igraph_community_edge_betweenness&#39;, &#39;igraph_community_fastgreedy&#39;, &#39;igraph_community_infomap&#39;, &#39;igraph_community_label_propagation&#39;, &#39;igraph_community_leading_eigenvector&#39;, &#39;igraph_community_multilevel&#39;, &#39;igraph_community_optimal_modularity&#39;, &#39;igraph_community_spinglass&#39;, &#39;igraph_community_walktrap&#39;, &#39;mcl_MCL&#39;, &#39;networkit_CutClustering&#39;, &#39;networkit_LPDegreeOrdered&#39;, &#39;networkit_PLM&#39;, &#39;networkit_PLP&#39;, &#39;alg_GossipMap&#39;, &#39;alg_RelaxMap&#39;, &#39;alg_pg_label_propagation&#39;, &#39;scan_AnyScan_Scan&#39;, &#39;scan_AnyScan_anyScan&#39;, &#39;scan_AnyScan_anyScanParl&#39;, &#39;scan_AnyScan_pScan&#39;, &#39;scan_Scanpp&#39;, &#39;scan_pScan&#39;, &#39;scan_ppScan&#39;, &#39;scan_ppScanSSE&#39;, &#39;sklearn_AffinityPropagation&#39;, &#39;sklearn_SpectralClustering&#39;, &#39;snap_Clauset_Newman_Moore&#39;, &#39;snap_Girvan_Newman&#39;, &#39;alg_Paris&#39;, &#39;alg_lso_cluster&#39;, &#39;alg_streamcom&#39;]&#34;,
+ 72)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span> <span class="s2">&quot;__ALG_LIST__ += </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">methods</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+def oslom_Infohiermap(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *Hierarchical Infomap* collected from `OSLOM &lt;http://www.oslom.org/index.html&gt;`_
+
+    Arguments
+        seed : int,         random seed
+
+    Reference
+        Martin Rosvall and Carl T. Bergstrom Multilevel compression of random walks on
+        networks reveals hierarchical organization in large integrated systems. PLoS ONE 6(4):
+        e18209 (2011).
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.OSLOM_clustering.Infohiermap(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def oslom_Infomap(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *infomap* collected from `OSLOM &lt;http://www.oslom.org/index.html&gt;`_
+
+    Arguments
+        seed : int,         random seed
+
+    Reference
+        Rosvall, M. and Bergstrom, C. T. Maps of random
+        walks on complex networks reveal community structure. Proc. Natl. Acad. Sci.
+        USA 105, 11181123 (2008).
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.OSLOM_clustering.Infomap(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def oslom_OSLOM(name, graph, seed=None, r=10, hr=50, t=0.1, cp=0.5, fast=False, singlet=False, infomap=False, copra=False, louvain=False, runs=1):
+    &#39;&#39;&#39;
+
+    A wrapper of *OSLOM (Order Statistics Local Optimization Method)* collected from `OSLOM &lt;http://www.oslom.org/index.html&gt;`_
+
+    Arguments
+
+      [-r R]:                       sets the number of runs for the first hierarchical level, bigger this value, more accurate the output (of course, it takes more). Default value is 10.
+
+      [-hr R]:                      sets the number of runs  for higher hierarchical levels. Default value is 50 (the method should be faster since the aggregated network is usually much smaller).
+
+      [-seed m]:                    sets m equal to the seed for the random number generator. (instead of reading from time_seed.dat)
+
+      [-hint filename]:             takes a partition from filename. The file is expected to have the nodes belonging to the same cluster on the same line.
+
+      [-load filename]:             takes modules from a tp file you already got in a previous run.
+
+      [-t T]:                       sets the threshold equal to T, default value is 0.1
+
+      [-singlet]:                    finds singletons. If you use this flag, the program generally finds a number of nodes which are not assigned to any module.
+                                    the program will assign each node with at least one not homeless neighbor. This only applies to the lowest hierarchical level.
+
+      [-cp P]:                      sets a kind of resolution parameter equal to P. This parameter is used to decide if it is better to take some modules or their union.
+                                    Default value is 0.5. Bigger value leads to bigger clusters. P must be in the interval (0, 1).
+
+      [-fast]:                      is equivalent to &#34;-r 1 -hr 1&#34; (the fastest possible execution).
+
+      [-infomap runs]:              calls infomap and uses its output as a starting point. runs is the number of times you want to call infomap.
+
+      [-copra runs]:                same as above using copra.
+
+      [-louvain runs]:              same as above using louvain method.
+
+
+    Reference
+        A. Lancichinetti, F. Radicchi, J.J. Ramasco and S. Fortunato Finding statistically sig-
+        nificant communities in networks PloS One 6, e18961 (2011)
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.OSLOM_clustering.OSLOM(name)
+        obj.run(graph, seed=seed, r=r, hr=hr, t=t, cp=cp, fast=fast, singlet=singlet, infomap=infomap, copra=copra, louvain=louvain, runs=runs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def oslom_copra(name, graph, v=5, v1=None, v2=None, prop=None, repeat=None, mo=None, nosplit=False, extrasimplify=False, q=False, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *COPRA (Community Overlap PRopagation Algorithm)* collected from `OSLOM &lt;http://www.oslom.org/index.html&gt;`_
+
+    Arguments
+        Usage: java COPRA &lt;file&gt; &lt;options&gt;
+
+        ============== ===============================================================
+        -bi            &lt;file&gt; is a bipartite network. &#34;-w&#34; not allowed.
+        -w             &lt;file&gt; is a weighted unipartite network. &#34;-bi&#34; not allowed.
+        -v &lt;v&gt;         &lt;v&gt; is maximum number of communities/vertex. Default: 1.
+        -vs &lt;v1&gt; &lt;v2&gt;  Repeats for -v &lt;v&gt; for all &lt;v&gt; between &lt;v1&gt;-&lt;v2&gt;.
+        -prop &lt;p&gt;      &lt;p&gt; is maximum number of propagations. Default: no limit.
+        -repeat &lt;r&gt;    Repeats &lt;r&gt; times, for each &lt;v&gt;, and computes average.
+        -mo            Compute the overlap modularity of each solution.
+        -nosplit       Don&#39;t split discontiguous communities.
+        -extrasimplify Simplify communities again after splitting.
+        -q             Don&#39;t show information when starting program.
+        ============== ===============================================================
+
+    Reference
+        Gregory, Steve. &#34;Finding overlapping communities in networks by label propagation.&#34;
+        New Journal of Physics 12.10 (2010): 103018.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.OSLOM_clustering.copra(name)
+        obj.run(graph, v=v, v1=v1, v2=v2, prop=prop, repeat=repeat, mo=mo, nosplit=nosplit, extrasimplify=extrasimplify, q=q, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def oslom_louvain_method(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *Louvain* algorithm collected from `OSLOM &lt;http://www.oslom.org/index.html&gt;`_
+
+    Arguments
+        seed : int, random seed
+
+    Reference
+        V.D. Blondel, J.-L. Guillaume, R. Lambiotte and E. Lefebvre Fast unfolding of com-
+        munity hierarchies in large networks. J. Stat. Mech. 2008 (10): P10008
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.OSLOM_clustering.louvain_method(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def oslom_lpm(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *Label Propagation Method* collected from `OSLOM &lt;http://www.oslom.org/index.html&gt;`_
+
+    Arguments
+        seed : int,         random seed
+
+    Reference
+        Raghavan, U. N., Albert, R. and Kumara, S. Near linear time algorithm to detect
+        community structures in large-scale networks. Phys. Rev. E 76, 036106 (2007).
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.OSLOM_clustering.lpm(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def oslom_modopt(name, graph, seed=None, lamb=1, trials=5, temp_step=0.999, initial_temp=1e-06):
+    &#39;&#39;&#39;
+
+    A wrapper of *Modularity Optimization (Simulated Annealing)* collected from `OSLOM &lt;http://www.oslom.org/index.html&gt;`_
+
+    Arguments
+        ./modopt [netfile] [random_seed] [lambda] [trials] [temp_step] [initial_temp]
+
+        default random_seed = 1
+
+        default lambda= 1
+
+        default trials= 5
+
+        default temp_step= 0.999
+
+        default initial_temp= 1e-6
+
+    Reference
+        Sales-Pardo, M., Guimer, R., Moreira, A. A. and Amaral, L. A. N Extracting the
+        hierarchical organization of complex systems. Proc. Natl. Acad. Sci. USA 104, 1522415229 (2007).
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.OSLOM_clustering.modopt(name)
+        obj.run(graph, seed=seed, lamb=lamb, trials=trials, temp_step=temp_step, initial_temp=initial_temp)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def pycabem_GANXiSw(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+
+    A wrapper of *GANXiSw* algorithm from https://sites.google.com/site/communitydetectionslpa/.
+
+    Arguments
+        GANXiSw 3.0.2(used to be SLPAw) is for weighted (directed) networks, version=3.0.2
+        Usage: java -jar GANXiSw.jar -i networkfile
+
+        =======  ===================================================
+          -i     input network file
+          -d     output director (default: output)
+          -L     set to 1 to use only the largest connected component
+          -t     maximum iteration (default: 100)
+          -run     number of repetitions
+          -r a     specific threshold in [0,0.5]
+          -ov     set to 0 to perform disjoint detection
+          -W         treat the input as a weighted network, set 0 to ignore the weights(default 1)
+          -Sym     set to 1 to make the edges symmetric/bi-directional (default 0)
+          -seed     user specified seed for random generator
+          -help     to display usage info
+        =======  ===================================================
+
+         -----------------------------Advanced Parameters---------------------------------
+
+        =============  ===================================================
+
+          -v             weighted version in {1,2,3}, default=3
+          -Oov         set to 1 to output overlapping file, default=0
+          -Onc         set to 1 to output &lt;nodeID communityID&gt; format, 2 to output &lt;communityID nodeID&gt; format
+          -minC         min community size threshold, default=2
+          -maxC         max community size threshold
+          -ev             embedded SLPAw&#39;s weighted version in {1,2,3}, default=1
+          -loopfactor     determine the num of loops for depomposing each large com, default=1.0
+          -Ohis1         set to 1 to output histgram Level1
+          -Ohis2         set to 1 to output histgram Level2
+          -OMem1         set to 1 to output each node&#39;s memory content at Level 1
+          -EC             evolution cutoff, a real value &gt; 1.0
+        =============  ===================================================
+
+        NOTE: 1. more parameters refer to Readme.pdf
+              2. parameters are *CASE-SENSITIVE*, e.g., -Onc is not -onc
+
+
+    Reference
+        J. Xie, B. K. Szymanski and X. Liu, &#34;SLPA: Uncovering Overlapping Communities in Social Networks via A Speaker-listener Interaction Dynamic Process&#34;
+
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.PyCABeM_clustering.GANXiSw(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def pycabem_HiReCS(name, graph, f=False, m=None, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *hirecs* algorithm from http://www.lumais.com/hirecs.
+
+    Arguments
+        Usage: ./hirecs [-o{t,c,j}] [-f] [-r] [-m&lt;float&gt;] &lt;adjacency_matrix.hig&gt;
+
+        ============   ===============================================================================
+          -c            clean links, skip links validation
+          -f            fast quazy-mutual clustering (faster). Default: strictly-mutual (better)
+          -r            rand reorder (shuffle) nodes and links on nodes construction
+          -m&lt;float&gt;       modularity profit margin for early exit, float E [-1, 1]. Default: -0.999, but on practice &gt;~= 0
+        ============   ===============================================================================
+
+    Reference
+        Cannot find any publication. Please refer to http://www.lumais.com/hirecs
+
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.PyCABeM_clustering.HiReCS(name)
+        obj.run(graph, f=f, m=m, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def pycabem_LabelRank(name, graph, cutoff_r=0.01, inflation_in=2, NBDisimilarity_q=0.3, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *LabelRank* algorithm from https://sites.google.com/site/communitydetectionslpa/.
+
+    Arguments
+        &gt; LabelRank netName cutoff_r inflation_in NBDisimilarity_q
+
+    Reference
+        J. Xie, B. K. Szymanski, &#34;LabelRank: A Stabilized Label Propagation Algorithm for Community Detection in Networks&#34;, IEEE NSW, West point, NY, 2013
+
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.PyCABeM_clustering.LabelRank(name)
+        obj.run(graph, cutoff_r=cutoff_r, inflation_in=inflation_in, NBDisimilarity_q=NBDisimilarity_q, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_CONGA(name, graph, silent=True, recompute=False, horizon=None, nComm=[5], weight=&#39;mean&#39;, seed=None):
+    &#39;&#39;&#39;
+
+    Cluster-Overlap Newman Girvan Algorithm
+
+    *Arguments*
+        Usage: java conga.CONGA &lt;file&gt; [-e] [-g f] [-n nC] [-s] [-cd t] [-f v] [-r]
+                             [-mem] [-m c] [-mo c] [-vad c] [-ov c]
+                             [-dia c] [-h h] [-GN] [-peacock s] [-w eW]
+        Options:
+          -n   Find clustering containing nC clusters. Default: 0.
+          -s   Silent operation: don&#39;t display steps in algorithm.
+          -r   Recompute clusters even if clustering file exists.
+          -h   Use region with horizon h. Default: unlimited.
+          -w   Include edge weights in computations. A positive number or &#39;min&#39;, &#39;mean&#39;,&#39;max&#39;.  Default: unweighted.
+
+    *Reference*
+        Gregory, Steve. &#34;An algorithm to find overlapping community structure in networks.&#34; European Conference on Principles of Data Mining and Knowledge Discovery. Springer, Berlin, Heidelberg, 2007.
+
+        Gregory, Steve. &#34;A fast algorithm to find overlapping communities in networks.&#34; Joint European Conference on Machine Learning and Knowledge Discovery in Databases. Springer, Berlin, Heidelberg, 2008.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.CONGA(name)
+        obj.run(graph, silent=silent, recompute=recompute, horizon=horizon, nComm=nComm, weight=weight, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_CliquePercolation(name, graph, k=None, verbose=False, seed=None):
+    &#39;&#39;&#39;
+
+    The sequential clique percolation algorithm is method for detecting clique percolation communities.
+    It is an alternative to CFinder: instead of finding maximal cliques in a graph and producing communities
+    of all the possible clique sizes, the SCP algorithm finds all the cliques of single size and produces
+    the community structure for all the possible thresholds.
+    The SCP algorithm should work well even for large sparse networks,
+    but might have trouble for dense networks and cliques of large size.
+
+    *Arguments*
+        Usage: ./k_clique [inputfile] [options]
+
+        Options:
+
+            -k=[clique size] : The size of the clique.
+
+            -v : Verbose mode.
+
+    *Reference*
+        Kumpula, Jussi M., et al. &#34;Sequential algorithm for fast clique percolation.&#34; Physical Review E 78.2 (2008): 026109.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.CliquePercolation(name)
+        obj.run(graph, k=k, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_Connected_Iterative_Scan(name, graph, l=None, seed=None):
+    &#39;&#39;&#39;
+
+    Connected Iterative Scan Connected Iterative Scan is also known at times as Locally Optimal Sets.
+
+    *Arguments*
+        ./cis -i network -o output -dl delimiter -s seed file -l lambda value
+
+    *Reference*
+        Kelley, Stephen. The existence and discovery of overlapping communities in large-scale networks.  Diss. Rensselaer Polytechnic Institute, 2009.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.Connected_Iterative_Scan(name)
+        obj.run(graph, l=l, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_DEMON(name, graph, epsilon=0.25, min_community_size=3, seed=None):
+    &#39;&#39;&#39;
+
+     DEMON
+
+    *Arguments*
+        epsilon  the tolerance required in order to merge communities
+
+        min_community_size: min_community_size
+
+    *Reference*
+        Michele Coscia, Giulio Rossetti, Fosca Giannotti, Dino Pedreschi:
+        DEMON: a local-first discovery method for overlapping communities.
+        KDD 2012:615-623
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.DEMON(name)
+        obj.run(graph, epsilon=epsilon, min_community_size=min_community_size, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_EAGLE(name, graph, nThread=None, seed=None):
+    &#39;&#39;&#39;
+
+    EAGLE (agglomerativE hierarchicAl clusterinG based on maximaL cliquE)
+
+    *Arguments*
+        Sinopsi: ./2009-eagle nThreads src &lt;dir|undir&gt; [dest]
+
+    *Reference*
+        Shen, Huawei, et al. &#34;Detect overlapping and hierarchical community structure in networks.&#34;
+        Physica A: Statistical Mechanics and its Applications 388.8 (2009): 1706-1712.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.EAGLE(name)
+        obj.run(graph, nThread=nThread, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_FastCpm(name, graph, k=4, seed=None):
+    &#39;&#39;&#39;
+
+     Find maximal cliques, via the Bron Kerbosch algorithm, http://en.wikipedia.org/wiki/Bron%E2%80%93Kerbosch_algorithm. Then perform k-clique percolation on these cliques, for a given value of k.
+
+    *Arguments*
+        k:  k for k-clique
+
+    *Reference*
+        Reid, Fergal, Aaron McDaid, and Neil Hurley.
+        &#34;Percolation computation in complex networks.&#34;
+        Proceedings of the 2012 international conference on advances in social networks analysis and mining (asonam 2012).
+        IEEE Computer Society, 2012.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.FastCpm(name)
+        obj.run(graph, k=k, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_GCE(name, graph, minimumCliqueSizeK=4, overlapToDiscardEta=0.6, fitnessExponentAlpha=1.0, CCHthresholdPhi=0.75, seed=None):
+    &#39;&#39;&#39;
+
+    Greedy Clique Expansion Community Finder
+    Community finder. Requires edge list of nodes. Processes graph in undirected, unweighted form.
+    Edgelist must be two values separated with non digit character.
+
+    *Arguments*
+        Use with either full (if specify all 5) or default (specify just graph file) parameters:
+
+        Full parameters are:
+
+            The name of the file to load
+
+            The minimum size of cliques to use as seeds. Recommend 4 as default, unless particularly small communities are required (in which case use 3).
+
+            The minimum value for one seed to overlap with another seed before it is considered sufficiently overlapping to be discarded (eta). 1 is complete overlap. However smaller values may be used to prune seeds more aggressively. A value of 0.6 is recommended.
+
+            The alpha value to use in the fitness function greedily expanding the seeds. 1.0 is recommended default. Values between .8 and 1.5 may be useful. As the density of edges increases, alpha may need to be increased to stop communities expanding to engulf the whole graph. If this occurs, a warning message advising that a higher value of alpha be used, will be printed.
+
+            The proportion of nodes (phi) within a core clique that must have already been covered by other cliques, for the clique to be &#39;sufficiently covered&#39; in the Clique Coveage Heuristic
+
+        Usage: ./2011-gce graphfilename minimumCliqueSizeK overlapToDiscardEta fitnessExponentAlpha CCHthresholdPhi
+
+        Usage (with defaults): ./2011-gce graphfilename
+
+        This will run with the default values of: minimumCliqueSizeK 4, overlapToDiscardEta 0.6, fitnessExponentAlpha 1.0, CCHthresholdPhi .75
+
+    *Reference*
+        Lee, Conrad, et al. &#34;Detecting highly overlapping community structure by greedy clique expansion.&#34; arXiv preprint arXiv:1002.1827 (2010).
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.GCE(name)
+        obj.run(graph, minimumCliqueSizeK=minimumCliqueSizeK, overlapToDiscardEta=overlapToDiscardEta, fitnessExponentAlpha=fitnessExponentAlpha, CCHthresholdPhi=CCHthresholdPhi, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_HDEMON(name, graph, epsilon=0.25, min_community_size=5, seed=None):
+    &#39;&#39;&#39;
+
+     Hierarchical Demon
+
+    *Arguments*
+        epsilon  the tolerance required in order to merge communities
+
+        min_community_size: min_community_size
+
+    *Reference*
+        M. Coscia, G. Rossetti, F. Giannotti, D. Pedreschi:
+        Uncovering Hierarchical and Overlapping Communities with a Local-First Approach, TKDD 2015
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.HDEMON(name)
+        obj.run(graph, epsilon=epsilon, min_community_size=min_community_size, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_LinkCommunities(name, graph, threshold=[0.01], seed=None):
+    &#39;&#39;&#39;
+
+    Link communities algorithm
+
+    *Arguments*
+        ./calcJaccards input.pairs output.jaccs
+
+        ./clusterJaccards network.pairs network.jaccs network.clusters network.cluster_stats threshold
+
+    *Reference*
+        Yong-Yeol Ahn, James P. Bagrow, and Sune Lehmann, Link communities reveal multiscale complexity in networks, Nature 466, 761 (2010)
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.LinkCommunities(name)
+        obj.run(graph, threshold=threshold, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_MOSES(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+     Model-based Overlapping Seed Expansion
+
+    *Arguments*
+
+
+    *Reference*
+
+    Aaron McDaid, Neil Hurley. Detecting highly overlapping communities with Model-based Overlapping Seed Expansion. ASONAM 2010
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.MOSES(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_MSCD_AFG(name, graph, scale_param=&#39;[1.2,2]&#39;, extra_param=None, verbose=0, seed=None):
+    &#39;&#39;&#39;
+
+     (Arenas et al.’s) Fast Multi-Scale Community Detection Tools
+
+    *Arguments*
+        scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+
+        extra_param: optional extra parameters for the given algorithm
+
+        verbose: verbose level (default=0, max=2)
+
+    *Reference*
+        Arenas, Alex, Alberto Fernandez, and Sergio Gomez. &#34;Analysis of the structure of complex networks at different resolution levels.&#34; New Journal of Physics 10.5 (2008): 053039.
+
+        Le Martelot, Erwan, and Chris Hankin.  &#34;Fast multi-scale detection of relevant communities in large-scale networks.&#34; The Computer Journal 56.9 (2013): 1136-1150.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_AFG(name)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_MSCD_HSLSW(name, graph, scale_param=&#39;[1.2,2]&#39;, extra_param=None, verbose=0, seed=None):
+    &#39;&#39;&#39;
+
+     (Huang et al.’s) Fast Multi-Scale Community Detection Tools
+
+    *Arguments*
+        scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+
+        extra_param: optional extra parameters for the given algorithm
+
+        verbose: verbose level (default=0, max=2)
+
+        The optional extra parameters must be given in order as a list with &#39;,&#39; between values and no space. The parameters are:
+          1. Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)
+
+    *Reference*
+        Huang, Jianbin, et al. &#34;Towards online multiresolution community detection in large-scale networks.&#34; PloS one 6.8 (2011): e23829.
+
+        Le Martelot, Erwan, and Chris Hankin.  &#34;Fast multi-scale detection of relevant communities in large-scale networks.&#34; The Computer Journal 56.9 (2013): 1136-1150.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_HSLSW(name)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_MSCD_LFK(name, graph, scale_param=&#39;[1.2,2]&#39;, extra_param=None, verbose=0, seed=None):
+    &#39;&#39;&#39;
+
+     (Lancichinetti et al.’s) Fast Multi-Scale Community Detection Tools
+
+    *Arguments*
+        scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+
+        extra_param: optional extra parameters for the given algorithm
+
+        verbose: verbose level (default=0, max=2)
+
+        The optional extra parameters must be given in order as a list with &#39;,&#39; between values and no space. The parameters are:
+          1. Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)
+          2. When growing a community, maximum number of neighbours from the sorted list of candidate nodes that can fail to join before the failures makes the growth stop. (default: infinite / value 0)
+          3. When growing a community, maximum number of iterations through all nodes during which nodes can be removed. (default: infinite / value 0)
+
+          Ex: To merge communities with 30% of overlapping nodes
+
+              mscd -g network.edges -w -c coms -p 0.3 -a LFK [1:-0.01:0]
+
+    *Reference*
+        Lancichinetti, Andrea, Santo Fortunato, and János Kertész. &#34;Detecting the overlapping and hierarchical community structure in complex networks.&#34; New Journal of Physics 11.3 (2009): 033015.
+
+        Le Martelot, Erwan, and Chris Hankin.  &#34;Fast multi-scale detection of relevant communities in large-scale networks.&#34; The Computer Journal 56.9 (2013): 1136-1150.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_LFK(name)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_MSCD_LFK2(name, graph, scale_param=&#39;[1.2,2]&#39;, extra_param=None, verbose=0, seed=None):
+    &#39;&#39;&#39;
+
+     ( Lancichinetti et al.’s multi-threaded ) Fast Multi-Scale Community Detection Tools
+
+    *Arguments*
+
+        scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+        extra_param: optional extra parameters for the given algorithm
+        verbose: verbose level (default=0, max=2)
+
+        The optional extra parameters must be given in order as a list with &#39;,&#39; between values and no space. The parameters are:
+
+          1. Merging threshold beyond which communities are merged. Value must be in [0,1]. (default 0.5)
+          2. Maximum number of additional threads the program can use (default: number of cores available / value 0)
+          3. Maximum number of seeds to start growing communities. (default: infinite / value 0)
+          4. Recursive level of seed neighbours not to use as seeds must be 0, 1 or 2. (default 1) (i.e. with 1, all the neighbours of a seed cannot be added as a seed)
+
+    *Reference*
+        Lancichinetti, Andrea, Santo Fortunato, and János Kertész. &#34;Detecting the overlapping and hierarchical community structure in complex networks.&#34; New Journal of Physics 11.3 (2009): 033015.
+
+        Le Martelot, Erwan, and Chris Hankin.  &#34;Fast multi-scale detection of relevant communities in large-scale networks.&#34; The Computer Journal 56.9 (2013): 1136-1150.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_LFK2(name)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_MSCD_RB(name, graph, scale_param=&#39;[1.2,2]&#39;, extra_param=None, verbose=0, seed=None):
+    &#39;&#39;&#39;
+
+     (Reichardt and Bornholdt’s) Fast Multi-Scale Community Detection Tools
+
+    *Arguments*
+        scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+
+        extra_param: optional extra parameters for the given algorithm
+
+        verbose: verbose level (default=0, max=2)
+
+    *Reference*
+        Reichardt, Jörg, and Stefan Bornholdt. &#34;Statistical mechanics of community detection.&#34; Physical Review E 74.1 (2006): 016110.
+
+        Le Martelot, Erwan, and Chris Hankin.  &#34;Fast multi-scale detection of relevant communities in large-scale networks.&#34; The Computer Journal 56.9 (2013): 1136-1150.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_RB(name)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_MSCD_RN(name, graph, scale_param=&#39;[1.2,2]&#39;, extra_param=None, verbose=0, seed=None):
+    &#39;&#39;&#39;
+
+     (Ronhovde and Nussinov’s) Fast Multi-Scale Community Detection Tools
+
+    *Arguments*
+        scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+
+        extra_param: optional extra parameters for the given algorithm
+
+        verbose: verbose level (default=0, max=2)
+
+    *Reference*
+        Ronhovde, Peter, and Zohar Nussinov. &#34;Local resolution-limit-free Potts model for community detection.&#34; Physical Review E 81.4 (2010): 046114.
+
+        Le Martelot, Erwan, and Chris Hankin.  &#34;Fast multi-scale detection of relevant communities in large-scale networks.&#34; The Computer Journal 56.9 (2013): 1136-1150.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_RN(name)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_MSCD_SO(name, graph, scale_param=&#39;[1.2,2]&#39;, extra_param=None, verbose=0, seed=None):
+    &#39;&#39;&#39;
+
+      stability optimisation (Fast Multi-Scale Community Detection Tools)
+
+    *Arguments*
+        scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+
+        extra_param: optional extra parameters for the given algorithm
+
+        verbose: verbose level (default=0, max=2)
+
+        The optional extra parameters must be given in order as a list with &#39;,&#39; between values and no space. The parameters are:
+
+          1. edge threshold (for walks of length&gt;1 computed edges below this value are discarded) (default: 0)
+          2. memory saving mode (for walks of length&gt;1 the number of networks kept in memory) (default: 0, i.e. off)
+
+          Ex: mscd -g network.edges -w -c coms -p 0.01,1 -a SO [0:0.1:5]
+
+    *Reference*
+        Le Martelot, Erwan, and Chris Hankin. &#34;Multi-scale community detection using stability optimisation within greedy algorithms.&#34; arXiv preprint arXiv:1201.3307 (2012).
+
+        Le Martelot, Erwan, and Chris Hankin.  &#34;Fast multi-scale detection of relevant communities in large-scale networks.&#34; The Computer Journal 56.9 (2013): 1136-1150.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_SO(name)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_MSCD_SOM(name, graph, scale_param=&#39;[1.2,2]&#39;, extra_param=None, verbose=0, seed=None):
+    &#39;&#39;&#39;
+
+      tability optimisation using matrices  (Fast Multi-Scale Community Detection Tools)
+
+    *Arguments*
+        scale_param: scale parameter values (e.g.[1,2], [1:1:10])
+
+        extra_param: optional extra parameters for the given algorithm
+
+        verbose: verbose level (default=0, max=2)
+
+        The optional extra parameters must be given in order as a list with &#39;,&#39; between values and no space. The parameters are:
+
+          1. memory saving mode (for walks of length&gt;1 the number of networks kept in memory) (default: 0, i.e. off)
+
+          Ex: mscd -g network.edges -w -c coms -p 1 -a SOM [0:0.1:5]
+
+    *Reference*
+        Le Martelot, Erwan, and Chris Hankin. &#34;Multi-scale community detection using stability optimisation within greedy algorithms.&#34; arXiv preprint arXiv:1201.3307 (2012).
+
+        Le Martelot, Erwan, and Chris Hankin.  &#34;Fast multi-scale detection of relevant communities in large-scale networks.&#34; The Computer Journal 56.9 (2013): 1136-1150.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.MSCD_SOM(name)
+        obj.run(graph, scale_param=scale_param, extra_param=extra_param, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_ParCPM(name, graph, n_thread=None, W=30, poc=False, seed=None):
+    &#39;&#39;&#39;
+
+     Model-based Overlapping Seed Expansion
+
+    *Arguments*
+        ===================    ===========================================================================
+         -P &lt;num_threads&gt;      Specifies the number of parallel threads to be executed.
+                               Default value is 8.
+         -W &lt;exp&gt;              Set the sliding window buffer size to 2**&lt;exp&gt; Bytes.
+                               Default value is 30 for a sliding window buffer size of 2**30 B = 1 GB.
+         -p                    Specifies to use the proof-of-concept method COSpoc rather than COS.
+                               With this option, parameter -W is ignored.
+        ===================    ===========================================================================
+    *Reference*
+        Gregori, Enrico, Luciano Lenzini, and Simone Mainardi.
+        &#34;Parallel k-clique community detection on large-scale networks.&#34;
+        IEEE Transactions on Parallel and Distributed Systems 24.8 (2013): 1651-1660.
+
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.ParCPM(name)
+        obj.run(graph, n_thread=n_thread, W=W, poc=poc, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_SVINET(name, graph, num_cluster=None, inference=&#39;link-sampling&#39;, stratified=False, rfreq=None, max_iterations=None, no_stop=False, seed=None):
+    &#39;&#39;&#39;
+
+     SVINET implements sampling based algorithms that derive from stochastic variational inference under the (assortative) mixed-membership stochastic blockmodel.
+
+    *Arguments*
+
+        SVINET: fast stochastic variational inference of undirected networks
+
+        svinet [OPTIONS]
+            ===============         ===========================================================================
+            -file &lt;name&gt;            input tab-separated file with a list of undirected links
+            -n &lt;N&gt;                  number of nodes in network
+            -k &lt;K&gt;                  number of communities
+            -batch                  run batch variational inference
+            -stratified             use stratified sampling, use with rpair or rnode options
+            -rnode                  inference using random node sampling
+            -rpair                  inference using random pair sampling
+            -link-sampling          inference using link sampling
+            -infset                 inference using informative set sampling
+            -rfreq                  set the frequency at which  (convergence is estimated;  statistics, e.g., heldout likelihood are computed)
+            -max-iterations         maximum number of iterations (use with -no-stop to avoid stopping in an earlier iteration)
+            -no-stop                disable stopping criteria
+            -seed                   set GSL random generator seed
+            ===============         ===========================================================================
+
+    *Reference*
+        Prem K. Gopalan, David M. Blei. Efficient discovery of overlapping communities in massive networks. To appear in the Proceedings of the National Academy of Sciences, 2013
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.SVINET(name)
+        obj.run(graph, num_cluster=num_cluster, inference=inference, stratified=stratified, rfreq=rfreq, max_iterations=max_iterations, no_stop=no_stop, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_TopGC(name, graph, seed=None, **kwargs):
+    &#39;&#39;&#39;
+
+     Top Graph Clusters (TopGC)
+
+    *Arguments*
+
+        Usage: java -jar TopGC.jar -i inputGraph [-p mostProm] [-max maxClusterSize] [-min minClusterSize] [-lambda overlapThreshold] [-l wordLength] [-m m] [-w numWords] [-trials trials]
+
+        Options:
+
+        -max    maxClusterSize
+                The maximum size allowed for a cluster.
+                Default is 20.
+
+        -min    minClusterSize
+                The minimum size allowed for a cluster.
+                Default is 5.
+
+        -p    mostProm
+                The pruning parameter. Limits the number of nodes to
+                consider for final clustering. Lower values will
+                achieve greater pruning, as well as limit memory
+                usage of the program. Ranges from 1 to graph size.
+                Default is 0.3*(# of nodes in graph) or
+                50,000 (whichever is smaller).
+
+        -lambda    overlapThreshold
+                The maximum overlap allowed between the nodes of
+                two clusters. Calculated as the ratio of the
+                size of their intersection and the smallest cluster
+                size. A double value ranging from 0 to 1.
+                Default is 0.2.
+
+        -l    wordLength
+                Length of node signature. Experimentally, higher
+                values tend to achieve greater precision, though
+                lower recall.
+
+        -m    m
+                Number of minhash values to obtain per node.
+
+        -w    w
+                Number of signatures to create per node.
+                Higher values may be necessary in graphs with loose
+                clusters.
+
+        -trials    trials
+                The number of neighborhood instances to create
+                per node. Used only in weighted graphs.
+
+    *Reference*
+        Macropol, Kathy, and Ambuj Singh. &#34;Scalable discovery of best clusters on large graphs.&#34; Proceedings of the VLDB Endowment 3.1-2 (2010): 693-702.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.TopGC(name)
+        obj.run(graph, seed=seed, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cdc_clique_modularity(name, graph, method=&#39;BK&#39;, nComm=10, seed=None):
+    &#39;&#39;&#39;
+
+    Detecting Communities in Networks by Merging Cliques
+
+    *Arguments*
+        java -cp CM.jar clique_modularity.CM &lt;networkFile&gt; -m &lt;method&gt; -c &lt;nComm&gt;
+        where method is BK or KJ
+
+    *Reference*
+        Yan, Bowen, and Steve Gregory. &#34;Detecting communities in networks by merging cliques.&#34; Intelligent Computing and Intelligent Systems, 2009. ICIS 2009. IEEE International Conference on. Vol. 1. IEEE, 2009.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cdc_clustering.clique_modularity(name)
+        obj.run(graph, method=method, nComm=nComm, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def cgcc_CGGC(name, graph, startk=None, finalk=None, runs=None, ensemblesize=None, algorithm=None, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *CGGC* (Core Groups Graph ensemble Clustering) method* from `https://github.com/eXascaleInfolab/CGGC`
+
+    Performs clustering of the unweighed undirected network (graph) using RG, CGGC_RG or CGGCi_RG algorithms.
+
+    Arguments
+
+        =============================== ====================================================
+        -h [ --help ]                   Display this message
+        -i [ --inpfmt ] arg (=)         input network format (inferred from the file
+                                        extension if not specified explicitly):
+                                        e - nse format: header in comments + each
+                                        line specifies a single edge: &lt;sid&gt; &lt;did&gt;,
+                                        a - nse format: header in comments + each
+                                        line specifies a single arc: &lt;sid&gt; &lt;did&gt;,
+                                        m - Metis format of the unweighted network,
+                                        p - Pajek format of the undirected unweighted
+                                        network
+        -s [ --startk ] arg (=2)        sample size of RG
+        -f [ --finalk ] arg (=2000)     sample size for final RG step
+        -r [ --runs ] arg (=1)          number of runs from which to pick the best
+                                        result
+        -e [ --ensemblesize ] arg (=-1) size of ensemble for ensemble algorithms (-1
+                                        = ln(#vertices))
+        -a [ --algorithm ] arg (=3)     algorithm: 1: RG, 2: CGGC_RG, 3: CGGCi_RG
+        -o [ --outfmt ] arg (=l)        output clusters format:
+                                        l - cnl format: header in comments + each
+                                        line corresponds to the cluster and contains
+                                        ids of the member vertices,
+                                        c - each line corresponds to the cluster and
+                                        contains ids of the member vertices,
+                                        v - each line corresponds to the vertex and
+                                        contains id of the owner cluster
+        -f [ --outfile ] arg            file to store the detected communities
+        -d [ --seed ] arg               seed value to initialize random number
+                                        generator
+        =============================== ====================================================
+
+    Reference
+        Ovelgönne, Michael, and Andreas Geyer-Schulz.
+        &#34;An ensemble learning strategy for graph clustering.&#34;
+        Graph Partitioning and Graph Clustering 588 (2012): 187.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.cggc_clustering.CGGC(name)
+        obj.run(graph, startk=startk, finalk=finalk, runs=runs, ensemblesize=ensemblesize, algorithm=algorithm, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def dct_dlplm(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *dlplm (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+
+    *Arguments*
+        None
+
+    *Reference*
+        Hamann, Michael, et al. &#34;Distributed Graph Clustering Using Modularity and Map Equation.&#34;
+        European Conference on Parallel Processing. Springer, Cham, 2018.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.dct_clustering.dlplm(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def dct_dlslm(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *dlslm (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+
+    *Arguments*
+        None
+
+    *Reference*
+        Hamann, Michael, et al. &#34;Distributed Graph Clustering Using Modularity and Map Equation.&#34;
+        European Conference on Parallel Processing. Springer, Cham, 2018.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.dct_clustering.dlslm(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def dct_dlslm_map_eq(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *dlslm_map_eq (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+
+    *Arguments*
+        None
+
+    *Reference*
+        Hamann, Michael, et al. &#34;Distributed Graph Clustering Using Modularity and Map Equation.&#34;
+        European Conference on Parallel Processing. Springer, Cham, 2018.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.dct_clustering.dlslm_map_eq(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def dct_dlslm_no_contraction(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *dlslm_no_contraction (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+
+    *Arguments*
+    None
+
+    *Reference*
+    Hamann, Michael, et al. &#34;Distributed Graph Clustering Using Modularity and Map Equation.&#34;
+    European Conference on Parallel Processing. Springer, Cham, 2018.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.dct_clustering.dlslm_no_contraction(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def dct_dlslm_with_seq(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *dlslm_with_seq (Distributed Graph Clustering using Thrill)* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+
+    *Arguments*
+        None
+
+    *Reference*
+        Hamann, Michael, et al. &#34;Distributed Graph Clustering Using Modularity and Map Equation.&#34;
+        European Conference on Parallel Processing. Springer, Cham, 2018.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.dct_clustering.dlslm_with_seq(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def dct_infomap(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *infomap* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+
+    *Arguments*
+    seed : int,         random seed
+
+    *Reference*
+        Rosvall, M., Axelsson, D., Bergstrom, C.T.: The map equation. The European
+        Physical Journal Special Topics 178(1), 13–23 (2009)
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.dct_clustering.infomap(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def dct_seq_louvain(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *Louvain* algorithm collected from `https://github.com/kit-algo/distributed_clustering_thrill`
+
+    *Arguments*
+        seed : int,         random seed
+
+    *Reference*
+        Blondel, V., Guillaume, J.L., Lambiotte, R., Lefebvre, E.: Fast unfolding of communities
+        in large networks. Journal of Statistical Mechanics: Theory and Experiment
+        2008(10) (2008)
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.dct_clustering.seq_louvain(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def igraph_community_edge_betweenness(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *community_edge_betweenness* algorithm from iGraph
+
+    Arguments
+        None
+
+    Reference
+        M Girvan and MEJ Newman: Community structure in social and biological networks, Proc. Nat. Acad. Sci. USA 99, 7821-7826 (2002)
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.igraph_clustering.community_edge_betweenness(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def igraph_community_fastgreedy(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *community_fastgreedy* algorithm from iGraph
+
+    Arguments
+        None
+
+    Reference
+        A Clauset, MEJ Newman and C Moore: Finding community structure in very large networks. Phys Rev E 70, 066111 (2004).
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.igraph_clustering.community_fastgreedy(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def igraph_community_infomap(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *community_infomap* algorithm from iGraph
+
+    Arguments
+        None
+
+    Reference
+    M. Rosvall and C. T. Bergstrom: Maps of information flow reveal community structure in complex networks, PNAS 105, 1118 (2008). http://dx.doi.org/10.1073/pnas.0706851105, http://arxiv.org/abs/0707.0609
+
+    M. Rosvall, D. Axelsson, and C. T. Bergstrom: The map equation, Eur. Phys. J. Special Topics 178, 13 (2009). http://dx.doi.org/10.1140/epjst/e2010-01179-1, http://arxiv.org/abs/0906.1405
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.igraph_clustering.community_infomap(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def igraph_community_label_propagation(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *community_label_propagation* algorithm from iGraph
+
+    Arguments
+        None
+
+    Reference
+        Raghavan, U.N. and Albert, R. and Kumara, S. Near linear time algorithm to detect community structures in large-scale networks. Phys Rev E 76:036106, 2007. http://arxiv.org/abs/0709.2938.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.igraph_clustering.community_label_propagation(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def igraph_community_leading_eigenvector(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *community_leading_eigenvector* algorithm from iGraph
+
+    Arguments
+        None
+
+    Reference
+        MEJ Newman: Finding community structure in networks using the eigenvectors of matrices, arXiv:physics/0605087
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.igraph_clustering.community_leading_eigenvector(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def igraph_community_multilevel(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *community_multilevel* algorithm from iGraph
+
+    Arguments
+        None
+
+    Reference
+        VD Blondel, J-L Guillaume, R Lambiotte and E Lefebvre: Fast unfolding of community hierarchies in large networks, J Stat Mech P10008 (2008), http://arxiv.org/abs/0803.0476
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.igraph_clustering.community_multilevel(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def igraph_community_optimal_modularity(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *community_optimal_modularity* algorithm from iGraph
+
+    Arguments
+        None
+
+    Reference
+        TBD
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.igraph_clustering.community_optimal_modularity(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def igraph_community_spinglass(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *community_spinglass* algorithm from iGraph
+
+    Arguments
+        None
+
+    Reference
+        Reichardt J and Bornholdt S: Statistical mechanics of community detection. Phys Rev E 74:016110 (2006). http://arxiv.org/abs/cond-mat/0603718.
+
+        Traag VA and Bruggeman J: Community detection in networks with positive and negative links. Phys Rev E 80:036115 (2009). http://arxiv.org/abs/0811.2329.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.igraph_clustering.community_spinglass(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def igraph_community_walktrap(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *community_walktrap* algorithm from iGraph
+
+    Arguments
+        None
+
+    Reference
+        Pascal Pons, Matthieu Latapy: Computing communities in large networks using random walks, http://arxiv.org/abs/physics/0512106
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.igraph_clustering.community_walktrap(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_BigClam(name, graph, dimensions=8, iterations=50, learning_rate=0.005, seed=None):
+    &#39;&#39;&#39;
+
+
+    An implementation of “BigClam” from the WSDM ‘13 paper “Overlapping Community Detection at Scale: A Non-negative Matrix Factorization Approach”.
+    The procedure uses gradient ascent to create an embedding which is used for deciding the node-cluster affiliations.
+
+    Parameters:
+        dimensions (int) – Number of embedding dimensions. Default 8.
+        iterations (int) – Number of training iterations. Default 50.
+        learning_rate (float) – Gradient ascent learning rate. Default is 0.005.
+
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.karateclub_clustering.BigClam(name)
+        obj.run(graph, dimensions=dimensions, iterations=iterations, learning_rate=learning_rate, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_DANMF(name, graph, layers=[32, 8], pre_iterations=100, iterations=100, seed=42, lamb=0.01):
+    &#39;&#39;&#39;
+
+    An implementation of “DANMF” from the CIKM ‘18 paper “Deep Autoencoder-like Nonnegative Matrix Factorization for Community Detection”. The procedure uses telescopic non-negative matrix factorization in order to learn a cluster membership distribution over nodes. The method can be used in an overlapping and non-overlapping way.
+
+    Parameters:
+        layers (list) – Autoencoder layer sizes in a list of integers. Default [32, 8].
+        pre_iterations (int) – Number of pre-training epochs. Default 100.
+        iterations (int) – Number of training epochs. Default 100.
+        seed (int) – Random seed for weight initializations. Default 42.
+        lamb (float) – Regularization parameter. Default 0.01.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.karateclub_clustering.DANMF(name)
+        obj.run(graph, layers=layers, pre_iterations=pre_iterations, iterations=iterations, seed=seed, lamb=lamb)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_EdMot(name, graph, component_count=2, cutoff=50, seed=None):
+    &#39;&#39;&#39;
+
+    An implementation of “Edge Motif Clustering” from the KDD ‘19 paper “EdMot: An Edge Enhancement Approach for Motif-aware Community Detection”. The tool first creates the graph of higher order motifs. This graph is clustered by the Louvain method. The resulting cluster memberships are stored as a dictionary.
+
+    Parameters:
+        component_count (int) – Number of extracted motif hypergraph components. Default is 2.
+        cutoff (int) – Motif edge cut-off value. Default is 50.
+
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.karateclub_clustering.EdMot(name)
+        obj.run(graph, component_count=component_count, cutoff=cutoff, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_EgoNetSplitter(name, graph, resolution=1.0, seed=None):
+    &#39;&#39;&#39;
+
+    An implementation of “Ego-Splitting” from the KDD ‘17 paper “Ego-Splitting Framework: from Non-Overlapping to Overlapping Clusters”. The tool first creates the ego-nets of nodes. A persona-graph is created which is clustered by the Louvain method. The resulting overlapping cluster memberships are stored as a dictionary.
+
+    Parameters:
+        resolution (float) – Resolution parameter of Python Louvain. Default 1.0.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.karateclub_clustering.EgoNetSplitter(name)
+        obj.run(graph, resolution=resolution, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_NNSED(name, graph, dimensions=32, iterations=10, seed=42):
+    &#39;&#39;&#39;
+
+    An implementation of “NNSED” from the CIKM ‘17 paper “A Non-negative Symmetric Encoder-Decoder Approach for Community Detection”. The procedure uses non-negative matrix factorization in order to learn an unnormalized cluster membership distribution over nodes. The method can be used in an overlapping and non-overlapping way.
+
+    Parameters:
+        layers (int) – Embedding layer size. Default is 32.
+        iterations (int) – Number of training epochs. Default 10.
+        seed (int) – Random seed for weight initializations. Default 42.
+
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.karateclub_clustering.NNSED(name)
+        obj.run(graph, dimensions=dimensions, iterations=iterations, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_SCD(name, graph, iterations=25, eps=1e-06, seed=None):
+    &#39;&#39;&#39;
+
+    An implementation of “SCD” from the WWW ‘14 paper “High Quality, Scalable and Parallel Community Detection for Large Real Graphs”. The procedure greedily optimizes the approximate weighted community clustering metric. First, clusters are built around highly clustered nodes. Second, we refine the initial partition by using the approximate WCC. These refinements happen for the whole vertex set.
+
+    Parameters:
+        iterations (int) – Refinemeent iterations. Default is 25.
+        eps (float) – Epsilon score for zero division correction. Default is 10**-6.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.karateclub_clustering.SCD(name)
+        obj.run(graph, iterations=iterations, eps=eps, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def karateclub_SymmNMF(name, graph, dimensions=32, iterations=200, rho=100.0, seed=None):
+    &#39;&#39;&#39;
+
+    An implementation of “Symm-NMF” from the SDM‘12 paper “Symmetric Nonnegative Matrix Factorization for Graph Clustering”. The procedure decomposed the second power od the normalized adjacency matrix with an ADMM based non-negative matrix factorization based technique. This results in a node embedding and each node is associated with an embedding factor in the created latent space.
+
+    Parameters:
+        dimensions (int) – Number of dimensions. Default is 32.
+        iterations (int) – Number of power iterations. Default is 200.
+        rho (float) – ADMM tuning parameter. Default is 100.0.
+
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.karateclub_clustering.SymmNMF(name)
+        obj.run(graph, dimensions=dimensions, iterations=iterations, rho=rho, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def mcl_MCL(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+    A wrapper of *MCL (Markov Cluster Algorithm)* from https://micans.org/mcl/
+
+    Arguments
+        Since there are a lot options for mcl. refer to https://micans.org/mcl/man/mcl.html for all of them.
+        However only specify algrithm options, don&#39;t specify file/folder/format related option.
+
+    Reference
+        Stijn van Dongen, Graph Clustering by Flow Simulation. PhD thesis, University of Utrecht, May 2000
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.mcl_clustering.MCL(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def networkit_CutClustering(name, graph, alpha=0.1, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *CutClustering* algorithm from NetworKit.
+
+    Arguments
+        None
+
+    Reference
+        Tarjan, Robert E.; Tsioutsiouliklis, Kostas. Graph Clustering and Minimum Cut Trees. Internet Mathematics 1 (2003), no. 4, 385–408.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.networkit_clustering.CutClustering(name)
+        obj.run(graph, alpha=alpha, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def networkit_LPDegreeOrdered(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *LPDegreeOrdered* algorithm from NetworKit.
+    Label propagation-based community detection algorithm which processes nodes in increasing order of node degree.
+
+    Arguments
+        None
+
+    Reference
+        TBD
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.networkit_clustering.LPDegreeOrdered(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def networkit_PLM(name, graph, refine=False, gamma=1.0, par=&#39;balanced&#39;, maxIter=32, turbo=True, recurse=True, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *PLM (Parallel Louvain Method)* algorithm from NetworKit.
+    Parallel Louvain Method - the Louvain method, optionally extended to a full multi-level algorithm with refinement
+
+    Arguments
+        refine (bool, optional) – Add a second move phase to refine the communities.
+
+        gamma (double) – Multi-resolution modularity parameter: 1.0 -&gt; standard modularity 0.0 -&gt; one community 2m -&gt; singleton communities
+
+        par (string) – parallelization strategy
+
+        maxIter (count) – maximum number of iterations for move phase
+
+        turbo (bool, optional) – faster but uses O(n) additional memory per thread
+
+        recurse (bool, optional) – use recursive coarsening, see http://journals.aps.org/pre/abstract/10.1103/PhysRevE.89.049902 for some explanations (default: true)
+
+    Reference
+        TBD
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.networkit_clustering.PLM(name)
+        obj.run(graph, refine=refine, gamma=gamma, par=par, maxIter=maxIter, turbo=turbo, recurse=recurse, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def networkit_PLP(name, graph, updateThreshold=None, maxIterations=None, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *PLP (Parallel Label Propagation)* algorithm from NetworKit.
+    Parallel label propagation for community detection: Moderate solution quality, very short time to solution.
+
+    As described in Ovelgoenne et al: An Ensemble Learning Strategy for Graph Clustering Raghavan et al. proposed
+    a label propagation algorithm for graph clustering.
+    This algorithm initializes every vertex of a graph with a
+    unique label. Then, in iterative sweeps over the set of vertices the vertex labels are updated. A vertex gets
+    the label that the maximum number of its neighbors have. The procedure is stopped when every vertex has the
+    label that at least half of its neighbors have.
+
+    Arguments
+        None
+
+    Reference
+        Ovelgönne, Michael, and Andreas Geyer-Schulz. &#34;An ensemble learning strategy for graph clustering.&#34; Graph Partitioning and Graph Clustering 588 (2012): 187.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.networkit_clustering.PLP(name)
+        obj.run(graph, updateThreshold=updateThreshold, maxIterations=maxIterations, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def alg_GossipMap(name, graph, thresh=None, tol=None, maxiter=None, maxspiter=None, trials=None, interval=None, outmode=None, ncpus=None, scheduler=None, engine_opts=None, graph_opts=None, scheduler_opts=None, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *GossipMap* algorithm from https://github.com/uwescience/GossipMap.
+
+    Arguments
+        GossipMap Algorithm:
+
+        ================================ =======================================================
+          --help                              Print this help message.
+          --graph arg                         The graph file. Required.
+          --format arg (=snap)                The graph file format.
+          --thresh arg (=0.001)               The threshold for convergence condition.
+          --tol arg (=1.00e-15)               The threshold for pagerank (ergodic
+                                              state) convergence condition.
+          --maxiter arg (=10)                 The maximum of the iteration for finding
+                                              community.
+          --maxspiter arg (=3)                The maximum of the iteration of sp-graph
+                                              for finding community.
+          --trials arg (=1)                   The number of trials for finding
+                                              community repeatedly.
+          --interval arg (=3)                 The time interval for checking whether
+                                              the received message is valid or not.
+          --mode arg (=1)                     The running mode of finding community: 1
+                                              - coreOnce, 2 - coreRepeat.
+          --outmode arg (=2)                  The running outerloop mode of finding
+                                              community: 1 - outerOnce, 2 -
+                                              outerRepeat.
+          --prefix arg                        If set, this app will save the community
+                                              detection result.
+          --ncpus arg (=6)                    Number of cpus to use per machine.
+                                              Defaults to (#cores - 2)
+          --scheduler arg                     Supported schedulers are: fifo, sweep,
+                                              priority, queued_fifo. Too see options
+                                              for each scheduler, run the program with
+                                              the option ---schedhelp=[scheduler_name]
+          --engine_opts arg                   string of engine options i.e.,
+                                              &#34;timeout=100&#34;
+          --graph_opts arg                    String of graph options i.e.,
+                                              &#34;ingress=random&#34;
+          --scheduler_opts arg                String of scheduler options i.e.,
+                                              &#34;strict=true&#34;
+          --engine_help arg                   Display help for engine options.
+          --graph_help arg                    Display help for the distributed graph.
+          --scheduler_help arg                Display help for schedulers.
+        ================================ =======================================================
+
+    Reference
+        Bae, Seung-Hee, and Bill Howe. &#34;GossipMap: A distributed community detection algorithm for billion-edge directed graphs.&#34; High Performance Computing, Networking, Storage and Analysis, 2015 SC-International Conference for. IEEE, 2015.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.powergraph_clustering.GossipMap(name)
+        obj.run(graph, thresh=thresh, tol=tol, maxiter=maxiter, maxspiter=maxspiter, trials=trials, interval=interval, outmode=outmode, ncpus=ncpus, scheduler=scheduler, engine_opts=engine_opts, graph_opts=graph_opts, scheduler_opts=scheduler_opts, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def alg_RelaxMap(name, graph, seed=None, thread=None, threshold=0.001, vThresh=0.0, maxIter=10, prior=True):
+    &#39;&#39;&#39;
+
+    A wrapper of *RelaxMap* algorithm from https://github.com/uwescience/RelaxMap.
+
+    Arguments
+
+        ==========   =======================================================
+
+        args[0]:     seed - random seed value for generating random sequential order of vertices for each iteration.
+        args[1]:     network data - the input graph data.
+                     RelaxMap supports 1) pajek format (.net) and 2) edge list format (.txt).
+        args[2]:     # thread - the number of threads
+        args[3]:     # attempts - the number of attempts.
+                     (this is not applied yet, so it only return with 1 attempt.)
+        args[4]:     threshold - the stop condition threshold (recommended 1e-3 or 1e-4)
+        args[5]:     vThresh - the threshold value for each vertex movement (recommended 0.0)
+        args[6]:     maxIter - the number of maximum iteration for each super-step.
+        args[7]:     outDir - the directory where the output files will be located.
+        args[8]:     prior/normal flag - apply the prioritized search for efficient runs (prior) or not (normal).
+        ==========   =======================================================
+
+    Reference
+        Seung-Hee Bae, Daniel Halperin, Jevin West, Martin Rosvall, and Bill Howe,
+        &#34;Scalable Flow-Based Community Detection for Large-Scale Network Analysis,&#34;
+        In Proceedings of IEEE 13th International Conference on Data Mining Workshop (ICDMW), 2013
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.powergraph_clustering.RelaxMap(name)
+        obj.run(graph, seed=seed, thread=thread, threshold=threshold, vThresh=vThresh, maxIter=maxIter, prior=prior)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def alg_pg_label_propagation(name, graph, execution=&#39;async&#39;, ncpus=None, scheduler=None, engine_opts=None, graph_opts=None, scheduler_opts=None, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *LPA* algorithm from PowerGraph.
+
+    Arguments
+        Label Propagation algorithm:
+
+        ================================ =======================================================
+          --help                         Print this help message.
+          --graph arg                    The graph file. Required
+          --execution arg (=synchronous) Execution type (synchronous or asynchronous)
+          --saveprefix arg               If set, will save the resultant pagerank to a
+                                         sequence of files with prefix saveprefix
+          --ncpus arg (=6)               Number of cpus to use per machine. Defaults to
+                                         (#cores - 2)
+          --scheduler arg                Supported schedulers are: fifo, sweep,
+                                         priority, queued_fifo. Too see options for
+                                         each scheduler, run the program with the
+                                         option ---schedhelp=[scheduler_name]
+          --engine_opts arg              string of engine options i.e., &#34;timeout=100&#34;
+          --graph_opts arg               String of graph options i.e., &#34;ingress=random&#34;
+          --scheduler_opts arg           String of scheduler options i.e.,
+                                         &#34;strict=true&#34;
+          --engine_help arg              Display help for engine options.
+          --graph_help arg               Display help for the distributed graph.
+          --scheduler_help arg           Display help for schedulers.
+        ================================ =======================================================
+
+    Reference
+        Gonzalez, Joseph E., et al. &#34;Powergraph: distributed graph-parallel computation on natural graphs.&#34; OSDI. Vol. 12. No. 1. 2012.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.powergraph_clustering.pg_label_propagation(name)
+        obj.run(graph, execution=execution, ncpus=ncpus, scheduler=scheduler, engine_opts=engine_opts, graph_opts=graph_opts, scheduler_opts=scheduler_opts, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def scan_AnyScan_Scan(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+    A wrapper of *scan@anyscan* algorithm
+
+    Arguments
+        Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
+                -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
+                -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
+                -a alpha    : block size alpha
+                -b beta     : block size beta
+                -t threads      : number of threads to be employed
+
+    Reference
+        Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.scan_clustering.AnyScan_Scan(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def scan_AnyScan_anyScan(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+    A wrapper of *anyscan* algorithm
+
+    Arguments
+        Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
+                -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
+                -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
+                -a alpha    : block size alpha
+                -b beta     : block size beta
+                -t threads      : number of threads to be employed
+
+    Reference
+        Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.scan_clustering.AnyScan_anyScan(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def scan_AnyScan_anyScanParl(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+    A wrapper of *anyscan parallel* algorithm
+
+    Arguments
+        Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
+                -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
+                -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
+                -a alpha    : block size alpha
+                -b beta     : block size beta
+                -t threads      : number of threads to be employed
+
+    Reference
+        Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.scan_clustering.AnyScan_anyScanParl(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def scan_AnyScan_pScan(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+    A wrapper of *pScan@anyscan* algorithm
+
+    Arguments
+        Usage: ./anyscan [switches] -i filename -m minpts -e epsilon -o output -t threads
+                -m minpts       : input parameter of DBSCAN, min points to form a cluster, e.g. 2
+                -e epsilon      : input parameter of DBSCAN, radius or threshold on neighbourhoods retrieved, e.g. 0.8
+                -a alpha    : block size alpha
+                -b beta     : block size beta
+                -t threads      : number of threads to be employed
+
+    Reference
+        Mai S T, Dieu M S, Assent I, et al. Scalable and Interactive Graph Clustering Algorithm on Multicore CPUs[C]//Data Engineering (ICDE), 2017 IEEE 33rd International Conference on. IEEE, 2017: 349-360
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.scan_clustering.AnyScan_pScan(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def scan_Scanpp(name, graph, mu=1, epsilon=0, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *scan++* algorithm
+
+    Arguments
+
+    ===========   ========================================    ===============================================
+        option    arguments (Default)                         description
+        -e        Real number between 0 and 1 (Default: 0)    Set the epsilon parameter for the clustering.
+        -m        Natural number (Default: 1)                 Set the mu parameter for the clustering.
+        -v        No arguments are required.                    Display statistics of the clustering.
+        -r        No arguments are required.                    Display the clustering results.
+    ===========   ========================================    ===============================================
+
+    Reference
+        Shiokawa H, Fujiwara Y, Onizuka M. SCAN++: efficient algorithm for finding clusters, hubs and outliers on large-scale graphs[J]. Proceedings of the VLDB Endowment, 2015, 8(11): 1178-1189.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.scan_clustering.Scanpp(name)
+        obj.run(graph, mu=mu, epsilon=epsilon, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def scan_pScan(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+    A wrapper of *pScan* algorithm
+
+    Arguments
+
+    =============  ======================================
+        epsilon:     similarity-threshold
+        mu:         density-threshold
+    =============  ======================================
+
+    Reference
+        Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
+
+        Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.scan_clustering.pScan(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def scan_ppScan(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+    A wrapper of *ppScan* algorithm
+
+    Arguments
+
+    =============  ======================================
+        epsilon:     similarity-threshold
+        mu:         density-threshold
+    =============  ======================================
+
+    Reference
+        Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
+
+        Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.scan_clustering.ppScan(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def scan_ppScanSSE(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+    A wrapper of *ppScanSSE* algorithm
+
+    Arguments
+
+    =============  ======================================
+        epsilon:     similarity-threshold
+        mu:         density-threshold
+    =============  ======================================
+
+    Reference
+        Chang L, Li W, Qin L, et al. $\mathsf {pSCAN} $: Fast and Exact Structural Graph Clustering[J]. IEEE Transactions on Knowledge and Data Engineering, 2017, 29(2): 387-401.
+
+        Yulin Che, Shixuan Sun, Qiong Luo. 2018. Parallelizing Pruning-based Graph Structural Clustering. In ICPP 2018: 47th International Conference on Parallel Processing, August 13–16, 2018, Eugene, OR, USA. ACM, New York, NY, USA
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.scan_clustering.ppScanSSE(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def sklearn_AffinityPropagation(name, graph, damping=None, max_iter=None, convergence=None, verbose=None, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *AffinityPropagation* algorithm from http://scikit-learn.org.
+
+    Parameters
+
+        damping : float, optional, default: 0.5
+            Damping factor (between 0.5 and 1) is the extent to
+            which the current value is maintained relative to
+            incoming values (weighted 1 - damping). This in order
+            to avoid numerical oscillations when updating these
+            values (messages).
+        max_iter : int, optional, default: 200
+            Maximum number of iterations.
+        convergence_iter : int, optional, default: 15
+            Number of iterations with no change in the number
+            of estimated clusters that stops the convergence.
+        verbose : boolean, optional, default: False
+            Whether to be verbose.
+
+    Reference
+        Brendan J. Frey and Delbert Dueck, “Clustering by Passing Messages Between Data Points”, Science Feb. 2007
+
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.sklearn_clustering.AffinityPropagation(name)
+        obj.run(graph, damping=damping, max_iter=max_iter, convergence=convergence, verbose=verbose, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def sklearn_SpectralClustering(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+    A wrapper of *SpectralClustering* algorithm from http://scikit-learn.org.
+
+    Parameters
+        eigen_solver : {None, &#39;arpack&#39;, &#39;lobpcg&#39;, or &#39;amg&#39;}
+            The eigenvalue decomposition strategy to use. AMG requires pyamg
+            to be installed. It can be faster on very large, sparse problems,
+            but may also lead to instabilities
+        random_state : int, RandomState instance or None (default)
+            A pseudo random number generator used for the initialization of the
+            lobpcg eigen vectors decomposition when eigen_solver == &#39;amg&#39; and by
+            the K-Means initialization. Use an int to make the randomness
+            deterministic.
+
+        n_init : int, optional, default: 10
+            Number of time the k-means algorithm will be run with different
+            centroid seeds. The final results will be the best output of
+            n_init consecutive runs in terms of inertia.
+        gamma : float, default=1.0
+            Kernel coefficient for rbf, poly, sigmoid, laplacian and chi2 kernels.
+            Ignored for ``affinity=&#39;nearest_neighbors&#39;``.
+        n_neighbors : integer
+            Number of neighbors to use when constructing the affinity matrix using
+            the nearest neighbors method. Ignored for ``affinity=&#39;rbf&#39;``.
+        eigen_tol : float, optional, default: 0.0
+            Stopping criterion for eigendecomposition of the Laplacian matrix
+            when using arpack eigen_solver.
+        assign_labels : {&#39;kmeans&#39;, &#39;discretize&#39;}, default: &#39;kmeans&#39;
+            The strategy to use to assign labels in the embedding
+            space. There are two ways to assign labels after the laplacian
+            embedding. k-means can be applied and is a popular choice. But it can
+            also be sensitive to initialization. Discretization is another approach
+            which is less sensitive to random initialization.
+        degree : float, default=3
+            Degree of the polynomial kernel. Ignored by other kernels.
+        coef0 : float, default=1
+            Zero coefficient for polynomial and sigmoid kernels.
+            Ignored by other kernels.
+        kernel_params : dictionary of string to any, optional
+            Parameters (keyword arguments) and values for kernel passed as
+            callable object. Ignored by other kernels.
+        n_jobs : int or None, optional (default=None)
+            The number of parallel jobs to run.
+            ``None`` means 1 unless in a :obj:`joblib.parallel_backend` context.
+            ``-1`` means using all processors.
+
+    Reference
+        Normalized cuts and image segmentation, 2000 Jianbo Shi, Jitendra Malik http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.160.2324
+
+        A Tutorial on Spectral Clustering, 2007 Ulrike von Luxburg http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.165.9323
+
+        Multiclass spectral clustering, 2003 Stella X. Yu, Jianbo Shi http://www1.icsi.berkeley.edu/~stellayu/publication/doc/2003kwayICCV.pdf
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.sklearn_clustering.SpectralClustering(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def snap_Clauset_Newman_Moore(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *CommunityCNM* algorithm from SNAP
+
+    Arguments
+        None
+
+    Reference
+        Clauset, Aaron, Mark EJ Newman, and Cristopher Moore. &#34;Finding community structure in very large networks.&#34; Physical review E 70.6 (2004): 066111.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.snap_clustering.Clauset_Newman_Moore(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def snap_Girvan_Newman(name, graph, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *CommunityGirvanNewman* algorithm from SNAP
+
+    Arguments
+        None
+
+    Reference
+        Girvan, Michelle, and Mark EJ Newman. &#34;Community structure in social and biological networks.&#34; Proceedings of the national academy of sciences 99.12 (2002): 7821-7826.
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.snap_clustering.Girvan_Newman(name)
+        obj.run(graph, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def alg_Paris(name, graph, vmax_start=None, vmax_end=None, c=None, niter=None, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *paris* algorithm from https://github.com/tbonald/paris
+
+    Arguments
+        None
+
+    Reference
+        Bonald, Thomas, et al. &#34;Hierarchical Graph Clustering using Node Pair Sampling.&#34; arXiv preprint arXiv:1806.01664 (2018).
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.unsorted_clustering.Paris(name)
+        obj.run(graph, vmax_start=vmax_start, vmax_end=vmax_end, c=c, niter=niter, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def alg_lso_cluster(name, graph, **kwargs):
+    &#39;&#39;&#39;
+
+    A wrapper of *lso-cluster* algorithm from https://github.com/twanvl/graph-cluster
+
+    Please specify long-format options. Don&#39;t specify output.
+
+    Arguments
+        Optional parameters regarding the clustering:
+
+        ==========    ====================================================================================
+        &#39;eval&#39;,         clustering Evaluate the objective function on clustering, do not optimize.
+
+        &#39;init&#39;,         clustering Use the given clustering as initial value for the optimization. Default: each node is initially in a separate cluster, i.e. clustering=1:length(A).
+        ==========    ====================================================================================
+
+        Optional parameters regarding the objective:
+
+        ====================    ====================================================================================
+        &#39;loss&#39;,                   loss Use the given loss/objective function. The loss is given a string name. See below for a list of supported loss functions. Default: loss = &#39;modularity&#39;
+
+        &#39;total_volume&#39;,           m Replace the total volume (sum of edges) by m. Many objectives use the total volume for normalization, and changing it will change the scale at which clusters are found. Usually increasing the total volume will result in larger clusters. Default: m = sum(sum(A))
+
+        &#39;extra_loss&#39;,             alpha Add a term to the loss function that penalizes the volume of clusters, with weight alpha.
+
+        &#39;num_clusters&#39;,             n Force the solution to have the given number of clusters. The algorithm uses a binary search to alter the objective until it finds a solution with the given number of clusters. The alteration is the same as the one used by extra_loss.
+
+        &#39;min_num_cluster&#39;,         n Force the solution to have at least the given number of clusters.
+
+        &#39;max_num_cluster&#39;,         n Force the solution to have at most the given number of clusters.
+
+        &#39;max_cluster_size&#39;,         n Allow clusters to have at most n nodes.
+        ====================    ====================================================================================
+
+        Optional parameters about internal algorithm details, you only need these if you know what you are doing:
+
+        ========================    ====================================================================================
+        &#39;seed&#39;,                         random_seed Use a given random seed. By default a fixed seed is used, so repeated runs with the same input give the same output.
+
+        &#39;num_repeats&#39;,                 n Repeat the search n times from scratch with different random seeds and return the best result. Default: 1
+
+        &#39;num_partitions&#39;,             n Number of times to try and break apart the clusters and re-cluster them Default: 0
+
+        &#39;optimize_exhaustive&#39;,         bool Use an exhaustive search instead of local search. This is of course very slow. Can be combined with max_num_cluster. Default: false.
+
+        &#39;optimize_higher_level&#39;,     bool Use a hierarchical optimizer, where small clusters are considered as nodes of a higher level graph. Default: true.
+
+        &#39;always_consider_empty&#39;,     bool Always consider the move of a node into a new singleton cluster. Default: true.
+
+        &#39;num_loss_tweaks&#39;,             n Maximum number of iterations in the binary search to force the specified number of clusters. Default: 32
+
+        &#39;check_invariants&#39;,             bool Check invariants of the algorithm (for debugging). Default: false.
+
+        &#39;trace_file&#39;,                 filename Write a trace of the steps performed by the optimization algorithm to a file in JSON format.
+
+        &#39;verbose&#39;,                     level Level of debug output. Levels go up to 7 and are increasingly chatty. Default: level = 0, i.e. no output.
+        ========================    ====================================================================================
+
+        Some of the supported loss functions are:
+
+        ================    ====================================================================================
+        &#39;modularity&#39;,         loss = -sum_c (w_c/m - v_c^2/m^2) This is the negation of the usual definition
+
+        &#39;infomap&#39;:             The infomap objective by [3].
+
+        &#39;ncut&#39;:                 Normalized cut, loss = sum_c (v_c - w_c) / n_c
+
+        &#39;rcut&#39;:                 Ratio cut, loss = sum_c (v_c - w_c) / v_c
+
+        {&#39;pmod&#39;,p}:             Modularity with a different power, loss = -sum_c (w_c/m - (v_c/m)^p / (p-1))
+
+        {&#39;mom&#39;,m}:             Monotonic variant of modularity, loss = -sum_c (w_c/(m + 2v_c) - (v_c/(m + 2v_c))^2)
+
+        &#39;w-log-v&#39;,             loss = sum_c (w_c/m * log(v_c) )
+
+        num loss = |C|:         Minimize the number of clusters, this leads to finding the connected components.
+        ================    ====================================================================================
+
+    Reference
+        Graph clustering: does the optimization procedure matter more than the objective function?; Twan van Laarhoven and Elena Marchiori; Physical Review E 87, 012812 (2013)
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.unsorted_clustering.lso_cluster(name)
+        obj.run(graph, **kwargs)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+
+def alg_streamcom(name, graph, vmax_start=None, vmax_end=None, c=None, niter=None, seed=None):
+    &#39;&#39;&#39;
+
+    A wrapper of *streamcom* algorithm from https://github.com/ahollocou/graph-streaming
+
+    Arguments
+        Usage: streamcom &lt;flags&gt;
+        Availaible flags:
+
+        ===========================================    ==============================================================
+        -f [graph file name] :                         Specifies the graph file.
+        --skip [number of lines] :                     Specifies the number of lines to skip in the graph file.
+        -o [output file name] :                         Specifies the output file for communities.
+        --vmax-start [maximum volume range start] :     Specifies the maximum volume for the aggregation phase, beginning of the range.
+        --vmax-end [maximum volume range end] :         Specifies the maximum volume for the aggregation phase, end of the range.
+        -c [condition] :                                 Specifies the aggregation condition for the aggregation phase: 0 is AND and 1 is OR.
+        --seed [random seed]:                             Specifies the random seed if the edges need to be shuffle.
+        --niter [number of iteration]:                     Specifies the number of iteration of the algorithm.
+        ===========================================    ==============================================================
+    Reference
+        Hollocou, Alexandre, et al. &#34;A Streaming Algorithm for Graph Clustering.&#34; arXiv preprint arXiv:1712.04337 (2017)
+
+    &#39;&#39;&#39;
+    try:
+        obj = gct.alg.unsorted_clustering.streamcom(name)
+        obj.run(graph, vmax_start=vmax_start, vmax_end=vmax_end, c=c, niter=niter, seed=seed)
+        result=Result(obj.result)
+        return result
+    except UnsupportedException as err:
+        print(&#34;Error: &#34; + str(err), file=sys.stderr)
+        return None
+
+__ALG_LIST__ += [&#39;oslom_Infohiermap&#39;, &#39;oslom_Infomap&#39;, &#39;oslom_OSLOM&#39;, &#39;oslom_copra&#39;, &#39;oslom_louvain_method&#39;, &#39;oslom_lpm&#39;, &#39;oslom_modopt&#39;, &#39;pycabem_GANXiSw&#39;, &#39;pycabem_HiReCS&#39;, &#39;pycabem_LabelRank&#39;, &#39;cdc_CONGA&#39;, &#39;cdc_CliquePercolation&#39;, &#39;cdc_Connected_Iterative_Scan&#39;, &#39;cdc_DEMON&#39;, &#39;cdc_EAGLE&#39;, &#39;cdc_FastCpm&#39;, &#39;cdc_GCE&#39;, &#39;cdc_HDEMON&#39;, &#39;cdc_LinkCommunities&#39;, &#39;cdc_MOSES&#39;, &#39;cdc_MSCD_AFG&#39;, &#39;cdc_MSCD_HSLSW&#39;, &#39;cdc_MSCD_LFK&#39;, &#39;cdc_MSCD_LFK2&#39;, &#39;cdc_MSCD_RB&#39;, &#39;cdc_MSCD_RN&#39;, &#39;cdc_MSCD_SO&#39;, &#39;cdc_MSCD_SOM&#39;, &#39;cdc_ParCPM&#39;, &#39;cdc_SVINET&#39;, &#39;cdc_TopGC&#39;, &#39;cdc_clique_modularity&#39;, &#39;cgcc_CGGC&#39;, &#39;dct_dlplm&#39;, &#39;dct_dlslm&#39;, &#39;dct_dlslm_map_eq&#39;, &#39;dct_dlslm_no_contraction&#39;, &#39;dct_dlslm_with_seq&#39;, &#39;dct_infomap&#39;, &#39;dct_seq_louvain&#39;, &#39;igraph_community_edge_betweenness&#39;, &#39;igraph_community_fastgreedy&#39;, &#39;igraph_community_infomap&#39;, &#39;igraph_community_label_propagation&#39;, &#39;igraph_community_leading_eigenvector&#39;, &#39;igraph_community_multilevel&#39;, &#39;igraph_community_optimal_modularity&#39;, &#39;igraph_community_spinglass&#39;, &#39;igraph_community_walktrap&#39;, &#39;karateclub_BigClam&#39;, &#39;karateclub_DANMF&#39;, &#39;karateclub_EdMot&#39;, &#39;karateclub_EgoNetSplitter&#39;, &#39;karateclub_NNSED&#39;, &#39;karateclub_SCD&#39;, &#39;karateclub_SymmNMF&#39;, &#39;mcl_MCL&#39;, &#39;networkit_CutClustering&#39;, &#39;networkit_LPDegreeOrdered&#39;, &#39;networkit_PLM&#39;, &#39;networkit_PLP&#39;, &#39;alg_GossipMap&#39;, &#39;alg_RelaxMap&#39;, &#39;alg_pg_label_propagation&#39;, &#39;scan_AnyScan_Scan&#39;, &#39;scan_AnyScan_anyScan&#39;, &#39;scan_AnyScan_anyScanParl&#39;, &#39;scan_AnyScan_pScan&#39;, &#39;scan_Scanpp&#39;, &#39;scan_pScan&#39;, &#39;scan_ppScan&#39;, &#39;scan_ppScanSSE&#39;, &#39;sklearn_AffinityPropagation&#39;, &#39;sklearn_SpectralClustering&#39;, &#39;snap_Clauset_Newman_Moore&#39;, &#39;snap_Girvan_Newman&#39;, &#39;alg_Paris&#39;, &#39;alg_lso_cluster&#39;, &#39;alg_streamcom&#39;]
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Graph Clustering Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pydoc.html">API Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Lizhen Shi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/usage/notebook/reflection_gen_functions.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

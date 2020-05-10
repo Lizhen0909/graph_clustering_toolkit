@@ -1,0 +1,105 @@
+.. Graph Clustering Toolkit documentation master file, created by
+   sphinx-quickstart on Wed Nov 14 09:59:53 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Usage
+~~~~~~~~~~~~~~
+
+
+Evnronment variables
+---------------------
+
+*Graph Clustering Toolkit(gct)* uses two environment variables: 
+
+#. *$GCT_HOME* where the gct code is, default to *$HOME/graph_clustering_toolkit*
+#. *$GCT_DATA* where the data, graph or clustering result locate, default to *$HOME/.gct*, It is safe to delete this folder.
+
+For docker users, the two variables are already set, where $GCT_DATA is set to /data. 
+It is better to map the folder to a host folder so that it does not vanish when container shutdown.
+
+Quick Code
+---------------------
+
+.. code-block:: python
+
+    import gct
+    from gct.dataset import random_dataset
+    #create a random graph use LFR generator
+    ds=random_dataset.generate_undirected_unweighted_random_graph_LFR(name="random_graph", \
+                                           N=128, k=16, maxk=32, mu=0.2, minc=32)
+    
+    # run pScan graph algorithm
+    pscan_clustering=gct.scan_pScan("get_start_pscan", ds)
+
+
+Cheats
+---------------------
+
+* list available algorithms
+
+.. code-block:: python
+
+    import gct
+    gct.list_algorithms()
+
+* list available (created) graphs
+
+.. code-block:: python
+
+    import gct
+    gct.list_dataset()
+    
+* delete a graph or graphs by pattern
+
+.. code-block:: python
+
+    import gct
+    gct.remove_data("name or pattern", dry_run=False)
+    
+* create a graph using edge list
+
+.. code-block:: python
+
+    from gct.dataset.dataset import Dataset
+    edgelist=.... #edge tuples or edge triples with weights
+    data =Dataset("name", edgesObj=edge_list)
+
+* run clustering algorithm by name
+
+.. code-block:: python
+
+    import gct
+    gct.alg.run_alg(runname, data, algname, **algparams)
+    
+* create a graph from/to networkx/igraph/snap/graph_tool
+
+.. code-block:: python
+
+    from gct.dataset import convert 
+    G=... #networkx graph
+    ds = convert.from_networkx(....) 
+    G2 = convert.to_networkx(....)
+    #other converters are similar
+    
+* use graph libraries like networkx/igraph/snap/graph_tool  directly
+
+.. code-block:: python
+
+    #just import them
+    import networkx
+    import igraph
+    import snap
+    import graph_tool
+ 
+
+
+Notebooks
+---------------------
+
+See the following notebooks for further usage.
+
+.. toctree::
+    :maxdepth: 1
+
+    notebook/1_get_start

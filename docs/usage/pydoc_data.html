@@ -1,0 +1,879 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Dataset (aka graph and/or cluster) &#8212; Graph Clustering Toolkit asdf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Metrics" href="pydoc_metrics.html" />
+    <link rel="prev" title="Algorithms" href="pydoc_alg.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="dataset-aka-graph-and-or-cluster">
+<h1>Dataset (aka graph and/or cluster)<a class="headerlink" href="#dataset-aka-graph-and-or-cluster" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="gct.Dataset">
+<em class="property">class </em><code class="sig-prename descclassname">gct.</code><code class="sig-name descname">Dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">groundtruthObj</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">edgesObj</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">directed</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">weighted</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">additional_meta</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">is_edge_mirrored</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.Dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dataset represents a graph and optional one or more ground truth. 
+The graph is either directed or undirected, weighted or unweighted. 
+The ground truth is either disjointed or overlapped.</p>
+<p>Every dataset has a name. Once created it saved on local disk (under $GCT_DATA).</p>
+<p>Instead of construct a dataset directly, mostly one creates a dataset use other methods, e.g. <a class="reference internal" href="#gct.load_dataset" title="gct.load_dataset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gct.load_dataset()</span></code></a>, 
+<a class="reference internal" href="#gct.from_snap" title="gct.from_snap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gct.from_snap()</span></code></a>, <a class="reference internal" href="#gct.from_igraph" title="gct.from_igraph"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gct.from_igraph()</span></code></a>, <a class="reference internal" href="#gct.from_networkx" title="gct.from_networkx"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gct.from_networkx()</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">gct.from_networkit()</span></code></p>
+<p>There are also building graphs that can be loaded directly. Use <a class="reference internal" href="#gct.list_dataset" title="gct.list_dataset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gct.list_dataset()</span></code></a> to find them.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="gct.Result">
+<em class="property">class </em><code class="sig-prename descclassname">gct.</code><code class="sig-name descname">Result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">result</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.Result" title="Permalink to this definition">¶</a></dt>
+<dd><p>The result after running a clustering algorithm. An algorithm may result one or multiple clusterings.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="gct.Clustering">
+<em class="property">class </em><code class="sig-prename descclassname">gct.</code><code class="sig-name descname">Clustering</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">clusteringobj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.Clustering" title="Permalink to this definition">¶</a></dt>
+<dd><p>A clustering (or partition) of a graph. May be disjointed or overlapped. The partitions in the clustering are also called clusters.</p>
+</dd></dl>
+
+<span class="target" id="module-gct"></span><dl class="py function">
+<dt id="gct.remove_results">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">remove_results</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_pattern</span><span class="o">=</span><span class="default_value">'*'</span></em>, <em class="sig-param"><span class="n">run_pattern</span><span class="o">=</span><span class="default_value">'*'</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.remove_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove data and algorithm run results by patterns.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.list_dataset">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">list_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pattern</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.list_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>list dataset matching the pattern. The pattern supports Unix shell-style wildcards. For example</p>
+<div class="highlight-pycon3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">gct</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">gct</span><span class="o">.</span><span class="n">list_dataset</span><span class="p">(</span><span class="s1">&#39;*snap*&#39;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span> <span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="gp">... </span>
+<span class="go">(&#39;snap&#39;, &#39;com-DBLP&#39;)</span>
+<span class="go">(&#39;snap&#39;, &#39;com-LiveJournal&#39;)</span>
+</pre></div>
+</div>
+<p>lists two datasets in the format of (category, name), which can be used to invoke <a class="reference internal" href="#gct.load_dataset" title="gct.load_dataset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">gct.load_dataset()</span></code></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.load_dataset">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">load_dataset</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">cat</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.load_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>load a named dataset. If catetory is not specified, all available datasets will be searched.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the dataset</p></li>
+<li><p><strong>cat</strong> – category of the dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a> a dataset</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>Exception</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.from_edgelist">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">from_edgelist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">edgelist</span></em>, <em class="sig-param"><span class="n">groundtruth</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">directed</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.from_edgelist" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a graph from edge list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – identifier of the dataset</p></li>
+<li><p><strong>edgelist</strong> – a 2d list (list of list) or a 2d numpy ndaray in [[src node, target node, weight],…] format.
+Or a dataframe that has columns of “src”,”dest”,”weight”. 
+Weight is optional, if missing it is an unweighted graph.</p></li>
+<li><p><strong>groundtruth</strong> – None or a 2d list (list of list) or a 2d numpy ndaray in [[node, cluster],…] format.
+Or a dataframe that has columns of “node”,”cluster”.</p></li>
+<li><p><strong>directed</strong> – this is a directed graph</p></li>
+<li><p><strong>description</strong> – discription</p></li>
+<li><p><strong>overide</strong> – When true and the named dataset already exists, it will be deleted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.from_networkx">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">from_networkx</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">weighted</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">'weight'</span></em>, <em class="sig-param"><span class="n">default</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.from_networkx" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a datast from networkx graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – identifier of the dataset</p></li>
+<li><p><strong>graph</strong> – a networkx graph</p></li>
+<li><p><strong>weight</strong> – is it a weighted graph?</p></li>
+<li><p><strong>data</strong> – the name of the edge data which is taken as weights.</p></li>
+<li><p><strong>default</strong> – default weight if networkx edge data is missing.</p></li>
+<li><p><strong>description</strong> – discription</p></li>
+<li><p><strong>overide</strong> – When true and the named dataset already exists, it will be deleted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.from_snap">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">from_snap</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.from_snap" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a datast from a SNAP graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – identifier of the dataset</p></li>
+<li><p><strong>graph</strong> – a SNAP graph</p></li>
+<li><p><strong>description</strong> – discription</p></li>
+<li><p><strong>overide</strong> – When true and the named dataset already exists, it will be deleted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.from_igraph">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">from_igraph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">graph</span></em>, <em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">'weight'</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.from_igraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>create a datast from <a class="reference external" href="http://igraph.org/">iGraph</a> graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – identifier of the dataset</p></li>
+<li><p><strong>graph</strong> – a igraph graph</p></li>
+<li><p><strong>data</strong> – the name of the edge data which is taken as weights. Ignore for unweighted graph.</p></li>
+<li><p><strong>description</strong> – discription</p></li>
+<li><p><strong>overide</strong> – When true and the named dataset already exists, it will be deleted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.to_networkx">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">to_networkx</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.to_networkx" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert the dataset to a networkx graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – <a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>networkx graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.to_igraph">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">to_igraph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.to_igraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert the dataset to a <a class="reference external" href="http://igraph.org/">iGraph</a> graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – <a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>igraph graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.to_networkit">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">to_networkit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.to_networkit" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert the dataset to a <a class="reference external" href="https://networkit.github.io/">networkit</a> graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – <a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>networkit graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.to_graph_tool">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">to_graph_tool</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.to_graph_tool" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert the dataset to a graph-tool graph.</p>
+<p>(TBD) graph_tool support weights?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – <a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>graph-tool graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.to_coo_adjacency_matrix">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">to_coo_adjacency_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">simalarity</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">distance_fun</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.to_coo_adjacency_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert the dataset to a sparse coo adjacency matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – <a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>scipy coo_matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.as_undirected">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">as_undirected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">newname</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.as_undirected" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert the dataset to undirected dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – <a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p></li>
+<li><p><strong>newname</strong> – the name of the new dataset</p></li>
+<li><p><strong>description</strong> – discription</p></li>
+<li><p><strong>overide</strong> – When true and the named dataset already exists, it will be deleted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.as_unweighted">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">as_unweighted</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">newname</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.as_unweighted" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert the dataset to unweighted dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – <a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p></li>
+<li><p><strong>newname</strong> – the name of the new dataset</p></li>
+<li><p><strong>description</strong> – discription</p></li>
+<li><p><strong>overide</strong> – When true and the named dataset already exists, it will be deleted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.as_unweighted_undirected">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">as_unweighted_undirected</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">newname</span></em>, <em class="sig-param"><span class="n">description</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.as_unweighted_undirected" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert the dataset to undirected unweighted dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – <a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p></li>
+<li><p><strong>newname</strong> – the name of the new dataset</p></li>
+<li><p><strong>description</strong> – discription</p></li>
+<li><p><strong>overide</strong> – When true and the named dataset already exists, it will be deleted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#gct.Dataset" title="gct.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">gct.Dataset</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.local_graph_exists">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">local_graph_exists</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.local_graph_exists" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if dataset ‘name’ exists locally.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – name of a dataset</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.load_local_graph">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">load_local_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.load_local_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>load a local dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>name</strong> – name of a dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.list_local_graph">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">list_local_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gct.list_local_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>list all local datasets</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.remove_local_graph">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">remove_local_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">rm_graph_data</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">rm_clustering_result</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.remove_local_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove a local dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of a dataset</p></li>
+<li><p><strong>rm_clustering_result</strong> – remove local graph data</p></li>
+<li><p><strong>rm_clustering_result</strong> – remove clustering results associated with the graph.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.list_clustering_result">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">list_clustering_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.list_clustering_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>list clustering results associated with the dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dataset_name</strong> – name of a dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.list_all_clustering_results">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">list_all_clustering_results</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">print_format</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.list_all_clustering_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>list clustering results associated with all available datasets</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.remove_data">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">remove_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_pattern</span><span class="o">=</span><span class="default_value">'*'</span></em>, <em class="sig-param"><span class="n">with_results</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">dry_run</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.remove_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove data (and algorithm run results) by data name pattern.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.generate_undirected_unweighted_random_graph_LFR">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">generate_undirected_unweighted_random_graph_LFR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">k</span></em>, <em class="sig-param"><span class="n">maxk</span></em>, <em class="sig-param"><span class="n">mu</span></em>, <em class="sig-param"><span class="n">t1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">minc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">on</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">om</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">C</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.generate_undirected_unweighted_random_graph_LFR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lancichinetti-Fortunato-Radicchi Benchmark geneartor. Original from <a class="reference external" href="https://sites.google.com/site/andrealancichinetti/files">https://sites.google.com/site/andrealancichinetti/files</a></p>
+<p>Parameter:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-N</p></td>
+<td><p>[number of nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-k</p></td>
+<td><p>[average degree]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-maxk</p></td>
+<td><p>[maximum degree]</p></td>
+</tr>
+<tr class="row-even"><td><p>-mu</p></td>
+<td><p>[mixing parameter]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-t1</p></td>
+<td><p>[minus exponent for the degree sequence]</p></td>
+</tr>
+<tr class="row-even"><td><p>-t2</p></td>
+<td><p>[minus exponent for the community size distribution]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-minc</p></td>
+<td><p>[minimum for the community sizes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-maxc</p></td>
+<td><p>[maximum for the community sizes]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-on</p></td>
+<td><p>[number of overlapping nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-om</p></td>
+<td><p>[number of memberships of the overlapping nodes]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-C</p></td>
+<td><p>[Average clustering coefficient]</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="simple">
+<dt>-N, -k, -maxk, -mu have to be specified. For the others, the program can use default values:</dt><dd><p>t1=2, t2=1, on=0, om=0, minc and maxc will be chosen close to the degree sequence extremes.</p>
+</dd>
+</dl>
+<p>If you don’t specify -C the rewiring process for raising the average clustering coefficient will not be performed</p>
+<p>If you set a parameter twice, the latter one will be taken.</p>
+<p>——————– Other options —————————</p>
+<p>To have a random network use:    -rand</p>
+<p>Using this option will set mu=0, and minc=maxc=N, i.e. there will be one only community.</p>
+<p>Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external degree/total degree is superiorly (inferiorly) bounded by the mixing parameter.</p>
+<p>——————– Examples —————————</p>
+<p>Example1:
+./benchmark -N 1000 -k 15 -maxk 50 -mu 0.1 -minc 20 -maxc 50 -C 0.7</p>
+<p>Example2:
+./benchmark -f flags.dat -t1 3</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Reference</dt><dd><p>Lancichinetti, Andrea, and Santo Fortunato. “Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities.” Physical Review E 80.1 (2009): 016118.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.generate_directed_unweighted_random_graph_LFR">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">generate_directed_unweighted_random_graph_LFR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">k</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxk</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mu</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">minc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">on</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">om</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">C</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.generate_directed_unweighted_random_graph_LFR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lancichinetti-Fortunato-Radicchi Benchmark geneartor. Original from <a class="reference external" href="https://sites.google.com/site/andrealancichinetti/files">https://sites.google.com/site/andrealancichinetti/files</a></p>
+<p>Parameter:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-N</p></td>
+<td><p>[number of nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-k</p></td>
+<td><p>[average in-degree]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-maxk</p></td>
+<td><p>[maximum in-degree]</p></td>
+</tr>
+<tr class="row-even"><td><p>-mu</p></td>
+<td><p>[mixing parameter]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-t1</p></td>
+<td><p>[minus exponent for the degree sequence]</p></td>
+</tr>
+<tr class="row-even"><td><p>-t2</p></td>
+<td><p>[minus exponent for the community size distribution]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-minc</p></td>
+<td><p>[minimum for the community sizes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-maxc</p></td>
+<td><p>[maximum for the community sizes]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-on</p></td>
+<td><p>[number of overlapping nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-om</p></td>
+<td><p>[number of memberships of the overlapping nodes]</p></td>
+</tr>
+</tbody>
+</table>
+<p>-N, -k, -maxk, -mu have to be specified. For the others, the program can use default values:</p>
+<p>t1=2, t2=1, on=0, om=0, minc and maxc will be chosen close to the degree sequence extremes.</p>
+<p>If you set a parameter twice, the latter one will be taken.</p>
+<p>——————– Other options —————————</p>
+<p>To have a random network use:    -rand</p>
+<p>Using this option will set mu=0, and minc=maxc=N, i.e. there will be one only community.</p>
+<p>Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external in-degree/total in-degree is superiorly (inferiorly) bounded by the mixing parameter.</p>
+<p>——————– Examples —————————</p>
+<p>Example1:    ./benchmark -N 1000 -k 15 -maxk 50 -mu 0.1 -minc 20 -maxc 50</p>
+<p>Example2:    ./benchmark -f flags.dat -t1 3</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Reference</dt><dd><p>Lancichinetti, Andrea, and Santo Fortunato. “Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities.” Physical Review E 80.1 (2009): 016118.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.generate_undirected_weighted_random_graph_LFR">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">generate_undirected_weighted_random_graph_LFR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">k</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxk</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mut</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">muw</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">minc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">on</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">om</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">C</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.generate_undirected_weighted_random_graph_LFR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lancichinetti-Fortunato-Radicchi Benchmark geneartor. Original from <a class="reference external" href="https://sites.google.com/site/andrealancichinetti/files">https://sites.google.com/site/andrealancichinetti/files</a></p>
+<p>Parameter:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-N</p></td>
+<td><p>[number of nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-k</p></td>
+<td><p>[average degree]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-maxk</p></td>
+<td><p>[maximum degree]</p></td>
+</tr>
+<tr class="row-even"><td><p>-mut</p></td>
+<td><p>[mixing parameter for the topology]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-muw</p></td>
+<td><p>[mixing parameter for the weights]</p></td>
+</tr>
+<tr class="row-even"><td><p>-beta</p></td>
+<td><p>[exponent for the weight distribution]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-t1</p></td>
+<td><p>[minus exponent for the degree sequence]</p></td>
+</tr>
+<tr class="row-even"><td><p>-t2</p></td>
+<td><p>[minus exponent for the community size distribution]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-minc</p></td>
+<td><p>[minimum for the community sizes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-maxc</p></td>
+<td><p>[maximum for the community sizes]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-on</p></td>
+<td><p>[number of overlapping nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-om</p></td>
+<td><p>[number of memberships of the overlapping nodes]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-C</p></td>
+<td><p>[Average clustering coefficient]</p></td>
+</tr>
+</tbody>
+</table>
+<p>-N, -k, -maxk, -muw have to be specified. For the others, the program can use default values:</p>
+<p>t1=2, t2=1, on=0, om=0, beta=1.5, mut=muw, minc and maxc will be chosen close to the degree sequence extremes.</p>
+<p>If you don’t specify -C the rewiring process for raising the average clustering coefficient will not be performed</p>
+<p>If you set a parameter twice, the latter one will be taken.</p>
+<p>——————– Other options —————————</p>
+<p>To have a random network use:    -rand</p>
+<p>Using this option will set muw=0, mut=0, and minc=maxc=N, i.e. there will be one only community.</p>
+<p>Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external degree/total degree is superiorly (inferiorly) bounded by the mixing parameter.</p>
+<p>——————– Examples —————————</p>
+<p>Example1:    ./benchmark -N 1000 -k 15 -maxk 50 -muw 0.1 -minc 20 -maxc 50</p>
+<p>Example2:    ./benchmark -f flags.dat -t1 3</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Reference</dt><dd><p>Lancichinetti, Andrea, and Santo Fortunato. “Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities.” Physical Review E 80.1 (2009): 016118.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.generate_directed_weighted_random_graph_LFR">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">generate_directed_weighted_random_graph_LFR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">k</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxk</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mut</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">muw</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">beta</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">minc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">on</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">om</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">C</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.generate_directed_weighted_random_graph_LFR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lancichinetti-Fortunato-Radicchi Benchmark geneartor. Original from <a class="reference external" href="https://sites.google.com/site/andrealancichinetti/files">https://sites.google.com/site/andrealancichinetti/files</a></p>
+<p>Parameter:</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 84%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-N</p></td>
+<td><p>[number of nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-k</p></td>
+<td><p>[average in-degree]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-maxk</p></td>
+<td><p>[maximum in-degree]</p></td>
+</tr>
+<tr class="row-even"><td><p>-mut</p></td>
+<td><p>[mixing parameter for the topology]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-muw</p></td>
+<td><p>[mixing parameter for the weights]</p></td>
+</tr>
+<tr class="row-even"><td><p>-beta</p></td>
+<td><p>[exponent for the weight distribution]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-t1</p></td>
+<td><p>[minus exponent for the degree sequence]</p></td>
+</tr>
+<tr class="row-even"><td><p>-t2</p></td>
+<td><p>[minus exponent for the community size distribution]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-minc</p></td>
+<td><p>[minimum for the community sizes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-maxc</p></td>
+<td><p>[maximum for the community sizes]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-on</p></td>
+<td><p>[number of overlapping nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-om</p></td>
+<td><p>[number of memberships of the overlapping nodes]</p></td>
+</tr>
+</tbody>
+</table>
+<p>-N, -k, -maxk, -muw have to be specified. For the others, the program can use default values:</p>
+<p>t1=2, t2=1, on=0, om=0, beta=1.5, mut=muw, minc and maxc will be chosen close to the degree sequence extremes.</p>
+<p>If you set a parameter twice, the latter one will be taken.</p>
+<p>——————– Other options —————————</p>
+<p>To have a random network use:    -rand</p>
+<p>Using this option will set muw=0, mut=0, and minc=maxc=N, i.e. there will be one only community.</p>
+<p>Use option -sup (-inf) if you want to produce a benchmark whose distribution of the ratio of external in-degree/total in-degree is superiorly (inferiorly) bounded by the mixing parameter.</p>
+<p>——————– Examples —————————</p>
+<p>Example1:    ./benchmark -N 1000 -k 15 -maxk 50 -muw 0.1 -minc 20 -maxc 50
+Example2:    ./benchmark -f flags.dat -t1 3</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Reference</dt><dd><p>Lancichinetti, Andrea, and Santo Fortunato. “Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities.” Physical Review E 80.1 (2009): 016118.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.generate_undirected_unweighted_hier_random_graph_LFR">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">generate_undirected_unweighted_hier_random_graph_LFR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">k</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxk</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mu1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mu2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">minc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">on</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">om</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">minC</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxC</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.generate_undirected_unweighted_hier_random_graph_LFR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lancichinetti-Fortunato-Radicchi Benchmark geneartor. Original from <a class="reference external" href="https://sites.google.com/site/andrealancichinetti/files">https://sites.google.com/site/andrealancichinetti/files</a></p>
+<p>Parameter</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-N</p></td>
+<td><p>[number of nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-k</p></td>
+<td><p>[average degree]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-maxk</p></td>
+<td><p>[maximum degree]</p></td>
+</tr>
+<tr class="row-even"><td><p>-t1</p></td>
+<td><p>[minus exponent for the degree sequence]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-t2</p></td>
+<td><p>[minus exponent for the community size distribution]</p></td>
+</tr>
+<tr class="row-even"><td><p>-minc</p></td>
+<td><p>[minimum for the micro community sizes]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-maxc</p></td>
+<td><p>[maximum for the micro community sizes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-on</p></td>
+<td><p>[number of overlapping nodes]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-om</p></td>
+<td><p>[number of memberships of the overlapping nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-minC</p></td>
+<td><p>[minimum for the macro community size]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-maxC</p></td>
+<td><p>[maximum for the macro community size]</p></td>
+</tr>
+<tr class="row-even"><td><p>-mu1</p></td>
+<td><p>[mixing parameter for the macro communities (see Readme file)]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-mu2</p></td>
+<td><p>[mixing parameter for the micro communities (see Readme file)]</p></td>
+</tr>
+</tbody>
+</table>
+<p>——————– Examples —————————</p>
+<p>Example2:
+./hbenchmark -f flags.dat</p>
+<p>./hbenchmark -N 10000 -k 20 -maxk 50 -mu2 0.3 -minc 20 -maxc 50 -minC 100 -maxC 1000 -mu1 0.1</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Reference</dt><dd><p>Lancichinetti, Andrea, and Santo Fortunato. “Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities.” Physical Review E 80.1 (2009): 016118.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="gct.generate_random_ovp_graph_LFR">
+<code class="sig-prename descclassname">gct.</code><code class="sig-name descname">generate_random_ovp_graph_LFR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">N</span></em>, <em class="sig-param"><span class="n">k</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxk</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">mut</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">muw</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">beta</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">t2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">minc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">maxc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">on</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">om</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">C</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">a</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">weighted</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">seed</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">overide</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#gct.generate_random_ovp_graph_LFR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extended version of the Lancichinetti-Fortunato-Radicchi Benchmark for Weighted Overlapping networks 
+to evaluate clustering algorithms using generated ground-truth communities.</p>
+<p>Refer <a class="reference external" href="https://github.com/eXascaleInfolab/LFR-Benchmark_UndirWeightOvp">https://github.com/eXascaleInfolab/LFR-Benchmark_UndirWeightOvp</a></p>
+<p>Parameter</p>
+<blockquote>
+<div><table class="docutils align-default">
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 93%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>-N</p></td>
+<td><p>[number of nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-k</p></td>
+<td><p>[average degree]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-maxk</p></td>
+<td><p>[maximum degree]</p></td>
+</tr>
+<tr class="row-even"><td><p>-mut</p></td>
+<td><p>[mixing parameter for the topology]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-muw</p></td>
+<td><p>[mixing parameter for the weights]</p></td>
+</tr>
+<tr class="row-even"><td><p>-beta</p></td>
+<td><p>[exponent for the weight distribution]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-t1</p></td>
+<td><p>[minus exponent for the degree sequence]</p></td>
+</tr>
+<tr class="row-even"><td><p>-t2</p></td>
+<td><p>[minus exponent for the community size distribution]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-minc</p></td>
+<td><p>[minimum for the community sizes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-maxc</p></td>
+<td><p>[maximum for the community sizes]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-on</p></td>
+<td><p>[number of overlapping nodes]</p></td>
+</tr>
+<tr class="row-even"><td><p>-om</p></td>
+<td><p>[number of memberships of the overlapping nodes]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-C</p></td>
+<td><p>[Average clustering coefficient]</p></td>
+</tr>
+<tr class="row-even"><td><p>-cnl</p></td>
+<td><p>[output communities as strings of nodes (input format for NMI evaluation)]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-name</p></td>
+<td><blockquote>
+<div><p>[base name for the output files]. It is used for the network, communities and statistics; files extensions are added automatically:</p>
+</div></blockquote>
+<p>.nsa  - network, represented by space/tab separated arcs
+.nse  - network, represented by space/tab separated edges
+{.cnl, .nmc}  - communities, represented by nodes lists ‘.cnl’ if ‘-cnl’ is used, otherwise as a nodes membership in communities ‘.nmc’)
+.nst  - network statistics</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>-seed</p></td>
+<td><p>[file name of the random seed, default: seed.txt]</p></td>
+</tr>
+<tr class="row-odd"><td><p>-a</p></td>
+<td><p>[{0, 1} yield directed network (1 - arcs) rather than undirected (0 - edges), default: 0 - edges]</p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="simple">
+<dt>Reference</dt><dd><p>Lancichinetti, Andrea, and Santo Fortunato. “Benchmarks for testing community detection algorithms on directed and weighted graphs with overlapping communities.” Physical Review E 80.1 (2009): 016118.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Graph Clustering Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="pydoc.html">API Documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pydoc_alg.html">Algorithms</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Dataset (aka graph and/or cluster)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pydoc_metrics.html">Metrics</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="pydoc.html">API Documentation</a><ul>
+      <li>Previous: <a href="pydoc_alg.html" title="previous chapter">Algorithms</a></li>
+      <li>Next: <a href="pydoc_metrics.html" title="next chapter">Metrics</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Lizhen Shi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/usage/pydoc_data.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

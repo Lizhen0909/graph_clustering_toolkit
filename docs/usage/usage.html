@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Usage &#8212; Graph Clustering Toolkit asdf documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Quick Tutorial" href="notebook/1_get_start.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="evnronment-variables">
+<h2>Evnronment variables<a class="headerlink" href="#evnronment-variables" title="Permalink to this headline">¶</a></h2>
+<p><em>Graph Clustering Toolkit(gct)</em> uses two environment variables:</p>
+<ol class="arabic simple">
+<li><p><em>$GCT_HOME</em> where the gct code is, default to <em>$HOME/graph_clustering_toolkit</em></p></li>
+<li><p><em>$GCT_DATA</em> where the data, graph or clustering result locate, default to <em>$HOME/.gct</em>, It is safe to delete this folder.</p></li>
+</ol>
+<p>For docker users, the two variables are already set, where $GCT_DATA is set to /data.
+It is better to map the folder to a host folder so that it does not vanish when container shutdown.</p>
+</div>
+<div class="section" id="quick-code">
+<h2>Quick Code<a class="headerlink" href="#quick-code" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gct</span>
+<span class="kn">from</span> <span class="nn">gct.dataset</span> <span class="kn">import</span> <span class="n">random_dataset</span>
+<span class="c1">#create a random graph use LFR generator</span>
+<span class="n">ds</span><span class="o">=</span><span class="n">random_dataset</span><span class="o">.</span><span class="n">generate_undirected_unweighted_random_graph_LFR</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;random_graph&quot;</span><span class="p">,</span> \
+                                       <span class="n">N</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">maxk</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">minc</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="c1"># run pScan graph algorithm</span>
+<span class="n">pscan_clustering</span><span class="o">=</span><span class="n">gct</span><span class="o">.</span><span class="n">scan_pScan</span><span class="p">(</span><span class="s2">&quot;get_start_pscan&quot;</span><span class="p">,</span> <span class="n">ds</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cheats">
+<h2>Cheats<a class="headerlink" href="#cheats" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>list available algorithms</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gct</span>
+<span class="n">gct</span><span class="o">.</span><span class="n">list_algorithms</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>list available (created) graphs</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gct</span>
+<span class="n">gct</span><span class="o">.</span><span class="n">list_dataset</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>delete a graph or graphs by pattern</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gct</span>
+<span class="n">gct</span><span class="o">.</span><span class="n">remove_data</span><span class="p">(</span><span class="s2">&quot;name or pattern&quot;</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>create a graph using edge list</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gct.dataset.dataset</span> <span class="kn">import</span> <span class="n">Dataset</span>
+<span class="n">edgelist</span><span class="o">=....</span> <span class="c1">#edge tuples or edge triples with weights</span>
+<span class="n">data</span> <span class="o">=</span><span class="n">Dataset</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">edgesObj</span><span class="o">=</span><span class="n">edge_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>run clustering algorithm by name</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gct</span>
+<span class="n">gct</span><span class="o">.</span><span class="n">alg</span><span class="o">.</span><span class="n">run_alg</span><span class="p">(</span><span class="n">runname</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">algname</span><span class="p">,</span> <span class="o">**</span><span class="n">algparams</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>create a graph from/to networkx/igraph/snap/graph_tool</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gct.dataset</span> <span class="kn">import</span> <span class="n">convert</span>
+<span class="n">G</span><span class="o">=...</span> <span class="c1">#networkx graph</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">convert</span><span class="o">.</span><span class="n">from_networkx</span><span class="p">(</span><span class="o">....</span><span class="p">)</span>
+<span class="n">G2</span> <span class="o">=</span> <span class="n">convert</span><span class="o">.</span><span class="n">to_networkx</span><span class="p">(</span><span class="o">....</span><span class="p">)</span>
+<span class="c1">#other converters are similar</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>use graph libraries like networkx/igraph/snap/graph_tool  directly</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#just import them</span>
+<span class="kn">import</span> <span class="nn">networkx</span>
+<span class="kn">import</span> <span class="nn">igraph</span>
+<span class="kn">import</span> <span class="nn">snap</span>
+<span class="kn">import</span> <span class="nn">graph_tool</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="notebooks">
+<h2>Notebooks<a class="headerlink" href="#notebooks" title="Permalink to this headline">¶</a></h2>
+<p>See the following notebooks for further usage.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebook/1_get_start.html">Quick Tutorial</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Graph Clustering Toolkit</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#evnronment-variables">Evnronment variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-code">Quick Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cheats">Cheats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#notebooks">Notebooks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebook/1_get_start.html">Quick Tutorial</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pydoc.html">API Documentation</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="installation.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="notebook/1_get_start.html" title="next chapter">Quick Tutorial</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Lizhen Shi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/usage/usage.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
