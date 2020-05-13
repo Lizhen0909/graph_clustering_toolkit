@@ -16,7 +16,7 @@ For more information, please refer to [online document](https://lizhen0909.githu
 
 Start python from docker:
 ```
-docker run -it -rm lizhen0909/graph_clustering_toolkit python
+docker run -it --rm lizhen0909/graph_clustering_toolkit python
 ```
 
 Run the script from the command line:
